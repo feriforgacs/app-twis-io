@@ -5,6 +5,10 @@ const options = {
 	site: process.env.NEXTAUTH_URL,
 
 	providers: [
+		Providers.Email({
+			server: `smtp://${process.env.EMAIL_SMTP_USER}:${process.env.SENDGRID_KEY}@${process.env.EMAIL_SMTP_HOST}`,
+			from: process.env.EMAIL_FROM,
+		}),
 		Providers.Google({
 			clientId: process.env.GOOGLE_CLIENT_ID,
 			clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -14,6 +18,11 @@ const options = {
 			clientSecret: process.env.FACEBOOK_APP_SECRET,
 		}),
 	],
+
+	pages: {
+		verifyRequest: "/check-your-inbox",
+		error: "/",
+	},
 
 	database: {
 		type: "mongodb",
