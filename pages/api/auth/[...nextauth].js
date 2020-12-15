@@ -3,7 +3,7 @@ import Providers from "next-auth/providers";
 
 const options = {
 	site: process.env.NEXTAUTH_URL,
-	// Configure one or more authentication providers
+
 	providers: [
 		Providers.Google({
 			clientId: process.env.GOOGLE_CLIENT_ID,
@@ -15,12 +15,38 @@ const options = {
 		}),
 	],
 
-	// A database is optional, but required to persist accounts in a database
 	database: {
 		type: "mongodb",
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
 		url: process.env.DATABASE_URL,
+	},
+	events: {
+		createUser: async (message) => {
+			/**
+			 * Add user to sendgrid contacts list to start welcome automation
+			 */
+			const res = await fetch(`${process.env.APP_URL}/api/sendgrid/add`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(message),
+			});
+
+			/**
+			 * Error
+			 */
+			if (res.status !== 200) {
+				// TODO
+				// send alert to admin
+			}
+		},
+		error: async (message) => {
+			// TODO
+			// auth error
+			// send alert to admin
+		},
 	},
 };
 
