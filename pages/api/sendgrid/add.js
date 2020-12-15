@@ -1,16 +1,28 @@
+import Cors from "cors";
 import { Client } from "@sendgrid/client";
+import initMiddleware from "../../../lib/init-middleware";
+
+// Initialize the cors middleware
+const cors = initMiddleware(
+	// You can read more about the available options here: https://github.com/expressjs/cors#configuration-options
+	Cors({
+		// Only allow requests with PUT
+		methods: ["PUT"],
+	})
+);
 
 export default async function (req, res) {
+	await cors(req, res);
+
 	const client = new Client();
 	client.setApiKey(process.env.SENDGRID_KEY);
-	const { name, email } = req.body;
+	const { email } = req.body;
 
 	const requestBody = {
 		list_ids: [process.env.SENDGRID_LIST_ID],
 		contacts: [
 			{
 				email: email,
-				first_name: name,
 			},
 		],
 	};

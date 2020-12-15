@@ -27,7 +27,7 @@ const options = {
 			 * Add user to sendgrid contacts list to start welcome automation
 			 */
 			const res = await fetch(`${process.env.APP_URL}/api/sendgrid/add`, {
-				method: "POST",
+				method: "PUT",
 				headers: {
 					"Content-Type": "application/json",
 				},
@@ -40,12 +40,14 @@ const options = {
 			if (res.status !== 200) {
 				// TODO
 				// send alert to admin
+				console.log(res);
 			}
 		},
 		error: async (message) => {
 			// TODO
 			// auth error
 			// send alert to admin
+			console.log(message);
 		},
 	},
 };
