@@ -7,7 +7,7 @@ export default function Home() {
 
 	const [session, loading] = useSession();
 	const [loginEmailAddress, setLoginEmailAddress] = useState("");
-	const [loginLoading, setLoginLoading] = useState(false);
+	const [emailLoginLoading, setEmailLoginLoading] = useState(false);
 
 	/**
 	 * Handle login with email address
@@ -15,7 +15,7 @@ export default function Home() {
 	 */
 	const signInWithEmail = (e) => {
 		e.preventDefault();
-		setLoginLoading(true);
+		setEmailLoginLoading(true);
 		signIn("email", { email: loginEmailAddress });
 	};
 
@@ -49,10 +49,9 @@ export default function Home() {
 					}}
 				>
 					<input type="email" value={loginEmailAddress} onChange={(e) => setLoginEmailAddress(e.target.value)} placeholder="Your email address" required="required" />
-					<button type="submit" disabled={loginLoading}>
-						Log in with email
+					<button type="submit" disabled={emailLoginLoading}>
+						{emailLoginLoading ? "Sending email..." : `Log in with email`}
 					</button>
-					{loginLoading && <span>processing...</span>}
 				</form>
 				<p>
 					<button onClick={() => signIn("google", { callbackUrl: "/dashboard" })}>Sign in with Google</button>
