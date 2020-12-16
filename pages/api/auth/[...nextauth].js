@@ -1,6 +1,6 @@
 import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
-const sgMail = require("@sendgrid/mail");
+import mail from "@sendgrid/mail";
 
 const options = {
 	site: process.env.NEXTAUTH_URL,
@@ -11,7 +11,7 @@ const options = {
 			from: process.env.LOGIN_EMAIL_FROM,
 			sendVerificationRequest: ({ identifier: email, url }) => {
 				return new Promise((resolve, reject) => {
-					sgMail.setApiKey(process.env.SENDGRID_KEY);
+					mail.setApiKey(process.env.SENDGRID_KEY);
 
 					const site = process.env.SITE_NAME;
 
@@ -25,7 +25,7 @@ const options = {
 
 					(async () => {
 						try {
-							await sgMail.send(content);
+							await mail.send(content);
 							return resolve();
 						} catch (error) {
 							console.log("ERROR", error);
