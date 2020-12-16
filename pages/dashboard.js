@@ -1,4 +1,4 @@
-import { useSession, getSession } from "next-auth/client";
+import { useSession, signOut, getSession } from "next-auth/client";
 import AccessDenied from "../components/AccessDenied";
 
 export default function dashboard() {
@@ -14,6 +14,7 @@ export default function dashboard() {
 		<>
 			<h1>Dashboard - Protected - {session.user.email}</h1>
 			<p>This is the dashboard, available only to logged in users.</p>
+			<button onClick={() => signOut({ callbackUrl: `${process.env.APP_URL}/signed-out` })}>Sign out</button>
 		</>
 	);
 }
