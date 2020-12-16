@@ -16,6 +16,7 @@ export default function Home() {
 	const signInWithEmail = (e) => {
 		e.preventDefault();
 		setEmailLoginLoading(true);
+		localStorage.setItem("verifyRequestEmail", loginEmailAddress);
 		signIn("email", { email: loginEmailAddress });
 	};
 
