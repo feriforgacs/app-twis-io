@@ -1,6 +1,7 @@
 import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
 import mail from "@sendgrid/mail";
+import SendAdminNotification from "../../../lib/AdminNotification";
 
 const options = {
 	site: process.env.NEXTAUTH_URL,
@@ -11,8 +12,6 @@ const options = {
 			from: process.env.LOGIN_EMAIL_FROM,
 			sendVerificationRequest: ({ identifier: email, url }) => {
 				return new Promise((resolve, reject) => {
-					mail.setApiKey(process.env.SENDGRID_KEY);
-
 					const site = process.env.SITE_NAME;
 
 					const content = {
@@ -22,6 +21,8 @@ const options = {
 						text: verificationEmailText({ url, site, email }),
 						html: verificationEmailHTML({ url, site, email }),
 					};
+
+					mail.setApiKey(process.env.SENDGRID_KEY);
 
 					(async () => {
 						try {
@@ -73,16 +74,17 @@ const options = {
 			 * Error
 			 */
 			if (res.status !== 200) {
-				// TODO
 				// send alert to admin
-				console.log(res);
+				SendAdminNotification(`🔴 ERROR - Create User Error`, `User email: ${JSON.stringify(message)}`);
+			} else {
+				// send notification about new user to the admin
+				SendAdminNotification(`🥳 New user registration`, `User email: ${message.email}`);
 			}
 		},
 		error: async (message) => {
-			// TODO
 			// auth error
 			// send alert to admin
-			console.log(message);
+			SendAdminNotification(`🔴 ERROR - Auth Error`, `User email: ${JSON.stringify(message)}`);
 		},
 	},
 };
