@@ -47,23 +47,29 @@ export default function LoginForm() {
 	return (
 		<div id="login-form">
 			<header>
-				<span>TWiS ✨</span>
+				<div className="logo-container">
+					<Image src="/images/logo.svg" alt="TWiS logo" className="logo" width={80} height={28} />
+				</div>
 				<h1>Sign up or log in</h1>
 			</header>
 
 			<section>
 				<div id="login-form__social">
-					<button onClick={() => signIn("google", { callbackUrl: "/dashboard" })}>
+					<button className="button button--outline" onClick={() => signIn("google", { callbackUrl: "/dashboard" })}>
 						<Image src="/images/icons/icon-google.svg" alt="Google logo" width={24} height={24} />
-						Continue with Google
+						<span>Continue with Google</span>
 					</button>
 
-					<button onClick={() => signIn("facebook", { callbackUrl: "/dashboard" })}>
+					<button className="button button--outline" onClick={() => signIn("facebook", { callbackUrl: "/dashboard" })}>
 						<Image src="/images/icons/icon-facebook.svg" alt="Facebook logo" width={24} height={24} />
-						Continue with Facebook
+						<span>Continue with Facebook</span>
 					</button>
 				</div>
-				<p id="login-form__separator">or</p>
+				<div id="login-form__separator">
+					<hr />
+					<span>or</span>
+					<hr />
+				</div>
 				<div id="login-form__email">
 					<form
 						method="post"
@@ -72,7 +78,7 @@ export default function LoginForm() {
 						}}
 					>
 						<input type="email" value={loginEmailAddress} onChange={(e) => handleEmailUpdate(e.target.value)} placeholder="Your email address" required="required" />
-						<button type="submit" disabled={emailLoginLoading || !isValidEmail}>
+						<button type="submit" disabled={emailLoginLoading || !isValidEmail} className="button button--primary">
 							{emailLoginLoading ? "Sending email..." : `Continue with email`}
 						</button>
 					</form>
