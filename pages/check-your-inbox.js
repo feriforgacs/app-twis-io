@@ -31,7 +31,7 @@ export default function CheckYourInbox() {
 			</header>
 			<section>
 				<p>
-					We’ve sent an email with a{" "}
+					We’ve sent an email to <strong>{verifyRequestEmail}</strong> with a{" "}
 					<span role="img" aria-label="sparkle emoji">
 						✨
 					</span>{" "}
@@ -39,7 +39,7 @@ export default function CheckYourInbox() {
 					<span role="img" aria-label="sparkle emoji">
 						✨
 					</span>{" "}
-					to <strong>{verifyRequestEmail}</strong>. The link in the email expires shortly, so please use it soon.
+					that you can use to log in. The link in the email expires shortly, so please use it soon.
 				</p>
 				<div id="email-signup-confirm__providers">
 					<a href="https://mail.google.com/mail/u/0/" target="_blank" rel="noopener noreferrer">

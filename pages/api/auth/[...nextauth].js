@@ -93,40 +93,72 @@ const verificationEmailHTML = ({ url, site, email }) => {
 	const escapedEmail = `${email.replace(/\./g, "&#8203;.")}`;
 	const escapedSite = `${site.replace(/\./g, "&#8203;.")}`;
 
-	const backgroundColor = "#f9f9f9";
-	const textColor = "#444444";
+	const backgroundColor = "#ffffff";
+	const textColor = "#1d1d1d";
 	const mainBackgroundColor = "#ffffff";
-	const buttonBackgroundColor = "#346df1";
-	const buttonBorderColor = "#346df1";
+	const buttonBackgroundColor = "#a30fbb";
+	const buttonBorderColor = "#a30fbb";
 	const buttonTextColor = "#ffffff";
 
 	return `
 		<body style="background: ${backgroundColor};">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
-					<td align="center" style="padding: 10px 0px 20px 0px; font-size: 22px; font-family: Helvetica, Arial, sans-serif; color: ${textColor};">
-						<strong>${escapedSite}</strong>
+					<td align="center" style="padding: 10px 0px 10px 0px; font-size: 32px; font-family: Helvetica, Arial, sans-serif; color: ${buttonBackgroundColor};">
+						<strong>twis</strong>
 					</td>
 				</tr>
 			</table>
-			<table width="100%" border="0" cellspacing="20" cellpadding="0" style="background: ${mainBackgroundColor}; max-width: 600px; margin: auto; border-radius: 10px;">
+			<table width="100%" border="0" cellspacing="20" cellpadding="0" style="background: ${mainBackgroundColor}; max-width: 500px; margin: auto; border-radius: 10px;">
 				<tr>
-					<td align="center" style="padding: 10px 0px 0px 0px; font-size: 18px; font-family: Helvetica, Arial, sans-serif; color: ${textColor};">
-						Sign in as <strong>${escapedEmail}</strong>
+					<td align="left" style="padding: 10px 0px 0px 0px; font-size: 18px; font-family: Helvetica, Arial, sans-serif; color: ${textColor};">
+						To sign in as <strong>${escapedEmail}</strong> click on the button below.
 					</td>
 				</tr>
 				<tr>
 					<td align="center" style="padding: 20px 0;">
 						<table border="0" cellspacing="0" cellpadding="0">
 							<tr>
-								<td align="center" style="border-radius: 5px;" bgcolor="${buttonBackgroundColor}"><a href="${url}" target="_blank" style="font-size: 18px; font-family: Helvetica, Arial, sans-serif; color: ${buttonTextColor}; text-decoration: none; text-decoration: none;border-radius: 5px; padding: 10px 20px; border: 1px solid ${buttonBorderColor}; display: inline-block; font-weight: bold;">👉 Sign in 👈</a></td>
+								<td align="center" style="border-radius: 5px;" bgcolor="${buttonBackgroundColor}"><a href="${url}" target="_blank" style="font-size: 18px; font-family: Helvetica, Arial, sans-serif; color: ${buttonTextColor}; text-decoration: none; text-decoration: none;border-radius: 5px; padding: 10px 20px; border: 1px solid ${buttonBorderColor}; display: inline-block; font-weight: bold;">👉 Click here to sign in 👈</a></td>
 							</tr>
 						</table>
 					</td>
 				</tr>
+
 				<tr>
-					<td align="center" style="padding: 0px 0px 10px 0px; font-size: 16px; line-height: 22px; font-family: Helvetica, Arial, sans-serif; color: ${textColor};">
-						If you did not request this email you can safely ignore it.
+					<td align="left" style="padding: 0px 0px 10px 0px; font-size: 16px; line-height: 22px; font-family: Helvetica, Arial, sans-serif; color: ${textColor};">
+						In case the button above doesn't work fork you, you can also copy and paste the following URL into your browser:
+					</td>
+				</tr>
+
+				<tr>
+					<td align="left" style="padding: 0px 0px 10px 0px; font-size: 16px; line-height: 22px; font-family: Helvetica, Arial, sans-serif; color: ${textColor}; background-color: #eee; border-radius: 5px;">
+						<table border="0" cellpadding="0" cellspacing="0" width="100%">
+							<tr>
+								<td colspan="3" height="10px"></td>
+							</tr>
+							<tr>
+								<td width="20px"></td>
+								<td>
+									<a href="${url}" target="_blank" style="color: #555555; text-decoration: none; font-size: 14px;">${url}</a>
+								</td>
+								<td width="20px"></td>
+							</tr>
+							<tr>
+								<td colspan="3" height="10px"></td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+
+				<tr>
+					<td align="left" style="padding: 0px 0px 10px 0px; font-size: 16px; line-height: 22px; font-family: Helvetica, Arial, sans-serif; color: ${textColor};">
+						If you didn’t request this email, there’s nothing to worry about - you can safely ignore it.
+					</td>
+				</tr>
+				<tr>
+					<td align="left" style="padding: 0px 0px 10px 0px; font-size: 14px; line-height: 22px; font-family: Helvetica, Arial, sans-serif; color: #616061;">
+						Having trouble signing in? Just send a reply to this message and we'll help you.
 					</td>
 				</tr>
 			</table>

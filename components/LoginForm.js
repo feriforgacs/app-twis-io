@@ -104,7 +104,7 @@ export default function LoginForm({ loginError = false, loggedOut = false, signI
 								signInWithEmail(e);
 							}}
 						>
-							<input type="email" value={loginEmailAddress} onChange={(e) => handleEmailUpdate(e.target.value)} placeholder="Your email address" required="required" />
+							<input type="email" value={loginEmailAddress} disabled={emailLoginLoading} onChange={(e) => handleEmailUpdate(e.target.value)} placeholder="Your email address" required="required" />
 							<button type="submit" disabled={emailLoginLoading || !isValidEmail} className="button button--primary">
 								{emailLoginLoading ? "Sending email..." : submitButtonLabel}
 							</button>
