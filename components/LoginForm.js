@@ -3,7 +3,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function LoginForm({ signIn = false }) {
+export default function LoginForm({ signIn = false, accessDenied = false }) {
 	const [session, loading] = useSession();
 	const [loginEmailAddress, setLoginEmailAddress] = useState("");
 	const [emailLoginLoading, setEmailLoginLoading] = useState(false);
@@ -48,63 +48,70 @@ export default function LoginForm({ signIn = false }) {
 	const submitButtonLabel = signIn ? `Sign in with email` : `Continue with email`;
 
 	return (
-		<div id="login-form">
-			<header>
-				<div className="logo-container">
-					<Image src="/images/logo.svg" alt="TWiS logo" className="logo" width={80} height={28} />
+		<>
+			{accessDenied && (
+				<div id="access-denied">
+					<p id="access-denied__message">You need to sign in to see this page.</p>
 				</div>
-				<h1>{signIn ? `Sign in` : `Sign up or log in`}</h1>
-			</header>
+			)}
+			<div id="login-form">
+				<header>
+					<div className="logo-container">
+						<Image src="/images/logo.svg" alt="TWiS logo" className="logo" width={80} height={28} />
+					</div>
+					<h1>{signIn ? `Sign in` : `Sign up or log in`}</h1>
+				</header>
 
-			<section>
-				<div id="login-form__social">
-					<button className="button button--outline" onClick={() => signIn("google", { callbackUrl: "/dashboard" })}>
-						<Image src="/images/icons/icon-google.svg" alt="Google logo" width={24} height={24} />
-						<span>{signIn ? `Sign in` : `Continue`} with Google</span>
-					</button>
-
-					<button className="button button--outline" onClick={() => signIn("facebook", { callbackUrl: "/dashboard" })}>
-						<Image src="/images/icons/icon-facebook.svg" alt="Facebook logo" width={24} height={24} />
-						<span>{signIn ? `Sign in` : `Continue`} with Facebook</span>
-					</button>
-				</div>
-				<div id="login-form__separator">
-					<hr />
-					<span>or</span>
-					<hr />
-				</div>
-				<div id="login-form__email">
-					<form
-						method="post"
-						onSubmit={(e) => {
-							signInWithEmail(e);
-						}}
-					>
-						<input type="email" value={loginEmailAddress} onChange={(e) => handleEmailUpdate(e.target.value)} placeholder="Your email address" required="required" />
-						<button type="submit" disabled={emailLoginLoading || !isValidEmail} className="button button--primary">
-							{emailLoginLoading ? "Sending email..." : submitButtonLabel}
+				<section>
+					<div id="login-form__social">
+						<button className="button button--outline" onClick={() => signIn("google", { callbackUrl: "/dashboard" })}>
+							<Image src="/images/icons/icon-google.svg" alt="Google logo" width={24} height={24} />
+							<span>{signIn ? `Sign in` : `Continue`} with Google</span>
 						</button>
-					</form>
-				</div>
 
-				<div id="login-form__legal">
-					By continuing with Google, Facebook, or email, you agree to our{" "}
-					<a href="/terms-of-service" target="_blank" rel="noopener noreferrer">
-						Terms of Service
-					</a>{" "}
-					and{" "}
-					<a href="/privacy-policy" target="_blank" rel="noopener noreferrer">
-						Privacy Policy
-					</a>
-					.
-				</div>
+						<button className="button button--outline" onClick={() => signIn("facebook", { callbackUrl: "/dashboard" })}>
+							<Image src="/images/icons/icon-facebook.svg" alt="Facebook logo" width={24} height={24} />
+							<span>{signIn ? `Sign in` : `Continue`} with Facebook</span>
+						</button>
+					</div>
+					<div id="login-form__separator">
+						<hr />
+						<span>or</span>
+						<hr />
+					</div>
+					<div id="login-form__email">
+						<form
+							method="post"
+							onSubmit={(e) => {
+								signInWithEmail(e);
+							}}
+						>
+							<input type="email" value={loginEmailAddress} onChange={(e) => handleEmailUpdate(e.target.value)} placeholder="Your email address" required="required" />
+							<button type="submit" disabled={emailLoginLoading || !isValidEmail} className="button button--primary">
+								{emailLoginLoading ? "Sending email..." : submitButtonLabel}
+							</button>
+						</form>
+					</div>
 
-				<div id="login-form__help">
-					<p>
-						Having trouble signing in? <Link href="/contact-us">Let us help!</Link>
-					</p>
-				</div>
-			</section>
-		</div>
+					<div id="login-form__legal">
+						By continuing with Google, Facebook, or email, you agree to our{" "}
+						<a href="/terms-of-service" target="_blank" rel="noopener noreferrer">
+							Terms of Service
+						</a>{" "}
+						and{" "}
+						<a href="/privacy-policy" target="_blank" rel="noopener noreferrer">
+							Privacy Policy
+						</a>
+						.
+					</div>
+
+					<div id="login-form__help">
+						<p>
+							Having trouble signing in? <Link href="/contact-us">Let us help!</Link>
+						</p>
+					</div>
+				</section>
+			</div>
+		</>
 	);
 }

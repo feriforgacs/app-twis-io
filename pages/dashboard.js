@@ -1,5 +1,5 @@
 import { useSession, signOut, getSession } from "next-auth/client";
-import AccessDenied from "../components/AccessDenied";
+import LoginForm from "../components/LoginForm";
 
 export default function dashboard() {
 	const [session, loading] = useSession();
@@ -7,7 +7,7 @@ export default function dashboard() {
 	if (typeof window !== "undefined" && loading) return null;
 
 	if (!session) {
-		return <AccessDenied />;
+		return <LoginForm signIn={true} accessDenied={true} />;
 	}
 
 	return (
