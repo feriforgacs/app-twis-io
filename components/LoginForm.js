@@ -1,9 +1,9 @@
-import { useSession } from "next-auth/client";
+import { signIn, useSession } from "next-auth/client";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function LoginForm({ loginError = false, signIn = false, accessDenied = false }) {
+export default function LoginForm({ loginError = false, loggedOut = false, signInPage = false, accessDenied = false }) {
 	const [session, loading] = useSession();
 	const [loginEmailAddress, setLoginEmailAddress] = useState("");
 	const [emailLoginLoading, setEmailLoginLoading] = useState(false);
@@ -59,14 +59,20 @@ export default function LoginForm({ loginError = false, signIn = false, accessDe
 					<div className="logo-container">
 						<Image src="/images/logo.svg" alt="TWiS logo" className="logo" width={80} height={28} />
 					</div>
-					<h1>{signIn ? `Sign in` : `Sign up or log in`}</h1>
+					<h1>{signInPage ? `Sign in` : `Sign up or log in`}</h1>
 					{loginError && (
-						<p id="login-form__error">
+						<p id="login-form__error" className="alert alert--error">
 							Something didn't work properly. Please, try again in a few minutes or use a different login option. If you keep seeing this message, please,{" "}
 							<Link href="/contact-us">
 								<a>contact us</a>
 							</Link>
 							.
+						</p>
+					)}
+
+					{loggedOut && (
+						<p id="login-form__success" className="alert alert--success">
+							You logged out successfully. Hope to see you soon <span role="img">👋</span>
 						</p>
 					)}
 				</header>
@@ -75,12 +81,12 @@ export default function LoginForm({ loginError = false, signIn = false, accessDe
 					<div id="login-form__social">
 						<button className="button button--outline" onClick={() => signIn("google", { callbackUrl: "/dashboard" })}>
 							<Image src="/images/icons/icon-google.svg" alt="Google logo" width={24} height={24} />
-							<span>{signIn ? `Sign in` : `Continue`} with Google</span>
+							<span>{signInPage ? `Sign in` : `Continue`} with Google</span>
 						</button>
 
 						<button className="button button--outline" onClick={() => signIn("facebook", { callbackUrl: "/dashboard" })}>
 							<Image src="/images/icons/icon-facebook.svg" alt="Facebook logo" width={24} height={24} />
-							<span>{signIn ? `Sign in` : `Continue`} with Facebook</span>
+							<span>{signInPage ? `Sign in` : `Continue`} with Facebook</span>
 						</button>
 					</div>
 					<div id="login-form__separator">

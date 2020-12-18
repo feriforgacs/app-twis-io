@@ -7,10 +7,14 @@ export default function Home() {
 	const router = useRouter();
 	const [session] = useSession();
 	const [loginError, setLoginError] = useState(false);
+	const [loggedOut, setLoggedOut] = useState(false);
 
 	useEffect(() => {
 		if (router.query.error) {
 			setLoginError(true);
+		}
+		if (router.query.logout) {
+			setLoggedOut(true);
 		}
 	});
 
@@ -25,5 +29,5 @@ export default function Home() {
 	/**
 	 * Display login form to users
 	 */
-	return <LoginForm loginError={loginError} />;
+	return <LoginForm loginError={loginError} loggedOut={loggedOut} />;
 }

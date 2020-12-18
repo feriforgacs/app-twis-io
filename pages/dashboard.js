@@ -7,14 +7,14 @@ export default function dashboard() {
 	if (typeof window !== "undefined" && loading) return null;
 
 	if (!session) {
-		return <LoginForm signIn={true} accessDenied={true} />;
+		return <LoginForm signInPage={true} accessDenied={true} />;
 	}
 
 	return (
 		<>
 			<h1>Dashboard - Protected - {session.user.email}</h1>
 			<p>This is the dashboard, available only to logged in users.</p>
-			<button onClick={() => signOut({ callbackUrl: `${process.env.APP_URL}/signed-out` })}>Sign out</button>
+			<button onClick={() => signOut({ callbackUrl: `${process.env.APP_URL}/?logout=1` })}>Sign out</button>
 		</>
 	);
 }
