@@ -2,6 +2,7 @@
 	align-items: center;
 	border: none;
 	border-radius: 5px;
+	cursor: pointer;
 	display: flex;
 	font-size: 1rem;
 	font-weight: bold;
@@ -11,11 +12,16 @@
 	max-width: 420px;
 	width: 100%;
 
+	&:disabled {
+		cursor: default;
+		opacity: 0.5;
+	}
+
 	&--primary {
 		background: #a30fbb;
 		color: #fff;
 
-		&:hover {
+		&:hover:not(:disabled) {
 			background: #b600d4;
 		}
 
@@ -27,5 +33,13 @@
 	&--outline {
 		background: #fafafa;
 		border: 1px solid #cecece;
+
+		&:hover:not(:disabled) {
+			background: #eee;
+		}
+
+		&:active {
+			background: #ccc;
+		}
 	}
 }

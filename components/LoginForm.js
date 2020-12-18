@@ -1,8 +1,9 @@
 import { signIn, useSession } from "next-auth/client";
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
-export default function LoginForm() {
+export default function LoginForm({ signIn = false }) {
 	const [session, loading] = useSession();
 	const [loginEmailAddress, setLoginEmailAddress] = useState("");
 	const [emailLoginLoading, setEmailLoginLoading] = useState(false);
@@ -44,25 +45,27 @@ export default function LoginForm() {
 		setIsValidEmail(/\S+@\S+\.\S+/.test(email));
 	};
 
+	const submitButtonLabel = signIn ? `Sign in with email` : `Continue with email`;
+
 	return (
 		<div id="login-form">
 			<header>
 				<div className="logo-container">
 					<Image src="/images/logo.svg" alt="TWiS logo" className="logo" width={80} height={28} />
 				</div>
-				<h1>Sign up or log in</h1>
+				<h1>{signIn ? `Sign in` : `Sign up or log in`}</h1>
 			</header>
 
 			<section>
 				<div id="login-form__social">
 					<button className="button button--outline" onClick={() => signIn("google", { callbackUrl: "/dashboard" })}>
 						<Image src="/images/icons/icon-google.svg" alt="Google logo" width={24} height={24} />
-						<span>Continue with Google</span>
+						<span>{signIn ? `Sign in` : `Continue`} with Google</span>
 					</button>
 
 					<button className="button button--outline" onClick={() => signIn("facebook", { callbackUrl: "/dashboard" })}>
 						<Image src="/images/icons/icon-facebook.svg" alt="Facebook logo" width={24} height={24} />
-						<span>Continue with Facebook</span>
+						<span>{signIn ? `Sign in` : `Continue`} with Facebook</span>
 					</button>
 				</div>
 				<div id="login-form__separator">
@@ -79,7 +82,7 @@ export default function LoginForm() {
 					>
 						<input type="email" value={loginEmailAddress} onChange={(e) => handleEmailUpdate(e.target.value)} placeholder="Your email address" required="required" />
 						<button type="submit" disabled={emailLoginLoading || !isValidEmail} className="button button--primary">
-							{emailLoginLoading ? "Sending email..." : `Continue with email`}
+							{emailLoginLoading ? "Sending email..." : submitButtonLabel}
 						</button>
 					</form>
 				</div>
@@ -94,6 +97,12 @@ export default function LoginForm() {
 						Privacy Policy
 					</a>
 					.
+				</div>
+
+				<div id="login-form__help">
+					<p>
+						Having trouble signing in? <Link href="/contact-us">Let us help!</Link>
+					</p>
 				</div>
 			</section>
 		</div>

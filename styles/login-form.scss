@@ -1,6 +1,11 @@
 #login-form {
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 	margin: 0 auto;
 	max-width: 420px;
+	min-height: 100vh;
 	padding: 2rem;
 
 	.logo-container {
@@ -80,5 +85,27 @@
 		a {
 			color: #888;
 		}
+	}
+
+	&__help {
+		color: #616061;
+		margin-top: 2.5rem;
+		font-size: 0.7rem;
+
+		a {
+			color: #616061;
+			font-weight: bold;
+		}
+	}
+}
+
+#access-denied {
+	&__message {
+		background: #eee;
+		border-bottom: 1px solid #ccc;
+		font-weight: bold;
+		margin: 0;
+		padding: 1rem 0.5rem;
+		text-align: center;
 	}
 }

@@ -1,3 +1,10 @@
+import LoginForm from "./LoginForm";
+
 export default function AccessDenied() {
-	return <div>You need to log in to access this page.</div>;
+	return (
+		<div id="access-denied">
+			<p id="access-denied__message">You need to sign in to see this page.</p>
+			<LoginForm signIn={true} />
+		</div>
+	);
 }
