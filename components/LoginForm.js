@@ -3,7 +3,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function LoginForm({ signIn = false, accessDenied = false }) {
+export default function LoginForm({ loginError = false, signIn = false, accessDenied = false }) {
 	const [session, loading] = useSession();
 	const [loginEmailAddress, setLoginEmailAddress] = useState("");
 	const [emailLoginLoading, setEmailLoginLoading] = useState(false);
@@ -60,6 +60,15 @@ export default function LoginForm({ signIn = false, accessDenied = false }) {
 						<Image src="/images/logo.svg" alt="TWiS logo" className="logo" width={80} height={28} />
 					</div>
 					<h1>{signIn ? `Sign in` : `Sign up or log in`}</h1>
+					{loginError && (
+						<p id="login-form__error">
+							Something didn't work properly. Please, try again in a few minutes or use a different login option. If you keep seeing this message, please,{" "}
+							<Link href="/contact-us">
+								<a>contact us</a>
+							</Link>
+							.
+						</p>
+					)}
 				</header>
 
 				<section>
@@ -107,7 +116,10 @@ export default function LoginForm({ signIn = false, accessDenied = false }) {
 
 					<div id="login-form__help">
 						<p>
-							Having trouble signing in? <Link href="/contact-us">Let us help!</Link>
+							Having trouble signing in?{" "}
+							<Link href="/contact-us">
+								<a>Let us help!</a>
+							</Link>
 						</p>
 					</div>
 				</section>

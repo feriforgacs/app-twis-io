@@ -1,10 +1,19 @@
 import { useSession } from "next-auth/client";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import LoginForm from "../components/LoginForm";
 
 export default function Home() {
 	const router = useRouter();
 	const [session] = useSession();
+	const [loginError, setLoginError] = useState(false);
+
+	useEffect(() => {
+		if (router.query.error) {
+			setLoginError(true);
+		}
+	});
+
 	/**
 	 * Redirect logged in users to dashboard
 	 */
@@ -16,5 +25,5 @@ export default function Home() {
 	/**
 	 * Display login form to users
 	 */
-	return <LoginForm />;
+	return <LoginForm loginError={loginError} />;
 }

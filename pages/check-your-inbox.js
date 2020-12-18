@@ -47,7 +47,10 @@ export default function CheckYourInbox() {
 				<div id="email-signup-confirm__help">
 					<p>Can’t find the email? Make sure you check your spam folder!</p>
 					<p>
-						Having trouble signing in? <Link href="/contact-us">Let us help!</Link>
+						Having trouble signing in?{" "}
+						<Link href="/contact-us">
+							<a>Let us help!</a>
+						</Link>
 					</p>
 				</div>
 			</section>

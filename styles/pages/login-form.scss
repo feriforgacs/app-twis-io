@@ -20,6 +20,21 @@
 		}
 	}
 
+	&__error {
+		background: #ffe8e8;
+		color: #b60808;
+		border: 1px solid #b60808;
+		border-radius: 5px;
+		line-height: 1.5rem;
+		margin: 1rem auto;
+		padding: 1rem;
+
+		a {
+			color: #b60808;
+			font-weight: bold;
+		}
+	}
+
 	&__social {
 		button {
 			margin: 0 auto 1rem;
