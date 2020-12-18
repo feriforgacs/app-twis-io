@@ -1,4 +1,4 @@
-import { signIn, useSession } from "next-auth/client";
+import { useSession } from "next-auth/client";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -54,7 +54,7 @@ export default function LoginForm({ signIn = false, accessDenied = false }) {
 					<p id="access-denied__message">You need to sign in to see this page.</p>
 				</div>
 			)}
-			<div id="login-form">
+			<main id="login-form">
 				<header>
 					<div className="logo-container">
 						<Image src="/images/logo.svg" alt="TWiS logo" className="logo" width={80} height={28} />
@@ -111,7 +111,7 @@ export default function LoginForm({ signIn = false, accessDenied = false }) {
 						</p>
 					</div>
 				</section>
-			</div>
+			</main>
 		</>
 	);
 }
