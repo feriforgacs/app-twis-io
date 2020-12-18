@@ -72,7 +72,10 @@ export default function LoginForm({ loginError = false, loggedOut = false, signI
 
 					{loggedOut && (
 						<p id="login-form__success" className="alert alert--success">
-							You logged out successfully. Hope to see you soon <span role="img">👋</span>
+							You logged out successfully. Hope to see you soon{" "}
+							<span role="img" aria-label="waving hand emoji">
+								👋
+							</span>
 						</p>
 					)}
 				</header>
