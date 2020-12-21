@@ -1,6 +1,9 @@
 @import "mixins/normalize";
+@import "mixins/color";
 @import "mixins/button";
 @import "mixins/alert";
+
+@import "layout/sidebar";
 
 @import "pages/login-form";
 @import "pages/email-signup-confirm";
@@ -8,7 +11,7 @@
 html,
 body {
 	background: #fafafa;
-	color: #1d1d1d;
+	color: $fontColor;
 	font-family: "Helvetica Neue", Helvetica, "Segoe UI", Tahoma, Arial, sans-serif;
 	font-size: 18px;
 }

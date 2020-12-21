@@ -16,24 +16,24 @@ export default function Sidebar() {
 	});
 
 	return (
-		<>
-			<nav id="page__navigation" className="page__navigation--top">
+		<div id="page__sidebar">
+			<nav className="page__sidebar--top">
 				<div className="logo-container">
 					<Image src="/images/logo.svg" alt="TWiS logo" className="logo" width={80} height={28} onClick={() => router.push("/dashboard")} />
 				</div>
-				<SidebarNavItem activeNavItem={activeNavItem} setActiveNavItem={setActiveNavItem} navItemHref="dashboard" navItemIcon="icon" navItemLabel="Dashboard" />
-				<SidebarNavItem activeNavItem={activeNavItem} setActiveNavItem={setActiveNavItem} navItemHref="campaigns" navItemIcon="icon" navItemLabel="Campaigns" />
-				<SidebarNavItem activeNavItem={activeNavItem} setActiveNavItem={setActiveNavItem} navItemHref="participants" navItemIcon="icon" navItemLabel="Participants" />
+				<SidebarNavItem activeNavItem={activeNavItem} setActiveNavItem={setActiveNavItem} navItemHref="dashboard" navItemIcon="dashboard" navItemLabel="Dashboard" />
+				<SidebarNavItem activeNavItem={activeNavItem} setActiveNavItem={setActiveNavItem} navItemHref="campaigns" navItemIcon="campaigns" navItemLabel="Campaigns" />
+				<SidebarNavItem activeNavItem={activeNavItem} setActiveNavItem={setActiveNavItem} navItemHref="participants" navItemIcon="participants" navItemLabel="Participants" />
 			</nav>
 
-			<nav id="page__navigation" className="page__navigation--bottom">
-				<SidebarNavItem activeNavItem={activeNavItem} setActiveNavItem={setActiveNavItem} navItemHref="account" navItemIcon="icon" navItemLabel="Account" />
-				<SidebarNavItem activeNavItem={activeNavItem} setActiveNavItem={setActiveNavItem} navItemHref="help" navItemIcon="icon" navItemLabel="Help" />
+			<nav className="page__sidebar--bottom">
+				<SidebarNavItem activeNavItem={activeNavItem} setActiveNavItem={setActiveNavItem} navItemHref="account" navItemIcon="account" navItemLabel="Account" />
+				<SidebarNavItem activeNavItem={activeNavItem} setActiveNavItem={setActiveNavItem} navItemHref="help" navItemIcon="help" navItemLabel="Help" />
 
 				<div className="nav-item">
 					<button onClick={() => signOut({ callbackUrl: `${process.env.APP_URL}/?logout=1` })}>Sign out</button>
 				</div>
 			</nav>
-		</>
+		</div>
 	);
 }

@@ -1,0 +1,50 @@
+#page__sidebar {
+	border-right: 1px solid #eceef0;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	justify-content: space-between;
+	left: 0;
+	overflow-y: scroll;
+	padding: 0.5rem;
+	position: fixed;
+	top: 0;
+	width: 250px;
+
+	.logo-container {
+		margin: 0.5rem 0 1rem 0.5rem;
+	}
+
+	.nav-item {
+		margin: 0.2rem 0;
+		a {
+			align-items: center;
+			box-sizing: border-box;
+			border-radius: 5px;
+			color: $fontColor;
+			font-size: 0.8rem;
+			display: flex;
+			padding: 0.2rem 0.5rem;
+			text-decoration: none;
+			width: 100%;
+
+			&:hover {
+				background: #fce8ff;
+			}
+		}
+
+		&--active {
+			a {
+				background: #fce8ff;
+				color: $primaryColor;
+				font-weight: bold;
+			}
+		}
+
+		&__icon {
+			margin-right: 0.3rem;
+			margin-top: 0.05rem;
+		}
+	}
+}
