@@ -15,6 +15,11 @@ export default function Sidebar() {
 		}
 	});
 
+	const doSignOut = (e) => {
+		e.preventDefault();
+		signOut({ callbackUrl: `${process.env.APP_URL}/?logout=1` });
+	};
+
 	return (
 		<div id="page__sidebar">
 			<nav className="page__sidebar--top">
@@ -30,8 +35,13 @@ export default function Sidebar() {
 				<SidebarNavItem activeNavItem={activeNavItem} setActiveNavItem={setActiveNavItem} navItemHref="account" navItemIcon="account" navItemLabel="Account" />
 				<SidebarNavItem activeNavItem={activeNavItem} setActiveNavItem={setActiveNavItem} navItemHref="help" navItemIcon="help" navItemLabel="Help" />
 
-				<div className="nav-item">
-					<button onClick={() => signOut({ callbackUrl: `${process.env.APP_URL}/?logout=1` })}>Sign out</button>
+				<div className="nav-item nav-item--sign-out">
+					<a href="#" onClick={(e) => doSignOut(e)}>
+						<span className="nav-item__icon">
+							<Image src={`/images/icons/icon-sign-out.svg`} width={20} height={20} alt={`Sign out icon`} />
+						</span>
+						<span className="nav-item__label">Sign out</span>
+					</a>
 				</div>
 			</nav>
 		</div>

@@ -45,7 +45,7 @@ export default function LoginForm({ loginError = false, loggedOut = false, signI
 		setIsValidEmail(/\S+@\S+\.\S+/.test(email));
 	};
 
-	const submitButtonLabel = signIn ? `Sign in with email` : `Continue with email`;
+	const submitButtonLabel = signInPage || loggedOut ? `Sign in with email` : `Continue with email`;
 
 	return (
 		<>
@@ -84,12 +84,12 @@ export default function LoginForm({ loginError = false, loggedOut = false, signI
 					<div id="login-form__social">
 						<button className="button button--outline" onClick={() => signIn("google", { callbackUrl: "/dashboard" })}>
 							<Image src="/images/icons/icon-google.svg" alt="Google logo" width={24} height={24} />
-							<span>{signInPage ? `Sign in` : `Continue`} with Google</span>
+							<span>{signInPage || loggedOut ? `Sign in` : `Continue`} with Google</span>
 						</button>
 
 						<button className="button button--outline" onClick={() => signIn("facebook", { callbackUrl: "/dashboard" })}>
 							<Image src="/images/icons/icon-facebook.svg" alt="Facebook logo" width={24} height={24} />
-							<span>{signInPage ? `Sign in` : `Continue`} with Facebook</span>
+							<span>{signInPage || loggedOut ? `Sign in` : `Continue`} with Facebook</span>
 						</button>
 					</div>
 					<div id="login-form__separator">
