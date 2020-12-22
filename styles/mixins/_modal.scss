@@ -1,0 +1,67 @@
+.modal {
+	animation: fadeIn ease 200ms;
+	background: #fff;
+	border-radius: 3px;
+	box-shadow: 0 31px 41px 0 rgba(32, 42, 53, 0.2), 0 2px 16px 0 rgba(32, 42, 54, 0.08);
+	max-width: 500px;
+	position: relative;
+	width: 100%;
+
+	&__container {
+		align-items: center;
+		background: rgba(0, 0, 0, 0.5);
+		display: flex;
+		height: 100vh;
+		justify-content: center;
+		left: 0;
+		position: fixed;
+		top: 0;
+		width: 100vw;
+		z-index: 999999;
+	}
+
+	&__header {
+		border-bottom: 1px solid #eee;
+		padding: 1rem;
+
+		h3 {
+			font-size: 1.1rem;
+			font-weight: 400;
+			margin: 0;
+			padding: 0;
+		}
+	}
+
+	&__body {
+		font-size: 0.9rem;
+		padding: 1rem;
+
+		p {
+			line-height: 1.5rem;
+			margin: 0;
+			padding: 0;
+		}
+	}
+
+	&__footer {
+		border-top: 1px solid #eee;
+		display: flex;
+		justify-content: space-between;
+		padding: 1rem;
+
+		.button--primary {
+			margin-left: auto;
+		}
+	}
+}
+
+@keyframes fadeIn {
+	0% {
+		margin-top: -50px;
+		opacity: 0;
+	}
+	100% {
+		margin-top: 0;
+		opacity: 1;
+	}
+}

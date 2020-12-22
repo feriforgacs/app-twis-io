@@ -1,0 +1,58 @@
+.toast__container {
+	animation: slideUp ease-in 200ms;
+	align-items: center;
+	bottom: 2rem;
+	display: flex;
+	flex-direction: column;
+	left: 0;
+	position: fixed;
+	right: 0;
+	text-align: center;
+
+	.toast {
+		align-items: center;
+		background: rgba(0, 0, 0, 0.9);
+		border-radius: 5px;
+		box-shadow: 0 31px 41px 0 rgba(32, 42, 53, 0.2), 0 2px 16px 0 rgba(32, 42, 54, 0.08);
+		color: #eee;
+		display: flex;
+		padding: 1rem;
+		position: relative;
+
+		.button--close {
+			display: inline-block;
+			height: 20px;
+			line-height: 20px;
+			margin: 0 0 0 1rem;
+			padding: 0;
+			position: relative;
+			top: 0;
+			width: 20px;
+
+			svg {
+				fill: #fff;
+			}
+
+			&:hover {
+				svg {
+					opacity: 0.6;
+				}
+			}
+		}
+
+		&--error {
+			background: rgba(219, 12, 12, 0.9);
+		}
+	}
+}
+
+@keyframes slideUp {
+	0% {
+		bottom: -2rem;
+		opacity: 0;
+	}
+	100% {
+		bottom: 2rem;
+		opacity: 1;
+	}
+}

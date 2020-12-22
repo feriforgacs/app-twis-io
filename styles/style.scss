@@ -2,7 +2,11 @@
 @import "mixins/color";
 @import "mixins/button";
 @import "mixins/alert";
+@import "mixins/toast";
+@import "mixins/skeleton";
+@import "mixins/modal";
 
+@import "layout/page";
 @import "layout/sidebar";
 
 @import "pages/login-form";

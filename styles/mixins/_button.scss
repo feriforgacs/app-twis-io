@@ -42,4 +42,26 @@
 			background: #ccc;
 		}
 	}
+
+	&--close {
+		background: none;
+		border: none;
+		border-radius: 1rem;
+		position: absolute;
+		right: 0;
+		top: 0.75rem;
+
+		&:hover {
+			background: none;
+
+			svg {
+				fill: #fff;
+			}
+		}
+
+		svg {
+			height: 20px;
+			width: 20px;
+		}
+	}
 }

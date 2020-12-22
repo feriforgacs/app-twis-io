@@ -1,0 +1,91 @@
+.skeleton {
+	background-color: #dfe3e8;
+	border-radius: 3px;
+	display: inline-block;
+	overflow: hidden;
+	position: relative;
+	min-width: 3rem;
+	min-height: 1rem;
+
+	&::before {
+		content: "";
+		display: block;
+		position: absolute;
+		left: -150px;
+		top: 0;
+		height: 100%;
+		width: 150px;
+		background: linear-gradient(to right, transparent 0%, #eee 50%, transparent 100%);
+		animation: load 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+	}
+
+	&--card-title {
+		height: 1.7777778rem;
+		width: 10rem;
+	}
+
+	&--text {
+		display: block;
+		height: 1.333333rem;
+	}
+
+	&--button {
+		height: 2.2777778rem;
+	}
+
+	&--h1 {
+		display: block;
+		line-height: 2.5rem;
+		min-height: 2.5rem;
+		margin: 0 0 1.11111rem;
+		width: 50%;
+
+		&-short {
+			width: 20%;
+		}
+
+		&-long {
+			width: 80%;
+		}
+	}
+
+	&--h2 {
+		display: block;
+		line-height: 1.7777778rem;
+		margin-bottom: 0.5rem;
+		min-height: 1.7777778rem;
+		width: 50%;
+
+		&-short {
+			width: 20%;
+		}
+
+		&-long {
+			width: 80%;
+		}
+	}
+
+	&--p {
+		display: block;
+		margin: 0 0 0.3rem;
+		padding: 0;
+		width: 100%;
+
+		&-short {
+			width: 20%;
+		}
+
+		&-long {
+			width: 80%;
+		}
+	}
+}
+
+@keyframes load {
+	from {
+		left: -150px;
+	}
+	to {
+		left: 100%;
+	}
+}
