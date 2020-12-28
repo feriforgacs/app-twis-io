@@ -11,6 +11,7 @@
 		"@sendgrid/client": "^7.4.0",
 		"@sendgrid/mail": "^7.4.0",
 		"cors": "^2.8.5",
+		"date-fns": "^2.16.1",
 		"mongodb": "^3.6.3",
 		"next": "10.0.3",
 		"next-auth": "^3.1.0",

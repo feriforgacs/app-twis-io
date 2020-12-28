@@ -4,7 +4,7 @@ import LoginForm from "../components/LoginForm";
 import Sidebar from "../components/dashboard-components/Sidebar";
 import Toast from "../components/dashboard-components/Toast";
 import DashboardSection from "../components/dashboard-components/DashboardSection";
-import CampaignList from "../components/dashboard-components/CampaignList";
+import CampaignList from "../components/dashboard-components/campaign-components/CampaignList";
 
 export default function dashboard() {
 	const [session, loading] = useSession();
