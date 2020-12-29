@@ -43,6 +43,27 @@
 		&:active {
 			background: #ccc;
 		}
+
+		&-primary {
+			color: $primaryColor;
+			border: 1px solid $primaryColor;
+
+			&:hover:not(:disabled) {
+				background: #eee;
+			}
+
+			&:active {
+				background: #ccc;
+			}
+		}
+	}
+
+	&--slim {
+		font-size: 0.9rem;
+		height: 2rem;
+		line-height: 2rem;
+		min-height: 2rem;
+		padding: 0rem 1.2rem;
 	}
 
 	&--close {

@@ -4,6 +4,36 @@
 	}
 }
 
-.mr-0 {
-	margin-right: 0;
+$marginRight: 0;
+@while $marginRight < 100 {
+	/* Margin right */
+	.mr-#{$marginRight} {
+		margin-right: ($marginRight) + px;
+	}
+
+	/* Margin left */
+	.ml-#{$marginRight} {
+		margin-left: ($marginRight) + px;
+	}
+
+	/* Margin top */
+	.mt-#{$marginRight} {
+		margin-top: ($marginRight) + px;
+	}
+
+	/* Margin bottom */
+	.mb-#{$marginRight} {
+		margin-bottom: ($marginRight) + px;
+	}
+
+	$marginRight: $marginRight + 5;
+}
+
+$opacity: 0;
+@while $opacity < 10 {
+	.op-#{$opacity} {
+		opacity: 0.1 * $opacity;
+	}
+
+	$opacity: $opacity + 1;
 }

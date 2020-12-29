@@ -23,7 +23,7 @@ export default function dashboard() {
 				<header id="page__header">
 					<h1 className="page__title">Dashboard</h1>
 					<div id="page__actions">
-						<button className="button button--primary">Create new campaign</button>
+						<button className="button button--primary button--slim">Create new campaign</button>
 					</div>
 				</header>
 

@@ -2,12 +2,46 @@
 	padding-left: 250px;
 }
 
-#page__content {
-	padding: 1rem 2rem;
+#page {
+	&__content {
+		padding: 1rem 2rem;
+		h1 {
+			font-size: 1.5rem;
+			margin: 0;
+			padding: 0;
+		}
+	}
 
-	h1 {
-		font-size: 1.5rem;
-		margin: 0;
+	&__header {
+		display: flex;
+		justify-content: space-between;
+	}
+}
+
+.section {
+	&__header {
+		border-bottom: 1px solid #eceef0;
+		margin: 1.11111rem 0;
+		padding: 0 0 1.11111rem;
+	}
+
+	&__action {
+		a {
+			color: $fontColorSecondary;
+			font-size: 0.8rem;
+			text-decoration: none;
+
+			&:hover {
+				opacity: 0.8;
+				text-decoration: none;
+			}
+		}
+	}
+
+	&__title {
+		font-size: 1.2rem;
+		font-weight: normal;
+		margin: 0 0 0.5rem;
 		padding: 0;
 	}
 }

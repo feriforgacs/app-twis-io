@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function DashboardSection({ id, title = "", actionURL = "", actionLabel = "" }) {
 	return (
-		<section id={`dashboard__${id}`}>
+		<section id={`dashboard__${id}`} className="section">
 			<header className="section__header">
 				<h2 className="section__title">{title}</h2>
 				{actionURL && actionLabel ? (

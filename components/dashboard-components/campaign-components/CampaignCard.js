@@ -49,6 +49,9 @@ export default function CampaignCard({ id, name, type, status, participants, vis
 					<div className="campaign-card__navigation campaign-card__navigation--dropdown" ref={campaignCardNavigationRef}>
 						<a href="/" target="_blank" rel="noopener noreferrer" className="button button--dropdown">
 							View campaign
+							<span className="ml-10 op-5">
+								<Image src="/images/icons/icon-link.svg" width={20} height={20} />
+							</span>
 						</a>
 						<button className="button button--dropdown">Duplicate Campaign</button>
 						<button className="button button--dropdown color--error">Delete Campaign</button>
@@ -71,18 +74,22 @@ export default function CampaignCard({ id, name, type, status, participants, vis
 
 				<div className="campaign-card__info">
 					<p className="campaign-visible-from campaign-info">
-						{/* <img src={iconCalendar} alt="Camapign visible from" /> */}
+						<span className="mr-5">
+							<Image src="/images/icons/icon-calendar.svg" width={15} height={15} alt="Camapign visible from" />
+						</span>
 						Visible from: <strong>{format(new Date(visibleFrom), "yyyy.MM.dd.")}</strong>
 					</p>
 					<p className="campaign-visible-to campaign-info">
-						{/* <img src={iconCalendar} alt="Camapign visible to" /> */}
+						<span className="mr-5">
+							<Image src="/images/icons/icon-calendar.svg" width={15} height={15} alt="Camapign visible to" />
+						</span>
 						Visible to: <strong>{format(new Date(visibleTo), "yyyy.MM.dd.")}</strong>
 					</p>
 				</div>
 			</div>
 			<div className="campaign-card__footer campaign-card__section">
 				<Link href={`/campaign/edit/${id}`} title={`Edit ${name}`}>
-					<a className="button button--outline">Edit Campaign</a>
+					<a className="button button--outline-primary">Edit Campaign</a>
 				</Link>
 			</div>
 		</div>
