@@ -1,0 +1,58 @@
+.badge {
+	background: #eaeaea;
+	border-radius: 2rem;
+	color: #585858;
+	display: inline-block;
+	font-size: 0.7rem;
+	line-height: 1.2rem;
+	padding: 0 0.8rem;
+	position: relative;
+
+	&--campaign-type {
+		background: #e9eef9;
+		color: #4575bd;
+		font-size: 0.7rem;
+		font-weight: 700;
+		text-transform: uppercase;
+	}
+
+	&--success {
+		background: #bbe5b3;
+		color: #414f3e;
+	}
+
+	&--error {
+		background: #fead9a;
+		color: #583c35;
+	}
+
+	&--active {
+		padding-left: calc(0.8rem + 10px);
+		&:before {
+			background: #58ab48;
+			border-radius: 10px;
+			content: "";
+			display: block;
+			height: 10px;
+			left: 7px;
+			position: absolute;
+			top: 6px;
+			width: 10px;
+		}
+	}
+
+	&--inactive {
+		padding-left: calc(0.8rem + 10px);
+		&:before {
+			border: 2px solid #afaeae;
+			border-radius: 10px;
+			content: "";
+			display: block;
+			height: 10px;
+			left: 7px;
+			position: absolute;
+			top: 4px;
+			width: 10px;
+		}
+	}
+}

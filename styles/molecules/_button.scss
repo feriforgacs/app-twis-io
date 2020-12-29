@@ -10,6 +10,7 @@
 	justify-content: center;
 	line-height: 3rem;
 	max-width: 420px;
+	text-decoration: none;
 	width: 100%;
 
 	&:disabled {
@@ -33,6 +34,7 @@
 	&--outline {
 		background: #fafafa;
 		border: 1px solid #cecece;
+		color: $fontColor;
 
 		&:hover:not(:disabled) {
 			background: #eee;
@@ -63,5 +65,48 @@
 			height: 20px;
 			width: 20px;
 		}
+	}
+
+	&--card-navigation {
+		background: none;
+		border: none;
+		border-radius: 20px;
+		color: $primaryColor;
+		font-weight: bold;
+		height: 20px;
+		padding: 0;
+		position: absolute;
+		right: 0.555555rem;
+		top: 1.11111rem;
+		width: 20px;
+
+		span {
+			display: inline-block;
+			padding-bottom: 9px;
+			transform: rotate(90deg);
+		}
+
+		&:hover {
+			background: #f7f7f7;
+			color: $primaryColor;
+
+			svg {
+				fill: $primaryColor;
+			}
+		}
+
+		svg {
+			fill: $primaryColor;
+			height: 15px;
+			width: 15px;
+		}
+	}
+
+	&--dropdown {
+		background: none;
+		border: none;
+		border-radius: 0;
+		font-size: 0.9rem;
+		text-align: left;
 	}
 }
