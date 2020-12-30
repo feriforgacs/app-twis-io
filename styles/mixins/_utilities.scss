@@ -4,29 +4,33 @@
 	}
 }
 
-$marginRight: 0;
-@while $marginRight < 100 {
+.block {
+	display: block;
+}
+
+$margin: 0;
+@while $margin < 100 {
 	/* Margin right */
-	.mr-#{$marginRight} {
-		margin-right: ($marginRight) + px;
+	.mr-#{$margin} {
+		margin-right: ($margin) + px;
 	}
 
 	/* Margin left */
-	.ml-#{$marginRight} {
-		margin-left: ($marginRight) + px;
+	.ml-#{$margin} {
+		margin-left: ($margin) + px;
 	}
 
 	/* Margin top */
-	.mt-#{$marginRight} {
-		margin-top: ($marginRight) + px;
+	.mt-#{$margin} {
+		margin-top: ($margin) + px;
 	}
 
 	/* Margin bottom */
-	.mb-#{$marginRight} {
-		margin-bottom: ($marginRight) + px;
+	.mb-#{$margin} {
+		margin-bottom: ($margin) + px;
 	}
 
-	$marginRight: $marginRight + 5;
+	$margin: $margin + 5;
 }
 
 $opacity: 0;
