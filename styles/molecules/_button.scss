@@ -19,15 +19,15 @@
 	}
 
 	&--primary {
-		background: #a30fbb;
+		background: $primaryColor;
 		color: #fff;
 
 		&:hover:not(:disabled) {
-			background: #b600d4;
+			background: $primaryColorHover;
 		}
 
 		&:active {
-			background: #7e0592;
+			background: $primaryColorActive;
 		}
 	}
 

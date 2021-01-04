@@ -30,13 +30,13 @@
 			width: 100%;
 
 			&:hover {
-				background: #fce8ff;
+				background: $secondaryColorHover;
 			}
 		}
 
 		&--active {
 			a {
-				background: #fce8ff;
+				background: $secondaryColorHover;
 				color: $primaryColor;
 				font-weight: bold;
 			}

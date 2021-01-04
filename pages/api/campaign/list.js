@@ -18,6 +18,7 @@ export default async function CampaignListHandler(req, res) {
 	}
 
 	/**
+	 * TODO
 	 * Get campaigns from the database
 	 */
 	res.status(200).json({ campaign: req.query.id });
