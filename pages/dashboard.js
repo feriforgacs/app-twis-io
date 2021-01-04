@@ -5,6 +5,7 @@ import Sidebar from "../components/dashboard-components/Sidebar";
 import Toast from "../components/dashboard-components/Toast";
 import DashboardSection from "../components/dashboard-components/DashboardSection";
 import CampaignList from "../components/dashboard-components/campaign-components/CampaignList";
+import ParticipantList from "../components/dashboard-components/participant-components/ParticipantList";
 
 export default function dashboard() {
 	const [session, loading] = useSession();
@@ -31,6 +32,7 @@ export default function dashboard() {
 				<CampaignList />
 
 				<DashboardSection id="latest-participants" title="Latest Participants" actionLabel="View all participants" actionURL="/participants" />
+				<ParticipantList />
 
 				{toastVisible && <Toast onClose={() => setToastVisible(false)} duration={3000} content={`Test toast...`} />}
 			</div>
