@@ -6,11 +6,11 @@ import Image from "next/image";
 export default function CampaignCard({ id, name, type, status, participants, visibleFrom, visibleTo }) {
 	const [navigationVisible, toggleNavigationVisible] = useState(false);
 
-	const campaignCardNavigationRef = useRef(null);
+	const componentRef = useRef(null);
 
 	useEffect(() => {
 		const handleClickOutSide = (event) => {
-			if (campaignCardNavigationRef.current && !campaignCardNavigationRef.current.contains(event.target)) {
+			if (componentRef.current && !componentRef.current.contains(event.target)) {
 				if (navigationVisible) {
 					toggleNavigationVisible(false);
 				}
@@ -22,7 +22,7 @@ export default function CampaignCard({ id, name, type, status, participants, vis
 		return () => {
 			document.removeEventListener("mousedown", handleClickOutSide);
 		};
-	}, [campaignCardNavigationRef, navigationVisible]);
+	}, [componentRef, navigationVisible]);
 	return (
 		<div className="campaign-card">
 			<div className="campaign-card__header campaign-card__section">
@@ -46,7 +46,7 @@ export default function CampaignCard({ id, name, type, status, participants, vis
 				</button>
 
 				{navigationVisible && (
-					<div className="campaign-card__navigation campaign-card__navigation--dropdown" ref={campaignCardNavigationRef}>
+					<div className="campaign-card__navigation campaign-card__navigation--dropdown" ref={componentRef}>
 						<a href="/" target="_blank" rel="noopener noreferrer" className="button button--dropdown">
 							View campaign
 							<span className="ml-10 op-5">
