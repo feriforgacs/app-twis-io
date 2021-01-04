@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import ParticipantRow from "./ParticipantRow";
 import EmptyState from "../EmptyState";
-import SkeletonParticipantRow from "../skeletons/SkeletonParticipantRow";
+import SkeletonParticipantList from "../skeletons/SkeletonParticipantList";
 
 export default function ParticipantList({ limit = 10 }) {
 	const [loading, setLoading] = useState(false);
-	const [participants, setParticipants] = useState([{ name: "Ferenc Forgacs", email: "forgacsf@gmail.com" }]);
+	const [participants, setParticipants] = useState([]);
 
 	/**
 	 * TODO
@@ -15,7 +15,7 @@ export default function ParticipantList({ limit = 10 }) {
 
 	return (
 		<div id="participant-list">
-			{loading && <SkeletonParticipantRow items={5} />}
+			{loading && <SkeletonParticipantList items={3} />}
 			{participants.length ? (
 				<table className="data-table">
 					<thead>
