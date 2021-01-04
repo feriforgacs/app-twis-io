@@ -10,6 +10,7 @@
 	justify-content: center;
 	line-height: 3rem;
 	max-width: 420px;
+	padding: 0 2rem;
 	text-decoration: none;
 	width: 100%;
 
@@ -129,5 +130,11 @@
 		border-radius: 0;
 		font-size: 0.9rem;
 		text-align: left;
+	}
+
+	&--autowidth {
+		max-width: auto;
+		min-width: auto;
+		width: auto;
 	}
 }
