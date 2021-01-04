@@ -1,4 +1,4 @@
-export default function SkeletonCampaignCard({ items = 1 }) {
+export default function SkeletonParticipantRow({ items = 1 }) {
 	let skeletons = [];
 	for (let i = 0; i < items; i++) {
 		skeletons.push(

@@ -8,6 +8,11 @@
 	display: block;
 }
 
+.not-provided {
+	font-style: italic;
+	opacity: 0.6;
+}
+
 $margin: 0;
 @while $margin < 100 {
 	/* Margin right */

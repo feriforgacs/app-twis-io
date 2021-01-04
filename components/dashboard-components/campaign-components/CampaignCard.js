@@ -73,18 +73,18 @@ export default function CampaignCard({ id, name, type, status, participants, vis
 				</div>
 
 				<div className="campaign-card__info">
-					<p className="campaign-visible-from campaign-info">
+					<div className="campaign-visible-from campaign-info">
 						<span className="mr-5">
 							<Image src="/images/icons/icon-calendar.svg" width={15} height={15} alt="Camapign visible from" />
 						</span>
 						Visible from: <strong>{format(new Date(visibleFrom), "yyyy.MM.dd.")}</strong>
-					</p>
-					<p className="campaign-visible-to campaign-info">
+					</div>
+					<div className="campaign-visible-to campaign-info">
 						<span className="mr-5">
 							<Image src="/images/icons/icon-calendar.svg" width={15} height={15} alt="Camapign visible to" />
 						</span>
 						Visible to: <strong>{format(new Date(visibleTo), "yyyy.MM.dd.")}</strong>
-					</p>
+					</div>
 				</div>
 			</div>
 			<div className="campaign-card__footer campaign-card__section">
