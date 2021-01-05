@@ -3,7 +3,6 @@ import { useSession, getSession } from "next-auth/client";
 import Head from "next/head";
 import LoginForm from "../components/LoginForm";
 import Sidebar from "../components/dashboard-components/Sidebar";
-import Toast from "../components/dashboard-components/Toast";
 import CampaignList from "../components/dashboard-components/campaign-components/CampaignList";
 import ParticipantList from "../components/dashboard-components/participant-components/ParticipantList";
 
@@ -33,8 +32,6 @@ export default function dashboard() {
 
 				<CampaignList dashboard={true} />
 				<ParticipantList dashboard={true} />
-
-				{toastVisible && <Toast onClose={() => setToastVisible(false)} duration={3000} content={`Test toast...`} />}
 			</div>
 		</div>
 	);

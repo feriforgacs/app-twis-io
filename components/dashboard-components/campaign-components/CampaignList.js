@@ -3,20 +3,57 @@ import DashboardSection from "../DashboardSection";
 import CampaignCard from "./CampaignCard";
 import SkeletonCampaignCard from "../skeletons/SkeletonCampaignCard";
 import EmptyState from "../EmptyState";
+import Toast from "../Toast";
 
 export default function CampaignList({ limit = 5, dashboard = false }) {
 	const [loading, setLoading] = useState(false);
 	const [campaigns, setCampaigns] = useState([]);
+	const [campaignLimit, setCampaignLimit] = useState(10);
+	const [campaignSearch, setCampaignSearch] = useState();
+	const [toastMessage, setToastMessage] = useState(false);
+	const [toastVisible, setToastVisible] = useState(false);
+	const [toastType, setToastType] = useState("default");
+	const [toastDuration, setToastDuration] = useState(3000);
 
+	/**
+	 * TODO
+	 * Display campaign type selector
+	 */
 	const createNewCampaign = () => {
 		alert("TODO");
 	};
 
 	/**
-	 * TODO
 	 * Get campaigns from the database
 	 */
-	useEffect(() => {});
+	const getCampaigns = async () => {
+		const campaignsRequest = await fetch(`${process.env.APP_URL}/api/campaigns?limit=${campaignLimit}&search=${campaignSearch}`, {
+			method: "GET",
+		});
+
+		const campaigns = await campaignsRequest.json();
+
+		if (campaigns.success !== true) {
+			// error
+			setToastMessage("Can't get campaigns. Please, try again.");
+			setToastType("error");
+			setToastDuration(6000);
+			setToastVisible(true);
+			return;
+		}
+
+		if (campaigns.data) {
+			setCampaigns(campaigns.data);
+		}
+		return;
+	};
+
+	/**
+	 * Get campaigns from the database on component load
+	 */
+	useEffect(() => {
+		getCampaigns();
+	}, [campaignLimit, campaignSearch]);
 
 	return (
 		<>
@@ -34,6 +71,8 @@ export default function CampaignList({ limit = 5, dashboard = false }) {
 					<EmptyState title="Create your first campaign" description="You haven't created any campaigns yet. Click the button below to get started." action={createNewCampaign} actionLabel="Create New Campaign" helpLabel="Learn more" helpURL="https://" illustration="campaigns" />
 				)}
 			</div>
+
+			{toastVisible && <Toast onClose={() => setToastVisible(false)} duration={toastDuration} type={toastType} content={toastMessage} />}
 		</>
 	);
 }
