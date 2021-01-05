@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useSession, getSession } from "next-auth/client";
+import Head from "next/head";
 import LoginForm from "../components/LoginForm";
 import Sidebar from "../components/dashboard-components/Sidebar";
 import Toast from "../components/dashboard-components/Toast";
@@ -18,6 +19,9 @@ export default function dashboard() {
 
 	return (
 		<div id="dashboard" className="page">
+			<Head>
+				<title>Dashboard - twis</title>
+			</Head>
 			<Sidebar />
 			<div id="page__content">
 				<header id="page__header">

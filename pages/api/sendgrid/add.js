@@ -1,6 +1,6 @@
 import Cors from "cors";
 import { Client } from "@sendgrid/client";
-import initMiddleware from "../../../lib/init-middleware";
+import initMiddleware from "../../../lib/InitMiddleware";
 
 // Initialize the cors middleware
 const cors = initMiddleware(
