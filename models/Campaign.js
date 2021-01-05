@@ -44,8 +44,4 @@ const campaignSchema = new mongoose.Schema({
 	},
 });
 
-campaignSchema.index({
-	name: "text",
-});
-
 export default mongoose.models.Campaign || mongoose.model("Campaign", campaignSchema);
