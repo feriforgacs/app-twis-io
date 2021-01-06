@@ -55,16 +55,16 @@ export default function CampaignList({ limit = 5, dashboard = false }) {
 			<div id="campaign-list">
 				{loading && (
 					<>
-						<div className="placeholder height-3"></div>
+						<div className={`placeholder ${dashboard ? "height-5" : "height-3"}`}></div>
 						<SkeletonCampaignCard items={3} />
 					</>
 				)}
 
 				{campaigns.length ? (
 					<>
-						<CampaignCard id={12345} name={`This is a sample campaign`} type={`quiz`} status={`active`} participants={1234} visibleFrom={`2021.01.01.`} visibleTo={`2021.02.01.`} />
-						<CampaignCard id={12345} name={`This is a sample campaign`} type={`quiz`} status={`active`} participants={1234} visibleFrom={`2021.01.01.`} visibleTo={`2021.02.01.`} />
-						<CampaignCard id={12345} name={`This is a sample campaign`} type={`quiz`} status={`active`} participants={1234} visibleFrom={`2021.01.01.`} visibleTo={`2021.02.01.`} />
+						{campaigns.map((campaignItem, key) => {
+							return <CampaignCard key={key} id={campaignItem._id} name={campaignItem.name} type={campaignItem.type} status={campaignItem.status} participants={campaignItem.participantCount} visibleFrom={campaignItem.visibleFrom} visibleTo={campaignItem.visibleTo} />;
+						})}
 					</>
 				) : (
 					""
