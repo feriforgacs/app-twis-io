@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { format } from "date-fns";
+import CreateCampaignOption from "./CampaignCreateOption";
 
 export default function CampaignCreate() {
 	const [name, setName] = useState(`My Campaign - ${format(new Date(), "yyyy.MM.dd.")}`);
@@ -15,7 +16,7 @@ export default function CampaignCreate() {
 							Campaign Name
 						</label>
 
-						<input type="text" name="name" id="name" value={name} onChange={(e) => setName(e.target.value)} maxLength="250" disabled={loading} />
+						<input type="text" className="form__input" name="name" id="name" value={name} onChange={(e) => setName(e.target.value)} maxLength="250" disabled={loading} />
 						<p className="form__info-text">This is just an information for you so later you can easily identify your campaign. It won't be visible for the visitors of your campaign.</p>
 					</div>
 				</div>
@@ -24,30 +25,16 @@ export default function CampaignCreate() {
 					<label className="form__label">Campaign Type</label>
 
 					<div className="campaign-type-options">
-						<div className={`campaign-type-option ${type == "quiz" ? "campaign-type-option--selected" : ""}`}>
-							<div className="campaign-type-option__icon"></div>
-							<div className="campaign-type-option__description">
-								<h4>Quiz</h4>
-								<p>Select this option to create a simple quiz campaign where players should choose the right answers from different options to claim their prize.</p>
-							</div>
-						</div>
+						<CreateCampaignOption name="Quiz" description="Select this option to create a simple quiz campaign where players should choose the right answers from different options to claim their prize." selected={type == "quiz"} onClick={() => setType("quiz")} />
 
-						<div className={`campaign-type-option ${type == "swipequiz" ? "campaign-type-option--selected" : ""}`}>
-							<div className="campaign-type-option__icon"></div>
-							<div className="campaign-type-option__description">
-								<h4>Swipe Quiz</h4>
-								<p>Select this option to create a swipe quiz campaign where participants should decide whether something is true or false to claim their reward.</p>
-							</div>
-						</div>
+						<CreateCampaignOption name="Swipe Quiz" description="Select this option to create a swipe quiz campaign where participants should decide whether something is true or false to claim their reward." selected={type == "swipequiz"} onClick={() => setType("swipequiz")} />
 
-						<div className={`campaign-type-option ${type == "memory" ? "campaign-type-option--selected" : ""}`}>
-							<div className="campaign-type-option__icon"></div>
-							<div className="campaign-type-option__description">
-								<h4>Memory</h4>
-								<p>Select this option to create a campaign where participants should complete a short memory game to claim their reward.</p>
-							</div>
-						</div>
+						<CreateCampaignOption name="Memory" description="Select this option to create a campaign where participants should complete a short memory game to claim their reward." selected={type == "memory"} onClick={() => setType("memory")} />
 					</div>
+				</div>
+
+				<div className="form__section form__section--actions">
+					<button className="button button--primary">Create Campaign</button>
 				</div>
 			</div>
 		</div>
