@@ -9,7 +9,7 @@ export default function CampaignList({ limit = 5, dashboard = false }) {
 	const [loading, setLoading] = useState(true);
 	const [campaigns, setCampaigns] = useState([]);
 	const [campaignLimit, setCampaignLimit] = useState(10);
-	const [campaignSearch, setCampaignSearch] = useState();
+	const [campaignSearch, setCampaignSearch] = useState("");
 	const [toastMessage, setToastMessage] = useState(false);
 	const [toastVisible, setToastVisible] = useState(false);
 	const [toastType, setToastType] = useState("default");

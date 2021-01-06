@@ -38,7 +38,15 @@ export default async function CampaignListHandler(req, res) {
 
 	// get campaigns from the database
 	try {
-		const campaigns = await Campaign.find({ name: { $regex: search }, createdBy: session.user.id }).limit(limit);
+		let campaigns;
+		if (search !== "") {
+			campaigns = await Campaign.find({ name: { $regex: search, $options: "i" }, createdBy: session.user.id })
+				.limit(limit)
+				.sort({ createdAt: -1 });
+		} else {
+			campaigns = await Campaign.find({ createdBy: session.user.id }).limit(limit).sort({ createdAt: -1 });
+		}
+
 		res.status(200).json({ success: true, data: campaigns });
 	} catch (error) {
 		res.status(400).json({ success: false });
