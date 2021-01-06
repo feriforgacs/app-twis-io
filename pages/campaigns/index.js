@@ -1,12 +1,11 @@
-import { useSession, getSession } from "next-auth/client";
 import Head from "next/head";
 import Link from "next/link";
-import LoginForm from "../components/LoginForm";
-import Sidebar from "../components/dashboard-components/Sidebar";
-import CampaignList from "../components/dashboard-components/campaign-components/CampaignList";
-import ParticipantList from "../components/dashboard-components/participant-components/ParticipantList";
+import { useSession, getSession } from "next-auth/client";
+import LoginForm from "../../components/LoginForm";
+import Sidebar from "../../components/dashboard-components/Sidebar";
+import CampaignList from "../../components/dashboard-components/campaign-components/CampaignList";
 
-export default function dashboard() {
+export default function campaigns() {
 	const [session, loading] = useSession();
 
 	if (typeof window !== "undefined" && loading) return null;
@@ -16,14 +15,14 @@ export default function dashboard() {
 	}
 
 	return (
-		<div id="dashboard" className="page">
+		<div id="campaigns" className="page">
 			<Head>
-				<title>Dashboard - {process.env.APP_NAME}</title>
+				<title>Campaigns - {process.env.APP_NAME}</title>
 			</Head>
 			<Sidebar />
 			<div id="page__content">
 				<header id="page__header">
-					<h1 className="page__title">Dashboard</h1>
+					<h1 className="page__title">Campaigns</h1>
 					<div id="page__actions">
 						<Link href="/campaigns/create">
 							<a className="button button--primary button--slim">Create New Campaign</a>
@@ -31,8 +30,7 @@ export default function dashboard() {
 					</div>
 				</header>
 
-				<CampaignList dashboard={true} />
-				<ParticipantList dashboard={true} />
+				<CampaignList />
 			</div>
 		</div>
 	);

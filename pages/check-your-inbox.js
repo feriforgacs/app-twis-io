@@ -25,7 +25,7 @@ export default function CheckYourInbox() {
 		<main id="email-signup-confirm">
 			<header>
 				<div className="logo-container">
-					<Image src="/images/logo.svg" alt="TWiS logo" className="logo" width={80} height={28} />
+					<Image src="/images/logo.svg" alt={`${process.env.APP_NAME} logo`} className="logo" width={80} height={28} />
 				</div>
 				<h1>Check your email for login instructions</h1>
 			</header>

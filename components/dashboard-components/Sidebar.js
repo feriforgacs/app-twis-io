@@ -11,7 +11,6 @@ export default function Sidebar() {
 
 	useEffect(() => {
 		if (router.pathname) {
-			console.log(router.pathname);
 			setActiveNavItem(router.pathname.replace("/", ""));
 		}
 	});
@@ -25,7 +24,7 @@ export default function Sidebar() {
 		<div id="page__sidebar">
 			<nav className="page__sidebar--top">
 				<div className="logo-container">
-					<Image src="/images/logo.svg" alt="TWiS logo" className="logo" width={80} height={28} onClick={() => router.push("/dashboard")} />
+					<Image src="/images/logo.svg" alt={`${process.env.APP_NAME} logo`} className="logo" width={80} height={28} onClick={() => router.push("/dashboard")} />
 				</div>
 				<SidebarNavItem activeNavItem={activeNavItem} setActiveNavItem={setActiveNavItem} navItemHref="dashboard" navItemIcon="dashboard" navItemLabel="Dashboard" />
 				<SidebarNavItem activeNavItem={activeNavItem} setActiveNavItem={setActiveNavItem} navItemHref="campaigns" navItemIcon="campaigns" navItemLabel="Campaigns" />

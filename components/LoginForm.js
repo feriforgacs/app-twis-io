@@ -57,7 +57,7 @@ export default function LoginForm({ loginError = false, loggedOut = false, signI
 			<main id="login-form">
 				<header>
 					<div className="logo-container">
-						<Image src="/images/logo.svg" alt="TWiS logo" className="logo" width={80} height={28} />
+						<Image src="/images/logo.svg" alt={`${process.env.APP_NAME} logo`} className="logo" width={80} height={28} />
 					</div>
 					<h1>{signInPage ? `Sign in` : `Sign up or log in`}</h1>
 					{loginError && (
