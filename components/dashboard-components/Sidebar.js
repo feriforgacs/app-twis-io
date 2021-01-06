@@ -11,6 +11,7 @@ export default function Sidebar() {
 
 	useEffect(() => {
 		if (router.pathname) {
+			console.log(router.pathname);
 			setActiveNavItem(router.pathname.replace("/", ""));
 		}
 	});
