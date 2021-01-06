@@ -1,13 +1,20 @@
 import { useState } from "react";
 import { format } from "date-fns";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import CreateCampaignOption from "./CampaignCreateOption";
 import Button from "../Button";
+import Toast from "../Toast";
 
 export default function CampaignCreate() {
-	const [name, setName] = useState(`My Campaign - ${format(new Date(), "yyyy.MM.dd.")}`);
+	const router = useRouter();
+	const [name, setName] = useState(`My Campaign - ${format(new Date(), "yyyy.MM.dd. HH:mm")}`);
 	const [type, setType] = useState("quiz");
 	const [loading, setLoading] = useState(false);
+	const [toastMessage, setToastMessage] = useState(false);
+	const [toastVisible, setToastVisible] = useState(false);
+	const [toastType, setToastType] = useState("default");
+	const [toastDuration, setToastDuration] = useState(3000);
 
 	const [invalidFields, setInvalidFields] = useState([]);
 
@@ -26,6 +33,40 @@ export default function CampaignCreate() {
 	const handleNameChange = (value) => {
 		setName(value);
 		checkRequiredInput("name", value);
+	};
+
+	const createCampaign = async () => {
+		setLoading(true);
+
+		const campaignCreateRequest = await fetch(`${process.env.APP_URL}/api/campaigns/create`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				name,
+				type,
+			}),
+		});
+
+		const campaign = await campaignCreateRequest.json();
+
+		setLoading(false);
+
+		if (campaign.success !== true) {
+			// error
+			setToastMessage("Can't create campaign. Please, try again.");
+			setToastType("error");
+			setToastDuration(6000);
+			setToastVisible(true);
+			return;
+		}
+
+		if (campaign.data) {
+			// redirect to campaign editor
+			router.push(`/campaigns/${campaign.data._id}`);
+		}
+		return;
 	};
 
 	return (
@@ -64,13 +105,15 @@ export default function CampaignCreate() {
 					</div>
 
 					<div className="form__section form__section--actions">
-						<Button label="Create Campaign" loading={loading} disabled={loading || invalidFields.length} type="primary" />
+						<Button label="Create Campaign" loading={loading} disabled={loading || invalidFields.length} type="primary" onClick={createCampaign} />
 					</div>
 				</div>
 			</div>
 			<Link href="/campaigns">
 				<a className="button button--link button--back">Back to campaigns</a>
 			</Link>
+
+			{toastVisible && <Toast onClose={() => setToastVisible(false)} duration={toastDuration} type={toastType} content={toastMessage} />}
 		</>
 	);
 }

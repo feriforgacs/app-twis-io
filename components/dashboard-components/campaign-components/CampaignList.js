@@ -70,7 +70,7 @@ export default function CampaignList({ limit = 5, dashboard = false }) {
 					""
 				)}
 
-				{!campaigns.length && !loading && <EmptyState title="Create your first campaign" description="You haven't created any campaigns yet. Click the button below to get started." actionLink="/campaigns/create" actionLabel="Create New Campaign" helpLabel="###TODO Learn more" helpURL="https://" illustration="campaigns" />}
+				{!campaigns.length && !loading ? <EmptyState title="Create your first campaign" description="You haven't created any campaigns yet. Click the button below to get started." actionLink="/campaigns/create" actionLabel="Create New Campaign" helpLabel="###TODO Learn more" helpURL="https://" illustration="campaigns" /> : ""}
 			</div>
 
 			{toastVisible && <Toast onClose={() => setToastVisible(false)} duration={toastDuration} type={toastType} content={toastMessage} />}

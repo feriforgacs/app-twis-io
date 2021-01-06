@@ -87,6 +87,12 @@ const options = {
 			SendAdminNotification(`🔴 ERROR - Auth Error`, `User email: ${JSON.stringify(message)}`);
 		},
 	},
+	callbacks: {
+		session: async (session, user) => {
+			session.user.id = user.id;
+			return Promise.resolve(session);
+		},
+	},
 };
 
 const verificationEmailHTML = ({ url, site, email }) => {

@@ -46,8 +46,10 @@ export default function ParticipantList({ limit = 10, dashboard = false }) {
 						</tfoot>
 					</table>
 				) : (
-					<EmptyState title="No participants" description="Your campaigns haven't acquired any participants yet." helpLabel="Learn how to acquire participants" helpURL="https://" illustration="participants" />
+					""
 				)}
+
+				{!participants.length && !loading ? <EmptyState title="No participants" description="Your campaigns haven't acquired any participants yet." helpLabel="###TODO Learn how to acquire participants" helpURL="https://" illustration="participants" /> : ""}
 			</div>
 		</>
 	);

@@ -1,5 +1,6 @@
 import escapeStringRegexp from "escape-string-regexp";
 import Cors from "cors";
+import { getSession } from "next-auth/client";
 import initMiddleware from "../../../lib/InitMiddleware";
 import AuthCheck from "../../../lib/AuthCheck";
 import DatabaseConnect from "../../../lib/DatabaseConnect";
@@ -21,6 +22,7 @@ export default async function CampaignListHandler(req, res) {
 	}
 
 	await DatabaseConnect();
+	const session = await getSession({ req });
 
 	// check limit in the params
 	let limit = 10;
@@ -36,7 +38,7 @@ export default async function CampaignListHandler(req, res) {
 
 	// get campaigns from the database
 	try {
-		const campaigns = await Campaign.find({ name: { $regex: search } }).limit(limit);
+		const campaigns = await Campaign.find({ name: { $regex: search }, createdBy: session.user.id }).limit(limit);
 		res.status(200).json({ success: true, data: campaigns });
 	} catch (error) {
 		res.status(400).json({ success: false });

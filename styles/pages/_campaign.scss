@@ -51,7 +51,7 @@
 					position: absolute;
 					top: 5px;
 					width: 20px;
-					animation: selectedFadeIn 150ms ease-in forwards;
+					animation: selectedFadeIn 200ms ease-in forwards;
 				}
 			}
 		}
@@ -62,6 +62,10 @@
 	0% {
 		opacity: 0;
 		transform: scale(0);
+	}
+	70% {
+		opacity: 1;
+		transform: scale(1.6);
 	}
 	100% {
 		opacity: 1;
