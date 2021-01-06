@@ -6,7 +6,7 @@ import EmptyState from "../EmptyState";
 import Toast from "../Toast";
 
 export default function CampaignList({ limit = 5, dashboard = false }) {
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(true);
 	const [campaigns, setCampaigns] = useState([]);
 	const [campaignLimit, setCampaignLimit] = useState(10);
 	const [campaignSearch, setCampaignSearch] = useState();
@@ -32,6 +32,8 @@ export default function CampaignList({ limit = 5, dashboard = false }) {
 		});
 
 		const campaigns = await campaignsRequest.json();
+
+		setLoading(false);
 
 		if (campaigns.success !== true) {
 			// error
