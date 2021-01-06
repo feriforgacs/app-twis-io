@@ -53,7 +53,12 @@ export default function CampaignList({ limit = 5, dashboard = false }) {
 		<>
 			{campaigns.length && dashboard ? <DashboardSection id="latest-campaigns" title="Latest Campaigns" actionLabel="View all campaigns" actionURL="/campaigns" /> : ""}
 			<div id="campaign-list">
-				{loading && <SkeletonCampaignCard items={3} />}
+				{loading && (
+					<>
+						<div className="placeholder height-3"></div>
+						<SkeletonCampaignCard items={3} />
+					</>
+				)}
 
 				{campaigns.length ? (
 					<>

@@ -46,3 +46,17 @@ $opacity: 0;
 
 	$opacity: $opacity + 1;
 }
+
+.placeholder {
+	display: block;
+	width: 100%;
+}
+
+$height: 1;
+@while $height < 11 {
+	.height-#{$height} {
+		height: ($height) + rem;
+	}
+
+	$height: $height + 1;
+}
