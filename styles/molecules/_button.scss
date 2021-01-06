@@ -11,12 +11,17 @@
 	line-height: 3rem;
 	margin: 0 auto;
 	max-width: 420px;
+	min-width: 250px;
 	padding: 0 2rem;
 	text-decoration: none;
 
 	&:disabled {
 		cursor: not-allowed;
 		opacity: 0.5;
+	}
+
+	svg {
+		fill: #ccc;
 	}
 
 	&--primary {
@@ -29,6 +34,10 @@
 
 		&:active {
 			background: $primaryColorActive;
+		}
+
+		svg {
+			fill: #fff;
 		}
 	}
 
@@ -138,5 +147,31 @@
 		max-width: auto;
 		min-width: auto;
 		width: auto;
+	}
+
+	&--back {
+		color: $fontColorTertiary;
+		font-size: 0.8rem;
+		font-weight: 400;
+	}
+
+	&__spinner {
+		display: inline-block;
+		height: 2rem;
+		width: 2rem;
+
+		svg {
+			animation: spin 0.5s linear infinite;
+		}
+	}
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
 	}
 }
