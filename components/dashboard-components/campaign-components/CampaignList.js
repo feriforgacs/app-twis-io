@@ -15,9 +15,6 @@ export default function CampaignList({ limit = 5, dashboard = false }) {
 	const [toastVisible, setToastVisible] = useState(false);
 	const [toastType, setToastType] = useState("default");
 	const [toastDuration, setToastDuration] = useState(3000);
-	const [selectedCampaignId, setSelectedCampaignId] = useState();
-	const [modalVisible, setModalVisible] = useState(true);
-	const [deleteLoading, setDeleteLoading] = useState(false);
 
 	/**
 	 * Get campaigns from the database
@@ -53,15 +50,6 @@ export default function CampaignList({ limit = 5, dashboard = false }) {
 		getCampaigns();
 	}, [campaignLimit, campaignSearch]);
 
-	const deleteCampaign = () => {
-		setDeleteLoading(true);
-	};
-
-	const displayConfirmDelete = (campaignId) => {
-		setSelectedCampaignId(campaignId);
-		setModalVisible(true);
-	};
-
 	return (
 		<>
 			{campaigns.length && dashboard ? <DashboardSection id="latest-campaigns" title="Latest Campaigns" actionLabel="View all campaigns" actionURL="/campaigns" /> : ""}
@@ -76,7 +64,7 @@ export default function CampaignList({ limit = 5, dashboard = false }) {
 				{campaigns.length ? (
 					<>
 						{campaigns.map((campaignItem, key) => {
-							return <CampaignCard key={key} id={campaignItem._id} name={campaignItem.name} type={campaignItem.type} status={campaignItem.status} participants={campaignItem.participantCount} visibleFrom={campaignItem.visibleFrom} visibleTo={campaignItem.visibleTo} />;
+							return <CampaignCard key={key} id={campaignItem._id} name={campaignItem.name} type={campaignItem.type} status={campaignItem.status} participants={campaignItem.participantCount} visibleFrom={campaignItem.visibleFrom} visibleTo={campaignItem.visibleTo} getCampaigns={getCampaigns} setToastMessage={setToastMessage} setToastVisible={setToastVisible} setToastType={setToastType} setToastDuration={setToastDuration} />;
 						})}
 					</>
 				) : (
@@ -87,8 +75,6 @@ export default function CampaignList({ limit = 5, dashboard = false }) {
 			</div>
 
 			{toastVisible && <Toast onClose={() => setToastVisible(false)} duration={toastDuration} type={toastType} content={toastMessage} />}
-
-			{modalVisible && <Modal title="Are you sure you want to delete the campaign?" body="When you delete a campaign, all the collected participant information will be removed as well." primaryAction={deleteCampaign} primaryActionLabel="Yes, delete campaign" secondaryAction={() => setModalVisible(false)} secondaryActionLabel="Cancel" onClose={() => setModalVisible(false)} loading={deleteLoading} />}
 		</>
 	);
 }

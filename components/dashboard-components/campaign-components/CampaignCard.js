@@ -2,9 +2,14 @@ import { useState, useRef, useEffect } from "react";
 import { format } from "date-fns";
 import Link from "next/link";
 import Image from "next/image";
+import Toast from "../Toast";
+import Modal from "../Modal";
 
-export default function CampaignCard({ id, name, type, status, participants, visibleFrom, visibleTo }) {
+export default function CampaignCard({ id, name, type, status, participants, visibleFrom, visibleTo, getCampaigns, setToastMessage, setToastVisible, setToastType, setToastDuration }) {
 	const [navigationVisible, toggleNavigationVisible] = useState(false);
+	const [selectedCampaignId, setSelectedCampaignId] = useState();
+	const [modalVisible, setModalVisible] = useState(false);
+	const [deleteLoading, setDeleteLoading] = useState(false);
 
 	const componentRef = useRef(null);
 
@@ -23,75 +28,124 @@ export default function CampaignCard({ id, name, type, status, participants, vis
 			document.removeEventListener("mousedown", handleClickOutSide);
 		};
 	}, [componentRef, navigationVisible]);
-	return (
-		<div className="campaign-card">
-			<div className="campaign-card__header campaign-card__section">
-				<h4 className="campaign-card__title">
-					<Link href={`/campaigns/${id}`} title={`Edit ${name}`}>
-						<a>
-							{name.substring(0, 22)}
-							{name.length > 22 && "..."}
-						</a>
-					</Link>
-				</h4>
 
-				<button className="button button--card-navigation" onClick={() => toggleNavigationVisible(!navigationVisible)}>
-					{!navigationVisible && <span>&hellip;</span>}
+	const deleteCampaign = async () => {
+		setDeleteLoading(true);
+
+		const campaignDeleteRequest = await fetch(`${process.env.APP_URL}/api/campaigns/delete`, {
+			method: "DELETE",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				id: selectedCampaignId,
+			}),
+		});
+
+		const campaign = await campaignDeleteRequest.json();
+
+		setDeleteLoading(false);
+
+		if (campaign.success !== true) {
+			// error
+			setModalVisible(false);
+			setToastMessage("Can't delete campaign. Please, try again.");
+			setToastType("error");
+			setToastDuration(6000);
+			setToastVisible(true);
+			return;
+		} else {
+			setModalVisible(false);
+			setToastMessage("Campaign has been deleted");
+			setToastType("default");
+			setToastDuration(3000);
+			setToastVisible(true);
+			getCampaigns();
+			return;
+		}
+	};
+
+	const displayConfirmDelete = (campaignId) => {
+		toggleNavigationVisible(false);
+		setSelectedCampaignId(campaignId);
+		setModalVisible(true);
+	};
+
+	return (
+		<>
+			<div className="campaign-card">
+				<div className="campaign-card__header campaign-card__section">
+					<h4 className="campaign-card__title">
+						<Link href={`/campaigns/${id}`} title={`Edit ${name}`}>
+							<a>
+								{name.substring(0, 22)}
+								{name.length > 22 && "..."}
+							</a>
+						</Link>
+					</h4>
+
+					<button className="button button--card-navigation" onClick={() => toggleNavigationVisible(!navigationVisible)}>
+						{!navigationVisible && <span>&hellip;</span>}
+
+						{navigationVisible && (
+							<svg viewBox="0 0 20 20">
+								<path d="M11.414 10l6.293-6.293a.999.999 0 1 0-1.414-1.414L10 8.586 3.707 2.293a.999.999 0 1 0-1.414 1.414L8.586 10l-6.293 6.293a.999.999 0 1 0 1.414 1.414L10 11.414l6.293 6.293a.997.997 0 0 0 1.414 0 .999.999 0 0 0 0-1.414L11.414 10z"></path>
+							</svg>
+						)}
+					</button>
 
 					{navigationVisible && (
-						<svg viewBox="0 0 20 20">
-							<path d="M11.414 10l6.293-6.293a.999.999 0 1 0-1.414-1.414L10 8.586 3.707 2.293a.999.999 0 1 0-1.414 1.414L8.586 10l-6.293 6.293a.999.999 0 1 0 1.414 1.414L10 11.414l6.293 6.293a.997.997 0 0 0 1.414 0 .999.999 0 0 0 0-1.414L11.414 10z"></path>
-						</svg>
+						<div className="campaign-card__navigation campaign-card__navigation--dropdown" ref={componentRef}>
+							<a href="/" target="_blank" rel="noopener noreferrer" className="button button--dropdown">
+								View campaign
+								<span className="ml-10 op-5">
+									<Image src="/images/icons/icon-link.svg" width={20} height={20} />
+								</span>
+							</a>
+							<button className="button button--dropdown">Duplicate Campaign</button>
+							<button className="button button--dropdown color--error" onClick={() => displayConfirmDelete(id)}>
+								Delete Campaign
+							</button>
+						</div>
 					)}
-				</button>
-
-				{navigationVisible && (
-					<div className="campaign-card__navigation campaign-card__navigation--dropdown" ref={componentRef}>
-						<a href="/" target="_blank" rel="noopener noreferrer" className="button button--dropdown">
-							View campaign
-							<span className="ml-10 op-5">
-								<Image src="/images/icons/icon-link.svg" width={20} height={20} />
-							</span>
-						</a>
-						<button className="button button--dropdown">Duplicate Campaign</button>
-						<button className="button button--dropdown color--error">Delete Campaign</button>
+				</div>
+				<div className="campaign-card__body campaign-card__section">
+					<div className="campaign-card__meta">
+						<span className="badge badge--info badge--campaign-type">{type}</span>
+						<span className={`campaign-status badge ${status === "active" ? "badge--active badge--success" : "badge--inactive"}`}>{status === "active" ? "active" : "inactive"}</span>
+						<Link href={`/participants/${id}`}>
+							<a className="campaign-participant-count">
+								<span>
+									<Image src="/images/icons/icon-participants.svg" width={15} height={15} alt={`${name} - Participants`} />
+								</span>
+								Participants: <strong>{participants}</strong>
+							</a>
+						</Link>
 					</div>
-				)}
-			</div>
-			<div className="campaign-card__body campaign-card__section">
-				<div className="campaign-card__meta">
-					<span className="badge badge--info badge--campaign-type">{type}</span>
-					<span className={`campaign-status badge ${status === "active" ? "badge--active badge--success" : "badge--inactive"}`}>{status === "active" ? "active" : "inactive"}</span>
-					<Link href={`/participants/${id}`}>
-						<a className="campaign-participant-count">
-							<span>
-								<Image src="/images/icons/icon-participants.svg" width={15} height={15} alt={`${name} - Participants`} />
+
+					<div className="campaign-card__info">
+						<div className="campaign-visible-from campaign-info">
+							<span className="mr-5">
+								<Image src="/images/icons/icon-calendar.svg" width={15} height={15} alt="Camapign visible from" />
 							</span>
-							Participants: <strong>{participants}</strong>
-						</a>
+							Visible from: <strong>{format(new Date(visibleFrom), "yyyy.MM.dd.")}</strong>
+						</div>
+						<div className="campaign-visible-to campaign-info">
+							<span className="mr-5">
+								<Image src="/images/icons/icon-calendar.svg" width={15} height={15} alt="Camapign visible to" />
+							</span>
+							Visible to: <strong>{format(new Date(visibleTo), "yyyy.MM.dd.")}</strong>
+						</div>
+					</div>
+				</div>
+				<div className="campaign-card__footer campaign-card__section">
+					<Link href={`/campaigns/${id}`} title={`Edit ${name}`}>
+						<a className="button button--outline-primary">Edit Campaign</a>
 					</Link>
 				</div>
+			</div>
 
-				<div className="campaign-card__info">
-					<div className="campaign-visible-from campaign-info">
-						<span className="mr-5">
-							<Image src="/images/icons/icon-calendar.svg" width={15} height={15} alt="Camapign visible from" />
-						</span>
-						Visible from: <strong>{format(new Date(visibleFrom), "yyyy.MM.dd.")}</strong>
-					</div>
-					<div className="campaign-visible-to campaign-info">
-						<span className="mr-5">
-							<Image src="/images/icons/icon-calendar.svg" width={15} height={15} alt="Camapign visible to" />
-						</span>
-						Visible to: <strong>{format(new Date(visibleTo), "yyyy.MM.dd.")}</strong>
-					</div>
-				</div>
-			</div>
-			<div className="campaign-card__footer campaign-card__section">
-				<Link href={`/campaigns/${id}`} title={`Edit ${name}`}>
-					<a className="button button--outline-primary">Edit Campaign</a>
-				</Link>
-			</div>
-		</div>
+			{modalVisible && <Modal title="Are you sure you want to delete the campaign?" body="When you delete a campaign, all the collected participant information will be removed as well." primaryAction={deleteCampaign} primaryActionLabel="Yes, delete campaign" secondaryAction={() => setModalVisible(false)} secondaryActionLabel="Cancel" onClose={() => setModalVisible(false)} loading={deleteLoading} />}
+		</>
 	);
 }
