@@ -3,7 +3,7 @@
 	background: #fff;
 	border-radius: 3px;
 	box-shadow: 0 31px 41px 0 rgba(32, 42, 53, 0.2), 0 2px 16px 0 rgba(32, 42, 54, 0.08);
-	max-width: 500px;
+	max-width: 600px;
 	position: relative;
 	width: 100%;
 
@@ -29,6 +29,23 @@
 			font-weight: 400;
 			margin: 0;
 			padding: 0;
+		}
+	}
+
+	.button--close {
+		padding: 0 1rem;
+		top: 0.15rem;
+
+		&:hover:not(:disabled) {
+			svg {
+				fill: #ddd;
+			}
+		}
+
+		&:active {
+			svg {
+				fill: #aaa;
+			}
 		}
 	}
 

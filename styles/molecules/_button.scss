@@ -41,6 +41,35 @@
 		}
 	}
 
+	&--danger {
+		background: $dangerColor;
+		color: #fff;
+
+		&:hover:not(:disabled) {
+			background: $dangerColorHover;
+		}
+
+		&:active {
+			background: $dangerColorActive;
+		}
+
+		svg {
+			fill: #fff;
+		}
+	}
+
+	&--default {
+		background: #eee;
+
+		&:hover:not(:disabled) {
+			background: #f7f7f7;
+		}
+
+		&:active {
+			background: #ccc;
+		}
+	}
+
 	&--outline {
 		background: #fafafa;
 		border: 1px solid #cecece;

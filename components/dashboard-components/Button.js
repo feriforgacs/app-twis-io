@@ -1,4 +1,4 @@
-export default function Button({ type = "", disabled = false, loading = false, size = "default", label = "Push The Button", onClick = "" }) {
+export default function Button({ type = "", disabled = false, loading = false, size = "normal", label = "Push The Button", onClick = "" }) {
 	return (
 		<button className={`button button--${type} button--${size}`} disabled={loading || disabled} onClick={onClick}>
 			{!loading && <span className="button__label">{label}</span>}
