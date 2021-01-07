@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 
 const campaignSchema = new mongoose.Schema({
 	name: {
-		/** The name of the campaign */
 		type: String,
 		trim: true,
 		required: [true, "Please, provide a name for this campaign"],

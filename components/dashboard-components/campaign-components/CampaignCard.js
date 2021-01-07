@@ -2,7 +2,6 @@ import { useState, useRef, useEffect } from "react";
 import { format } from "date-fns";
 import Link from "next/link";
 import Image from "next/image";
-import Toast from "../Toast";
 import Modal from "../Modal";
 
 export default function CampaignCard({ id, name, type, status, participants, visibleFrom, visibleTo, getCampaigns, setToastMessage, setToastVisible, setToastType, setToastDuration }) {
