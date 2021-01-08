@@ -41,6 +41,11 @@
 		}
 	}
 
+	&--secondary {
+		background: $secondaryColor;
+		color: #fff;
+	}
+
 	&--danger {
 		background: $dangerColor;
 		color: #fff;
@@ -84,6 +89,7 @@
 		}
 
 		&-primary {
+			background: #fff;
 			color: $primaryColor;
 			border: 1px solid $primaryColor;
 

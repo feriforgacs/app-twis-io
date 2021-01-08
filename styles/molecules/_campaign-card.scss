@@ -72,8 +72,8 @@
 			}
 		}
 
-		.campaign-participant-count {
-			color: #5b5c5d;
+		a.campaign-participant-count {
+			color: $primaryColor;
 			display: flex;
 			font-size: 0.8rem;
 			line-height: 1.2rem;
@@ -87,7 +87,7 @@
 			}
 
 			&:hover {
-				color: #212b36;
+				color: $primaryColorHover;
 				text-decoration: none;
 			}
 

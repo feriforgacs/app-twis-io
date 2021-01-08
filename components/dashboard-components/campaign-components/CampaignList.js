@@ -4,6 +4,7 @@ import CampaignCard from "./CampaignCard";
 import SkeletonCampaignCard from "../skeletons/SkeletonCampaignCard";
 import EmptyState from "../EmptyState";
 import Toast from "../Toast";
+import CampaignSearch from "./CampaignSearch";
 
 export default function CampaignList({ limit = 5, dashboard = false }) {
 	const [loading, setLoading] = useState(true);
@@ -47,11 +48,14 @@ export default function CampaignList({ limit = 5, dashboard = false }) {
 	 */
 	useEffect(() => {
 		getCampaigns();
-	}, [campaignLimit, campaignSearch]);
+	}, [campaignLimit]);
 
 	return (
 		<>
 			{campaigns.length && dashboard ? <DashboardSection id="latest-campaigns" title="Latest Campaigns" actionLabel="View all campaigns" actionURL="/campaigns" /> : ""}
+
+			{campaigns.length && !dashboard ? <CampaignSearch campaignSearch={campaignSearch} setCampaignSearch={setCampaignSearch} /> : ""}
+
 			<div id="campaign-list">
 				{loading && (
 					<>
