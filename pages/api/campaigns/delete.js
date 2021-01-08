@@ -4,6 +4,7 @@ import initMiddleware from "../../../lib/InitMiddleware";
 import AuthCheck from "../../../lib/AuthCheck";
 import DatabaseConnect from "../../../lib/DatabaseConnect";
 import Campaign from "../../../models/Campaign";
+import Participant from "../../../models/Participant";
 
 const cors = initMiddleware(
 	Cors({
@@ -23,7 +24,17 @@ export default async function CampaignDeleteHandler(req, res) {
 	await DatabaseConnect();
 	const session = await getSession({ req });
 
-	// get campaigns from the database
+	// TODO - remove participant's answers from the database
+
+	// remove campaign participants from the database
+	try {
+		await Participant.deleteMany({ campaignId: req.body.id });
+	} catch (error) {
+		res.status(400).json({ success: false, error });
+		return;
+	}
+
+	// remove campaign from the database
 	try {
 		await Campaign.findOneAndDelete({ _id: req.body.id, createdBy: session.user.id });
 
