@@ -3,3 +3,9 @@
 		margin-top: 3rem;
 	}
 }
+
+.participant-list__item {
+	&--active {
+		background: #ffffe5;
+	}
+}

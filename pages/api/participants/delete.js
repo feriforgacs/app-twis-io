@@ -1,9 +1,8 @@
 import Cors from "cors";
-import { getSession } from "next-auth/client";
 import initMiddleware from "../../../lib/InitMiddleware";
 import AuthCheck from "../../../lib/AuthCheck";
 import DatabaseConnect from "../../../lib/DatabaseConnect";
-import Campaign from "../../../models/Campaign";
+import Participant from "../../../models/Participant";
 
 const cors = initMiddleware(
 	Cors({
@@ -11,7 +10,7 @@ const cors = initMiddleware(
 	})
 );
 
-export default async function CampaignDeleteHandler(req, res) {
+export default async function ParticipantDeleteHandler(req, res) {
 	await cors(req, res);
 
 	const authStatus = await AuthCheck(req, res);
@@ -21,11 +20,10 @@ export default async function CampaignDeleteHandler(req, res) {
 	}
 
 	await DatabaseConnect();
-	const session = await getSession({ req });
 
 	// get campaigns from the database
 	try {
-		await Campaign.findOneAndDelete({ _id: req.body.id, createdBy: session.user.id });
+		await Participant.findOneAndDelete({ _id: req.body.id, campaignId: req.body.campaignId });
 
 		res.status(200).json({ success: true });
 	} catch (error) {

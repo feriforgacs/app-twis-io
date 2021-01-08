@@ -46,4 +46,8 @@ participantSchema.pre("find", function () {
 	this.populate("campaign");
 });
 
+participantSchema.pre("findOne", function () {
+	this.populate("campaign");
+});
+
 export default mongoose.models.Participant || mongoose.model("Participant", participantSchema);

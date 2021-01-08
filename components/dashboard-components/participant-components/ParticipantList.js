@@ -50,6 +50,12 @@ export default function ParticipantList({ limit = 10, dashboard = false }) {
 		getParticipants();
 	}, [participantLimit, participantSearch, participantCampaignId]);
 
+	const removeParticipant = (index) => {
+		const remainingParticipants = [...participants];
+		remainingParticipants.splice(index, 1);
+		setParticipants(remainingParticipants);
+	};
+
 	return (
 		<>
 			{participants.length && dashboard ? <DashboardSection id="latest-participants" title="Latest Participants" actionLabel="View all participants" actionURL="/participants" /> : ""}
@@ -73,7 +79,7 @@ export default function ParticipantList({ limit = 10, dashboard = false }) {
 						</thead>
 						<tbody>
 							{participants.map((participantItem, key) => (
-								<ParticipantRow key={key} id={participantItem._id} name={participantItem.name} email={participantItem.email} campaignId={participantItem.campaignId} campaignName={participantItem.campaign.name} createdAt={participantItem.createdAt} />
+								<ParticipantRow key={key} index={key} id={participantItem._id} name={participantItem.name} email={participantItem.email} campaignId={participantItem.campaignId} campaignName={participantItem.campaign.name} createdAt={participantItem.createdAt} setToastMessage={setToastMessage} setToastVisible={setToastVisible} setToastType={setToastType} setToastDuration={setToastDuration} removeParticipant={removeParticipant} />
 							))}
 						</tbody>
 						<tfoot>

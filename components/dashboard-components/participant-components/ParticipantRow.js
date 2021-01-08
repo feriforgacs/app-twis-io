@@ -1,9 +1,14 @@
 import { useState, useRef, useEffect } from "react";
 import { format } from "date-fns";
 import Link from "next/link";
+import Modal from "../Modal";
 
-export default function ParticipantRow({ id, name = "", email = "", campaignId, campaignName, createdAt }) {
+export default function ParticipantRow({ id, name = "", email = "", campaignId, campaignName, createdAt, index, setToastMessage, setToastType, setToastDuration, setToastVisible, removeParticipant }) {
 	const [navigationVisible, toggleNavigationVisible] = useState(false);
+	const [selectedParticipantId, setSelectedParticipantId] = useState();
+	const [selectedParticipantCampaignId, setSelectedParticipantCampaignId] = useState();
+	const [modalVisible, setModalVisible] = useState(false);
+	const [deleteLoading, setDeleteLoading] = useState(false);
 
 	const componentRef = useRef(null);
 
@@ -23,8 +28,52 @@ export default function ParticipantRow({ id, name = "", email = "", campaignId, 
 		};
 	}, [componentRef, navigationVisible]);
 
+	const deleteParticipant = async () => {
+		setDeleteLoading(true);
+
+		const participantDeleteRequest = await fetch(`${process.env.APP_URL}/api/participants/delete`, {
+			method: "DELETE",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				id: selectedParticipantId,
+				campaignId: selectedParticipantCampaignId,
+			}),
+		});
+
+		const participant = await participantDeleteRequest.json();
+
+		setDeleteLoading(false);
+
+		if (participant.success !== true) {
+			// error
+			setModalVisible(false);
+			setToastMessage("Can't delete participant. Please, try again.");
+			setToastType("error");
+			setToastDuration(6000);
+			setToastVisible(true);
+			return;
+		} else {
+			setModalVisible(false);
+			setToastMessage("Participant has been deleted");
+			setToastType("default");
+			setToastDuration(3000);
+			setToastVisible(true);
+			removeParticipant(index);
+			return;
+		}
+	};
+
+	const displayConfirmDelete = (participantId, campaignId) => {
+		toggleNavigationVisible(false);
+		setSelectedParticipantId(participantId);
+		setSelectedParticipantCampaignId(campaignId);
+		setModalVisible(true);
+	};
+
 	return (
-		<tr className="participant-list__item">
+		<tr className={`participant-list__item ${modalVisible || navigationVisible ? "participant-list__item--active" : ""}`}>
 			<td className="item__created">
 				<Link href={`/participants/${id}`}>
 					<a title="View participant info">{format(new Date(createdAt), "yyyy.MM.dd. HH:mm:ss")}</a>
@@ -61,9 +110,13 @@ export default function ParticipantRow({ id, name = "", email = "", campaignId, 
 						<Link href={`/participants/${id}`}>
 							<a className="button button--dropdown">View Details</a>
 						</Link>
-						<button className="button button--dropdown color--error">Delete Participant</button>
+						<button className="button button--dropdown color--error" onClick={() => displayConfirmDelete(id, campaignId)}>
+							Delete Participant
+						</button>
 					</div>
 				)}
+
+				{modalVisible && <Modal title="Are you sure you want to delete the participant?" body={`If you remove a participant, there is no option to restore the collected information.`} primaryAction={deleteParticipant} primaryActionLabel="Yes, delete participant" secondaryAction={() => setModalVisible(false)} secondaryActionLabel="Cancel" onClose={() => setModalVisible(false)} loading={deleteLoading} />}
 			</td>
 		</tr>
 	);
