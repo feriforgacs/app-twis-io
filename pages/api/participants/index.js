@@ -34,7 +34,7 @@ export default async function ParticipantListHandler(req, res) {
 	}
 
 	// filter by campaign id
-	if (req.query.campaign) {
+	if (req.query.campaign && req.query.campaign !== "") {
 		campaigns = [req.query.campaign];
 	}
 
@@ -46,7 +46,7 @@ export default async function ParticipantListHandler(req, res) {
 
 	// check search query in the params
 	let search = "";
-	if (req.query.search) {
+	if (req.query.search && req.query.search !== "") {
 		search = escapeStringRegexp(req.query.search);
 	}
 
