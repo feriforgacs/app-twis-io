@@ -1,12 +1,13 @@
 #campaigns {
 	#campaign-list {
-		margin-top: 2rem;
+		margin: 2rem -0.5rem;
 	}
 }
 
 #campaign-list {
 	display: flex;
 	flex-wrap: wrap;
+	margin: 0 -0.5rem;
 	min-height: 400px;
 }
 
