@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { signOut } from "next-auth/client";
 import Image from "next/image";
+import Link from "next/link";
 
 import SidebarNavItem from "./SidebarNavItem";
 
@@ -24,7 +25,11 @@ export default function Sidebar() {
 		<div id="page__sidebar">
 			<nav className="page__sidebar--top">
 				<div className="logo-container">
-					<Image src="/images/logo.svg" alt={`${process.env.APP_NAME} logo`} className="logo" width={80} height={28} onClick={() => router.push("/dashboard")} />
+					<Link href="/dashboard">
+						<a>
+							<Image src="/images/logo.svg" alt={`${process.env.APP_NAME} logo`} className="logo" width={80} height={28} onClick={() => router.push("/dashboard")} />
+						</a>
+					</Link>
 				</div>
 				<SidebarNavItem activeNavItem={activeNavItem} setActiveNavItem={setActiveNavItem} navItemHref="dashboard" navItemIcon="dashboard" navItemLabel="Dashboard" />
 				<SidebarNavItem activeNavItem={activeNavItem} setActiveNavItem={setActiveNavItem} navItemHref="campaigns" navItemIcon="campaigns" navItemLabel="Campaigns" />
