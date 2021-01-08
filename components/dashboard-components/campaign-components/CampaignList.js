@@ -4,7 +4,6 @@ import CampaignCard from "./CampaignCard";
 import SkeletonCampaignCard from "../skeletons/SkeletonCampaignCard";
 import EmptyState from "../EmptyState";
 import Toast from "../Toast";
-import Modal from "../Modal";
 
 export default function CampaignList({ limit = 5, dashboard = false }) {
 	const [loading, setLoading] = useState(true);
@@ -63,9 +62,9 @@ export default function CampaignList({ limit = 5, dashboard = false }) {
 
 				{campaigns.length ? (
 					<>
-						{campaigns.map((campaignItem, key) => {
-							return <CampaignCard key={key} id={campaignItem._id} name={campaignItem.name} type={campaignItem.type} status={campaignItem.status} participants={campaignItem.participantCount} visibleFrom={campaignItem.visibleFrom} visibleTo={campaignItem.visibleTo} getCampaigns={getCampaigns} setToastMessage={setToastMessage} setToastVisible={setToastVisible} setToastType={setToastType} setToastDuration={setToastDuration} />;
-						})}
+						{campaigns.map((campaignItem, key) => (
+							<CampaignCard key={key} id={campaignItem._id} name={campaignItem.name} type={campaignItem.type} status={campaignItem.status} participants={campaignItem.participantCount} visibleFrom={campaignItem.visibleFrom} visibleTo={campaignItem.visibleTo} getCampaigns={getCampaigns} setToastMessage={setToastMessage} setToastVisible={setToastVisible} setToastType={setToastType} setToastDuration={setToastDuration} />
+						))}
 					</>
 				) : (
 					""
