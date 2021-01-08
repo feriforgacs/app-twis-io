@@ -33,6 +33,11 @@ export default async function ParticipantListHandler(req, res) {
 		res.status(400).json({ success: false });
 	}
 
+	// filter by campaign id
+	if (req.query.campaign) {
+		campaigns = [req.query.campaign];
+	}
+
 	// check limit in the params
 	let limit = 10;
 	if (req.query.limit) {
