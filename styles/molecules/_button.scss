@@ -135,6 +135,28 @@
 		}
 	}
 
+	&--clear {
+		background: none;
+		border: none;
+		border-radius: 1rem;
+		cursor: pointer;
+		height: 3rem;
+		line-height: 3.5rem;
+		outline: none;
+		position: absolute;
+		right: 0;
+
+		svg {
+			margin: 0 0.5rem;
+			fill: $primaryColor;
+			stroke: #fff;
+		}
+
+		&:hover {
+			opacity: 0.8;
+		}
+	}
+
 	&--card-navigation {
 		background: none;
 		border: none;

@@ -22,8 +22,8 @@ export default function CampaignList({ limit = 5, dashboard = false }) {
 	/**
 	 * Get campaigns from the database
 	 */
-	const getCampaigns = async () => {
-		const campaignsRequest = await fetch(`${process.env.APP_URL}/api/campaigns?limit=${campaignLimit}&search=${campaignSearch}`, {
+	const getCampaigns = async (reset = false) => {
+		const campaignsRequest = await fetch(`${process.env.APP_URL}/api/campaigns?limit=${campaignLimit}&search=${reset ? "" : campaignSearch}`, {
 			method: "GET",
 		});
 
@@ -64,11 +64,20 @@ export default function CampaignList({ limit = 5, dashboard = false }) {
 		getCampaigns();
 	};
 
+	const filterReset = () => {
+		setCampaignSearch("");
+		if (filtered) {
+			setLoading(true);
+			setFiltered(false);
+			getCampaigns(true);
+		}
+	};
+
 	return (
 		<>
 			{campaigns.length && dashboard ? <DashboardSection id="latest-campaigns" title="Latest Campaigns" actionLabel="View all campaigns" actionURL="/campaigns" /> : ""}
 
-			{(campaigns.length || filtered) && !dashboard ? <CampaignSearch campaignSearch={campaignSearch} setCampaignSearch={setCampaignSearch} loading={loading} setLoading={setLoading} filterCampaigns={filterCampaigns} /> : ""}
+			{(campaigns.length || filtered) && !dashboard ? <CampaignSearch campaignSearch={campaignSearch} setCampaignSearch={setCampaignSearch} loading={loading} setLoading={setLoading} filterCampaigns={filterCampaigns} filterReset={filterReset} /> : ""}
 
 			<div id="campaign-list">
 				{/* Display loading state when getting campaigs on pageload or searching */}
