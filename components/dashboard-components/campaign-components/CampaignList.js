@@ -5,6 +5,7 @@ import SkeletonCampaignCard from "../skeletons/SkeletonCampaignCard";
 import EmptyState from "../EmptyState";
 import Toast from "../Toast";
 import CampaignSearch from "./CampaignSearch";
+import EmptyStateSearch from "../EmptyStateSearch";
 
 export default function CampaignList({ limit = 5, dashboard = false }) {
 	const [loading, setLoading] = useState(true);
@@ -15,6 +16,8 @@ export default function CampaignList({ limit = 5, dashboard = false }) {
 	const [toastVisible, setToastVisible] = useState(false);
 	const [toastType, setToastType] = useState("default");
 	const [toastDuration, setToastDuration] = useState(3000);
+	const [searching, setSearching] = useState(false);
+	const [filtered, setFiltered] = useState(false);
 
 	/**
 	 * Get campaigns from the database
@@ -27,6 +30,7 @@ export default function CampaignList({ limit = 5, dashboard = false }) {
 		const campaigns = await campaignsRequest.json();
 
 		setLoading(false);
+		setSearching(false);
 
 		if (campaigns.success !== true) {
 			// error
@@ -50,13 +54,24 @@ export default function CampaignList({ limit = 5, dashboard = false }) {
 		getCampaigns();
 	}, [campaignLimit]);
 
+	/**
+	 * Filter campaign list
+	 */
+	const filterCampaigns = () => {
+		setLoading(true);
+		setSearching(true);
+		setFiltered(true);
+		getCampaigns();
+	};
+
 	return (
 		<>
 			{campaigns.length && dashboard ? <DashboardSection id="latest-campaigns" title="Latest Campaigns" actionLabel="View all campaigns" actionURL="/campaigns" /> : ""}
 
-			{campaigns.length && !dashboard ? <CampaignSearch campaignSearch={campaignSearch} setCampaignSearch={setCampaignSearch} /> : ""}
+			{(campaigns.length || filtered) && !dashboard ? <CampaignSearch campaignSearch={campaignSearch} setCampaignSearch={setCampaignSearch} loading={loading} setLoading={setLoading} filterCampaigns={filterCampaigns} /> : ""}
 
 			<div id="campaign-list">
+				{/* Display loading state when getting campaigs on pageload or searching */}
 				{loading && (
 					<>
 						<div className={`placeholder ${dashboard ? "height-5" : "height-3"}`}></div>
@@ -64,7 +79,8 @@ export default function CampaignList({ limit = 5, dashboard = false }) {
 					</>
 				)}
 
-				{campaigns.length ? (
+				{/* Display campaigns when not not empty and not searching */}
+				{campaigns.length && !searching ? (
 					<>
 						{campaigns.map((campaignItem, key) => (
 							<CampaignCard key={key} id={campaignItem._id} name={campaignItem.name} type={campaignItem.type} status={campaignItem.status} participants={campaignItem.participantCount} visibleFrom={campaignItem.visibleFrom} visibleTo={campaignItem.visibleTo} getCampaigns={getCampaigns} setToastMessage={setToastMessage} setToastVisible={setToastVisible} setToastType={setToastType} setToastDuration={setToastDuration} />
@@ -74,7 +90,10 @@ export default function CampaignList({ limit = 5, dashboard = false }) {
 					""
 				)}
 
-				{!campaigns.length && !loading ? <EmptyState title="Create your first campaign" description="You haven't created any campaigns yet. Click the button below to get started." actionLink="/campaigns/create" actionLabel="Create New Campaign" helpLabel="###TODO Learn more" helpURL="https://" illustration="campaigns" /> : ""}
+				{filtered && !campaigns.length && !searching ? <EmptyStateSearch title="No result" description="We couldn't find any items that fit your criteria. Please, try a different keyword" illustration="participants" /> : ""}
+
+				{/* Empty state when there are no campaigns, not search result and not loading */}
+				{!campaigns.length && !loading && !filtered ? <EmptyState title="Create your first campaign" description="You haven't created any campaigns yet. Click the button below to get started." actionLink="/campaigns/create" actionLabel="Create New Campaign" helpLabel="###TODO Learn more" helpURL="https://" illustration="campaigns" /> : ""}
 			</div>
 
 			{toastVisible && <Toast onClose={() => setToastVisible(false)} duration={toastDuration} type={toastType} content={toastMessage} />}

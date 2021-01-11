@@ -7,6 +7,21 @@
 	position: relative;
 	width: 100%;
 
+	&--search {
+		align-items: center;
+		flex-direction: column;
+		min-height: auto;
+		text-align: center;
+
+		.empty-state__body {
+			max-width: 100%;
+		}
+
+		.empty-state__illustration {
+			position: relative;
+		}
+	}
+
 	&__body {
 		max-width: 350px;
 		z-index: 1;
