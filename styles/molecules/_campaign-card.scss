@@ -5,17 +5,16 @@
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 	box-sizing: border-box;
 
-	flex: calc(100% - 2px);
+	flex: 1;
 	height: 100%;
 	margin: 0 0.5rem 2rem;
-	max-width: 400px;
 
 	@media only screen and(min-width: 1000px) {
-		flex: 0 0 calc(48% - 2px);
+		max-width: calc(50% - 1rem);
 	}
 
 	@media only screen and(min-width: 1200px) {
-		flex: 0 0 calc(30.33333% - 2px);
+		max-width: calc(33.3333333% - 1rem);
 	}
 
 	a:not(.button) {
@@ -42,7 +41,7 @@
 		}
 
 		h4 {
-			font-size: 1.2rem;
+			font-size: 1rem;
 			font-weight: 700;
 			margin: 0;
 			padding: 0;
