@@ -1,6 +1,6 @@
 #participants {
 	#participant-list {
-		margin-top: 3rem;
+		margin: 2rem 0;
 	}
 }
 
@@ -8,4 +8,8 @@
 	&--active {
 		background: #ffffe5;
 	}
+}
+
+#participant-search {
+	margin-top: 2rem;
 }

@@ -3,9 +3,9 @@ import DashboardSection from "../DashboardSection";
 import CampaignCard from "./CampaignCard";
 import SkeletonCampaignCard from "../skeletons/SkeletonCampaignCard";
 import EmptyState from "../EmptyState";
+import EmptyStateSearch from "../EmptyStateSearch";
 import Toast from "../Toast";
 import CampaignSearch from "./CampaignSearch";
-import EmptyStateSearch from "../EmptyStateSearch";
 
 export default function CampaignList({ limit = 5, dashboard = false }) {
 	const [loading, setLoading] = useState(true);
@@ -80,7 +80,7 @@ export default function CampaignList({ limit = 5, dashboard = false }) {
 			{(campaigns.length || filtered) && !dashboard ? <CampaignSearch campaignSearch={campaignSearch} setCampaignSearch={setCampaignSearch} loading={loading} setLoading={setLoading} filterCampaigns={filterCampaigns} filterReset={filterReset} /> : ""}
 
 			<div id="campaign-list">
-				{/* Display loading state when getting campaigs on pageload or searching */}
+				{/* Display loading state when getting campaigs on pageload or search */}
 				{loading && (
 					<>
 						<div className={`placeholder ${dashboard ? "height-5" : "height-3"}`}></div>
@@ -99,6 +99,7 @@ export default function CampaignList({ limit = 5, dashboard = false }) {
 					""
 				)}
 
+				{/* Display no result state when there are no search results */}
 				{filtered && !campaigns.length && !searching ? <EmptyStateSearch title="No result" description="We couldn't find any items that fit your criteria. Please, try a different keyword" illustration="participants" /> : ""}
 
 				{/* Empty state when there are no campaigns, not search result and not loading */}
