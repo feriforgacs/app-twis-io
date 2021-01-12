@@ -4,6 +4,7 @@ import ParticipantRow from "./ParticipantRow";
 import EmptyState from "../EmptyState";
 import SkeletonParticipantList from "../skeletons/SkeletonParticipantList";
 import Toast from "../Toast";
+import ParticipantSearch from "./ParticipantSearch";
 
 export default function ParticipantList({ limit = 10, dashboard = false }) {
 	const [loading, setLoading] = useState(true);
@@ -48,7 +49,7 @@ export default function ParticipantList({ limit = 10, dashboard = false }) {
 	 */
 	useEffect(() => {
 		getParticipants();
-	}, [participantLimit, participantSearch, participantCampaignId]);
+	}, []);
 
 	const removeParticipant = (index) => {
 		const remainingParticipants = [...participants];
@@ -60,6 +61,7 @@ export default function ParticipantList({ limit = 10, dashboard = false }) {
 		<>
 			{participants.length && dashboard ? <DashboardSection id="latest-participants" title="Latest Participants" actionLabel="View all participants" actionURL="/participants" /> : ""}
 			<div id="participant-list">
+				<ParticipantSearch participantSearch={participantSearch} setParticipantSearch={setParticipantSearch} />
 				{loading && (
 					<>
 						<div className={`placeholder ${dashboard ? "height-5" : "height-3"}`}></div>
