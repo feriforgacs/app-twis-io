@@ -6,6 +6,8 @@ import EmptyStateSearch from "../EmptyStateSearch";
 import SkeletonParticipantList from "../skeletons/SkeletonParticipantList";
 import Toast from "../Toast";
 import ParticipantSearch from "./ParticipantSearch";
+import FooterHelp from "../FooterHelp";
+import LinkComponent from "../LinkComponent";
 
 export default function ParticipantList({ limit = 10, dashboard = false }) {
 	const [loading, setLoading] = useState(true);
@@ -136,6 +138,12 @@ export default function ParticipantList({ limit = 10, dashboard = false }) {
 				{/* Empty state when there are no participants, not search result and not loading */}
 				{!participants.length && !loading && !filtered ? <EmptyState title="No participants" description="Your campaigns haven't acquired any participants yet." helpLabel="###TODO Learn how to acquire participants" helpURL="https://" illustration="participants" /> : ""}
 			</div>
+
+			{!dashboard && (
+				<FooterHelp>
+					Learn more about <LinkComponent url="http://twis.io">getting participants</LinkComponent>
+				</FooterHelp>
+			)}
 
 			{toastVisible && <Toast onClose={() => setToastVisible(false)} duration={toastDuration} type={toastType} content={toastMessage} />}
 		</>
