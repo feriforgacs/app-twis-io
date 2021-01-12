@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import DashboardSection from "../DashboardSection";
 import CampaignCard from "./CampaignCard";
 import SkeletonCampaignCard from "../skeletons/SkeletonCampaignCard";
+import SkeletonSearchForm from "../skeletons/SkeletonSearchForm";
 import EmptyState from "../EmptyState";
 import EmptyStateSearch from "../EmptyStateSearch";
 import Toast from "../Toast";
@@ -79,13 +80,19 @@ export default function CampaignList({ limit = 5, dashboard = false }) {
 		<>
 			{campaigns.length && dashboard ? <DashboardSection id="latest-campaigns" title="Latest Campaigns" actionLabel="View all campaigns" actionURL="/campaigns" /> : ""}
 
+			{loading && !dashboard && (
+				<>
+					<div className={`placeholder height-2`}></div>
+					<SkeletonSearchForm />
+				</>
+			)}
 			{(campaigns.length || filtered) && !dashboard ? <CampaignSearch campaignSearch={campaignSearch} setCampaignSearch={setCampaignSearch} loading={loading} setLoading={setLoading} filterCampaigns={filterCampaigns} filterReset={filterReset} /> : ""}
 
 			<div id="campaign-list">
 				{/* Display loading state when getting campaigs on pageload or search */}
 				{loading && (
 					<>
-						<div className={`placeholder ${dashboard ? "height-5" : "height-3"}`}></div>
+						<div className={`placeholder ${dashboard ? "height-5" : ""}`}></div>
 						<SkeletonCampaignCard items={3} />
 					</>
 				)}

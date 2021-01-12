@@ -4,6 +4,7 @@ import ParticipantRow from "./ParticipantRow";
 import EmptyState from "../EmptyState";
 import EmptyStateSearch from "../EmptyStateSearch";
 import SkeletonParticipantList from "../skeletons/SkeletonParticipantList";
+import SkeletonSearchForm from "../skeletons/SkeletonSearchForm";
 import Toast from "../Toast";
 import ParticipantSearch from "./ParticipantSearch";
 import FooterHelp from "../FooterHelp";
@@ -90,13 +91,20 @@ export default function ParticipantList({ limit = 10, dashboard = false }) {
 		<>
 			{participants.length && dashboard ? <DashboardSection id="latest-participants" title="Latest Participants" actionLabel="View all participants" actionURL="/participants" /> : ""}
 
+			{loading && !dashboard && (
+				<>
+					<div className={`placeholder height-2`}></div>
+					<SkeletonSearchForm items={2} />
+				</>
+			)}
+
 			{(participants.length || filtered) && !dashboard ? <ParticipantSearch participantSearch={participantSearch} setParticipantSearch={setParticipantSearch} setParticipantCampaignId={setParticipantCampaignId} loading={loading} setLoading={setLoading} filterParticipants={filterParticipants} filterReset={filterReset} /> : ""}
 
 			<div id="participant-list">
 				{/* Display loading state when getting participants on pageload or search */}
 				{loading && (
 					<>
-						<div className={`placeholder ${dashboard ? "height-5" : "height-3"}`}></div>
+						<div className={`placeholder ${dashboard ? "height-5" : ""}`}></div>
 						<SkeletonParticipantList items={3} />
 					</>
 				)}

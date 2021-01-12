@@ -34,6 +34,21 @@
 		height: 2.2777778rem;
 	}
 
+	&--input {
+		height: 2.2777778rem;
+		min-width: 200px;
+		width: 100%;
+	}
+
+	&--input-search {
+		height: 3rem;
+	}
+
+	&--button-search {
+		height: 3rem;
+		min-width: 200px;
+	}
+
 	&--h1 {
 		display: block;
 		line-height: 2.5rem;
