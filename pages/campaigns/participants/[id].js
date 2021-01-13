@@ -23,7 +23,7 @@ export default function campaignParticipants() {
 			<Sidebar />
 			<div id="page__content">
 				<header id="page__header">
-					<h1 className="page__title">Participants</h1>
+					<h1 className="page__title">###CAMPAING NAME / Participants</h1>
 				</header>
 
 				<ParticipantList campaignId={router.query.id} hideCampaignSelect={true} />

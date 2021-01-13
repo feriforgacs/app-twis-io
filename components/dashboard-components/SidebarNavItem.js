@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function SidebarNavItem({ activeNavItem, navItemHref, navItemIcon, navItemLabel }) {
 	let currentNavItemActive = false;
 	if (activeNavItem) {
-		currentNavItemActive = activeNavItem.includes(navItemHref);
+		currentNavItemActive = activeNavItem.indexOf(navItemHref) === 0 ? true : false;
 	}
 	return (
 		<div className={`nav-item ${currentNavItemActive ? "nav-item--active" : ""}`}>
