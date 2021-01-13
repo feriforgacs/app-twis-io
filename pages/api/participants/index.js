@@ -45,9 +45,9 @@ export default async function ParticipantListHandler(req, res) {
 	}
 
 	// check limit in the params
-	let limit = 100;
+	let limit = 200;
 	if (req.query.limit) {
-		limit = parseInt(req.query.limit) || 100;
+		limit = parseInt(req.query.limit) || 200;
 	}
 
 	// check search query in the params

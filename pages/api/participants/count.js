@@ -26,10 +26,10 @@ export default async function ParticipantCountHandler(req, res) {
 	const session = await getSession({ req });
 
 	let campaignId;
-	if (req.query.id && req.query.id !== "") {
+	if (req.query.campaign && req.query.campaign !== "") {
 		// validate campaign id parameter
-		if (mongoose.Types.ObjectId.isValid(req.query.id)) {
-			campaignId = req.query.id;
+		if (mongoose.Types.ObjectId.isValid(req.query.campaign)) {
+			campaignId = req.query.campaign;
 		} else {
 			res.status(400).json({ success: false, error: "invalid campaign id" });
 			return;

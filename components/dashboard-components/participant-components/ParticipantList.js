@@ -9,11 +9,12 @@ import Toast from "../Toast";
 import ParticipantSearch from "./ParticipantSearch";
 import FooterHelp from "../FooterHelp";
 import LinkComponent from "../LinkComponent";
+import Pagination from "../Pagination";
 
-export default function ParticipantList({ limit = 10, dashboard = false }) {
+export default function ParticipantList({ limit = 2, dashboard = false }) {
 	const [loading, setLoading] = useState(true);
 	const [participants, setParticipants] = useState([]);
-	const [participantLimit, setParticipantLimit] = useState(10);
+	const [participantLimit, setParticipantLimit] = useState(limit);
 	const [participantSearch, setParticipantSearch] = useState("");
 	const [participantCampaignId, setParticipantCampaignId] = useState("");
 	const [toastMessage, setToastMessage] = useState(false);
@@ -22,12 +23,15 @@ export default function ParticipantList({ limit = 10, dashboard = false }) {
 	const [toastDuration, setToastDuration] = useState(3000);
 	const [searching, setSearching] = useState(false);
 	const [filtered, setFiltered] = useState(false);
+	const [page, setPage] = useState(1);
+	const [pageCount, setPageCount] = useState(1);
+	const [participantCount, setParticipantCount] = useState();
 
 	/**
 	 * Get participants from the database
 	 */
-	const getParticipants = async (reset = false) => {
-		const participantsRequest = await fetch(`${process.env.APP_URL}/api/participants?limit=${participantLimit}&search=${reset ? "" : participantSearch}&campaign=${reset ? "" : participantCampaignId}`, {
+	const getParticipants = async (reset = false, page = 1) => {
+		const participantsRequest = await fetch(`${process.env.APP_URL}/api/participants?limit=${participantLimit}&search=${reset ? "" : participantSearch}&campaign=${reset ? "" : participantCampaignId}&page=${page}`, {
 			method: "GET",
 		});
 
@@ -47,15 +51,50 @@ export default function ParticipantList({ limit = 10, dashboard = false }) {
 
 		if (participants.data) {
 			setParticipants(participants.data);
+			setPage(page);
+		}
+		return;
+	};
+
+	/**
+	 * Count all participants, or participants by campaign
+	 * @param {bool} reset reset campaign id
+	 */
+	const countParticipants = async (reset = false) => {
+		const participantsCountRequest = await fetch(`${process.env.APP_URL}/api/participants/count?campaign=${reset ? "" : participantCampaignId}`, {
+			method: "GET",
+		});
+
+		const participantsCount = await participantsCountRequest.json();
+
+		if (participantsCount.success !== true) {
+			// error
+			setToastMessage("Can't count participants. Please, try again.");
+			setToastType("error");
+			setToastDuration(6000);
+			setToastVisible(true);
+			return;
+		}
+
+		if (participantsCount.data) {
+			setParticipantCount(participantsCount.data);
+			if (participantsCount.data > participantLimit) {
+				// count pages if participant count is higher than the limit
+				setPageCount(Math.ceil(participantsCount.data / participantLimit));
+			} else {
+				setPageCount(1);
+			}
 		}
 		return;
 	};
 
 	/**
 	 * Load participants on component mount
+	 * Count participants on component load
 	 */
 	useEffect(() => {
 		getParticipants();
+		countParticipants();
 	}, []);
 
 	/**
@@ -69,22 +108,34 @@ export default function ParticipantList({ limit = 10, dashboard = false }) {
 	};
 
 	/**
-	 * Filter campaign list
+	 * Filter participant list
 	 */
 	const filterParticipants = () => {
 		setLoading(true);
 		setSearching(true);
 		setFiltered(true);
 		getParticipants();
+		countParticipants();
 	};
 
+	/**
+	 * Reset participant search
+	 */
 	const filterReset = () => {
 		setParticipantSearch("");
 		if (filtered) {
 			setLoading(true);
 			setFiltered(false);
 			getParticipants(true);
+			countParticipants(true);
 		}
+	};
+
+	/**
+	 * Go to selected page
+	 */
+	const goToPage = (pageIndex) => {
+		getParticipants(false, pageIndex);
 	};
 
 	return (
@@ -105,7 +156,6 @@ export default function ParticipantList({ limit = 10, dashboard = false }) {
 				{loading && (
 					<>
 						<div className={`placeholder ${dashboard ? "height-5" : ""}`}></div>
-						<p className="skeleton skeleton-p--short"></p>
 						<SkeletonParticipantList items={3} />
 					</>
 				)}
@@ -113,9 +163,6 @@ export default function ParticipantList({ limit = 10, dashboard = false }) {
 				{/* Display participants when not not empty and not searching */}
 				{participants.length && !searching ? (
 					<>
-						<p className="item-count text--small text--secondary mt-0 mb-10 pl-20">
-							<strong>{participants.length}</strong> participant{participants.length > 1 ? "s" : ""}
-						</p>
 						<table className="data-table">
 							<thead>
 								<tr>
@@ -141,6 +188,8 @@ export default function ParticipantList({ limit = 10, dashboard = false }) {
 								</tr>
 							</tfoot>
 						</table>
+
+						{pageCount > 1 && !dashboard && <Pagination pageCount={pageCount} currentPage={page} goToPage={goToPage} />}
 					</>
 				) : (
 					""

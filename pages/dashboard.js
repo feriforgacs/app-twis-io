@@ -32,7 +32,7 @@ export default function dashboard() {
 				</header>
 
 				<CampaignList dashboard={true} />
-				<ParticipantList dashboard={true} />
+				<ParticipantList dashboard={true} limit={50} />
 			</div>
 		</div>
 	);
