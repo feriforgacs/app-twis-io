@@ -13,12 +13,12 @@ import Pagination from "../Pagination";
 import "nprogress/nprogress.css";
 import NProgress from "nprogress";
 
-export default function ParticipantList({ limit = 200, dashboard = false }) {
+export default function ParticipantList({ limit = 200, dashboard = false, campaignId = "", hideCampaignSelect = false }) {
 	const [loading, setLoading] = useState(true);
 	const [participants, setParticipants] = useState([]);
 	const [participantLimit, setParticipantLimit] = useState(limit);
 	const [participantSearch, setParticipantSearch] = useState("");
-	const [participantCampaignId, setParticipantCampaignId] = useState("");
+	const [participantCampaignId, setParticipantCampaignId] = useState(campaignId);
 	const [toastMessage, setToastMessage] = useState(false);
 	const [toastVisible, setToastVisible] = useState(false);
 	const [toastType, setToastType] = useState("default");
@@ -154,7 +154,7 @@ export default function ParticipantList({ limit = 200, dashboard = false }) {
 				</>
 			)}
 
-			{(participants.length || filtered) && !dashboard ? <ParticipantSearch participantSearch={participantSearch} setParticipantSearch={setParticipantSearch} setParticipantCampaignId={setParticipantCampaignId} loading={loading} setLoading={setLoading} filterParticipants={filterParticipants} filterReset={filterReset} /> : ""}
+			{(participants.length || filtered) && !dashboard ? <ParticipantSearch participantSearch={participantSearch} setParticipantSearch={setParticipantSearch} setParticipantCampaignId={setParticipantCampaignId} participantCampaignId={participantCampaignId} loading={loading} setLoading={setLoading} filterParticipants={filterParticipants} filterReset={filterReset} hideCampaignSelect={hideCampaignSelect} /> : ""}
 
 			<div id="participant-list">
 				{/* Display loading state when getting participants on pageload or search */}

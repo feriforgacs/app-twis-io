@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Button from "../Button";
 import Toast from "../Toast";
 
-export default function ParticipantSearch({ participantSearch, setParticipantSearch, loading = false, filterParticipants, filterReset, setParticipantCampaignId }) {
+export default function ParticipantSearch({ participantSearch, setParticipantSearch, loading = false, filterParticipants, filterReset, setParticipantCampaignId, participantCampaignId, hideCampaignSelect = false }) {
 	const [campaigns, setCampaigns] = useState([]);
 	const [campaignsLoading, setCampaignsLoading] = useState(true);
 	const [toastMessage, setToastMessage] = useState(false);
@@ -59,18 +59,21 @@ export default function ParticipantSearch({ participantSearch, setParticipantSea
 							</button>
 						)}
 					</div>
-					<div className="form__group form__group--select">
-						<select className="form__select form__select--search" name="campaign" id="campaign" disabled={campaignsLoading} onChange={(e) => setParticipantCampaignId(e.target.value)}>
-							<option value="">All campaigns</option>
-							{campaigns.length &&
-								!campaignsLoading &&
-								campaigns.map((campaignItem, key) => (
-									<option key={key} value={campaignItem._id}>
-										{campaignItem.name}
-									</option>
-								))}
-						</select>
-					</div>
+					{!hideCampaignSelect && (
+						<div className="form__group form__group--select">
+							<select className="form__select form__select--search" name="campaign" id="campaign" disabled={campaignsLoading} onChange={(e) => setParticipantCampaignId(e.target.value)}>
+								<option value="">All campaigns</option>
+								{campaigns.length &&
+									!campaignsLoading &&
+									campaigns.map((campaignItem, key) => (
+										<option key={key} value={campaignItem._id} selected={`${participantCampaignId === campaignItem._id ? "selected" : ""}`}>
+											{campaignItem.name}
+										</option>
+									))}
+							</select>
+						</div>
+					)}
+
 					<div className="form__group">
 						<Button type="outline-primary" label="Search" disabled={loading} loading={loading} onClick={() => filterParticipants()} />
 					</div>

@@ -112,7 +112,7 @@ export default function CampaignCard({ id, name, type, status, participants, vis
 					<div className="campaign-card__meta">
 						<span className="badge badge--info badge--campaign-type">{type}</span>
 						<span className={`campaign-status badge ${status === "active" ? "badge--active badge--success" : "badge--inactive"}`}>{status === "active" ? "active" : "inactive"}</span>
-						<Link href={`/participants/${id}`}>
+						<Link href={`/campaigns/participants/${id}`}>
 							<a className="campaign-participant-count">
 								<span>
 									<Image src="/images/icons/icon-participants.svg" width={15} height={15} alt={`${name} - Participants`} />

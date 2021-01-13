@@ -1,10 +1,12 @@
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { useSession, getSession } from "next-auth/client";
-import LoginForm from "../../components/LoginForm";
-import Sidebar from "../../components/dashboard-components/Sidebar";
-import ParticipantList from "../../components/dashboard-components/participant-components/ParticipantList";
+import LoginForm from "../../../components/LoginForm";
+import Sidebar from "../../../components/dashboard-components/Sidebar";
+import ParticipantList from "../../../components/dashboard-components/participant-components/ParticipantList";
 
-export default function participants() {
+export default function campaignParticipants() {
+	const router = useRouter();
 	const [session, loading] = useSession();
 
 	if (typeof window !== "undefined" && loading) return null;
@@ -24,7 +26,7 @@ export default function participants() {
 					<h1 className="page__title">Participants</h1>
 				</header>
 
-				<ParticipantList />
+				<ParticipantList campaignId={router.query.id} hideCampaignSelect={true} />
 			</div>
 		</div>
 	);
