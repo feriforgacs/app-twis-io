@@ -41,7 +41,7 @@ export default async function ParticipantListHandler(req, res) {
 	// check page in the params
 	let page = 0;
 	if (req.query.page) {
-		page = parseInt(req.query.page) || 0;
+		page = parseInt(req.query.page) - 1 || 0;
 	}
 
 	// check limit in the params
@@ -73,12 +73,12 @@ export default async function ParticipantListHandler(req, res) {
 				.and({ campaignId: { $in: campaigns } })
 				.limit(limit)
 				.skip(limit * page)
-				.sort({ createdAt: -1 });
+				.sort({ _id: -1 });
 		} else {
 			participants = await Participant.find({ campaignId: { $in: campaigns } })
 				.limit(limit)
 				.skip(limit * page)
-				.sort({ createdAt: -1 });
+				.sort({ _id: -1 });
 		}
 		res.status(200).json({ success: true, data: participants });
 	} catch (error) {

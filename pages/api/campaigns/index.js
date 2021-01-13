@@ -42,9 +42,9 @@ export default async function CampaignListHandler(req, res) {
 		if (search !== "") {
 			campaigns = await Campaign.find({ name: { $regex: search, $options: "i" }, createdBy: session.user.id })
 				.limit(limit)
-				.sort({ createdAt: -1 });
+				.sort({ _id: -1 });
 		} else {
-			campaigns = await Campaign.find({ createdBy: session.user.id }).limit(limit).sort({ createdAt: -1 });
+			campaigns = await Campaign.find({ createdBy: session.user.id }).limit(limit).sort({ _id: -1 });
 		}
 
 		res.status(200).json({ success: true, data: campaigns });
