@@ -10,6 +10,8 @@ import ParticipantSearch from "./ParticipantSearch";
 import FooterHelp from "../FooterHelp";
 import LinkComponent from "../LinkComponent";
 import Pagination from "../Pagination";
+import "nprogress/nprogress.css";
+import NProgress from "nprogress";
 
 export default function ParticipantList({ limit = 2, dashboard = false }) {
 	const [loading, setLoading] = useState(true);
@@ -39,6 +41,7 @@ export default function ParticipantList({ limit = 2, dashboard = false }) {
 
 		setLoading(false);
 		setSearching(false);
+		NProgress.done();
 
 		if (participants.success !== true) {
 			// error
@@ -61,7 +64,7 @@ export default function ParticipantList({ limit = 2, dashboard = false }) {
 	 * @param {bool} reset reset campaign id
 	 */
 	const countParticipants = async (reset = false) => {
-		const participantsCountRequest = await fetch(`${process.env.APP_URL}/api/participants/count?campaign=${reset ? "" : participantCampaignId}`, {
+		const participantsCountRequest = await fetch(`${process.env.APP_URL}/api/participants/count?campaign=${reset ? "" : participantCampaignId}&search=${reset ? "" : participantSearch}`, {
 			method: "GET",
 		});
 
@@ -135,6 +138,7 @@ export default function ParticipantList({ limit = 2, dashboard = false }) {
 	 * Go to selected page
 	 */
 	const goToPage = (pageIndex) => {
+		NProgress.start();
 		getParticipants(false, pageIndex);
 	};
 

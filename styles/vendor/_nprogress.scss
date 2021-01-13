@@ -1,0 +1,13 @@
+#nprogress {
+	div.bar {
+		background: $primaryColor;
+		box-shadow: 0px 0px 5px $primaryColor;
+		height: 3px;
+	}
+
+	div.spinner-icon {
+		border: solid 3px transparent;
+		border-top-color: $primaryColor;
+		border-left-color: $primaryColor;
+	}
+}
