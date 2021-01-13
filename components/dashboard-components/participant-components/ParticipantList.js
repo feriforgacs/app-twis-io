@@ -33,7 +33,7 @@ export default function ParticipantList({ limit = 200, dashboard = false }) {
 	 * Get participants from the database
 	 */
 	const getParticipants = async (reset = false, page = 1) => {
-		const participantsRequest = await fetch(`${process.env.APP_URL}/api/participants?limit=${participantLimit}&search=${reset ? "" : participantSearch}&campaign=${reset ? "" : participantCampaignId}&page=${page}`, {
+		const participantsRequest = await fetch(`${process.env.APP_URL}/api/participants?limit=${participantLimit}&search=${reset ? "" : participantSearch}&campaign=${participantCampaignId}&page=${page}`, {
 			method: "GET",
 		});
 
@@ -127,6 +127,7 @@ export default function ParticipantList({ limit = 200, dashboard = false }) {
 	const filterReset = () => {
 		setParticipantSearch("");
 		if (filtered) {
+			setSearching(true);
 			setLoading(true);
 			setFiltered(false);
 			getParticipants(true);
@@ -146,7 +147,7 @@ export default function ParticipantList({ limit = 200, dashboard = false }) {
 		<>
 			{participants.length && dashboard ? <DashboardSection id="latest-participants" title="Latest Participants" actionLabel="View all participants" actionURL="/participants" /> : ""}
 
-			{loading && !dashboard && (
+			{loading && !dashboard && !searching && (
 				<>
 					<div className={`placeholder height-2`}></div>
 					<SkeletonSearchForm items={2} />
