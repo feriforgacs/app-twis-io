@@ -105,37 +105,43 @@ export default function ParticipantList({ limit = 10, dashboard = false }) {
 				{loading && (
 					<>
 						<div className={`placeholder ${dashboard ? "height-5" : ""}`}></div>
+						<p className="skeleton skeleton-p--short"></p>
 						<SkeletonParticipantList items={3} />
 					</>
 				)}
 
 				{/* Display participants when not not empty and not searching */}
 				{participants.length && !searching ? (
-					<table className="data-table">
-						<thead>
-							<tr>
-								<th>Created At</th>
-								<th>Name</th>
-								<th>Email address</th>
-								<th>Campaign</th>
-								<th></th>
-							</tr>
-						</thead>
-						<tbody>
-							{participants.map((participantItem, key) => (
-								<ParticipantRow key={key} index={key} id={participantItem._id} name={participantItem.name} email={participantItem.email} campaignId={participantItem.campaignId} campaignName={participantItem.campaign.name} createdAt={participantItem.createdAt} setToastMessage={setToastMessage} setToastVisible={setToastVisible} setToastType={setToastType} setToastDuration={setToastDuration} removeParticipant={removeParticipant} />
-							))}
-						</tbody>
-						<tfoot>
-							<tr>
-								<th>Created At</th>
-								<th>Name</th>
-								<th>Email address</th>
-								<th>Campaign</th>
-								<th></th>
-							</tr>
-						</tfoot>
-					</table>
+					<>
+						<p className="item-count text--small text--secondary mt-0 mb-10 pl-20">
+							<strong>{participants.length}</strong> participant{participants.length > 1 ? "s" : ""}
+						</p>
+						<table className="data-table">
+							<thead>
+								<tr>
+									<th>Created At</th>
+									<th>Name</th>
+									<th>Email address</th>
+									<th>Campaign</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								{participants.map((participantItem, key) => (
+									<ParticipantRow key={key} index={key} id={participantItem._id} name={participantItem.name} email={participantItem.email} campaignId={participantItem.campaignId} campaignName={participantItem.campaign.name} createdAt={participantItem.createdAt} setToastMessage={setToastMessage} setToastVisible={setToastVisible} setToastType={setToastType} setToastDuration={setToastDuration} removeParticipant={removeParticipant} />
+								))}
+							</tbody>
+							<tfoot>
+								<tr>
+									<th>Created At</th>
+									<th>Name</th>
+									<th>Email address</th>
+									<th>Campaign</th>
+									<th></th>
+								</tr>
+							</tfoot>
+						</table>
+					</>
 				) : (
 					""
 				)}

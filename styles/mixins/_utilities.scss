@@ -15,6 +15,11 @@
 
 $margin: 0;
 @while $margin < 100 {
+	/* Margin global */
+	.m-#{$margin} {
+		margin: ($margin) + px;
+	}
+
 	/* Margin right */
 	.mr-#{$margin} {
 		margin-right: ($margin) + px;
@@ -38,6 +43,36 @@ $margin: 0;
 	$margin: $margin + 5;
 }
 
+$padding: 0;
+@while $padding < 100 {
+	/* padding global */
+	.p-#{$padding} {
+		padding: ($padding) + px;
+	}
+
+	/* padding right */
+	.pr-#{$padding} {
+		padding-right: ($padding) + px;
+	}
+
+	/* padding left */
+	.pl-#{$padding} {
+		padding-left: ($padding) + px;
+	}
+
+	/* padding top */
+	.pt-#{$padding} {
+		padding-top: ($padding) + px;
+	}
+
+	/* padding bottom */
+	.pb-#{$padding} {
+		padding-bottom: ($padding) + px;
+	}
+
+	$padding: $padding + 5;
+}
+
 $opacity: 0;
 @while $opacity < 10 {
 	.op-#{$opacity} {
@@ -59,4 +94,18 @@ $height: 1;
 	}
 
 	$height: $height + 1;
+}
+
+.text {
+	&--small {
+		font-size: smaller;
+	}
+
+	&--secondary {
+		color: $fontColorSecondary;
+	}
+
+	&--tertiary {
+		color: $fontColorTertiary;
+	}
 }
