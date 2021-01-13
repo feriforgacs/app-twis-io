@@ -26,35 +26,46 @@ export default async function ParticipantCountHandler(req, res) {
 	const session = await getSession({ req });
 
 	let campaignId;
-	/**
-	 * Validate campaign id parameter
-	 */
-	if (req.query.id && req.query.id !== "" && mongoose.Types.ObjectId.isValid(req.query.id)) {
-		campaignId = req.query.id;
-	} else {
-		res.status(400).json({ success: false });
-		return;
-	}
-
-	/**
-	 * Check campaign and user connection
-	 */
-	try {
-		const campaign = await Campaign.countDocuments({ _id: campaignId, createdBy: session.user.id });
-		if (!campaign) {
-			res.status(400).json({ success: false });
+	if (req.query.id && req.query.id !== "") {
+		// validate campaign id parameter
+		if (mongoose.Types.ObjectId.isValid(req.query.id)) {
+			campaignId = req.query.id;
+		} else {
+			res.status(400).json({ success: false, error: "invalid campaign id" });
 			return;
 		}
-	} catch (error) {
-		res.status(400).json({ success: false });
-		return;
 	}
 
+	let campaigns;
+	if (campaignId) {
+		// check campaign and user connection
+		try {
+			const campaign = await Campaign.countDocuments({ _id: campaignId, createdBy: session.user.id });
+			if (!campaign) {
+				res.status(400).json({ success: false, error: "not authorized" });
+				return;
+			} else {
+				campaigns = [campaignId];
+			}
+		} catch (error) {
+			res.status(400).json({ success: false, error });
+			return;
+		}
+	} else {
+		// get the ids of all campaigns created by the user
+		try {
+			campaigns = await Campaign.find({ createdBy: session.user.id }).distinct("_id");
+		} catch (error) {
+			res.status(400).json({ success: false, error });
+		}
+	}
+
+	// get all participant count, or count participants by campaign id
 	try {
-		const participants = await Participant.countDocuments({ campaignId: campaignId });
+		const participants = await Participant.countDocuments({ campaignId: { $in: campaigns } });
 		res.status(200).json({ success: true, data: participants });
 	} catch (error) {
-		res.status(400).json({ success: false });
+		res.status(400).json({ success: false, error });
 	}
 	return;
 }
