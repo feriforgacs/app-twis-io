@@ -1,3 +1,4 @@
+import escapeStringRegexp from "escape-string-regexp";
 import Cors from "cors";
 import { getSession } from "next-auth/client";
 import initMiddleware from "../../../lib/InitMiddleware";
@@ -36,6 +37,12 @@ export default async function ParticipantCountHandler(req, res) {
 		}
 	}
 
+	// check search query in the params
+	let search = "";
+	if (req.query.search && req.query.search !== "") {
+		search = escapeStringRegexp(req.query.search);
+	}
+
 	let campaigns;
 	if (campaignId) {
 		// check campaign and user connection
@@ -62,7 +69,26 @@ export default async function ParticipantCountHandler(req, res) {
 
 	// get all participant count, or count participants by campaign id
 	try {
-		const participants = await Participant.countDocuments({ campaignId: { $in: campaigns } });
+		let participants;
+		if (search !== "") {
+			participants = await Participant.countDocuments({
+				$and: [
+					{ campaignId: { $in: campaigns } },
+					{
+						$or: [
+							{
+								name: { $regex: search, $options: "i" },
+							},
+							{
+								email: { $regex: search, $options: "i" },
+							},
+						],
+					},
+				],
+			});
+		} else {
+			participants = await Participant.countDocuments({ campaignId: { $in: campaigns } });
+		}
 		res.status(200).json({ success: true, data: participants });
 	} catch (error) {
 		res.status(400).json({ success: false, error });

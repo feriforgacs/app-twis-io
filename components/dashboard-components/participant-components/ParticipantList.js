@@ -13,7 +13,7 @@ import Pagination from "../Pagination";
 import "nprogress/nprogress.css";
 import NProgress from "nprogress";
 
-export default function ParticipantList({ limit = 2, dashboard = false }) {
+export default function ParticipantList({ limit = 200, dashboard = false }) {
 	const [loading, setLoading] = useState(true);
 	const [participants, setParticipants] = useState([]);
 	const [participantLimit, setParticipantLimit] = useState(limit);
