@@ -40,6 +40,9 @@ participantSchema.virtual("campaign", {
 	localField: "campaignId",
 	foreignField: "_id",
 	justOne: true,
+	options: {
+		select: "_id name",
+	},
 });
 
 participantSchema.pre("find", function () {

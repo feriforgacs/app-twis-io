@@ -38,10 +38,16 @@ export default async function ParticipantListHandler(req, res) {
 		campaigns = [req.query.campaign];
 	}
 
+	// check page in the params
+	let page = 0;
+	if (req.query.page) {
+		page = parseInt(req.query.page) || 0;
+	}
+
 	// check limit in the params
-	let limit = 10;
+	let limit = 100;
 	if (req.query.limit) {
-		limit = parseInt(req.query.limit) || 10;
+		limit = parseInt(req.query.limit) || 100;
 	}
 
 	// check search query in the params
@@ -66,10 +72,12 @@ export default async function ParticipantListHandler(req, res) {
 			})
 				.and({ campaignId: { $in: campaigns } })
 				.limit(limit)
+				.skip(limit * page)
 				.sort({ createdAt: -1 });
 		} else {
 			participants = await Participant.find({ campaignId: { $in: campaigns } })
 				.limit(limit)
+				.skip(limit * page)
 				.sort({ createdAt: -1 });
 		}
 		res.status(200).json({ success: true, data: participants });
