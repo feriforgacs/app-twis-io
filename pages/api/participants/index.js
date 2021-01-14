@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import escapeStringRegexp from "escape-string-regexp";
 import Cors from "cors";
 import { getSession } from "next-auth/client";
@@ -25,17 +26,32 @@ export default async function ParticipantListHandler(req, res) {
 	await DatabaseConnect();
 	const session = await getSession({ req });
 
-	// get the ids of campaigns created by the user
 	let campaigns;
-	try {
-		campaigns = await Campaign.find({ createdBy: session.user.id }).distinct("_id");
-	} catch (error) {
-		res.status(400).json({ success: false });
-	}
-
 	// filter by campaign id
 	if (req.query.campaign && req.query.campaign !== "") {
-		campaigns = [req.query.campaign];
+		// check campaign id format
+		if (!mongoose.Types.ObjectId.isValid(req.query.campaign)) {
+			res.status(400).json({ success: false, error: "invalid campaign id" });
+			return;
+		}
+
+		try {
+			campaigns = await Campaign.find({ createdBy: session.user.id, _id: req.query.campaign }).distinct("_id");
+			if (!campaigns.length) {
+				res.status(401).json({ success: false, error: "not authorized" });
+				return;
+			}
+		} catch (error) {
+			res.status(400).json({ success: false });
+			return;
+		}
+	} else {
+		// get all campaign ids for campaigns that were created by the user
+		try {
+			campaigns = await Campaign.find({ createdBy: session.user.id }).distinct("_id");
+		} catch (error) {
+			res.status(400).json({ success: false });
+		}
 	}
 
 	// check page in the params
