@@ -17,10 +17,21 @@ export default function campaignParticipants() {
 	const [toastType, setToastType] = useState("default");
 	const [toastDuration, setToastDuration] = useState(3000);
 
+	if (typeof window !== "undefined" && loading) return null;
+
+	if (!session) {
+		return <LoginForm signInPage={true} accessDenied={true} />;
+	}
+
 	/**
 	 * Get campaign data from the database
 	 */
 	const getCampaignData = async () => {
+		// make sure user is logged in
+		if (!session) {
+			return;
+		}
+
 		const campaignRequest = await fetch(`${process.env.APP_URL}/api/campaigns/data?id=${router.query.id}`, {
 			method: "GET",
 		});
@@ -45,12 +56,6 @@ export default function campaignParticipants() {
 	useEffect(() => {
 		getCampaignData();
 	}, []);
-
-	if (typeof window !== "undefined" && loading) return null;
-
-	if (!session) {
-		return <LoginForm signInPage={true} accessDenied={true} />;
-	}
 
 	return (
 		<div id="participants" className="page">
