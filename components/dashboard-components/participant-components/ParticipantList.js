@@ -68,10 +68,9 @@ export default function ParticipantList({ limit = 200, dashboard = false, campai
 
 		/**
 		 * Count all participants, or participants by campaign
-		 * @param {bool} reset reset campaign id
 		 */
-		const countParticipants = async (reset = false) => {
-			const participantsCountRequest = await fetch(`${process.env.APP_URL}/api/participants/count?campaign=${reset ? "" : participantCampaignId}&search=${reset ? "" : participantSearch}`, {
+		const countParticipants = async () => {
+			const participantsCountRequest = await fetch(`${process.env.APP_URL}/api/participants/count?campaign=${participantCampaignId}&search=${participantSearch}`, {
 				method: "GET",
 			});
 
