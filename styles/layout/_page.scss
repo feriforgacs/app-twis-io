@@ -12,11 +12,6 @@
 			padding: 0;
 		}
 	}
-
-	&__header {
-		display: flex;
-		justify-content: space-between;
-	}
 }
 
 .section {
@@ -28,7 +23,7 @@
 
 	&__action {
 		a {
-			color: $fontColorSecondary;
+			color: $fontColorTertiary;
 			font-size: 0.8rem;
 			text-decoration: none;
 

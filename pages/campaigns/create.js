@@ -3,6 +3,7 @@ import { useSession, getSession } from "next-auth/client";
 import LoginForm from "../../components/LoginForm";
 import Sidebar from "../../components/dashboard-components/Sidebar";
 import CampaignCreate from "../../components/dashboard-components/campaign-components/CampaignCreate";
+import PageHeader from "../../components/dashboard-components/PageHeader";
 
 export default function campaigns() {
 	const [session, loading] = useSession();
@@ -20,10 +21,7 @@ export default function campaigns() {
 			</Head>
 			<Sidebar />
 			<div id="page__content">
-				<header id="page__header">
-					<h1 className="page__title">Create New Campaign</h1>
-				</header>
-
+				<PageHeader title="Create New Campaign" secondaryActionURL="/campaigns" secondaryActionLabel="Back to campaigns" />
 				<CampaignCreate />
 			</div>
 		</div>

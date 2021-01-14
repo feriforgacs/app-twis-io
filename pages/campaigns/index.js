@@ -1,9 +1,9 @@
 import Head from "next/head";
-import Link from "next/link";
 import { useSession, getSession } from "next-auth/client";
 import LoginForm from "../../components/LoginForm";
 import Sidebar from "../../components/dashboard-components/Sidebar";
 import CampaignList from "../../components/dashboard-components/campaign-components/CampaignList";
+import PageHeader from "../../components/dashboard-components/PageHeader";
 
 export default function campaigns() {
 	const [session, loading] = useSession();
@@ -21,15 +21,7 @@ export default function campaigns() {
 			</Head>
 			<Sidebar />
 			<div id="page__content">
-				<header id="page__header">
-					<h1 className="page__title">Campaigns</h1>
-					<div id="page__actions">
-						<Link href="/campaigns/create">
-							<a className="button button--primary button--slim">Create New Campaign</a>
-						</Link>
-					</div>
-				</header>
-
+				<PageHeader title="Campaigns" primaryActionURL="/campaigns/create" primaryActionLabel="Create New Campaign" />
 				<CampaignList />
 			</div>
 		</div>

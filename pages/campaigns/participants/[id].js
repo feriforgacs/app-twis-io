@@ -6,6 +6,7 @@ import LoginForm from "../../../components/LoginForm";
 import Sidebar from "../../../components/dashboard-components/Sidebar";
 import ParticipantList from "../../../components/dashboard-components/participant-components/ParticipantList";
 import Toast from "../../../components/dashboard-components/Toast";
+import PageHeader from "../../../components/dashboard-components/PageHeader";
 
 export default function campaignParticipants() {
 	const router = useRouter();
@@ -60,10 +61,7 @@ export default function campaignParticipants() {
 			</Head>
 			<Sidebar />
 			<div id="page__content">
-				<header id="page__header">
-					<h1 className="page__title">{campaign.name || "..."} - Participants</h1>
-				</header>
-
+				<PageHeader title={`${campaign.name || "..."} - Participants`} secondaryActionLabel="Back to campaigns" secondaryActionURL="/campaigns" />
 				<ParticipantList campaignId={router.query.id} hideCampaignSelect={true} />
 				{toastVisible && <Toast onClose={() => setToastVisible(false)} duration={toastDuration} type={toastType} content={toastMessage} />}
 			</div>

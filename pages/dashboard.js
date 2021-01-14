@@ -1,6 +1,5 @@
 import { useSession, getSession } from "next-auth/client";
 import Head from "next/head";
-import Link from "next/link";
 import LoginForm from "../components/LoginForm";
 import Sidebar from "../components/dashboard-components/Sidebar";
 import CampaignList from "../components/dashboard-components/campaign-components/CampaignList";

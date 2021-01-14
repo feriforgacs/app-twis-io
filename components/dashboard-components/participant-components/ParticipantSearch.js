@@ -63,12 +63,12 @@ export default function ParticipantSearch({ participantSearch, setParticipantSea
 					</div>
 					{!hideCampaignSelect && (
 						<div className="form__group form__group--select">
-							<select className="form__select form__select--search" name="campaign" id="campaign" disabled={campaignsLoading} onChange={(e) => setParticipantCampaignId(e.target.value)}>
+							<select className="form__select form__select--search" name="campaign" id="campaign" disabled={campaignsLoading} onChange={(e) => setParticipantCampaignId(e.target.value)} value={participantCampaignId}>
 								<option value="">All campaigns</option>
 								{campaigns.length &&
 									!campaignsLoading &&
 									campaigns.map((campaignItem, key) => (
-										<option key={key} value={campaignItem._id} selected={`${participantCampaignId === campaignItem._id ? "selected" : ""}`}>
+										<option key={key} value={campaignItem._id}>
 											{campaignItem.name}
 										</option>
 									))}

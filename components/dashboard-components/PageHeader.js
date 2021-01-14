@@ -13,9 +13,9 @@ export default function PageHeader({ title = "Provide a title", primaryActionURL
 			)}
 
 			{secondaryActionURL && secondaryActionLabel && (
-				<div id="page__actions--secondary">
+				<div id="page__actions--secondary" className="section__action">
 					<Link href={secondaryActionURL}>
-						<a className="button button--link">{secondaryActionLabel}</a>
+						<a>{secondaryActionLabel}</a>
 					</Link>
 				</div>
 			)}

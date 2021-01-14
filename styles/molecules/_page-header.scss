@@ -1,0 +1,12 @@
+#page__header {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+
+	#page__actions {
+		&--secondary {
+			flex: 100%;
+			margin-top: 0.5rem;
+		}
+	}
+}

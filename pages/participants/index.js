@@ -3,6 +3,7 @@ import { useSession, getSession } from "next-auth/client";
 import LoginForm from "../../components/LoginForm";
 import Sidebar from "../../components/dashboard-components/Sidebar";
 import ParticipantList from "../../components/dashboard-components/participant-components/ParticipantList";
+import PageHeader from "../../components/dashboard-components/PageHeader";
 
 export default function participants() {
 	const [session, loading] = useSession();
@@ -20,10 +21,7 @@ export default function participants() {
 			</Head>
 			<Sidebar />
 			<div id="page__content">
-				<header id="page__header">
-					<h1 className="page__title">Participants</h1>
-				</header>
-
+				<PageHeader title="Participants" />
 				<ParticipantList />
 			</div>
 		</div>
