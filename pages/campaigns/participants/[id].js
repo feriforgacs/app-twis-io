@@ -23,39 +23,39 @@ export default function campaignParticipants() {
 		return <LoginForm signInPage={true} accessDenied={true} />;
 	}
 
-	/**
-	 * Get campaign data from the database
-	 */
-	const getCampaignData = async () => {
-		// make sure user is logged in
-		if (!session) {
-			return;
-		}
-
-		const campaignRequest = await fetch(`${process.env.APP_URL}/api/campaigns/data?id=${router.query.id}`, {
-			method: "GET",
-		});
-
-		const campaign = await campaignRequest.json();
-
-		if (campaign.success !== true) {
-			// error
-			setToastMessage("Can't get campaign data. Please, try again.");
-			setToastType("error");
-			setToastDuration(6000);
-			setToastVisible(true);
-			return;
-		}
-
-		if (campaign.data) {
-			setCampaign(campaign.data);
-		}
-		return;
-	};
-
 	useEffect(() => {
+		/**
+		 * Get campaign data from the database
+		 */
+		const getCampaignData = async () => {
+			// make sure user is logged in
+			if (!session) {
+				return;
+			}
+
+			const campaignRequest = await fetch(`${process.env.APP_URL}/api/campaigns/data?id=${router.query.id}`, {
+				method: "GET",
+			});
+
+			const campaign = await campaignRequest.json();
+
+			if (campaign.success !== true) {
+				// error
+				setToastMessage("Can't get campaign data. Please, try again.");
+				setToastType("error");
+				setToastDuration(6000);
+				setToastVisible(true);
+				return;
+			}
+
+			if (campaign.data) {
+				setCampaign(campaign.data);
+			}
+			return;
+		};
+
 		getCampaignData();
-	}, []);
+	});
 
 	return (
 		<div id="participants" className="page">

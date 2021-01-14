@@ -86,7 +86,7 @@ export default function ParticipantRow({ id, name = "", email = "", campaignId, 
 			</td>
 			<td className={`item__email`}>
 				{email ? (
-					<a href={`mailto:${email}`} target="_blank" rel="noopener noreferrer">
+					<a href={`mailto:${email}`} target="_blank" rel="noopener noreferrer" title={`Send email to ${email}`}>
 						{email}
 					</a>
 				) : (

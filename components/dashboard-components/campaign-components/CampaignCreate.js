@@ -88,7 +88,7 @@ export default function CampaignCreate() {
 									<span>Campaign Name is required</span>
 								</p>
 							)}
-							<p className="form__info-text">This is just an information for you so later you can easily identify your campaign. It won't be visible for the visitors of your campaign.</p>
+							<p className="form__info-text">This is just an information for you so later you can easily identify your campaign. It won&apos;t be visible for the visitors of your campaign.</p>
 						</div>
 					</div>
 

@@ -5,7 +5,7 @@ import Sidebar from "../../components/dashboard-components/Sidebar";
 import CampaignList from "../../components/dashboard-components/campaign-components/CampaignList";
 import PageHeader from "../../components/dashboard-components/PageHeader";
 
-export default function campaigns() {
+export default function Campaigns() {
 	const [session, loading] = useSession();
 
 	if (typeof window !== "undefined" && loading) return null;
