@@ -1,13 +1,49 @@
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useSession, getSession } from "next-auth/client";
 import LoginForm from "../../../components/LoginForm";
 import Sidebar from "../../../components/dashboard-components/Sidebar";
 import ParticipantList from "../../../components/dashboard-components/participant-components/ParticipantList";
+import Toast from "../../../components/dashboard-components/Toast";
 
 export default function campaignParticipants() {
 	const router = useRouter();
 	const [session, loading] = useSession();
+	const [campaign, setCampaign] = useState({});
+	const [toastMessage, setToastMessage] = useState(false);
+	const [toastVisible, setToastVisible] = useState(false);
+	const [toastType, setToastType] = useState("default");
+	const [toastDuration, setToastDuration] = useState(3000);
+
+	/**
+	 * Get campaign data from the database
+	 */
+	const getCampaignData = async () => {
+		const campaignRequest = await fetch(`${process.env.APP_URL}/api/campaigns/data?id=${router.query.id}`, {
+			method: "GET",
+		});
+
+		const campaign = await campaignRequest.json();
+
+		if (campaign.success !== true) {
+			// error
+			setToastMessage("Can't get campaign data. Please, try again.");
+			setToastType("error");
+			setToastDuration(6000);
+			setToastVisible(true);
+			return;
+		}
+
+		if (campaign.data) {
+			setCampaign(campaign.data);
+		}
+		return;
+	};
+
+	useEffect(() => {
+		getCampaignData();
+	}, []);
 
 	if (typeof window !== "undefined" && loading) return null;
 
@@ -18,15 +54,18 @@ export default function campaignParticipants() {
 	return (
 		<div id="participants" className="page">
 			<Head>
-				<title>Participants - {process.env.APP_NAME}</title>
+				<title>
+					{campaign.name || "..."} - Participants - {process.env.APP_NAME}
+				</title>
 			</Head>
 			<Sidebar />
 			<div id="page__content">
 				<header id="page__header">
-					<h1 className="page__title">###CAMPAING NAME / Participants</h1>
+					<h1 className="page__title">{campaign.name || "..."} - Participants</h1>
 				</header>
 
 				<ParticipantList campaignId={router.query.id} hideCampaignSelect={true} />
+				{toastVisible && <Toast onClose={() => setToastVisible(false)} duration={toastDuration} type={toastType} content={toastMessage} />}
 			</div>
 		</div>
 	);

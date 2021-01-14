@@ -40,8 +40,10 @@ export default function ParticipantSearch({ participantSearch, setParticipantSea
 	 * Get campaigns from the database on component load
 	 */
 	useEffect(() => {
-		getCampaigns();
-	}, []);
+		if (!hideCampaignSelect) {
+			getCampaigns();
+		}
+	}, [hideCampaignSelect]);
 
 	return (
 		<>
