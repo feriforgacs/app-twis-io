@@ -5,7 +5,7 @@ import Sidebar from "../../components/dashboard-components/Sidebar";
 import ParticipantList from "../../components/dashboard-components/participant-components/ParticipantList";
 import PageHeader from "../../components/dashboard-components/PageHeader";
 
-export default function participants() {
+export default function Participants() {
 	const [session, loading] = useSession();
 
 	if (typeof window !== "undefined" && loading) return null;

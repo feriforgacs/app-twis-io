@@ -2,8 +2,10 @@ import { useSession } from "next-auth/client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 export default function CheckYourInbox() {
+	const router = useRouter();
 	const [session] = useSession();
 	const [verifyRequestEmail, setVerifyRequestEmail] = useState();
 
@@ -11,7 +13,7 @@ export default function CheckYourInbox() {
 		if (localStorage.getItem("verifyRequestEmail")) {
 			setVerifyRequestEmail(localStorage.getItem("verifyRequestEmail"));
 		}
-	});
+	}, []);
 
 	/**
 	 * Redirect logged in users to dashboard

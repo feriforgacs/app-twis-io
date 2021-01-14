@@ -16,7 +16,7 @@ export default function Home() {
 		if (router.query.logout) {
 			setLoggedOut(true);
 		}
-	});
+	}, [router.query.error, router.query.logout]);
 
 	/**
 	 * Redirect logged in users to dashboard

@@ -19,7 +19,7 @@ const options = {
 						from: `${process.env.LOGIN_EMAIL_FROM_NAME} <${process.env.LOGIN_EMAIL_FROM}>`,
 						subject: `Sign in to ${site}`,
 						text: verificationEmailText({ url, site, email }),
-						html: verificationEmailHTML({ url, site, email }),
+						html: verificationEmailHTML({ url, email }),
 					};
 
 					mail.setApiKey(process.env.SENDGRID_KEY);
@@ -95,9 +95,8 @@ const options = {
 	},
 };
 
-const verificationEmailHTML = ({ url, site, email }) => {
+const verificationEmailHTML = ({ url, email }) => {
 	const escapedEmail = `${email.replace(/\./g, "&#8203;.")}`;
-	const escapedSite = `${site.replace(/\./g, "&#8203;.")}`;
 
 	const backgroundColor = "#ffffff";
 	const textColor = "#1d1d1d";

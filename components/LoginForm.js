@@ -1,9 +1,11 @@
 import { signIn, useSession } from "next-auth/client";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function LoginForm({ loginError = false, loggedOut = false, signInPage = false, accessDenied = false }) {
+	const router = useRouter();
 	const [session, loading] = useSession();
 	const [loginEmailAddress, setLoginEmailAddress] = useState("");
 	const [emailLoginLoading, setEmailLoginLoading] = useState(false);
@@ -62,7 +64,7 @@ export default function LoginForm({ loginError = false, loggedOut = false, signI
 					<h1>{signInPage ? `Sign in` : `Sign up or log in`}</h1>
 					{loginError && (
 						<p id="login-form__error" className="alert alert--error">
-							Something didn't work properly. Please, try again in a few minutes or use a different login option. If you keep seeing this message, please,{" "}
+							Something didn&apos;t work properly. Please, try again in a few minutes or use a different login option. If you keep seeing this message, please,{" "}
 							<Link href="/contact-us">
 								<a>contact us</a>
 							</Link>
