@@ -10,7 +10,6 @@ import ParticipantSearch from "./ParticipantSearch";
 import FooterHelp from "../FooterHelp";
 import LinkComponent from "../LinkComponent";
 import Pagination from "../Pagination";
-import "nprogress/nprogress.css";
 import NProgress from "nprogress";
 
 export default function ParticipantList({ limit = 200, dashboard = false, campaignId = "", hideCampaignSelect = false }) {

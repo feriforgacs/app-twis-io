@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import NProgress from "nprogress";
 import DashboardSection from "../DashboardSection";
 import CampaignCard from "./CampaignCard";
 import SkeletonCampaignCard from "../skeletons/SkeletonCampaignCard";
@@ -23,11 +24,12 @@ export default function CampaignList({ limit = 50, dashboard = false }) {
 	const [filtered, setFiltered] = useState(false);
 	const [reload, setReload] = useState(false);
 
-	/**
-	 * Get campaigns from the database on component load
-	 */
 	useEffect(() => {
+		/**
+		 * Get campaigns from the database on component load
+		 */
 		const getCampaigns = async () => {
+			NProgress.start();
 			const campaignsRequest = await fetch(`${process.env.APP_URL}/api/campaigns?limit=${campaignLimit}&search=${campaignSearch}`, {
 				method: "GET",
 			});
@@ -37,6 +39,7 @@ export default function CampaignList({ limit = 50, dashboard = false }) {
 			setLoading(false);
 			setSearching(false);
 			setReload(false);
+			NProgress.done();
 
 			if (campaigns.success !== true) {
 				// error
@@ -68,6 +71,7 @@ export default function CampaignList({ limit = 50, dashboard = false }) {
 
 	const filterReset = () => {
 		setCampaignSearch("");
+		setSearching(true);
 		if (filtered) {
 			setLoading(true);
 			setFiltered(false);
@@ -78,7 +82,7 @@ export default function CampaignList({ limit = 50, dashboard = false }) {
 		<>
 			{campaigns.length && dashboard ? <DashboardSection id="latest-campaigns" title="Latest Campaigns" actionLabel="View all campaigns" actionURL="/campaigns" /> : ""}
 
-			{loading && !dashboard && (
+			{loading && !dashboard && !searching && (
 				<>
 					<div className={`placeholder height-2`}></div>
 					<SkeletonSearchForm />
