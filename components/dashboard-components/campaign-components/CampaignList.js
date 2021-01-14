@@ -10,10 +10,10 @@ import CampaignSearch from "./CampaignSearch";
 import FooterHelp from "../FooterHelp";
 import LinkComponent from "../LinkComponent";
 
-export default function CampaignList({ limit = 5, dashboard = false }) {
+export default function CampaignList({ limit = 50, dashboard = false }) {
 	const [loading, setLoading] = useState(true);
 	const [campaigns, setCampaigns] = useState([]);
-	const [campaignLimit, setCampaignLimit] = useState(10);
+	const [campaignLimit] = useState(limit);
 	const [campaignSearch, setCampaignSearch] = useState("");
 	const [toastMessage, setToastMessage] = useState(false);
 	const [toastVisible, setToastVisible] = useState(false);
@@ -21,50 +21,49 @@ export default function CampaignList({ limit = 5, dashboard = false }) {
 	const [toastDuration, setToastDuration] = useState(3000);
 	const [searching, setSearching] = useState(false);
 	const [filtered, setFiltered] = useState(false);
-
-	/**
-	 * Get campaigns from the database
-	 */
-	const getCampaigns = async (reset = false) => {
-		const campaignsRequest = await fetch(`${process.env.APP_URL}/api/campaigns?limit=${campaignLimit}&search=${reset ? "" : campaignSearch}`, {
-			method: "GET",
-		});
-
-		const campaigns = await campaignsRequest.json();
-
-		setLoading(false);
-		setSearching(false);
-
-		if (campaigns.success !== true) {
-			// error
-			setToastMessage("Can't get campaigns. Please, try again.");
-			setToastType("error");
-			setToastDuration(6000);
-			setToastVisible(true);
-			return;
-		}
-
-		if (campaigns.data) {
-			setCampaigns(campaigns.data);
-		}
-		return;
-	};
+	const [reload, setReload] = useState(false);
 
 	/**
 	 * Get campaigns from the database on component load
 	 */
 	useEffect(() => {
+		const getCampaigns = async () => {
+			const campaignsRequest = await fetch(`${process.env.APP_URL}/api/campaigns?limit=${campaignLimit}&search=${campaignSearch}`, {
+				method: "GET",
+			});
+
+			const campaigns = await campaignsRequest.json();
+
+			setLoading(false);
+			setSearching(false);
+			setReload(false);
+
+			if (campaigns.success !== true) {
+				// error
+				setToastMessage("Can't get campaigns. Please, try again.");
+				setToastType("error");
+				setToastDuration(6000);
+				setToastVisible(true);
+				return;
+			}
+
+			if (campaigns.data) {
+				setCampaigns(campaigns.data);
+			}
+			return;
+		};
+
 		getCampaigns();
-	}, [campaignLimit]);
+	}, [campaignLimit, campaignSearch, reload]);
 
 	/**
 	 * Filter campaign list
 	 */
-	const filterCampaigns = () => {
+	const filterCampaigns = (keyword) => {
 		setLoading(true);
 		setSearching(true);
 		setFiltered(true);
-		getCampaigns();
+		setCampaignSearch(keyword);
 	};
 
 	const filterReset = () => {
@@ -72,7 +71,6 @@ export default function CampaignList({ limit = 5, dashboard = false }) {
 		if (filtered) {
 			setLoading(true);
 			setFiltered(false);
-			getCampaigns(true);
 		}
 	};
 
@@ -86,7 +84,7 @@ export default function CampaignList({ limit = 5, dashboard = false }) {
 					<SkeletonSearchForm />
 				</>
 			)}
-			{(campaigns.length || filtered) && !dashboard ? <CampaignSearch campaignSearch={campaignSearch} setCampaignSearch={setCampaignSearch} loading={loading} setLoading={setLoading} filterCampaigns={filterCampaigns} filterReset={filterReset} /> : ""}
+			{(campaigns.length || filtered) && !dashboard ? <CampaignSearch loading={loading} setLoading={setLoading} filterCampaigns={filterCampaigns} filterReset={filterReset} /> : ""}
 
 			<div id="campaign-list">
 				{/* Display loading state when getting campaigs on pageload or search */}
@@ -101,7 +99,7 @@ export default function CampaignList({ limit = 5, dashboard = false }) {
 				{campaigns.length && !searching ? (
 					<>
 						{campaigns.map((campaignItem, key) => (
-							<CampaignCard key={key} id={campaignItem._id} name={campaignItem.name} type={campaignItem.type} status={campaignItem.status} participants={campaignItem.participantCount} visibleFrom={campaignItem.visibleFrom} visibleTo={campaignItem.visibleTo} getCampaigns={getCampaigns} setToastMessage={setToastMessage} setToastVisible={setToastVisible} setToastType={setToastType} setToastDuration={setToastDuration} />
+							<CampaignCard key={key} id={campaignItem._id} name={campaignItem.name} type={campaignItem.type} status={campaignItem.status} participants={campaignItem.participantCount} visibleFrom={campaignItem.visibleFrom} visibleTo={campaignItem.visibleTo} reloadCampaigns={setReload} setToastMessage={setToastMessage} setToastVisible={setToastVisible} setToastType={setToastType} setToastDuration={setToastDuration} />
 						))}
 					</>
 				) : (

@@ -16,7 +16,7 @@ import NProgress from "nprogress";
 export default function ParticipantList({ limit = 200, dashboard = false, campaignId = "", hideCampaignSelect = false }) {
 	const [loading, setLoading] = useState(true);
 	const [participants, setParticipants] = useState([]);
-	const [participantLimit, setParticipantLimit] = useState(limit);
+	const [participantLimit] = useState(limit);
 	const [participantSearch, setParticipantSearch] = useState("");
 	const [participantCampaignId, setParticipantCampaignId] = useState(campaignId);
 	const [toastMessage, setToastMessage] = useState(false);
@@ -27,7 +27,6 @@ export default function ParticipantList({ limit = 200, dashboard = false, campai
 	const [filtered, setFiltered] = useState(false);
 	const [page, setPage] = useState(1);
 	const [pageCount, setPageCount] = useState(1);
-	const [participantCount, setParticipantCount] = useState();
 
 	/**
 	 * Get participants from the database
@@ -80,7 +79,6 @@ export default function ParticipantList({ limit = 200, dashboard = false, campai
 		}
 
 		if (participantsCount.data) {
-			setParticipantCount(participantsCount.data);
 			if (participantsCount.data > participantLimit) {
 				// count pages if participant count is higher than the limit
 				setPageCount(Math.ceil(participantsCount.data / participantLimit));
@@ -96,9 +94,9 @@ export default function ParticipantList({ limit = 200, dashboard = false, campai
 	 * Count participants on component load
 	 */
 	useEffect(() => {
-		getParticipants();
-		countParticipants();
-	}, []);
+		//getParticipants();
+		//countParticipants();
+	});
 
 	/**
 	 * Remove participant from state

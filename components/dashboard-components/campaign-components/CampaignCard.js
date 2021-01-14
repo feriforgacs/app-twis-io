@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Modal from "../Modal";
 
-export default function CampaignCard({ id, name, type, status, participants, visibleFrom, visibleTo, getCampaigns, setToastMessage, setToastVisible, setToastType, setToastDuration }) {
+export default function CampaignCard({ id, name, type, status, participants, visibleFrom, visibleTo, reloadCampaigns, setToastMessage, setToastVisible, setToastType, setToastDuration }) {
 	const [navigationVisible, toggleNavigationVisible] = useState(false);
 	const [selectedCampaignId, setSelectedCampaignId] = useState();
 	const [modalVisible, setModalVisible] = useState(false);
@@ -59,7 +59,7 @@ export default function CampaignCard({ id, name, type, status, participants, vis
 			setToastType("default");
 			setToastDuration(3000);
 			setToastVisible(true);
-			getCampaigns();
+			reloadCampaigns(true);
 			return;
 		}
 	};
