@@ -12,7 +12,7 @@ import LinkComponent from "../LinkComponent";
 import Pagination from "../Pagination";
 import NProgress from "nprogress";
 
-export default function ParticipantList({ limit = 200, dashboard = false, campaignId = "", hideCampaignSelect = false }) {
+export default function ParticipantList({ limit = 2, dashboard = false, campaignId = "", hideCampaignSelect = false }) {
 	const [loading, setLoading] = useState(true);
 	const [participants, setParticipants] = useState([]);
 	const [participantLimit] = useState(limit);
@@ -26,76 +26,80 @@ export default function ParticipantList({ limit = 200, dashboard = false, campai
 	const [filtered, setFiltered] = useState(false);
 	const [page, setPage] = useState(1);
 	const [pageCount, setPageCount] = useState(1);
-
-	/**
-	 * Get participants from the database
-	 */
-	const getParticipants = async (reset = false, page = 1) => {
-		const participantsRequest = await fetch(`${process.env.APP_URL}/api/participants?limit=${participantLimit}&search=${reset ? "" : participantSearch}&campaign=${participantCampaignId}&page=${page}`, {
-			method: "GET",
-		});
-
-		const participants = await participantsRequest.json();
-
-		setLoading(false);
-		setSearching(false);
-		NProgress.done();
-
-		if (participants.success !== true) {
-			// error
-			setToastMessage("Can't get participants. Please, try again.");
-			setToastType("error");
-			setToastDuration(6000);
-			setToastVisible(true);
-			return;
-		}
-
-		if (participants.data) {
-			setParticipants(participants.data);
-			setPage(page);
-		}
-		return;
-	};
-
-	/**
-	 * Count all participants, or participants by campaign
-	 * @param {bool} reset reset campaign id
-	 */
-	const countParticipants = async (reset = false) => {
-		const participantsCountRequest = await fetch(`${process.env.APP_URL}/api/participants/count?campaign=${reset ? "" : participantCampaignId}&search=${reset ? "" : participantSearch}`, {
-			method: "GET",
-		});
-
-		const participantsCount = await participantsCountRequest.json();
-
-		if (participantsCount.success !== true) {
-			// error
-			setToastMessage("Can't count participants. Please, try again.");
-			setToastType("error");
-			setToastDuration(6000);
-			setToastVisible(true);
-			return;
-		}
-
-		if (participantsCount.data) {
-			if (participantsCount.data > participantLimit) {
-				// count pages if participant count is higher than the limit
-				setPageCount(Math.ceil(participantsCount.data / participantLimit));
-			} else {
-				setPageCount(1);
-			}
-		}
-		return;
-	};
+	const [recountParticipants, setRecountParticipants] = useState(true);
 
 	/**
 	 * Load participants on component mount
 	 * Count participants on component load
 	 */
 	useEffect(() => {
-		//getParticipants();
-		//countParticipants();
-	});
+		/**
+		 * Get participants from the database
+		 */
+		const getParticipants = async () => {
+			const participantsRequest = await fetch(`${process.env.APP_URL}/api/participants?limit=${participantLimit}&search=${participantSearch}&campaign=${participantCampaignId}&page=${page}`, {
+				method: "GET",
+			});
+
+			const participants = await participantsRequest.json();
+
+			setLoading(false);
+			setSearching(false);
+			NProgress.done();
+
+			if (participants.success !== true) {
+				// error
+				setToastMessage("Can't get participants. Please, try again.");
+				setToastType("error");
+				setToastDuration(6000);
+				setToastVisible(true);
+				return;
+			}
+
+			if (participants.data) {
+				setParticipants(participants.data);
+				setPage(page);
+				if (recountParticipants) {
+					countParticipants();
+				}
+			}
+			return;
+		};
+
+		/**
+		 * Count all participants, or participants by campaign
+		 * @param {bool} reset reset campaign id
+		 */
+		const countParticipants = async (reset = false) => {
+			const participantsCountRequest = await fetch(`${process.env.APP_URL}/api/participants/count?campaign=${reset ? "" : participantCampaignId}&search=${reset ? "" : participantSearch}`, {
+				method: "GET",
+			});
+
+			const participantsCount = await participantsCountRequest.json();
+
+			if (participantsCount.success !== true) {
+				// error
+				setToastMessage("Can't count participants. Please, try again.");
+				setToastType("error");
+				setToastDuration(6000);
+				setToastVisible(true);
+				return;
+			}
+
+			if (participantsCount.data) {
+				setRecountParticipants(false);
+				if (participantsCount.data > participantLimit) {
+					// count pages if participant count is higher than the limit
+					setPageCount(Math.ceil(participantsCount.data / participantLimit));
+				} else {
+					setPageCount(1);
+				}
+			}
+			return;
+		};
+
+		getParticipants();
+	}, [participantLimit, participantSearch, participantCampaignId, page, recountParticipants]);
 
 	/**
 	 * Remove participant from state
@@ -110,12 +114,14 @@ export default function ParticipantList({ limit = 200, dashboard = false, campai
 	/**
 	 * Filter participant list
 	 */
-	const filterParticipants = () => {
+	const filterParticipants = (keyword, campaignId) => {
 		setLoading(true);
 		setSearching(true);
 		setFiltered(true);
-		getParticipants();
-		countParticipants();
+		setPage(1);
+		setParticipantCampaignId(campaignId);
+		setParticipantSearch(keyword);
+		setRecountParticipants(true);
 	};
 
 	/**
@@ -127,8 +133,8 @@ export default function ParticipantList({ limit = 200, dashboard = false, campai
 			setSearching(true);
 			setLoading(true);
 			setFiltered(false);
-			getParticipants(true);
-			countParticipants(true);
+			setPage(1);
+			setRecountParticipants(true);
 		}
 	};
 
@@ -137,7 +143,7 @@ export default function ParticipantList({ limit = 200, dashboard = false, campai
 	 */
 	const goToPage = (pageIndex) => {
 		NProgress.start();
-		getParticipants(false, pageIndex);
+		setPage(pageIndex);
 	};
 
 	return (
@@ -151,7 +157,7 @@ export default function ParticipantList({ limit = 200, dashboard = false, campai
 				</>
 			)}
 
-			{(participants.length || filtered) && !dashboard ? <ParticipantSearch participantSearch={participantSearch} setParticipantSearch={setParticipantSearch} setParticipantCampaignId={setParticipantCampaignId} participantCampaignId={participantCampaignId} loading={loading} setLoading={setLoading} filterParticipants={filterParticipants} filterReset={filterReset} hideCampaignSelect={hideCampaignSelect} /> : ""}
+			{(participants.length || filtered) && !dashboard ? <ParticipantSearch participantCampaignId={participantCampaignId} loading={loading} filterParticipants={filterParticipants} filterReset={filterReset} hideCampaignSelect={hideCampaignSelect} /> : ""}
 
 			<div id="participant-list">
 				{/* Display loading state when getting participants on pageload or search */}

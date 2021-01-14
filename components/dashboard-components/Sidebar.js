@@ -1,10 +1,21 @@
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 import { signOut } from "next-auth/client";
 import Image from "next/image";
 import Link from "next/link";
-
+import NProgress from "nprogress";
 import SidebarNavItem from "./SidebarNavItem";
+
+Router.onRouteChangeStart = () => {
+	NProgress.start();
+};
+Router.onRouteChangeComplete = () => {
+	NProgress.done();
+};
+
+Router.onRouteChangeError = () => {
+	NProgress.done();
+};
 
 export default function Sidebar() {
 	const router = useRouter();
@@ -14,7 +25,7 @@ export default function Sidebar() {
 		if (router.pathname) {
 			setActiveNavItem(router.pathname.replace("/", ""));
 		}
-	});
+	}, [router.pathname]);
 
 	const doSignOut = (e) => {
 		e.preventDefault();
