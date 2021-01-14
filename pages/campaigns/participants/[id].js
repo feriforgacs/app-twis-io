@@ -8,32 +8,26 @@ import ParticipantList from "../../../components/dashboard-components/participan
 import Toast from "../../../components/dashboard-components/Toast";
 import PageHeader from "../../../components/dashboard-components/PageHeader";
 
-export default function campaignParticipants() {
+export default function CampaignParticipants() {
 	const router = useRouter();
 	const [session, loading] = useSession();
 	const [campaign, setCampaign] = useState({});
+	const [campaignId] = useState(router.query.id || 0);
 	const [toastMessage, setToastMessage] = useState(false);
 	const [toastVisible, setToastVisible] = useState(false);
 	const [toastType, setToastType] = useState("default");
 	const [toastDuration, setToastDuration] = useState(3000);
 
-	if (typeof window !== "undefined" && loading) return null;
-
-	if (!session) {
-		return <LoginForm signInPage={true} accessDenied={true} />;
-	}
-
 	useEffect(() => {
+		// make sure user is logged in
+		if (!session) {
+			return;
+		}
 		/**
 		 * Get campaign data from the database
 		 */
 		const getCampaignData = async () => {
-			// make sure user is logged in
-			if (!session) {
-				return;
-			}
-
-			const campaignRequest = await fetch(`${process.env.APP_URL}/api/campaigns/data?id=${router.query.id}`, {
+			const campaignRequest = await fetch(`${process.env.APP_URL}/api/campaigns/data?id=${campaignId}`, {
 				method: "GET",
 			});
 
@@ -55,7 +49,13 @@ export default function campaignParticipants() {
 		};
 
 		getCampaignData();
-	});
+	}, [campaignId, session]);
+
+	if (typeof window !== "undefined" && loading) return null;
+
+	if (!session) {
+		return <LoginForm signInPage={true} accessDenied={true} />;
+	}
 
 	return (
 		<div id="participants" className="page">
@@ -67,7 +67,7 @@ export default function campaignParticipants() {
 			<Sidebar />
 			<div id="page__content">
 				<PageHeader title={`${campaign.name || "..."} - Participants`} secondaryActionLabel="Back to campaigns" secondaryActionURL="/campaigns" />
-				<ParticipantList campaignId={router.query.id} hideCampaignSelect={true} />
+				<ParticipantList campaignId={campaignId} hideCampaignSelect={true} />
 				{toastVisible && <Toast onClose={() => setToastVisible(false)} duration={toastDuration} type={toastType} content={toastMessage} />}
 			</div>
 		</div>
