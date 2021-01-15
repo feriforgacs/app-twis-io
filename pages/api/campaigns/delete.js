@@ -1,8 +1,10 @@
 import Cors from "cors";
+import mongoose from "mongoose";
 import { getSession } from "next-auth/client";
 import initMiddleware from "../../../lib/InitMiddleware";
 import AuthCheck from "../../../lib/AuthCheck";
 import DatabaseConnect from "../../../lib/DatabaseConnect";
+import EventLog from "../../../lib/EventLog";
 import Campaign from "../../../models/Campaign";
 import Participant from "../../../models/Participant";
 
@@ -24,11 +26,36 @@ export default async function CampaignDeleteHandler(req, res) {
 	await DatabaseConnect();
 	const session = await getSession({ req });
 
-	// TODO - remove participant's answers from the database
+	// check campaign id
+	if (!req.body.id) {
+		res.status(400).json({ success: false, error: "missing campaign id" });
+		return;
+	}
+
+	// check campaign id format
+	const campaignId = req.body.id;
+	if (!mongoose.Types.ObjectId.isValid(campaignId)) {
+		res.status(400).json({ success: false, error: "invalid campaign id" });
+		return;
+	}
+
+	// check user and campaign connection
+	try {
+		const campaign = await Campaign.countDocuments({ _id: campaignId, createdBy: session.user.id });
+		if (!campaign) {
+			res.status(400).json({ success: false, error: "not authorized" });
+			return;
+		}
+	} catch (error) {
+		res.status(400).json({ success: false, error });
+		return;
+	}
+
+	// TODO - remove participants answer's from the database
 
 	// remove campaign participants from the database
 	try {
-		await Participant.deleteMany({ campaignId: req.body.id });
+		await Participant.deleteMany({ campaignId: campaignId });
 	} catch (error) {
 		res.status(400).json({ success: false, error });
 		return;
@@ -36,10 +63,11 @@ export default async function CampaignDeleteHandler(req, res) {
 
 	// remove campaign from the database
 	try {
-		await Campaign.findOneAndDelete({ _id: req.body.id, createdBy: session.user.id });
-
+		await Campaign.findOneAndDelete({ _id: campaignId, createdBy: session.user.id });
+		await EventLog(`campaign delete - campaign id: ${campaignId}`, session.user.id);
 		res.status(200).json({ success: true });
 	} catch (error) {
 		res.status(400).json({ success: false });
 	}
+	return;
 }

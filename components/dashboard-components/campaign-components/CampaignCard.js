@@ -144,7 +144,7 @@ export default function CampaignCard({ id, name, type, status, participants, vis
 				</div>
 			</div>
 
-			{modalVisible && <Modal title="Are you sure you want to delete the campaign?" body="When you delete a campaign, all the collected participant information will be removed as well." primaryAction={deleteCampaign} primaryActionLabel="Yes, delete campaign" secondaryAction={() => setModalVisible(false)} secondaryActionLabel="Cancel" onClose={() => setModalVisible(false)} loading={deleteLoading} />}
+			{modalVisible && <Modal title="Are you sure you want to delete the campaign?" body="⚠️ When you delete a campaign, all the collected participant information will be removed as well. ⚠️" primaryAction={deleteCampaign} primaryActionLabel="Yes, delete campaign" secondaryAction={() => setModalVisible(false)} secondaryActionLabel="Cancel" onClose={() => setModalVisible(false)} loading={deleteLoading} />}
 		</>
 	);
 }
