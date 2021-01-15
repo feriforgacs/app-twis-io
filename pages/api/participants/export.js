@@ -6,6 +6,7 @@ import { format } from "date-fns";
 import { getSession } from "next-auth/client";
 import initMiddleware from "../../../lib/InitMiddleware";
 import AuthCheck from "../../../lib/AuthCheck";
+import EventLog from "../../../lib/EventLog";
 import DatabaseConnect from "../../../lib/DatabaseConnect";
 import Campaign from "../../../models/Campaign";
 import Participant from "../../../models/Participant";
@@ -109,10 +110,12 @@ export default async function ParticipantExportHandler(req, res) {
 
 		res.setHeader("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 		res.setHeader("Content-Disposition", `attachment; filename=twis_participant_export_${format(new Date(), "yyyyMMdd")}.xlsx`);
-		workbook.xlsx.write(res).then(function () {
-			res.end();
+		const exportResult = await workbook.xlsx.write(res);
+		if (exportResult) {
+			await EventLog(`participant export - search: ${search} - campaigns: ${campaigns.join()}`, session.user.id);
+			res.status(200).end();
 			return;
-		});
+		}
 	} catch (error) {
 		res.status(400).send("Database error. Please, refresh the page and try again.");
 		res.end();
