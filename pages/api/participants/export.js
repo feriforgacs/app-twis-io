@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import escapeStringRegexp from "escape-string-regexp";
 import Cors from "cors";
+import ExcelJS from "exceljs";
+import { format } from "date-fns";
 import { getSession } from "next-auth/client";
 import initMiddleware from "../../../lib/InitMiddleware";
 import AuthCheck from "../../../lib/AuthCheck";
@@ -31,18 +33,21 @@ export default async function ParticipantExportHandler(req, res) {
 	if (req.query.campaign && req.query.campaign !== "") {
 		// check campaign id format
 		if (!mongoose.Types.ObjectId.isValid(req.query.campaign)) {
-			res.status(400).json({ success: false, error: "invalid campaign id" });
+			res.status(400).send("Invalid campaign ID");
+			res.end();
 			return;
 		}
 
 		try {
 			campaigns = await Campaign.find({ createdBy: session.user.id, _id: req.query.campaign }).distinct("_id");
 			if (!campaigns.length) {
-				res.status(401).json({ success: false, error: "not authorized" });
+				res.status(401).send("Not authorized");
+				res.end();
 				return;
 			}
 		} catch (error) {
-			res.status(400).json({ success: false });
+			res.status(400).send("Database error. Please, refresh the page and try again.");
+			res.end();
 			return;
 		}
 	} else {
@@ -50,20 +55,8 @@ export default async function ParticipantExportHandler(req, res) {
 		try {
 			campaigns = await Campaign.find({ createdBy: session.user.id }).distinct("_id");
 		} catch (error) {
-			res.status(400).json({ success: false });
+			res.status(400).send("Database error. Please, refresh the page and try again.");
 		}
-	}
-
-	// check page in the params
-	let page = 0;
-	if (req.query.page) {
-		page = parseInt(req.query.page) - 1 || 0;
-	}
-
-	// check limit in the params
-	let limit = 200;
-	if (req.query.limit) {
-		limit = parseInt(req.query.limit) || 200;
 	}
 
 	// check search query in the params
@@ -87,18 +80,42 @@ export default async function ParticipantExportHandler(req, res) {
 				],
 			})
 				.and({ campaignId: { $in: campaigns } })
-				.limit(limit)
-				.skip(limit * page)
 				.sort({ _id: -1 });
 		} else {
-			participants = await Participant.find({ campaignId: { $in: campaigns } })
-				.limit(limit)
-				.skip(limit * page)
-				.sort({ _id: -1 });
+			participants = await Participant.find({ campaignId: { $in: campaigns } }).sort({ _id: -1 });
 		}
-		res.status(200).json({ success: true, data: participants });
+
+		/**
+		 * TODO
+		 * Log export event because of GDPR
+		 */
+
+		const workbook = new ExcelJS.Workbook();
+		workbook.creator = "twis.io";
+
+		var worksheet = workbook.addWorksheet("Participants");
+		worksheet.columns = [
+			{ header: "ID", key: "id" },
+			{ header: "Created at", key: "created_at" },
+			{ header: "Name", key: "name" },
+			{ header: "Email address", key: "email" },
+			{ header: "Campaign name", key: "campaign_name" },
+			{ header: "Campaign ID", key: "campaign_id" },
+		];
+
+		participants.forEach((participant) => {
+			worksheet.addRow({ id: participant._id, created_at: participant.createdAt, name: participant.name, email: participant.email, campaign_name: participant.campaign.name, campaign_id: participant.campaign._id });
+		});
+
+		res.setHeader("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+		res.setHeader("Content-Disposition", `attachment; filename=twis_participant_export_${format(new Date(), "yyyyMMdd")}.xlsx`);
+		workbook.xlsx.write(res).then(function () {
+			res.end();
+			return;
+		});
 	} catch (error) {
-		res.status(400).json({ success: false });
+		res.status(400).send("Database error. Please, refresh the page and try again.");
+		res.end();
 	}
 	return;
 }
