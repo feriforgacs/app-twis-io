@@ -116,7 +116,7 @@ export default function ParticipantRow({ id, name = "", email = "", campaignId, 
 					</div>
 				)}
 
-				{modalVisible && <Modal title="Are you sure you want to delete the participant?" body={`If you remove a participant, there is no option to restore the collected information.`} primaryAction={deleteParticipant} primaryActionLabel="Yes, delete participant" secondaryAction={() => setModalVisible(false)} secondaryActionLabel="Cancel" onClose={() => setModalVisible(false)} loading={deleteLoading} />}
+				{modalVisible && <Modal title="Are you sure you want to delete the participant?" body={`⚠️ When you remove a participant, their answers will be deleted as well and there is no option to restore the collected information. ⚠️`} primaryAction={deleteParticipant} primaryActionLabel="Yes, delete participant" secondaryAction={() => setModalVisible(false)} secondaryActionLabel="Cancel" onClose={() => setModalVisible(false)} loading={deleteLoading} />}
 			</td>
 		</tr>
 	);
