@@ -95,16 +95,16 @@ export default async function ParticipantExportHandler(req, res) {
 
 		var worksheet = workbook.addWorksheet("Participants");
 		worksheet.columns = [
-			{ header: "ID", key: "id" },
-			{ header: "Created at", key: "created_at" },
-			{ header: "Name", key: "name" },
-			{ header: "Email address", key: "email" },
-			{ header: "Campaign name", key: "campaign_name" },
-			{ header: "Campaign ID", key: "campaign_id" },
+			{ header: "ID", key: "id", width: 25 },
+			{ header: "Created at", key: "created_at", width: 15 },
+			{ header: "Name", key: "name", width: 25 },
+			{ header: "Email address", key: "email", width: 25 },
+			{ header: "Campaign name", key: "campaign_name", width: 25 },
+			{ header: "Campaign ID", key: "campaign_id", width: 25 },
 		];
 
 		participants.forEach((participant) => {
-			worksheet.addRow({ id: participant._id, created_at: participant.createdAt, name: participant.name, email: participant.email, campaign_name: participant.campaign.name, campaign_id: participant.campaign._id });
+			worksheet.addRow({ id: participant._id.toString(), created_at: participant.createdAt, name: participant.name, email: participant.email, campaign_name: participant.campaign.name, campaign_id: participant.campaign._id.toString() });
 		});
 
 		res.setHeader("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
