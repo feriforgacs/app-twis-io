@@ -123,7 +123,7 @@ export default function CampaignList({ limit = 50, dashboard = false }) {
 
 			{!dashboard && (
 				<FooterHelp>
-					Lrean more about <LinkComponent url="http://twis.io">campaign best practices</LinkComponent>
+					###TODO Lrean more about <LinkComponent url="http://twis.io">campaign best practices</LinkComponent>
 				</FooterHelp>
 			)}
 

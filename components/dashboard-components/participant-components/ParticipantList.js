@@ -217,7 +217,7 @@ export default function ParticipantList({ limit = 200, dashboard = false, campai
 
 			{!dashboard && (
 				<FooterHelp>
-					Learn more about <LinkComponent url="http://twis.io">getting participants</LinkComponent>
+					###TODO Learn more about <LinkComponent url="http://twis.io">getting participants</LinkComponent>
 				</FooterHelp>
 			)}
 
