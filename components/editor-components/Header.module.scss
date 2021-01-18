@@ -1,0 +1,12 @@
+@import "../../styles/mixins/color";
+
+.header {
+	align-items: center;
+	background: $primaryColor;
+	display: flex;
+	height: 60px;
+}
+
+.logoContainer {
+	padding: 0 1rem;
+}

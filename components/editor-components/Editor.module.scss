@@ -1,0 +1,15 @@
+.editor {
+	background: #f7f7f7;
+	box-sizing: border-box;
+	min-height: 100vh;
+	min-width: 100vw;
+	overflow-y: scroll;
+
+	&__sidebar {
+		background: #34495b;
+		width: 400px;
+	}
+
+	&__body {
+	}
+}
