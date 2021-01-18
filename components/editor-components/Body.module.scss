@@ -1,3 +1,9 @@
 .body {
-	background: yellow;
+	height: calc(100vh - 60px);
+	left: 400px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	position: fixed;
+	top: 60px;
+	width: calc(100vw - 400px);
 }
