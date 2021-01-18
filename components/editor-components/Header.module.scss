@@ -4,9 +4,55 @@
 	align-items: center;
 	background: $primaryColor;
 	display: flex;
+	font-size: 0.8rem;
 	height: 60px;
+	left: 0;
+	position: fixed;
+	top: 0;
+	width: 100vw;
+	z-index: 1000;
+
+	a {
+		color: #fff;
+		text-decoration: none;
+	}
+}
+
+.separator {
+	color: #9680fe;
+	font-weight: 700;
+	padding: 0 1rem;
 }
 
 .logoContainer {
 	padding: 0 1rem;
+}
+
+.campaignNameContainer {
+	position: relative;
+	input {
+		background: none;
+		border: 1px solid #9680fe;
+		border-radius: 3px;
+		box-sizing: border-box;
+		color: #fff;
+		height: 1.8rem;
+		line-height: 1.8rem;
+		padding: 0 0.5rem;
+		position: relative;
+		width: 250px;
+		z-index: 20;
+	}
+}
+
+.editIcon {
+	opacity: 0.5;
+	position: absolute;
+	right: 0.5rem;
+	top: 0.3rem;
+	z-index: 1;
+
+	svg {
+		stroke: #fff;
+	}
 }
