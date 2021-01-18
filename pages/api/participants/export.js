@@ -31,7 +31,7 @@ export default async function ParticipantExportHandler(req, res) {
 
 	let campaigns;
 	// filter by campaign id
-	if (req.query.campaign && req.query.campaign !== "") {
+	if (req.query.campaign && (req.query.campaign !== "" || req.query.campaign !== 0)) {
 		// check campaign id format
 		if (!mongoose.Types.ObjectId.isValid(req.query.campaign)) {
 			res.status(400).send("Invalid campaign ID");

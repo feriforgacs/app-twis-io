@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import NProgress from "nprogress";
 import DashboardSection from "../DashboardSection";
 import ParticipantRow from "./ParticipantRow";
 import EmptyState from "../EmptyState";
@@ -10,7 +11,7 @@ import ParticipantSearch from "./ParticipantSearch";
 import FooterHelp from "../FooterHelp";
 import LinkComponent from "../LinkComponent";
 import Pagination from "../Pagination";
-import NProgress from "nprogress";
+import PageActionsHeader from "../PageActionsHeader";
 
 export default function ParticipantList({ limit = 200, dashboard = false, campaignId = "", hideCampaignSelect = false }) {
 	const [loading, setLoading] = useState(true);
@@ -18,6 +19,7 @@ export default function ParticipantList({ limit = 200, dashboard = false, campai
 	const [participantLimit] = useState(limit);
 	const [participantSearch, setParticipantSearch] = useState("");
 	const [participantCampaignId, setParticipantCampaignId] = useState(campaignId);
+	const [participantCount, setParticipantCount] = useState(0);
 	const [toastMessage, setToastMessage] = useState(false);
 	const [toastVisible, setToastVisible] = useState(false);
 	const [toastType, setToastType] = useState("default");
@@ -60,6 +62,7 @@ export default function ParticipantList({ limit = 200, dashboard = false, campai
 				setParticipants(participants.data);
 				setPage(page);
 				if (recountParticipants) {
+					setParticipantCount("...");
 					countParticipants();
 				}
 			}
@@ -85,15 +88,15 @@ export default function ParticipantList({ limit = 200, dashboard = false, campai
 				return;
 			}
 
-			if (participantsCount.data) {
-				setRecountParticipants(false);
-				if (participantsCount.data > participantLimit) {
-					// count pages if participant count is higher than the limit
-					setPageCount(Math.ceil(participantsCount.data / participantLimit));
-				} else {
-					setPageCount(1);
-				}
+			setRecountParticipants(false);
+			setParticipantCount(parseInt(participantsCount.data));
+			if (participantsCount.data > participantLimit) {
+				// count pages if participant count is higher than the limit
+				setPageCount(Math.ceil(participantsCount.data / participantLimit));
+			} else {
+				setPageCount(1);
 			}
+
 			return;
 		};
 
@@ -156,6 +159,8 @@ export default function ParticipantList({ limit = 200, dashboard = false, campai
 				</>
 			)}
 
+			{participants.length && !dashboard ? <PageActionsHeader infoText={`${participantCount} participant${participantCount > 1 ? "s" : ""}`} primaryActionLabel="Export participants" primaryActionURL={`/api/participants/export?campaign=${participantCampaignId}&search=${participantSearch}`} /> : ""}
+
 			{(participants.length || filtered) && !dashboard ? <ParticipantSearch participantCampaignId={participantCampaignId} loading={loading} filterParticipants={filterParticipants} filterReset={filterReset} hideCampaignSelect={hideCampaignSelect} /> : ""}
 
 			<div id="participant-list">
@@ -206,7 +211,7 @@ export default function ParticipantList({ limit = 200, dashboard = false, campai
 				{filtered && !participants.length && !searching ? <EmptyStateSearch title="No result" description="We couldn't find any items that fit your criteria. Please, try a different keyword" illustration="participants" /> : ""}
 
 				{/* Empty state when there are no participants, not search result and not loading */}
-				{!participants.length && !loading && !filtered ? <EmptyState title="No participants" description="Your campaigns haven't acquired any participants yet." helpLabel="###TODO Learn how to acquire participants" helpURL="https://" illustration="participants" /> : ""}
+				{!participants.length && !loading && !filtered ? <EmptyState title="No participants" description="You haven't acquired any participants yet." helpLabel="###TODO Learn how to acquire participants" helpURL="https://" illustration="participants" /> : ""}
 			</div>
 
 			{!dashboard && (

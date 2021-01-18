@@ -104,6 +104,19 @@
 		}
 	}
 
+	&--link {
+		color: $fontColorTertiary;
+		font-weight: 400;
+
+		&:hover:not(:disabled) {
+			color: $fontColor;
+		}
+
+		&:active {
+			color: $primaryColor;
+		}
+	}
+
 	&--slim {
 		font-size: 0.9rem;
 		height: 2rem;

@@ -1,0 +1,19 @@
+.page__actions {
+	display: flex;
+	justify-content: space-between;
+
+	.info {
+		p {
+			font-size: 0.9rem;
+			margin: 0.5rem 0;
+		}
+	}
+
+	.actions {
+		display: flex;
+
+		.button {
+			margin: 0 0 0 0.5rem;
+		}
+	}
+}
