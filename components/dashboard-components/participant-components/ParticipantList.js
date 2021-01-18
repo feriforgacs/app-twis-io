@@ -111,6 +111,7 @@ export default function ParticipantList({ limit = 200, dashboard = false, campai
 		const remainingParticipants = [...participants];
 		remainingParticipants.splice(index, 1);
 		setParticipants(remainingParticipants);
+		setParticipantCount(participantCount - 1);
 	};
 
 	/**

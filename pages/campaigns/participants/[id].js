@@ -66,7 +66,7 @@ export default function CampaignParticipants() {
 			</Head>
 			<Sidebar />
 			<div id="page__content">
-				<PageHeader title={`${campaign.name || "..."} - Participants`} secondaryActionLabel="Back to campaigns" secondaryActionURL="/campaigns" />
+				<PageHeader title={`${campaign.name || "..."} - Participants`} />
 				<ParticipantList campaignId={campaignId} hideCampaignSelect={true} />
 				{toastVisible && <Toast onClose={() => setToastVisible(false)} duration={toastDuration} type={toastType} content={toastMessage} />}
 			</div>
