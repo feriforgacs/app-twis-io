@@ -10,6 +10,7 @@ import Toast from "../Toast";
 import CampaignSearch from "./CampaignSearch";
 import FooterHelp from "../FooterHelp";
 import LinkComponent from "../LinkComponent";
+import PageActionsHeader from "../PageActionsHeader";
 
 export default function CampaignList({ limit = 50, dashboard = false }) {
 	const [loading, setLoading] = useState(true);
@@ -88,6 +89,9 @@ export default function CampaignList({ limit = 50, dashboard = false }) {
 					<SkeletonSearchForm />
 				</>
 			)}
+
+			{campaigns.length && !dashboard ? <PageActionsHeader infoText={`${campaigns.length} campaign${campaigns.length > 1 ? "s" : ""}`} primaryActionURL="/campaigns/create" primaryActionLabel="Create New Campaign" /> : ""}
+
 			{(campaigns.length || filtered) && !dashboard ? <CampaignSearch loading={loading} setLoading={setLoading} filterCampaigns={filterCampaigns} filterReset={filterReset} /> : ""}
 
 			<div id="campaign-list">

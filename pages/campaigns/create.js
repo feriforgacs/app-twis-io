@@ -21,7 +21,7 @@ export default function CampaignCreatePage() {
 			</Head>
 			<Sidebar />
 			<div id="page__content">
-				<PageHeader title="Create New Campaign" secondaryActionURL="/campaigns" secondaryActionLabel="Back to campaigns" />
+				<PageHeader title="Create New Campaign" />
 				<CampaignCreate />
 			</div>
 		</div>

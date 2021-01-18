@@ -5,6 +5,7 @@ import Link from "next/link";
 import CreateCampaignOption from "./CampaignCreateOption";
 import Button from "../Button";
 import Toast from "../Toast";
+import PageActionsHeader from "../PageActionsHeader";
 
 export default function CampaignCreate() {
 	const router = useRouter();
@@ -71,6 +72,7 @@ export default function CampaignCreate() {
 
 	return (
 		<>
+			<PageActionsHeader infoActionURL="/campaigns" infoActionLabel="Back to campaigns" />
 			<div id="campaign-create">
 				<div id="campaign-create__form" className="form">
 					<div className="form__section">

@@ -21,7 +21,7 @@ export default function Campaigns() {
 			</Head>
 			<Sidebar />
 			<div id="page__content">
-				<PageHeader title="Campaigns" primaryActionURL="/campaigns/create" primaryActionLabel="Create New Campaign" />
+				<PageHeader title="Campaigns" />
 				<CampaignList />
 			</div>
 		</div>
