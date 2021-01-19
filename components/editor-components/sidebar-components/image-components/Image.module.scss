@@ -1,3 +1,33 @@
 .imageList {
 	padding: 0 1rem 1rem;
 }
+
+.imageUploadContainer {
+	padding: 0 1rem 1rem;
+	position: relative;
+
+	input {
+		background: none;
+		border: none;
+		box-sizing: border-box;
+		cursor: pointer;
+		font-size: 0.8rem;
+		height: 2.3rem;
+		left: 0;
+		line-height: 2.3rem;
+		margin: 0;
+		opacity: 0;
+		padding: 0;
+		position: absolute;
+		top: 0;
+		width: 100%;
+	}
+
+	small{
+		color: #6589a8;
+		display: block;
+		font-size: .7rem;
+		margin-top: .4rem;
+		text-align: center;
+	}
+}

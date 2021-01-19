@@ -10,6 +10,8 @@
 	"dependencies": {
 		"@sendgrid/client": "^7.4.0",
 		"@sendgrid/mail": "^7.4.0",
+		"axios": "^0.21.1",
+		"cloudinary": "^1.23.0",
 		"cors": "^2.8.5",
 		"date-fns": "^2.16.1",
 		"escape-string-regexp": "^4.0.0",
