@@ -4,6 +4,12 @@
 
 .option {
 	cursor: move;
+	cursor: grab;
+
+	&:active {
+		cursor: move;
+		cursor: grabbing;
+	}
 }
 
 .optionText {
@@ -29,6 +35,7 @@
 .tab {
 	box-sizing: border-box;
 	border-right: 1px solid #425d74;
+	color: #c0c5c8;
 	cursor: pointer;
 	flex-grow: 1;
 	padding: 0 0.5rem;
@@ -42,6 +49,6 @@
 
 .tabActive {
 	background: #425d74;
+	color: #fff;
 	cursor: default;
-	font-weight: bold;
 }

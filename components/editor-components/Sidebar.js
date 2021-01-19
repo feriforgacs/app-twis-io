@@ -1,8 +1,8 @@
 import { useState } from "react";
 import styles from "./Sidebar.module.scss";
 import Element from "./sidebar-components/Element";
-import ElementOptionsText from "./sidebar-components/ElementOptionsText";
-import ElementOptionsImage from "./sidebar-components/ElementOptionsImage";
+import TextList from "./sidebar-components/text-components/TextList";
+import ImageList from "./sidebar-components/image-components/ImageList";
 
 export default function Sidebar() {
 	const [activeElement, setActiveElement] = useState("text");
@@ -16,8 +16,8 @@ export default function Sidebar() {
 			</div>
 			<div id="sidebar__element-options" className={styles.sidebarElementOptions}>
 				<p>Drag and drop items to the screens</p>
-				{activeElement === "text" && <ElementOptionsText />}
-				{activeElement === "image" && <ElementOptionsImage />}
+				{activeElement === "text" && <TextList />}
+				{activeElement === "image" && <ImageList />}
 			</div>
 		</div>
 	);
