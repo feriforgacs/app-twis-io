@@ -14,3 +14,34 @@
 	padding: 0.5rem;
 	user-select: none;
 }
+
+.tabs {
+	border: 1px solid #425d74;
+	border-radius: 5px;
+	color: #fff;
+	display: flex;
+	font-size: 0.7rem;
+	justify-content: space-evenly;
+	line-height: 2rem;
+	text-transform: uppercase;
+}
+
+.tab {
+	box-sizing: border-box;
+	border-right: 1px solid #425d74;
+	cursor: pointer;
+	flex-grow: 1;
+	padding: 0 0.5rem;
+	text-align: center;
+	user-select: none;
+
+	&:last-child {
+		border-right: none;
+	}
+}
+
+.tabActive {
+	background: #425d74;
+	cursor: default;
+	font-weight: bold;
+}

@@ -2,6 +2,7 @@ import { useState } from "react";
 import styles from "./Sidebar.module.scss";
 import Element from "./sidebar-components/Element";
 import ElementOptionsText from "./sidebar-components/ElementOptionsText";
+import ElementOptionsImage from "./sidebar-components/ElementOptionsImage";
 
 export default function Sidebar() {
 	const [activeElement, setActiveElement] = useState("text");
@@ -16,6 +17,7 @@ export default function Sidebar() {
 			<div id="sidebar__element-options" className={styles.sidebarElementOptions}>
 				<p>Drag and drop items to the screens</p>
 				{activeElement === "text" && <ElementOptionsText />}
+				{activeElement === "image" && <ElementOptionsImage />}
 			</div>
 		</div>
 	);
