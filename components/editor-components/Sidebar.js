@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styles from "./Sidebar.module.scss";
 import Element from "./sidebar-components/Element";
+import ElementOptionsText from "./sidebar-components/ElementOptionsText";
 
 export default function Sidebar() {
 	const [activeElement, setActiveElement] = useState("text");
@@ -13,7 +14,8 @@ export default function Sidebar() {
 				<Element icon="sticker" label="Sticker" active={activeElement === "sticker"} onClick={() => setActiveElement("sticker")} />
 			</div>
 			<div id="sidebar__element-options" className={styles.sidebarElementOptions}>
-				element settings
+				<p>Drag and drop items to the screens</p>
+				{activeElement === "text" && <ElementOptionsText />}
 			</div>
 		</div>
 	);
