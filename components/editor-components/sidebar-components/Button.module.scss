@@ -1,0 +1,21 @@
+.button {
+	align-items: center;
+	background: #159c5b;
+	border: none;
+	border-radius: 3px;
+	box-sizing: border-box;
+	color: #fff;
+	cursor: pointer;
+	display: flex;
+	font-size: 0.8rem;
+	font-weight: bold;
+	height: 2.2rem;
+	justify-content: center;
+	line-height: 2.2rem;
+	outline: none;
+	width: 100%;
+
+	&:active {
+		box-shadow: 0 0 10px #159c5b;
+	}
+}
