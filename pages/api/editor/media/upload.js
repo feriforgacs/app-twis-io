@@ -11,12 +11,12 @@ const cors = initMiddleware(
 );
 
 export const config = {
-  api: {
-    bodyParser: {
-      sizeLimit: '2.5mb',
-    },
-  },
-}
+	api: {
+		bodyParser: {
+			sizeLimit: "2.5mb",
+		},
+	},
+};
 
 export default async function UploadHandler(req, res) {
 	await cors(req, res);
@@ -36,24 +36,21 @@ export default async function UploadHandler(req, res) {
 	});
 
 	try {
-		const image = await cloudinary.v2.uploader.upload(
-			req.body.image,
-		{
+		const image = await cloudinary.v2.uploader.upload(req.body.image, {
 			folder: `twis/uploads/${session.user.id}`,
 			overwrite: false,
 		});
 
 		const uploadedImage = {
-				id: image.public_id,
-				thumb: `https://res.cloudinary.com/${process.env.CLOUDINARY_CLOUD_NAME}/image/upload/c_thumb,w_200/v${image.version}/${image.public_id}.${image.format}`,
-				src: image.secure_url,
-				width: image.width,
-				height: image.height,
-			};
+			id: image.public_id,
+			thumb: `https://res.cloudinary.com/${process.env.CLOUDINARY_CLOUD_NAME}/image/upload/c_thumb,w_200/v${image.version}/${image.public_id}.${image.format}`,
+			src: image.secure_url,
+			width: image.width,
+			height: image.height,
+		};
 
 		return res.status(200).json({ success: true, data: uploadedImage });
 	} catch (error) {
 		return res.status(400).json({ success: false, error });
 	}
-	return;
 }
