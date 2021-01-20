@@ -1,6 +1,6 @@
 import Cors from "cors";
 import { getSession } from "next-auth/client";
-import cloudinary from "cloudinary";
+import { v2 as cloudinary } from "cloudinary";
 import initMiddleware from "../../../../lib/InitMiddleware";
 import AuthCheck from "../../../../lib/AuthCheck";
 
@@ -36,7 +36,7 @@ export default async function UploadHandler(req, res) {
 	});
 
 	try {
-		const image = await cloudinary.v2.uploader.upload(req.body.image, {
+		const image = await cloudinary.uploader.upload(req.body.image, {
 			folder: `twis/uploads/${session.user.id}`,
 			overwrite: false,
 		});

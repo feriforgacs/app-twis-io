@@ -1,6 +1,6 @@
 import Cors from "cors";
 import { getSession } from "next-auth/client";
-import cloudinary from "cloudinary";
+import { v2 as cloudinary } from "cloudinary";
 import initMiddleware from "../../../../lib/InitMiddleware";
 import AuthCheck from "../../../../lib/AuthCheck";
 
@@ -29,7 +29,7 @@ export default async function ListHandler(req, res) {
 	});
 
 	try {
-		const images = await cloudinary.v2.search.expression(`folder:twis/uploads/${session.user.id}`).sort_by("created_at", "desc").max_results(1).next_cursor(nextCursor).execute();
+		const images = await cloudinary.search.expression(`folder:twis/uploads/${session.user.id}`).sort_by("created_at", "desc").max_results(1).next_cursor(nextCursor).execute();
 
 		let userImages = [];
 		if (images.resources.length > 0) {
