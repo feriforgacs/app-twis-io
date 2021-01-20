@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import Button from "../Button";
 import styles from "./Image.module.scss";
 import Toast from "../../../dashboard-components/Toast";
+import Masonry from "react-masonry-css";
+import Image from "./Image";
+import ImageUploadPreview from "./ImageUploadPreview";
 
-export default function MediaLibraryImages() {
+export default function MediaLibrary() {
 	const [mediaLibraryImages, setMediaLibraryImages] = useState([]);
 	const [uploading, setUploading] = useState(false);
 	const [page, setPage] = useState(1);
@@ -16,13 +19,62 @@ export default function MediaLibraryImages() {
 	const [toastDuration, setToastDuration] = useState(3000);
 
 	/**
+	 * Get images from user's media library
+	 */
+	useEffect(() => {
+		const localMediaLibraryImages = JSON.parse(localStorage.getItem("mediaLibraryImages"));
+		const localMediaLibraryImagesDate = parseInt(localStorage.getItem("mediaLibraryImagesDate"));
+		const localMediaLibraryImagesNextCursor = localStorage.getItem("mediaLibraryNextCursors");
+		const oneHour = 60 * 60 * 60;
+
+		const getImages = async () => {
+			setLoading(true);
+
+			try {
+				const result = await axios(`${process.env.APP_URL}/api/editor/media`);
+
+				if (result.data.success !== true) {
+					console.log(result);
+					setToastMessage("Can't load media library images.");
+					setToastType("error");
+					setToastDuration(3000);
+					setToastVisible(true);
+					return;
+				}
+
+				setMediaLibraryImages(result.data.userImages);
+				setPage(result.data.nextCursor);
+
+				if (result.data.nextCursor !== "") {
+					setShowLoadMore(true);
+					setPage(result.data.nextCursor);
+				}
+
+				setLoading(false);
+
+				localStorage.setItem("mediaLibraryImagesDate", Date.now());
+				localStorage.setItem("mediaLibraryImages", JSON.stringify(result.data.userImages));
+				localStorage.setItem("mediaLibraryNextCursors", result.data.nextCursor);
+			} catch (error) {
+				console.log(error);
+				setToastMessage("Can't load media library images.");
+				setToastType("error");
+				setToastDuration(3000);
+				setToastVisible(true);
+			}
+		};
+
+		getImages();
+	}, []);
+
+	/**
 	 * Read selected image as data url to upload
 	 * @param {object} e Event target object
 	 */
 	const readSelectedImage = (e) => {
 		const image = e.target.files[0];
 		// check selected file size
-		if(image.size > 2097152){
+		if (image.size > 2097152) {
 			alert("Please, select a smaller file (max 2MB)");
 			return;
 		}
@@ -101,7 +153,13 @@ export default function MediaLibraryImages() {
 				<input type="file" accept=".jpg,.jpeg,.gif,.png,.svg" onChange={(e) => readSelectedImage(e)} name="image" disabled={uploading} />
 				<small>(max 2MB)</small>
 			</div>
-			<div className={styles.imageList}></div>
+			<div className={styles.imageList}>
+				<Masonry breakpointCols={2} className={styles.imageGrid} columnClassName={styles.imageGridColumn}>
+					{mediaLibraryImages.map((image) => {
+						return image.type && image.type === "preview" ? <ImageUploadPreview key="image-upload-preview" thumb={image.thumb} caption={"Uploading image..."} /> : <Image key={`media-library-${image.id}`} thumb={image.thumb} src={image.src} caption={`Media library ${image.id}`} width={image.width} height={image.height} />;
+					})}
+				</Masonry>
+			</div>
 			{toastVisible && <Toast onClose={() => setToastVisible(false)} duration={toastDuration} type={toastType} content={toastMessage} />}
 		</>
 	);

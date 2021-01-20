@@ -29,7 +29,7 @@ export default async function ListHandler(req, res) {
 	});
 
 	try {
-		const images = await cloudinary.search.expression(`folder:twis/uploads/${session.user.id}`).sort_by("created_at", "desc").max_results(1).next_cursor(nextCursor).execute();
+		const images = await cloudinary.search.expression(`folder:twis/uploads/${session.user.id}`).sort_by("created_at", "desc").max_results(process.env.MEDIA_LIBRARY_LIMIT).next_cursor(nextCursor).execute();
 
 		let userImages = [];
 		if (images.resources.length > 0) {
@@ -51,7 +51,7 @@ export default async function ListHandler(req, res) {
 			nextCursor = "";
 		}
 
-		return res.status(200).json({ success: true, data: { userImages, nextCursor } });
+		return res.status(200).json({ success: true, userImages, nextCursor });
 	} catch (error) {
 		console.log(error);
 		return res.status(400).json({ success: false, error });

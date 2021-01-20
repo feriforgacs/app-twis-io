@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from "../ElementOptions.module.scss";
-import MediaLibraryImages from "./MediaLibraryImages";
+import MediaLibrary from "./MediaLibrary";
 import StockImages from "./StockImages";
 import Gifs from "./Gifs";
 
@@ -21,7 +21,7 @@ export default function ImageList() {
 					</div>
 				</div>
 			</div>
-			{activeTab === "medialibrary" && <MediaLibraryImages />}
+			{activeTab === "medialibrary" && <MediaLibrary />}
 			{activeTab === "stock" && <StockImages />}
 			{activeTab === "gif" && <Gifs />}
 		</>

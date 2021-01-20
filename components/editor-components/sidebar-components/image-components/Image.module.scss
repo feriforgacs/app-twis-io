@@ -23,11 +23,72 @@
 		width: 100%;
 	}
 
-	small{
+	small {
 		color: #6589a8;
 		display: block;
-		font-size: .7rem;
-		margin-top: .4rem;
+		font-size: 0.7rem;
+		margin-top: 0.4rem;
 		text-align: center;
+	}
+}
+
+.imageUploadPreview {
+	position: relative;
+
+	img {
+		filter: grayscale(100%);
+	}
+
+	&:after {
+		animation: spin 1s linear infinite;
+		background: url(../../../../public/images/editor/icons/icon-loading.svg) no-repeat center center;
+		content: "";
+		display: block;
+		height: 100%;
+		left: 0;
+		position: absolute;
+		top: 0;
+		width: 100%;
+	}
+}
+
+.imageGrid {
+	display: flex;
+	width: auto;
+}
+
+.imageGridColumn {
+	padding-right: 5px;
+	background-clip: padding-box;
+
+	figure {
+		background: none;
+		margin: 0 0 10px;
+		padding: 0;
+
+		img {
+			cursor: move;
+			cursor: -webkit-grab;
+			cursor: -moz-grab;
+			cursor: grab;
+			max-width: 100%;
+
+			&:active {
+				cursor: move;
+				cursor: grabbing;
+			}
+		}
+	}
+
+	&:last-child {
+		padding-left: 5px;
+		padding-right: 0;
+	}
+}
+
+@keyframes spin {
+	100% {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
 	}
 }
