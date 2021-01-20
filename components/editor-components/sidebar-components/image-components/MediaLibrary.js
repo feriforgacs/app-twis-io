@@ -9,6 +9,7 @@ import ImageUploadPreview from "./ImageUploadPreview";
 
 export default function MediaLibrary() {
 	const [mediaLibraryImages, setMediaLibraryImages] = useState([]);
+	const [loadingImages, setLoadingImages] = useState(true);
 	const [uploading, setUploading] = useState(false);
 	const [page, setPage] = useState(1);
 	const [loading, setLoading] = useState(false);
@@ -29,7 +30,7 @@ export default function MediaLibrary() {
 
 		const getImages = async () => {
 			setLoading(true);
-
+			setLoadingImages(false);
 			try {
 				const result = await axios(`${process.env.APP_URL}/api/editor/media`);
 
@@ -64,7 +65,27 @@ export default function MediaLibrary() {
 			}
 		};
 
-		getImages();
+		// load data from localstorage
+		const loadImages = () => {
+			setMediaLibraryImages(localMediaLibraryImages);
+			setPage(localMediaLibraryImagesNextCursor);
+			if (localMediaLibraryImagesNextCursor !== "") {
+				setShowLoadMore(true);
+			}
+			setLoading(false);
+			setLoadingImages(false);
+		};
+
+		if (localMediaLibraryImages && localMediaLibraryImagesDate && localMediaLibraryImagesNextCursor && Date.now() - localMediaLibraryImagesDate > oneHour) {
+			// local storage timestamp is older than 1 hour, get images from API
+			getImages();
+		} else if (localMediaLibraryImages && localMediaLibraryImagesDate && localMediaLibraryImagesNextCursor) {
+			// get images from localStorage
+			loadImages();
+		} else {
+			// no data in localstorage, get images from API
+			getImages();
+		}
 	}, []);
 
 	/**
@@ -146,6 +167,20 @@ export default function MediaLibrary() {
 		setUploading(false);
 	};
 
+	/**
+	 * Load more images from the media libraray
+	 */
+	const loadMoreResult = async () => {
+		setLoading(true);
+		const result = await axios(`${process.env.APP_URL}/api/editor/media?page=${page}`);
+		setMediaLibraryImages([...mediaLibraryImages, ...result.data.userImages]);
+		setPage(result.data.nextCursor);
+		setLoading(false);
+		if (result.data.nextCursor === "") {
+			setShowLoadMore(false);
+		}
+	};
+
 	return (
 		<>
 			<div className={styles.imageUploadContainer}>
@@ -154,12 +189,21 @@ export default function MediaLibrary() {
 				<small>(max 2MB)</small>
 			</div>
 			<div className={styles.imageList}>
-				<Masonry breakpointCols={2} className={styles.imageGrid} columnClassName={styles.imageGridColumn}>
-					{mediaLibraryImages.map((image) => {
-						return image.type && image.type === "preview" ? <ImageUploadPreview key="image-upload-preview" thumb={image.thumb} caption={"Uploading image..."} /> : <Image key={`media-library-${image.id}`} thumb={image.thumb} src={image.src} caption={`Media library ${image.id}`} width={image.width} height={image.height} />;
-					})}
-				</Masonry>
+				{loadingImages && <p className="align--center">Loading images...</p>}
+
+				{mediaLibraryImages.length === 0 && !loadingImages && <p className="align--center">There are no images in your media library</p>}
+
+				{mediaLibraryImages.length > 0 && !loadingImages && (
+					<Masonry breakpointCols={2} className={styles.imageGrid} columnClassName={styles.imageGridColumn}>
+						{mediaLibraryImages.map((image) => {
+							return image.type && image.type === "preview" ? <ImageUploadPreview key="image-upload-preview" thumb={image.thumb} caption={"Uploading image..."} /> : <Image key={`media-library-${image.id}`} thumb={image.thumb} src={image.src} caption={`Media library ${image.id}`} width={image.width} height={image.height} />;
+						})}
+					</Masonry>
+				)}
+
+				{showLoadMore && page !== "" && <Button label={`${loading ? "loading..." : "Load more"}`} disabled={loading} onClick={() => loadMoreResult()} buttonType="buttonOutline" />}
 			</div>
+
 			{toastVisible && <Toast onClose={() => setToastVisible(false)} duration={toastDuration} type={toastType} content={toastMessage} />}
 		</>
 	);

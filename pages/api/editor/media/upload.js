@@ -49,7 +49,7 @@ export default async function UploadHandler(req, res) {
 			height: image.height,
 		};
 
-		return res.status(200).json({ success: true, data: uploadedImage });
+		return res.status(200).json({ success: true, image: uploadedImage });
 	} catch (error) {
 		return res.status(400).json({ success: false, error });
 	}

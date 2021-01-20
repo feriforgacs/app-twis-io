@@ -109,3 +109,17 @@ $height: 1;
 		color: $fontColorTertiary;
 	}
 }
+
+.align {
+	&--left {
+		text-align: left;
+	}
+
+	&--center {
+		text-align: center;
+	}
+
+	&--right {
+		text-align: right;
+	}
+}
