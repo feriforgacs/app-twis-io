@@ -27,10 +27,12 @@ export default function MediaLibrary() {
 		const localMediaLibraryImagesNextCursor = localStorage.getItem("mediaLibraryNextCursors");
 		const oneHour = 3600000;
 
+		let source = axios.CancelToken.source();
+
 		const getImages = async () => {
 			setLoading(true);
 			try {
-				const result = await axios(`${process.env.APP_URL}/api/editor/media`);
+				const result = await axios(`${process.env.APP_URL}/api/editor/media`, { cancelToken: source.token });
 
 				if (result.data.success !== true) {
 					console.log(result);
@@ -83,6 +85,8 @@ export default function MediaLibrary() {
 			// no data in localstorage, get images from API
 			getImages();
 		}
+
+		return () => source.cancel();
 	}, []);
 
 	/**

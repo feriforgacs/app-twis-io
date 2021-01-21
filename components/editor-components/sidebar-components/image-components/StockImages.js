@@ -26,10 +26,12 @@ export default function StockImages() {
 		const localUnsplashImagesDate = parseInt(localStorage.getItem("unsplashImagesDate"));
 		const oneHour = 3600000;
 
+		let source = axios.CancelToken.source();
+
 		const getImages = async () => {
 			setLoading(true);
 			try {
-				const result = await axios(`${process.env.APP_URL}/api/editor/stock-photo`);
+				const result = await axios(`${process.env.APP_URL}/api/editor/stock-photo`, { cancelToken: source.token });
 
 				if (result.data.success !== true) {
 					console.log(result);
@@ -72,6 +74,8 @@ export default function StockImages() {
 			// get images from API
 			getImages();
 		}
+
+		return () => source.cancel();
 	}, []);
 
 	/**

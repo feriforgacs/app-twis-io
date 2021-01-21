@@ -26,10 +26,12 @@ export default function StickerList() {
 		const localGiphyStickersDate = parseInt(localStorage.getItem("giphyStickersDate"));
 		const oneHour = 3600000;
 
+		let source = axios.CancelToken.source();
+
 		const getImages = async () => {
 			setLoading(true);
 			try {
-				const result = await axios(`${process.env.APP_URL}/api/editor/sticker`);
+				const result = await axios(`${process.env.APP_URL}/api/editor/sticker`, { cancelToken: source.token });
 
 				if (result.data.success !== true) {
 					console.log(result);
@@ -71,6 +73,8 @@ export default function StickerList() {
 			// get images from API
 			getImages();
 		}
+
+		return () => source.cancel();
 	}, []);
 
 	/**

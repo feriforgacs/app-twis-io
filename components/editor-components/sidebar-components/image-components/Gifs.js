@@ -26,11 +26,13 @@ export default function Gifs() {
 		const localGiphyImagesDate = parseInt(localStorage.getItem("giphyImagesDate"));
 		const oneHour = 3600000;
 
+		let source = axios.CancelToken.source();
+
 		// fetch data from api
 		const getImages = async () => {
 			setLoading(true);
 			try {
-				const result = await axios(`${process.env.APP_URL}/api/editor/gif`);
+				const result = await axios(`${process.env.APP_URL}/api/editor/gif`, { cancelToken: source.token });
 
 				if (result.data.success !== true) {
 					console.log(result);
@@ -72,6 +74,8 @@ export default function Gifs() {
 			// get images from API
 			getImages();
 		}
+
+		return () => source.cancel();
 	}, []);
 
 	/**
