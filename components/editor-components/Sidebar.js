@@ -3,6 +3,7 @@ import styles from "./Sidebar.module.scss";
 import Element from "./sidebar-components/Element";
 import TextList from "./sidebar-components/text-components/TextList";
 import ImageList from "./sidebar-components/image-components/ImageList";
+import StickerList from "./sidebar-components/sticker-components/StickerList";
 
 export default function Sidebar() {
 	const [activeElement, setActiveElement] = useState("text");
@@ -18,6 +19,7 @@ export default function Sidebar() {
 				<p>Drag and drop items to the screens</p>
 				{activeElement === "text" && <TextList />}
 				{activeElement === "image" && <ImageList />}
+				{activeElement === "sticker" && <StickerList />}
 			</div>
 		</div>
 	);
