@@ -92,5 +92,5 @@ export default async function StockListHandler(req, res) {
 		});
 	}
 
-	return res.status(200).json({ success: true, data: unsplashPhotos });
+	return res.status(200).json({ success: true, images: unsplashPhotos });
 }

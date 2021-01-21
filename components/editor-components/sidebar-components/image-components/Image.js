@@ -1,4 +1,5 @@
 import { useDrag } from "react-dnd";
+import styles from "./Image.module.scss";
 import { ItemTypes } from "../../../../utils/Items";
 
 const Image = ({ thumb, src, caption, width, height, unsplashImage = false, unsplashId = 0, unsplashUserName = "", unsplashUserProfile = "" }) => {
@@ -19,12 +20,12 @@ const Image = ({ thumb, src, caption, width, height, unsplashImage = false, unsp
 	});
 
 	return (
-		<div className={`sidebar-image-container ${unsplashId && "sidebar-image-container--unsplash"}`}>
-			<figure ref={drag} className={`${isDragging && "item--dragged"} item-draggable ${unsplashId && "image--unsplash"}`}>
+		<div className={styles.sidebarImageContainer}>
+			<figure ref={drag} className={`${isDragging && "item--dragged"}`}>
 				<img src={thumb} alt={caption} title="Drag & drop this image to the screen where you want to use it" />
 			</figure>
 			{unsplashUserName && unsplashUserProfile && (
-				<div className="unsplash-image-meta">
+				<div className={`${styles.imageMeta} imageMeta`}>
 					By{" "}
 					<a href={unsplashUserProfile} target="_blank" rel="noopener noreferrer">
 						{unsplashUserName}

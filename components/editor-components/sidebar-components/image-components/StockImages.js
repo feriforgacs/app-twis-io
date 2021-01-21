@@ -12,11 +12,66 @@ export default function StockImages() {
 	const [page, setPage] = useState(1);
 	const [loading, setLoading] = useState(false);
 	const [showLoadMore, setShowLoadMore] = useState(false);
-	const [query, setQuery] = useState();
+	const [query, setQuery] = useState("");
 	const [toastMessage, setToastMessage] = useState(false);
 	const [toastVisible, setToastVisible] = useState(false);
 	const [toastType, setToastType] = useState("default");
 	const [toastDuration, setToastDuration] = useState(3000);
+
+	/**
+	 * Get latest unsplash photos
+	 */
+	useEffect(() => {
+		const localUnsplashImages = JSON.parse(localStorage.getItem("unsplashImages"));
+		const localUnsplashImagesDate = parseInt(localStorage.getItem("unsplashImagesDate"));
+		const oneHour = 3600000;
+
+		const getImages = async () => {
+			setLoading(true);
+			try {
+				const result = await axios(`${process.env.APP_URL}/api/editor/stock-photo`);
+				if (result.data.success !== true) {
+					console.log(result);
+					setLoading(false);
+					setToastMessage("Can't load images from Unsplash.");
+					setToastType("error");
+					setToastDuration(3000);
+					setToastVisible(true);
+					return;
+				}
+
+				setImages(result.data.images);
+				localStorage.setItem("unsplashImagesDate", Date.now());
+				localStorage.setItem("unsplashImages", JSON.stringify(result.data.images));
+			} catch (error) {
+				console.log(error);
+				setToastMessage("Can't load images from Unsplash.");
+				setToastType("error");
+				setToastDuration(3000);
+				setToastVisible(true);
+			}
+
+			setLoading(false);
+		};
+
+		// load data from localstorage
+		const loadImages = () => {
+			setLoading(true);
+			setImages(localUnsplashImages);
+			setLoading(false);
+		};
+
+		if (localUnsplashImages && localUnsplashImagesDate && Date.now() - localUnsplashImagesDate > oneHour) {
+			// get images from API
+			getImages();
+		} else if (localUnsplashImages && localUnsplashImagesDate) {
+			// get images from localStorage
+			loadImages();
+		} else {
+			// get images from API
+			getImages();
+		}
+	}, []);
 
 	/**
 	 * Search images on unsplash
@@ -39,8 +94,9 @@ export default function StockImages() {
 					return;
 				}
 
-				setImages(result.data.data);
+				setImages(result.data.images);
 				setShowLoadMore(true);
+				setPage(1);
 			} catch (error) {
 				console.log(error);
 				setToastMessage("Can't load images from Unsplash.");
@@ -69,7 +125,7 @@ export default function StockImages() {
 				setToastVisible(true);
 				return;
 			}
-			setImages([...images, ...result.data.data]);
+			setImages([...images, ...result.data.images]);
 			setShowLoadMore(true);
 		} catch (error) {
 			console.log(error);
@@ -84,7 +140,7 @@ export default function StockImages() {
 	return (
 		<>
 			<div className={`${styles.searchInputContainer} ${loading ? styles.searchInputContainerLoading : ""}`}>
-				<DebounceInput className={`${loading ? styles.searchInputLoading : ""}`} placeholder="Search on Unsplash" minLength="3" debounceTimeout="300" onChange={(e) => searchImages(e.target.value)} disabled={loading} />
+				<DebounceInput className={`${loading ? styles.searchInputLoading : ""}`} placeholder="Search on Unsplash" minLength="3" debounceTimeout="300" onChange={(e) => searchImages(e.target.value)} />
 				<p className="align--center">
 					Powered by{" "}
 					<a href="https://unsplash.com/?utm_source=twis&utm_medium=referral" target="_blank" rel="noreferrer">

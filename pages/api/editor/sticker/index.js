@@ -87,5 +87,5 @@ export default async function StickerRequestHandler(req, res) {
 		}
 	}
 
-	return res.status(200).json({ success: true, data: giphyGifs });
+	return res.status(200).json({ success: true, images: giphyGifs });
 }
