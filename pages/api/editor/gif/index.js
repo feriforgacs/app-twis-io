@@ -29,9 +29,9 @@ export default async function GifRequestHandler(req, res) {
 			giphyResult = await axios.get("https://api.giphy.com/v1/gifs/search", {
 				params: {
 					api_key: process.env.GIPHY_API_KEY,
-					limit: 10,
+					limit: process.env.MEDIA_LIBRARY_LIMIT,
 					q: keyword,
-					offset: 10 * (page - 1),
+					offset: process.env.MEDIA_LIBRARY_LIMIT * (page - 1),
 				},
 			});
 		} catch (error) {
@@ -44,7 +44,7 @@ export default async function GifRequestHandler(req, res) {
 			giphyResult = await axios.get("https://api.giphy.com/v1/gifs/search", {
 				params: {
 					api_key: process.env.GIPHY_API_KEY,
-					limit: 10,
+					limit: process.env.MEDIA_LIBRARY_LIMIT,
 					q: keyword,
 				},
 			});
@@ -58,8 +58,8 @@ export default async function GifRequestHandler(req, res) {
 			giphyResult = await axios.get("https://api.giphy.com/v1/gifs/trending", {
 				params: {
 					api_key: process.env.GIPHY_API_KEY,
-					limit: 10,
-					offset: 10 * (page - 1),
+					limit: process.env.MEDIA_LIBRARY_LIMIT,
+					offset: process.env.MEDIA_LIBRARY_LIMIT * (page - 1),
 				},
 			});
 		} catch (error) {
