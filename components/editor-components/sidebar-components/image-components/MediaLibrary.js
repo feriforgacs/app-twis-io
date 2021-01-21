@@ -25,7 +25,7 @@ export default function MediaLibrary() {
 		const localMediaLibraryImages = JSON.parse(localStorage.getItem("mediaLibraryImages"));
 		const localMediaLibraryImagesDate = parseInt(localStorage.getItem("mediaLibraryImagesDate"));
 		const localMediaLibraryImagesNextCursor = localStorage.getItem("mediaLibraryNextCursors");
-		const oneHour = 60 * 60 * 60;
+		const oneHour = 3600000;
 
 		const getImages = async () => {
 			setLoading(true);
