@@ -9,10 +9,9 @@ import ImageUploadPreview from "./ImageUploadPreview";
 
 export default function MediaLibrary() {
 	const [mediaLibraryImages, setMediaLibraryImages] = useState([]);
-	const [loadingImages, setLoadingImages] = useState(true);
 	const [uploading, setUploading] = useState(false);
 	const [page, setPage] = useState(1);
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(true);
 	const [showLoadMore, setShowLoadMore] = useState(false);
 	const [toastMessage, setToastMessage] = useState(false);
 	const [toastVisible, setToastVisible] = useState(false);
@@ -30,7 +29,6 @@ export default function MediaLibrary() {
 
 		const getImages = async () => {
 			setLoading(true);
-			setLoadingImages(false);
 			try {
 				const result = await axios(`${process.env.APP_URL}/api/editor/media`);
 
@@ -73,7 +71,6 @@ export default function MediaLibrary() {
 				setShowLoadMore(true);
 			}
 			setLoading(false);
-			setLoadingImages(false);
 		};
 
 		if (localMediaLibraryImages && localMediaLibraryImagesDate && localMediaLibraryImagesNextCursor && Date.now() - localMediaLibraryImagesDate > oneHour) {
@@ -189,17 +186,17 @@ export default function MediaLibrary() {
 				<small>(max 2MB)</small>
 			</div>
 			<div className={styles.imageList}>
-				{loadingImages && <p className="align--center">Loading images...</p>}
+				{mediaLibraryImages.length === 0 && !loading && <p className="align--center">There are no images in your media library</p>}
 
-				{mediaLibraryImages.length === 0 && !loadingImages && <p className="align--center">There are no images in your media library</p>}
-
-				{mediaLibraryImages.length > 0 && !loadingImages && (
+				{mediaLibraryImages.length > 0 && (
 					<Masonry breakpointCols={2} className={styles.imageGrid} columnClassName={styles.imageGridColumn}>
 						{mediaLibraryImages.map((image) => {
 							return image.type && image.type === "preview" ? <ImageUploadPreview key="image-upload-preview" thumb={image.thumb} caption={"Uploading image..."} /> : <Image key={`media-library-${image.id}`} thumb={image.thumb} src={image.src} caption={`Media library ${image.id}`} width={image.width} height={image.height} />;
 						})}
 					</Masonry>
 				)}
+
+				{mediaLibraryImages.length === 0 && loading && <p className="align--center">Loading images...</p>}
 
 				{showLoadMore && page !== "" && <Button label={`${loading ? "loading..." : "Load more"}`} disabled={loading} onClick={() => loadMoreResult()} buttonType="buttonOutline" />}
 			</div>
