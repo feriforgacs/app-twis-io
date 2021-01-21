@@ -30,6 +30,7 @@ export default function StockImages() {
 			setLoading(true);
 			try {
 				const result = await axios(`${process.env.APP_URL}/api/editor/stock-photo`);
+
 				if (result.data.success !== true) {
 					console.log(result);
 					setLoading(false);
