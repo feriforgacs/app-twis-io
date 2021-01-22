@@ -7,7 +7,7 @@ import Masonry from "react-masonry-css";
 import Image from "./Image";
 import ImageUploadPreview from "./ImageUploadPreview";
 
-export default function MediaLibrary() {
+export default function MediaLibrary({ active = false }) {
 	const [mediaLibraryImages, setMediaLibraryImages] = useState([]);
 	const [uploading, setUploading] = useState(false);
 	const [page, setPage] = useState(1);
@@ -230,7 +230,7 @@ export default function MediaLibrary() {
 	};
 
 	return (
-		<>
+		<div className={`${!active ? "hidden" : ""}`}>
 			<div className={styles.imageUploadContainer}>
 				<Button label={`${uploading ? "Uploading image..." : "Upload New Image"}`} disabled={uploading} />
 				<input type="file" accept=".jpg,.jpeg,.gif,.png,.svg" onChange={(e) => readSelectedImage(e)} name="image" disabled={uploading} />
@@ -253,6 +253,6 @@ export default function MediaLibrary() {
 			</div>
 
 			{toastVisible && <Toast onClose={() => setToastVisible(false)} duration={toastDuration} type={toastType} content={toastMessage} />}
-		</>
+		</div>
 	);
 }

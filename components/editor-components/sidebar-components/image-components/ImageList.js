@@ -21,9 +21,9 @@ export default function ImageList() {
 					</div>
 				</div>
 			</div>
-			{activeTab === "medialibrary" && <MediaLibrary />}
-			{activeTab === "stock" && <StockImages />}
-			{activeTab === "gif" && <Gifs />}
+			<MediaLibrary active={activeTab === "medialibrary"} />
+			<StockImages active={activeTab === "stock"} />
+			<Gifs active={activeTab === "gif"} />
 		</>
 	);
 }

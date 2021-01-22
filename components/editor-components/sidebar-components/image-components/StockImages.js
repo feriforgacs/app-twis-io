@@ -7,7 +7,7 @@ import Toast from "../../../dashboard-components/Toast";
 import Masonry from "react-masonry-css";
 import Image from "./Image";
 
-export default function StockImages() {
+export default function StockImages({ active = false }) {
 	const [images, setImages] = useState([]);
 	const [page, setPage] = useState(1);
 	const [loading, setLoading] = useState(false);
@@ -172,7 +172,7 @@ export default function StockImages() {
 	};
 
 	return (
-		<>
+		<div className={`${!active ? "hidden" : ""}`}>
 			<div className={`${styles.searchInputContainer} ${loading ? styles.searchInputContainerLoading : ""}`}>
 				<DebounceInput className={`${loading ? styles.searchInputLoading : ""}`} placeholder="Search on Unsplash" minLength="3" debounceTimeout="300" onChange={(e) => searchImages(e.target.value)} />
 				<p className="align--center">
@@ -200,6 +200,6 @@ export default function StockImages() {
 			</div>
 
 			{toastVisible && <Toast onClose={() => setToastVisible(false)} duration={toastDuration} type={toastType} content={toastMessage} />}
-		</>
+		</div>
 	);
 }

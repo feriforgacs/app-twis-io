@@ -13,6 +13,10 @@
 	opacity: 0.6;
 }
 
+.hidden {
+	display: none;
+}
+
 $margin: 0;
 @while $margin < 100 {
 	/* Margin global */
