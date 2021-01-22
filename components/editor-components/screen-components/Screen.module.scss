@@ -6,22 +6,31 @@
 
 .screenActions {
 	display: flex;
+	justify-content: space-between;
 }
 
 .buttonScreen {
 	align-items: center;
 	background: none;
 	border: none;
+	border-radius: 3px;
 	box-sizing: border-box;
 	color: #555;
 	cursor: pointer;
 	display: flex;
+	opacity: 0.8;
 	outline: none;
-	padding: 0;
+	padding: 0.3rem;
+
+	&:hover {
+		background: #ecebf1;
+		opacity: 1;
+	}
 }
 
 .buttonLabel {
 	margin-left: 0.5rem;
+	font-size: 0.7rem;
 }
 
 .buttonScreenSettings {
@@ -47,4 +56,8 @@
 
 .screenBodyDropover {
 	box-shadow: 0 0 10px #0ae7f5;
+}
+
+.screenAdditionalActions {
+	display: flex;
 }

@@ -35,7 +35,7 @@ export default function Header({ campaignName = "" }) {
 
 				<span className={styles.separator}>&#8725;</span>
 
-				<Link href="/dashboard/campaigns/">
+				<Link href="/campaigns/">
 					<a>Campaigns</a>
 				</Link>
 
