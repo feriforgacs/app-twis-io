@@ -32,6 +32,10 @@ export default async function CampaignCreateHandler(req, res) {
 	try {
 		const campaign = await Campaign.create({ name, type, createdBy: session.user.id });
 
+		/**
+		 * @todo create start screen, end screen success, end screen failure and first question or other first action screen
+		 */
+
 		res.status(200).json({
 			success: true,
 			data: {

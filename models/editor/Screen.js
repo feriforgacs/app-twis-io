@@ -18,12 +18,7 @@ const screenSchema = new mongoose.Schema({
 	campaignId: {
 		type: mongoose.Schema.ObjectId,
 		ref: "Campaign",
-		required: [true, "Campaign ID is required for participant"],
-	},
-	createdBy: {
-		type: mongoose.Schema.ObjectId,
-		ref: "user",
-		required: [true, "You must supply a user for the campaign"],
+		required: [true, "Campaign ID is required for screen"],
 	},
 	createdAt: {
 		type: Date,
