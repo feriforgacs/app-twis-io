@@ -17,9 +17,9 @@ export default function Sidebar() {
 			</div>
 			<div id="sidebar__element-options" className={styles.sidebarElementOptions}>
 				<p>Drag and drop items to the screens</p>
-				{activeElement === "text" && <TextList />}
-				{activeElement === "image" && <ImageList />}
-				{activeElement === "sticker" && <StickerList />}
+				<TextList active={activeElement === "text"} />
+				<ImageList active={activeElement === "image"} />
+				<StickerList active={activeElement === "sticker"} />
 			</div>
 		</div>
 	);

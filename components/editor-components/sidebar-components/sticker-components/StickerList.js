@@ -7,7 +7,7 @@ import Toast from "../../../dashboard-components/Toast";
 import Masonry from "react-masonry-css";
 import Sticker from "./Sticker";
 
-export default function StickerList() {
+export default function StickerList({ active = false }) {
 	const [images, setImages] = useState([]);
 	const [page, setPage] = useState(1);
 	const [loading, setLoading] = useState(false);
@@ -170,7 +170,7 @@ export default function StickerList() {
 	};
 
 	return (
-		<>
+		<div className={`${!active ? "hidden" : ""}`}>
 			<div className={`${styles.searchInputContainer} ${loading ? styles.searchInputContainerLoading : ""} mt-20`}>
 				<DebounceInput className={`${loading ? styles.searchInputLoading : ""}`} placeholder="Search for stickers on GIPHY" minLength="3" debounceTimeout="300" onChange={(e) => searchImages(e.target.value)} />
 				<p className="align--center">
@@ -198,6 +198,6 @@ export default function StickerList() {
 			</div>
 
 			{toastVisible && <Toast onClose={() => setToastVisible(false)} duration={toastDuration} type={toastType} content={toastMessage} />}
-		</>
+		</div>
 	);
 }

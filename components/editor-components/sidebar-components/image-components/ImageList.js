@@ -4,10 +4,10 @@ import MediaLibrary from "./MediaLibrary";
 import StockImages from "./StockImages";
 import Gifs from "./Gifs";
 
-export default function ImageList() {
+export default function ImageList({ active = false }) {
 	const [activeTab, setActiveTab] = useState("medialibrary");
 	return (
-		<>
+		<div className={`${!active ? "hidden" : ""}`}>
 			<div className={styles.elementOptions}>
 				<div className={styles.tabs}>
 					<div onClick={() => setActiveTab("medialibrary")} className={`${styles.tab} ${activeTab === "medialibrary" ? styles.tabActive : ""}`}>
@@ -24,6 +24,6 @@ export default function ImageList() {
 			<MediaLibrary active={activeTab === "medialibrary"} />
 			<StockImages active={activeTab === "stock"} />
 			<Gifs active={activeTab === "gif"} />
-		</>
+		</div>
 	);
 }
