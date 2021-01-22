@@ -13,6 +13,7 @@ export default function Gifs() {
 	const [loading, setLoading] = useState(false);
 	const [showLoadMore, setShowLoadMore] = useState(false);
 	const [query, setQuery] = useState("");
+	const [requestCancelToken, setRequestCancelToken] = useState();
 	const [toastMessage, setToastMessage] = useState(false);
 	const [toastVisible, setToastVisible] = useState(false);
 	const [toastType, setToastType] = useState("default");
@@ -48,6 +49,10 @@ export default function Gifs() {
 				localStorage.setItem("giphyImagesDate", Date.now());
 				localStorage.setItem("giphyImages", JSON.stringify(result.data.images));
 			} catch (error) {
+				if (axios.isCancel(error)) {
+					return;
+				}
+
 				console.log(error);
 				setToastMessage("Can't load images from GIPHY.");
 				setToastType("error");
@@ -86,8 +91,16 @@ export default function Gifs() {
 		if (keyword.length >= 3) {
 			setQuery(keyword);
 			setLoading(true);
+
+			if (requestCancelToken) {
+				requestCancelToken.cancel();
+			}
+
+			let source = axios.CancelToken.source();
+			setRequestCancelToken(source);
+
 			try {
-				const result = await axios(`${process.env.APP_URL}/api/editor/gif?keyword=${keyword}`);
+				const result = await axios(`${process.env.APP_URL}/api/editor/gif?keyword=${keyword}`, { cancelToken: source.token });
 
 				if (result.data.success !== true) {
 					console.log(result);
@@ -103,6 +116,9 @@ export default function Gifs() {
 				setShowLoadMore(true);
 				setPage(1);
 			} catch (error) {
+				if (axios.isCancel(error)) {
+					return;
+				}
 				console.log(error);
 				setToastMessage("Can't load images from GIPHY.");
 				setToastType("error");
@@ -119,8 +135,16 @@ export default function Gifs() {
 	const loadMoreResult = async () => {
 		setPage(page + 1);
 		setLoading(true);
+
+		if (requestCancelToken) {
+			requestCancelToken.cancel();
+		}
+
+		let source = axios.CancelToken.source();
+		setRequestCancelToken(source);
+
 		try {
-			const result = await axios(`${process.env.APP_URL}/api/editor/gif?keyword=${query}&page=${page + 1}`);
+			const result = await axios(`${process.env.APP_URL}/api/editor/gif?keyword=${query}&page=${page + 1}`, { cancelToken: source.token });
 			if (result.data.success !== true) {
 				console.log(result);
 				setLoading(false);
@@ -133,6 +157,9 @@ export default function Gifs() {
 			setImages([...images, ...result.data.images]);
 			setShowLoadMore(true);
 		} catch (error) {
+			if (axios.isCancel(error)) {
+				return;
+			}
 			console.log(error);
 			setToastMessage("Can't load images from GIPHY.");
 			setToastType("error");

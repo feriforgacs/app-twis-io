@@ -13,6 +13,7 @@ export default function StickerList() {
 	const [loading, setLoading] = useState(false);
 	const [showLoadMore, setShowLoadMore] = useState(false);
 	const [query, setQuery] = useState("");
+	const [requestCancelToken, setRequestCancelToken] = useState();
 	const [toastMessage, setToastMessage] = useState(false);
 	const [toastVisible, setToastVisible] = useState(false);
 	const [toastType, setToastType] = useState("default");
@@ -47,6 +48,10 @@ export default function StickerList() {
 				localStorage.setItem("giphyStickersDate", Date.now());
 				localStorage.setItem("giphyStickers", JSON.stringify(result.data.images));
 			} catch (error) {
+				if (axios.isCancel(error)) {
+					return;
+				}
+
 				console.log(error);
 				setToastMessage("Can't load stickers from GIPHY.");
 				setToastType("error");
@@ -85,10 +90,18 @@ export default function StickerList() {
 		if (keyword.length >= 3) {
 			setQuery(keyword);
 			setLoading(true);
-			try {
-				const result = await axios(`${process.env.APP_URL}/api/editor/sticker?keyword=${keyword}`);
 
-				if (result.data.success !== true) {
+			if (requestCancelToken) {
+				requestCancelToken.cancel();
+			}
+
+			let source = axios.CancelToken.source();
+			setRequestCancelToken(source);
+
+			try {
+				const result = await axios(`${process.env.APP_URL}/api/editor/sticker?keyword=${keyword}`, { cancelToken: source.token });
+
+				if (result && result.data.success !== true) {
 					console.log(result);
 					setLoading(false);
 					setToastMessage("Can't load stickers from GIPHY.");
@@ -102,6 +115,9 @@ export default function StickerList() {
 				setShowLoadMore(true);
 				setPage(1);
 			} catch (error) {
+				if (axios.isCancel(error)) {
+					return;
+				}
 				console.log(error);
 				setToastMessage("Can't load stickers from GIPHY.");
 				setToastType("error");
@@ -118,8 +134,16 @@ export default function StickerList() {
 	const loadMoreResult = async () => {
 		setPage(page + 1);
 		setLoading(true);
+
+		if (requestCancelToken) {
+			requestCancelToken.cancel();
+		}
+
+		let source = axios.CancelToken.source();
+		setRequestCancelToken(source);
+
 		try {
-			const result = await axios(`${process.env.APP_URL}/api/editor/sticker?keyword=${query}&page=${page + 1}`);
+			const result = await axios(`${process.env.APP_URL}/api/editor/sticker?keyword=${query}&page=${page + 1}`, { cancelToken: source.token });
 			if (result.data.success !== true) {
 				console.log(result);
 				setLoading(false);
@@ -132,6 +156,10 @@ export default function StickerList() {
 			setImages([...images, ...result.data.images]);
 			setShowLoadMore(true);
 		} catch (error) {
+			if (axios.isCancel(error)) {
+				return;
+			}
+
 			console.log(error);
 			setToastMessage("Can't load stickers from GIPHY.");
 			setToastType("error");
@@ -166,7 +194,7 @@ export default function StickerList() {
 					</Masonry>
 				)}
 
-				{showLoadMore && page !== "" && <Button label={`${loading ? "loading..." : "Load more"}`} disabled={loading} onClick={() => loadMoreResult()} buttonType="buttonOutline" />}
+				{showLoadMore && page !== "" && images.length !== 0 && <Button label={`${loading ? "loading..." : "Load more"}`} disabled={loading} onClick={() => loadMoreResult()} buttonType="buttonOutline" />}
 			</div>
 
 			{toastVisible && <Toast onClose={() => setToastVisible(false)} duration={toastDuration} type={toastType} content={toastMessage} />}

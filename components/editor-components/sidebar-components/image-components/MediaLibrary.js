@@ -12,6 +12,7 @@ export default function MediaLibrary() {
 	const [uploading, setUploading] = useState(false);
 	const [page, setPage] = useState(1);
 	const [loading, setLoading] = useState(true);
+	const [requestCancelToken, setRequestCancelToken] = useState();
 	const [showLoadMore, setShowLoadMore] = useState(false);
 	const [toastMessage, setToastMessage] = useState(false);
 	const [toastVisible, setToastVisible] = useState(false);
@@ -57,6 +58,10 @@ export default function MediaLibrary() {
 				localStorage.setItem("mediaLibraryImages", JSON.stringify(result.data.userImages));
 				localStorage.setItem("mediaLibraryNextCursors", result.data.nextCursor);
 			} catch (error) {
+				if (axios.isCancel(error)) {
+					return;
+				}
+
 				console.log(error);
 				setToastMessage("Can't load media library images.");
 				setToastType("error");
@@ -123,6 +128,13 @@ export default function MediaLibrary() {
 		setUploading(true);
 		let imagesTemp = [...mediaLibraryImages];
 
+		if (requestCancelToken) {
+			requestCancelToken.cancel();
+		}
+
+		let source = axios.CancelToken.source();
+		setRequestCancelToken(source);
+
 		try {
 			const uploadResult = await axios.put(
 				`${process.env.APP_URL}/api/editor/media/upload`,
@@ -133,7 +145,8 @@ export default function MediaLibrary() {
 					headers: {
 						"Content-Type": "application/json",
 					},
-				}
+				},
+				{ cancelToken: source.token }
 			);
 
 			// check upload result
@@ -155,6 +168,9 @@ export default function MediaLibrary() {
 				localStorage.setItem("mediaLibraryImages", JSON.stringify(imagesTemp));
 			}
 		} catch (error) {
+			if (axios.isCancel(error)) {
+				return;
+			}
 			// remove upload preview image from state
 			imagesTemp.shift(imagesTemp);
 			setMediaLibraryImages(imagesTemp);
@@ -173,13 +189,44 @@ export default function MediaLibrary() {
 	 */
 	const loadMoreResult = async () => {
 		setLoading(true);
-		const result = await axios(`${process.env.APP_URL}/api/editor/media?page=${page}`);
-		setMediaLibraryImages([...mediaLibraryImages, ...result.data.userImages]);
-		setPage(result.data.nextCursor);
-		setLoading(false);
-		if (result.data.nextCursor === "") {
-			setShowLoadMore(false);
+
+		if (requestCancelToken) {
+			requestCancelToken.cancel();
 		}
+
+		let source = axios.CancelToken.source();
+		setRequestCancelToken(source);
+
+		try {
+			const result = await axios(`${process.env.APP_URL}/api/editor/media?page=${page}`, { cancelToken: source.token });
+
+			if (result.data.success !== true) {
+				console.log(result);
+				setToastMessage("Can't load media library images.");
+				setToastType("error");
+				setToastDuration(3000);
+				setToastVisible(true);
+				return;
+			}
+
+			setMediaLibraryImages([...mediaLibraryImages, ...result.data.userImages]);
+			setPage(result.data.nextCursor);
+			if (result.data.nextCursor === "") {
+				setShowLoadMore(false);
+			}
+		} catch (error) {
+			if (axios.isCancel(error)) {
+				return;
+			}
+			console.log(error);
+			setToastMessage("Can't load media library images.");
+			setToastType("error");
+			setToastDuration(3000);
+			setToastVisible(true);
+			return;
+		}
+
+		setLoading(false);
 	};
 
 	return (
@@ -202,7 +249,7 @@ export default function MediaLibrary() {
 
 				{mediaLibraryImages.length === 0 && loading && <p className="align--center">Loading images...</p>}
 
-				{showLoadMore && page !== "" && <Button label={`${loading ? "loading..." : "Load more"}`} disabled={loading} onClick={() => loadMoreResult()} buttonType="buttonOutline" />}
+				{showLoadMore && page !== "" && <Button label={`${loading ? "loading..." : "Load more"}`} disabled={loading || uploading} onClick={() => loadMoreResult()} buttonType="buttonOutline" />}
 			</div>
 
 			{toastVisible && <Toast onClose={() => setToastVisible(false)} duration={toastDuration} type={toastType} content={toastMessage} />}
