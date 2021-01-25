@@ -1,5 +1,12 @@
 import Screen from "./Screen";
 
 export default function ScreenList() {
-	return <Screen />;
+	return (
+		<>
+			<Screen />
+			<Screen />
+			<Screen />
+			<Screen />
+		</>
+	);
 }

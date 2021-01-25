@@ -4,7 +4,7 @@
 	height: calc(100vh - 60px);
 	left: 0;
 	position: fixed;
-	overflow-y: scroll;
+	overflow: hidden;
 	top: 60px;
 	width: 400px;
 	z-index: 10;
@@ -17,9 +17,24 @@
 }
 
 .sidebarElementOptions {
+	box-sizing: border-box;
 	height: calc(100vh - 60px);
 	overflow-y: scroll;
+	scrollbar-color: #666 #201c29;
 	width: 330px;
+
+	&::-webkit-scrollbar {
+		width: 0.5rem;
+	}
+
+	&::-webkit-scrollbar-track {
+		background: #34495b;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background: rgba(0, 0, 0, 0.5);
+		border-radius: 1rem;
+	}
 
 	p {
 		color: #6589a8;
