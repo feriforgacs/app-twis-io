@@ -23,11 +23,14 @@ export const GlobalProvider = ({ children }) => {
 			const result = await axios(`${process.env.APP_URL}/api/editor/campaign/data?id=${campaignId}`, { cancelToken: source.token });
 
 			if (result.data.success !== true) {
-				/**
-				 * @todo set error in global state
-				 */
 				console.log(result);
-				return { error: true, errorMessage: "Can't get campaign data from the database" };
+				dispatch({
+					type: "SET_ERROR",
+					payload: {
+						errorMessage: "Can't get campaign data from the database",
+					},
+				});
+				return;
 			}
 
 			dispatch({
@@ -43,17 +46,21 @@ export const GlobalProvider = ({ children }) => {
 				return;
 			}
 
-			/**
-			 * @todo set error in global state
-			 */
 			console.log(error);
-			return { error: true, errorMessage: "Can't get campaign data from the database" };
+			dispatch({
+				type: "SET_ERROR",
+				payload: {
+					errorMessage: "Can't get campaign data from the database",
+				},
+			});
+			return;
 		}
 	};
 
 	return (
 		<GlobalContext.Provider
 			value={{
+				loading: state.loading,
 				error: state.error,
 				errorMessage: state.errorMessage,
 

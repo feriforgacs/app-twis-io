@@ -13,19 +13,21 @@ export default function Editor({ campaignId }) {
 
 	useEffect(() => {
 		loadCampaignData(campaignId);
-	}, []);
+	}, []); // eslint-disable-line
 	return (
 		<>
 			{error ? (
 				<EditorError errorMessage={errorMessage} />
 			) : (
-				<div id="editor" className={styles.editor}>
-					<Header />
-					<DndProvider backend={HTML5Backend}>
-						<Sidebar />
-						<Body />
-					</DndProvider>
-				</div>
+				<>
+					<div id="editor" className={styles.editor}>
+						<Header />
+						<DndProvider backend={HTML5Backend}>
+							<Sidebar />
+							<Body />
+						</DndProvider>
+					</div>
+				</>
 			)}
 		</>
 	);

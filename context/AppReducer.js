@@ -16,6 +16,7 @@ export default function AppReducer(state, action) {
 		case "SET_CAMPAIGN_INITIAL_STATE":
 			return {
 				...state,
+				loading: false,
 				campaign: action.payload.campaign,
 				screens: action.payload.screens,
 			};
