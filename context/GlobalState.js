@@ -92,7 +92,8 @@ export const GlobalProvider = ({ children }) => {
 				`${process.env.APP_URL}/api/editor/campaign/update`,
 				{
 					campaignId: state.campaign._id,
-					[key]: value,
+					key,
+					value,
 				},
 				{
 					headers: {
