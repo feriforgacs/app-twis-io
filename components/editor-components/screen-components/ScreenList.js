@@ -4,9 +4,6 @@ export default function ScreenList() {
 	return (
 		<>
 			<Screen />
-			<Screen />
-			<Screen />
-			<Screen />
 		</>
 	);
 }

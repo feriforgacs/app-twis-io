@@ -75,7 +75,7 @@ export default function CampaignCard({ id, name, type, status, participants, vis
 			<div className="campaign-card">
 				<div className="campaign-card__header campaign-card__section">
 					<h4 className="campaign-card__title">
-						<Link href={`/campaigns/${id}`} title={`Edit ${name}`}>
+						<Link href={`/editor/${id}`} title={`Edit ${name}`}>
 							<a>
 								{name.substring(0, 22)}
 								{name.length > 22 && "..."}
@@ -138,7 +138,7 @@ export default function CampaignCard({ id, name, type, status, participants, vis
 					</div>
 				</div>
 				<div className="campaign-card__footer campaign-card__section">
-					<Link href={`/campaigns/${id}`} title={`Edit ${name}`}>
+					<Link href={`/editor/${id}`} title={`Edit ${name}`}>
 						<a className="button button--outline-primary">Edit Campaign</a>
 					</Link>
 				</div>

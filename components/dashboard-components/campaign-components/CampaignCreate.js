@@ -65,7 +65,7 @@ export default function CampaignCreate() {
 
 		if (campaign.data) {
 			// redirect to campaign editor
-			router.push(`/campaigns/${campaign.data._id}`);
+			router.push(`/editor/${campaign.data._id}`);
 		}
 		return;
 	};

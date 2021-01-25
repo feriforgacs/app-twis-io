@@ -72,6 +72,10 @@ export default async function CampaignCreateHandler(req, res) {
 		await Promise.all([startScreenPromise, endScreenSuccessPromise, endScreenFailurePromise]);
 
 		/**
+		 * @todo create campaign specific default screens - eg forst question screen for a quiz
+		 */
+
+		/**
 		 * @todo create default screen items
 		 */
 
