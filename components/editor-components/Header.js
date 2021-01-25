@@ -1,17 +1,28 @@
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
 import Head from "next/head";
+import { GlobalContext } from "../../context/GlobalState";
 import styles from "./Header.module.scss";
 
-export default function Header({ campaignName = "" }) {
-	const [name, setName] = useState(campaignName);
+export default function Header() {
+	const { campaign, updateCampaignData } = useContext(GlobalContext);
+	const [name, setName] = useState(campaign.name || "");
 	const router = useRouter();
 
-	const updateData = (key, value) => {
-		console.log(key, value);
+	const updateData = (campaignName) => {
+		if (campaignName.length <= 3) {
+			alert("Campaign name should be at least 3 characters long");
+			return;
+		}
+
+		updateCampaignData("name", campaignName);
 	};
+
+	useEffect(() => {
+		setName(campaign.name);
+	}, [campaign]);
 
 	return (
 		<>
@@ -45,7 +56,7 @@ export default function Header({ campaignName = "" }) {
 					className={styles.campaignNameContainer}
 					onSubmit={(e) => {
 						e.preventDefault();
-						updateData("name", name);
+						updateData(name);
 					}}
 				>
 					<input type="text" value={name} onChange={(e) => setName(e.target.value)} />

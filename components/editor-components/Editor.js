@@ -7,17 +7,18 @@ import Header from "./Header";
 import Sidebar from "./Sidebar";
 import Body from "./Body";
 import EditorError from "./EditorError";
+import Toast from "../dashboard-components/Toast";
 
 export default function Editor({ campaignId }) {
-	const { loadCampaignData, error, errorMessage } = useContext(GlobalContext);
+	const { loadCampaignData, criticalError, criticalErrorMessage, error, errorMessage, setError } = useContext(GlobalContext);
 
 	useEffect(() => {
 		loadCampaignData(campaignId);
 	}, []); // eslint-disable-line
 	return (
 		<>
-			{error ? (
-				<EditorError errorMessage={errorMessage} />
+			{criticalError ? (
+				<EditorError errorMessage={criticalErrorMessage} />
 			) : (
 				<>
 					<div id="editor" className={styles.editor}>
@@ -26,6 +27,7 @@ export default function Editor({ campaignId }) {
 							<Sidebar />
 							<Body />
 						</DndProvider>
+						{error && <Toast onClose={() => setError(false, "")} duration={3000} type={"error"} content={errorMessage} />}
 					</div>
 				</>
 			)}

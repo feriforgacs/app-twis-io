@@ -1,12 +1,22 @@
 export default function AppReducer(state, action) {
 	switch (action.type) {
 		/**
-		 * Set global error state
+		 * Set critical error state
+		 */
+		case "SET_CRITICAL_ERROR":
+			return {
+				...state,
+				criticalError: true,
+				criticalErrorMessage: action.payload.errorMessage,
+			};
+
+		/**
+		 * Set error state
 		 */
 		case "SET_ERROR":
 			return {
 				...state,
-				error: true,
+				error: action.payload.error,
 				errorMessage: action.payload.errorMessage,
 			};
 
@@ -19,6 +29,18 @@ export default function AppReducer(state, action) {
 				loading: false,
 				campaign: action.payload.campaign,
 				screens: action.payload.screens,
+			};
+
+		/**
+		 * Update campaign data in the database
+		 */
+		case "UPDATE_CAMPAIGN_DATA":
+			return {
+				...state,
+				campaign: {
+					...state.campaign,
+					[action.payload.key]: action.payload.value,
+				},
 			};
 
 		default:
