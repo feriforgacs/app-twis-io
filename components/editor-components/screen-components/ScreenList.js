@@ -1,14 +1,21 @@
 import { useContext } from "react";
 import { GlobalContext } from "../../../context/GlobalState";
+import SkeletonScreen from "../skeletons/SkeletonScreen";
 import Screen from "./Screen";
 
 export default function ScreenList() {
-	const { screens } = useContext(GlobalContext);
+	const { screens, loading } = useContext(GlobalContext);
 	return (
 		<>
-			{screens.map((screen) => (
-				<Screen key={screen._id} />
-			))}
+			{loading ? (
+				<>
+					<SkeletonScreen />
+					<SkeletonScreen />
+					<SkeletonScreen />
+				</>
+			) : (
+				screens.map((screen) => <Screen key={screen._id} />)
+			)}
 		</>
 	);
 }

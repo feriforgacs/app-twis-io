@@ -8,7 +8,7 @@ import styles from "./Header.module.scss";
 
 export default function Header() {
 	const { campaign, updateCampaignData } = useContext(GlobalContext);
-	const [name, setName] = useState(campaign.name || "");
+	const [name, setName] = useState(campaign.name);
 	const router = useRouter();
 
 	const updateData = (campaignName) => {
@@ -59,7 +59,7 @@ export default function Header() {
 						updateData(name);
 					}}
 				>
-					<input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+					<input type="text" value={name || ""} onChange={(e) => setName(e.target.value)} />
 					<span className={styles.editIcon}>
 						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#000000" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
 							<polygon points="14 2 18 6 7 17 3 17 3 13 14 2"></polygon>
