@@ -38,14 +38,14 @@ export default async function UpdateHandler(req, res) {
 
 	// validate successScreenId parameter
 	if (mongoose.Types.ObjectId.isValid(req.body.successScreenId)) {
-		successScreenId = req.body.successScreenId;
+		successScreenId = mongoose.Types.ObjectId(req.body.successScreenId);
 	} else {
 		return res.status(400).json({ success: false, error: "invalid successScreenId" });
 	}
 
 	// validate failureScreenId parameter
 	if (mongoose.Types.ObjectId.isValid(req.body.failureScreenId)) {
-		failureScreenId = req.body.failureScreenId;
+		failureScreenId = mongoose.Types.ObjectId(req.body.failureScreenId);
 	} else {
 		return res.status(400).json({ success: false, error: "invalid failureScreenId" });
 	}
@@ -70,12 +70,12 @@ export default async function UpdateHandler(req, res) {
 		const successScreenOrderIndex = parseInt(req.body.screen.orderIndex) + 1;
 		const failureScreenOrderIndex = parseInt(req.body.screen.orderIndex) + 2;
 
-		const successScreenUpdatePromise = Screen.findOneAndUpdate({ _id: successScreenId }, { orderIndex: successScreenOrderIndex });
-		const failureScreenUpdatePromise = Screen.findOneAndUpdate({ _id: failureScreenId }, { orderIndex: failureScreenOrderIndex });
+		const screenIndexUpdate = Screen.collection.initializeUnorderedBulkOp();
+		screenIndexUpdate.find({ _id: successScreenId }).update({ $set: { orderIndex: successScreenOrderIndex } });
+		screenIndexUpdate.find({ _id: failureScreenId }).update({ $set: { orderIndex: failureScreenOrderIndex } });
+		const screenIndexUpdateResult = await screenIndexUpdate.execute();
 
-		const [successScreenUpdateResult, failureScreenUpdateResult] = await Promise.all([successScreenUpdatePromise, failureScreenUpdatePromise]);
-
-		if (!successScreenUpdateResult || !failureScreenUpdateResult) {
+		if (!screenIndexUpdateResult) {
 			return res.status(400).json({ success: false });
 		}
 
