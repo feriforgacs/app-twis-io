@@ -140,6 +140,94 @@ export const GlobalProvider = ({ children }) => {
 		}
 	};
 
+	/**
+	 * Add new screen
+	 * @param {string} screenType The type of the screen we'd like to add
+	 * @param {string} screenId New screen's unique id
+	 */
+	const addScreen = async (screenType, screenId) => {
+		const newScreen = {
+			screenId,
+			type: screenType,
+			orderIndex: state.screens.length - 2,
+			background: "#ffffff",
+			campaignId: state.campaign._id,
+		};
+		// add screen to state
+		dispatch({
+			type: "ADD_SCREEN",
+			payload: newScreen,
+		});
+
+		// save screen to the database
+		let source = axios.CancelToken.source();
+		try {
+			const result = await axios.put(
+				`${process.env.APP_URL}/api/editor/screen/add`,
+				{
+					campaignId: state.campaign._id,
+					screen: newScreen,
+				},
+				{
+					headers: {
+						"Content-Type": "application/json",
+					},
+				},
+				{ cancelToken: source.token }
+			);
+
+			if (result.data.success !== true) {
+				console.log(result);
+				// set error
+				dispatch({
+					type: "SET_ERROR",
+					payload: {
+						error: true,
+						errorMessage: "Can't add new screen",
+					},
+				});
+
+				// remove screen from state
+				dispatch({
+					type: "REMOVE_SCREEN",
+					payload: screenId,
+				});
+
+				return;
+			}
+
+			dispatch({
+				type: "UPDATE_SCREEN",
+				payload: {
+					screenId,
+					_id: result.data.screen._id,
+				},
+			});
+			return;
+		} catch (error) {
+			if (axios.isCancel(error)) {
+				return;
+			}
+
+			console.log(error);
+			// set error
+			dispatch({
+				type: "SET_ERROR",
+				payload: {
+					error: true,
+					errorMessage: "Can't add new screen",
+				},
+			});
+
+			// remove screen from state
+			dispatch({
+				type: "REMOVE_SCREEN",
+				payload: screenId,
+			});
+			return;
+		}
+	};
+
 	return (
 		<GlobalContext.Provider
 			value={{
@@ -154,6 +242,7 @@ export const GlobalProvider = ({ children }) => {
 				setError,
 				loadCampaignData,
 				updateCampaignData,
+				addScreen,
 			}}
 		>
 			{children}

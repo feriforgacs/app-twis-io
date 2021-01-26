@@ -2,6 +2,11 @@ import mongoose from "mongoose";
 
 const screenSchema = new mongoose.Schema(
 	{
+		screenId: {
+			type: String,
+			trim: true,
+			required: [true, "Screen ID is required"],
+		},
 		type: {
 			type: String,
 			required: [true, "Screen types is required"],

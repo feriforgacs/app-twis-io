@@ -1,4 +1,5 @@
 import Cors from "cors";
+import { v4 as uuidv4 } from "uuid";
 import { getSession } from "next-auth/client";
 import initMiddleware from "../../../lib/InitMiddleware";
 import AuthCheck from "../../../lib/AuthCheck";
@@ -41,6 +42,7 @@ export default async function CampaignCreateHandler(req, res) {
 		 */
 		// create start screen
 		const startScreen = {
+			screenId: uuidv4(),
 			type: "start",
 			orderIndex: 0,
 			background: "linear-gradient(135.57deg, rgb(164, 38, 184) 0%, rgb(78, 156, 239) 93.45%)",
@@ -51,6 +53,7 @@ export default async function CampaignCreateHandler(req, res) {
 
 		// create end screen success
 		const endScreenSuccess = {
+			screenId: uuidv4(),
 			type: "endSuccess",
 			orderIndex: 1,
 			background: "linear-gradient(rgb(15, 191, 33), rgb(10, 206, 171))",
@@ -61,6 +64,7 @@ export default async function CampaignCreateHandler(req, res) {
 
 		// create end screen failure
 		const endScreenFailure = {
+			screenId: uuidv4(),
 			type: "endFailure",
 			orderIndex: 2,
 			background: "linear-gradient(rgb(191, 68, 15), rgb(206, 22, 10))",
