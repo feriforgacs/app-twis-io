@@ -76,6 +76,19 @@
 		}
 	}
 
+	&--default-editor {
+		background: #eee;
+		color: #253747;
+
+		&:hover:not(:disabled) {
+			background: #ccc;
+		}
+
+		&:active {
+			background: #ccc;
+		}
+	}
+
 	&--outline {
 		background: #fafafa;
 		border: 1px solid #cecece;

@@ -186,17 +186,15 @@ export default function StickerList({ active = false }) {
 				{images.length === 0 && !loading && <p className="align--center">No result</p>}
 
 				{images.length === 0 && loading && (
-					<p className="align--center">
-						<div className={styles.imageGrid}>
-							<div className={styles.imageGridColumn}>
-								<SkeletonImage items={5} />
-							</div>
-
-							<div className={styles.imageGridColumn}>
-								<SkeletonImage items={5} />
-							</div>
+					<div className={styles.imageGrid}>
+						<div className={styles.imageGridColumn}>
+							<SkeletonImage items={5} />
 						</div>
-					</p>
+
+						<div className={styles.imageGridColumn}>
+							<SkeletonImage items={5} />
+						</div>
+					</div>
 				)}
 
 				{images.length > 0 && (
