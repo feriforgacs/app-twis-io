@@ -51,8 +51,6 @@ export default async function CampaignDeleteHandler(req, res) {
 		return;
 	}
 
-	// TODO - remove participants answer's from the database
-
 	// remove campaign participants from the database
 	try {
 		await Participant.deleteMany({ campaignId: campaignId });
@@ -60,6 +58,11 @@ export default async function CampaignDeleteHandler(req, res) {
 		res.status(400).json({ success: false, error });
 		return;
 	}
+
+	/**
+	 * @todo - remove participants answer's from the database
+	 * @todo - remove screens, screen items, etc
+	 */
 
 	// remove campaign from the database
 	try {

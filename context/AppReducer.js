@@ -1,6 +1,7 @@
 export default function AppReducer(state, action) {
 	let screens;
 	let index;
+	let data;
 
 	switch (action.type) {
 		/**
@@ -83,7 +84,10 @@ export default function AppReducer(state, action) {
 				// use screen index that was sent with the payload
 				index = action.payload.index;
 			}
-			screens[index] = { ...screens[index], [action.payload.key]: action.payload.value };
+
+			data = action.payload.data;
+
+			screens[index] = { ...screens[index], ...data };
 			return {
 				...state,
 				screens,

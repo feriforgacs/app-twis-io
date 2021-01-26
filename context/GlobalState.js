@@ -162,7 +162,7 @@ export const GlobalProvider = ({ children }) => {
 		// save screen to the database
 		let source = axios.CancelToken.source();
 		try {
-			const result = await axios.put(
+			const result = await axios.post(
 				`${process.env.APP_URL}/api/editor/screen/add`,
 				{
 					campaignId: state.campaign._id,
@@ -200,7 +200,9 @@ export const GlobalProvider = ({ children }) => {
 				type: "UPDATE_SCREEN",
 				payload: {
 					screenId,
-					_id: result.data.screen._id,
+					data: {
+						_id: result.data.screen._id,
+					},
 				},
 			});
 			return;
