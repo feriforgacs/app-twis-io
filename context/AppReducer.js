@@ -58,6 +58,11 @@ export default function AppReducer(state, action) {
 			screens = [...state.screens];
 			index = screens.length - 2; // insert new screen before end screens
 			screens.splice(index, 0, action.payload);
+
+			// update order index of last two screens
+			screens[screens.length - 2].orderIndex = screens.length - 2; // success end screen
+			screens[screens.length - 1].orderIndex = screens.length - 1; // failure end screen
+
 			return {
 				...state,
 				screens,
@@ -98,6 +103,10 @@ export default function AppReducer(state, action) {
 				index = action.payload.index;
 			}
 			screens.splice(index, 1);
+
+			// update order index of last two screens
+			screens[screens.length - 2].orderIndex = screens.length - 2; // success end screen
+			screens[screens.length - 1].orderIndex = screens.length - 1; // failure end screen
 			return {
 				...state,
 				screens,
