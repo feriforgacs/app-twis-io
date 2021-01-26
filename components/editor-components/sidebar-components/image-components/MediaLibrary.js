@@ -6,6 +6,7 @@ import Toast from "../../../dashboard-components/Toast";
 import Masonry from "react-masonry-css";
 import Image from "./Image";
 import ImageUploadPreview from "./ImageUploadPreview";
+import SkeletonImage from "../../skeletons/SkeletonImage";
 
 export default function MediaLibrary({ active = false }) {
 	const [mediaLibraryImages, setMediaLibraryImages] = useState([]);
@@ -247,7 +248,17 @@ export default function MediaLibrary({ active = false }) {
 					</Masonry>
 				)}
 
-				{mediaLibraryImages.length === 0 && loading && <p className="align--center">Loading images...</p>}
+				{mediaLibraryImages.length === 0 && loading && (
+					<div className={styles.imageGrid}>
+						<div className={styles.imageGridColumn}>
+							<SkeletonImage items={5} />
+						</div>
+
+						<div className={styles.imageGridColumn}>
+							<SkeletonImage items={5} />
+						</div>
+					</div>
+				)}
 
 				{showLoadMore && page !== "" && <Button label={`${loading ? "loading..." : "Load more"}`} disabled={loading || uploading} onClick={() => loadMoreResult()} buttonType="buttonOutline" />}
 			</div>

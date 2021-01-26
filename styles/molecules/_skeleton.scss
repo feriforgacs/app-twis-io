@@ -99,6 +99,18 @@
 	&--screen {
 		width: 360px;
 	}
+
+	&--editor-image {
+		background: #253747;
+		border-radius: 0;
+		box-sizing: border-box;
+		min-height: 100px;
+		width: 100%;
+
+		&::before {
+			background: linear-gradient(to right, transparent 0%, #17232e 50%, transparent 100%);
+		}
+	}
 }
 
 @keyframes load {

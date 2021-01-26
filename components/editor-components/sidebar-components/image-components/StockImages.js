@@ -6,6 +6,7 @@ import styles from "./Image.module.scss";
 import Toast from "../../../dashboard-components/Toast";
 import Masonry from "react-masonry-css";
 import Image from "./Image";
+import SkeletonImage from "../../skeletons/SkeletonImage";
 
 export default function StockImages({ active = false }) {
 	const [images, setImages] = useState([]);
@@ -186,7 +187,17 @@ export default function StockImages({ active = false }) {
 			<div className={styles.imageList}>
 				{images.length === 0 && !loading && <p className="align--center">No result</p>}
 
-				{images.length === 0 && loading && <p className="align--center">Loading images...</p>}
+				{images.length === 0 && loading && (
+					<div className={styles.imageGrid}>
+						<div className={styles.imageGridColumn}>
+							<SkeletonImage items={5} />
+						</div>
+
+						<div className={styles.imageGridColumn}>
+							<SkeletonImage items={5} />
+						</div>
+					</div>
+				)}
 
 				{images.length > 0 && (
 					<Masonry breakpointCols={2} className={styles.imageGrid} columnClassName={styles.imageGridColumn}>
