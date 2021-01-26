@@ -146,6 +146,9 @@ export const GlobalProvider = ({ children }) => {
 	 * @param {string} screenId New screen's unique id
 	 */
 	const addScreen = async (screenType, screenId) => {
+		const successScreenId = state.screens[state.screens.length - 2]._id;
+		const failureScreenId = state.screens[state.screens.length - 1]._id;
+
 		const newScreen = {
 			screenId,
 			type: screenType,
@@ -167,6 +170,8 @@ export const GlobalProvider = ({ children }) => {
 				{
 					campaignId: state.campaign._id,
 					screen: newScreen,
+					successScreenId, // sending along to update order index
+					failureScreenId, // sending along to update order index
 				},
 				{
 					headers: {
