@@ -1,6 +1,11 @@
 import mongoose from "mongoose";
 
 const screenItemSchema = new mongoose.Schema({
+	itemId: {
+		type: String,
+		required: [true, "Item ID is required"],
+		trim: true,
+	},
 	type: {
 		type: String,
 		required: [true, "Item type is required"],

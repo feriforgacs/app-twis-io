@@ -1,3 +1,7 @@
+import { useContext, useRef } from "react";
+import { useDrop } from "react-dnd";
+import { v4 as uuidv4 } from "uuid";
+import { ItemTypes } from "../../../utils/Items";
 import styles from "./Screen.module.scss";
 import Image from "next/image";
 import ReactTooltip from "react-tooltip";
@@ -11,6 +15,24 @@ export default function Screen({ screen }) {
 		question: "Question Screen",
 		info: "Info Screen",
 	};
+
+	const screenRef = useRef();
+
+	const [{ isOver }, drop] = useDrop({
+		accept: [ItemTypes.TEXT, ItemTypes.IMAGE, ItemTypes.STICKER],
+		collect: (monitor) => ({
+			isOver: !!monitor.isOver(),
+		}),
+		drop: (item, monitor) => {
+			const offset = monitor.getSourceClientOffset();
+			const dropTargetXy = screenRef.current.getBoundingClientRect();
+			const droppedItemX = Math.floor(offset.x - dropTargetXy.left) < 0 ? 0 : Math.floor(offset.x - dropTargetXy.left);
+			const droppedItemY = Math.floor(offset.y - dropTargetXy.top) < 0 ? 0 : Math.floor(offset.y - dropTargetXy.top);
+
+			console.log(item);
+		},
+	});
+
 	return (
 		<>
 			{screen.type === "endSuccess" && <ScreenAddActions />}
@@ -45,7 +67,16 @@ export default function Screen({ screen }) {
 						""
 					)}
 				</div>
-				<div className={`${styles.screenBody}`}>body</div>
+				<div
+					ref={drop}
+					style={{
+						position: `relative`,
+					}}
+				>
+					<div ref={screenRef} className={`${styles.screenBody} ${isOver ? styles.screenBodyDropover : ""}`}>
+						@todo - list screen items {isOver && "item over"}
+					</div>
+				</div>
 			</div>
 		</>
 	);

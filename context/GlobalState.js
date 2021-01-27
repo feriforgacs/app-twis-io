@@ -10,6 +10,10 @@ let InitialState = {
 	errorMessage: "",
 	ciritcalError: false,
 	criticalErrorMessage: "😢  An error occured. Please, refresh the page and try again.",
+	activeScreenId: "",
+	activeScreenSettings: "",
+	activeItemId: "",
+	activeItemSettings: "",
 	campaign: {},
 	screens: [],
 };
