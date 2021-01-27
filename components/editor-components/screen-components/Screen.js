@@ -1,13 +1,17 @@
 import { useContext, useRef } from "react";
 import { useDrop } from "react-dnd";
 import { v4 as uuidv4 } from "uuid";
+import { GlobalContext } from "../../../context/GlobalState";
 import { ItemTypes } from "../../../utils/Items";
 import styles from "./Screen.module.scss";
 import Image from "next/image";
 import ReactTooltip from "react-tooltip";
 import ScreenAddActions from "./ScreenAddActions";
+import ScreenItem from "./items/ScreenItem";
 
-export default function Screen({ screen }) {
+export default function Screen({ screen, screenIndex }) {
+	const { addScreenItem } = useContext(GlobalContext);
+
 	const screenTypeNames = {
 		start: "Start Screen",
 		endSuccess: "End Screen Success",
@@ -30,6 +34,30 @@ export default function Screen({ screen }) {
 			const droppedItemY = Math.floor(offset.y - dropTargetXy.top) < 0 ? 0 : Math.floor(offset.y - dropTargetXy.top);
 
 			console.log(item);
+
+			/**
+			 * Add item to screen items
+			 */
+			const newScreenItem = {
+				itemId: uuidv4(),
+				screenId: screen.screenId,
+				type: item.type,
+				orderIndex: screen.screenItems.length,
+				settings: {
+					top: droppedItemY,
+					left: droppedItemX,
+					width: item.size.width,
+					height: item.size.height,
+				},
+			};
+
+			addScreenItem(screenIndex, newScreenItem);
+
+			/**
+			 * @todo set screen to active screen
+			 * @todo set item as active item
+			 * @todo trigger unsplash download if necessary
+			 */
 		},
 	});
 
@@ -74,7 +102,7 @@ export default function Screen({ screen }) {
 					}}
 				>
 					<div ref={screenRef} className={`${styles.screenBody} ${isOver ? styles.screenBodyDropover : ""}`}>
-						@todo - list screen items {isOver && "item over"}
+						{screen.screenItems.length > 0 && screen.screenItems.map((screenItem, index) => <ScreenItem key={index} screenItem={screenItem} screenItemIndex={index} />)}
 					</div>
 				</div>
 			</div>

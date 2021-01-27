@@ -10,9 +10,8 @@ let InitialState = {
 	errorMessage: "",
 	ciritcalError: false,
 	criticalErrorMessage: "😢  An error occured. Please, refresh the page and try again.",
-	activeScreenId: "",
-	activeScreenSettings: "",
-	activeItemId: "",
+	activeScreen: "",
+	activeScreenItem: "",
 	activeItemSettings: "",
 	campaign: {},
 	screens: [],
@@ -145,6 +144,12 @@ export const GlobalProvider = ({ children }) => {
 	};
 
 	/**
+	 * ==============================
+	 * ======= SCREEN ACTIONS =======
+	 * ==============================
+	 */
+
+	/**
 	 * Add new screen
 	 * @param {string} screenType The type of the screen we'd like to add
 	 * @param {string} screenId New screen's unique id
@@ -239,6 +244,141 @@ export const GlobalProvider = ({ children }) => {
 		}
 	};
 
+	/**
+	 * Set active screen in global state
+	 * @param {obj} activeScreen active screen object
+	 */
+	const setActiveScreen = (activeScreen) => {
+		dispatch({
+			type: "SET_ACTIVE_SCREEN",
+			payload: activeScreen,
+		});
+	};
+
+	/**
+	 * Helper function to reset active screen in global state
+	 */
+	const resetActiveScreen = () => {
+		setActiveScreen("");
+	};
+
+	/**
+	 * ==============================
+	 * ======== ITEM ACTIONS ========
+	 * ==============================
+	 */
+
+	/**
+	 * Add new item to a screen
+	 * @param {int} screenIndex the index of the screen the item was dropped
+	 * @param {obj} newScreenItem new screen item object
+	 */
+	const addScreenItem = async (screenIndex, newScreenItem) => {
+		// add screen item to global state
+		dispatch({
+			type: "ADD_SCREEN_ITEM",
+			payload: {
+				screenIndex,
+				newScreenItem,
+			},
+		});
+
+		// save screen item to the database
+		let source = axios.CancelToken.source();
+		try {
+			const result = await axios.post(
+				`${process.env.APP_URL}/api/editor/screenitem/add`,
+				{
+					campaignId: state.campaign._id,
+					screenItem: newScreenItem,
+				},
+				{
+					headers: {
+						"Content-Type": "application/json",
+					},
+				},
+				{ cancelToken: source.token }
+			);
+
+			if (result.data.success !== true) {
+				console.log(result);
+				// set error
+				dispatch({
+					type: "SET_ERROR",
+					payload: {
+						error: true,
+						errorMessage: "Can't add new screen item",
+					},
+				});
+
+				// remove screen from state
+				dispatch({
+					type: "REMOVE_SCREEN_ITEM",
+					payload: {
+						screenId: newScreenItem.screenId,
+						itemId: newScreenItem.itemId,
+					},
+				});
+
+				return;
+			}
+
+			dispatch({
+				type: "UPDATE_SCREEN_ITEM",
+				payload: {
+					screenId: newScreenItem.screenId,
+					itemId: newScreenItem.itemId,
+					data: {
+						_id: result.data.screenItem._id,
+					},
+				},
+			});
+			return;
+		} catch (error) {
+			if (axios.isCancel(error)) {
+				return;
+			}
+
+			console.log(error);
+			// set error
+			dispatch({
+				type: "SET_ERROR",
+				payload: {
+					error: true,
+					errorMessage: "Can't add new screen item",
+				},
+			});
+
+			// remove screen from state
+			dispatch({
+				type: "REMOVE_SCREEN_ITEM",
+				payload: {
+					screenId: newScreenItem.screenId,
+					itemId: newScreenItem.itemId,
+				},
+			});
+			return;
+		}
+	};
+
+	/**
+	 * Set active screen item in global stat
+	 * @param {obj} activeScreenItem active screen item object
+	 */
+	const setActiveScreenItem = (activeScreenItem) => {
+		dispatch({
+			type: "SET_ACTIVE_SCREEN_ITEM",
+			payload: activeScreenItem,
+		});
+	};
+
+	/**
+	 * Helper function to reset active screen item
+	 */
+	const resetActiveScreenItem = () => {
+		setActiveScreenItem("");
+	};
+
 	return (
 		<GlobalContext.Provider
 			value={{
@@ -247,6 +387,8 @@ export const GlobalProvider = ({ children }) => {
 				errorMessage: state.errorMessage,
 				criticalError: state.criticalError,
 				criticalErrorMessage: state.criticalErrorMessage,
+				activeScreen: state.activeScreen,
+				activeScreenItem: state.activeScreenItem,
 				campaign: state.campaign,
 				screens: state.screens,
 
@@ -254,6 +396,11 @@ export const GlobalProvider = ({ children }) => {
 				loadCampaignData,
 				updateCampaignData,
 				addScreen,
+				setActiveScreen,
+				resetActiveScreen,
+				addScreenItem,
+				setActiveScreenItem,
+				resetActiveScreenItem,
 			}}
 		>
 			{children}

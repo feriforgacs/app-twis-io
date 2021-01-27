@@ -2,6 +2,8 @@ export default function AppReducer(state, action) {
 	let screens;
 	let index;
 	let data;
+	let screenIndex;
+	let itemIndex;
 
 	switch (action.type) {
 		/**
@@ -117,10 +119,75 @@ export default function AppReducer(state, action) {
 			};
 
 		/**
+		 * Set active screen
+		 */
+		case "SET_ACTIVE_SCREEN":
+			return {
+				...state,
+				activeScreen: action.payload,
+			};
+
+		/**
 		 * ==============================
 		 * ======== ITEM ACTIONS ========
 		 * ==============================
 		 */
+
+		/**
+		 * Add new item to screen
+		 */
+		case "ADD_SCREEN_ITEM":
+			screens = [...state.screens];
+			screens[action.payload.screenIndex].screenItems.push(action.payload.newScreenItem);
+
+			return {
+				...state,
+				screens,
+			};
+
+		/**
+		 * Update screen item data
+		 */
+		case "UPDATE_SCREEN_ITEM":
+			screens = [...state.screens];
+			// find screen index based on screen id
+			screenIndex = screens.findIndex((obj) => obj.screenId === action.payload.screenId);
+			itemIndex = screens[screenIndex].findIndex((obj) => obj.itemId === action.payload.itemId);
+
+			screens[screenIndex].screenItems[itemIndex] = [...screens[screenIndex].screenItems[itemIndex], ...data];
+
+			return {
+				...state,
+				screens,
+			};
+
+		/**
+		 * Remove screen item
+		 */
+		case "REMOVE_SCREEN_ITEM":
+			console.log("remove screen item");
+			console.log(action.payload);
+			screens = [...state.screens];
+			// find screen index based on screen id
+			index = screens.findIndex((obj) => obj.screenId === action.payload.screenId);
+			console.log(screens[index].screenItems);
+			// remove screen item based on screen index and screen item id
+			screens[index].screenItems.filter((screenItem) => screenItem.itemId === "kamu");
+			console.log(screens[index].screenItems);
+
+			return {
+				...state,
+				screens,
+			};
+
+		/**
+		 * Set active screen item
+		 */
+		case "SET_ACTIVE_SCREEN_ITEM":
+			return {
+				...state,
+				activeScreenItem: action.payload,
+			};
 		default:
 			return state;
 	}
