@@ -17,7 +17,7 @@ const screenItemSchema = new mongoose.Schema({
 		default: 0,
 	},
 	settings: {
-		type: String,
+		type: Object,
 	},
 	screenId: {
 		type: mongoose.Schema.ObjectId,

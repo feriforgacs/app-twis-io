@@ -155,7 +155,7 @@ export default function AppReducer(state, action) {
 			screenIndex = screens.findIndex((obj) => obj.screenId === action.payload.screenId);
 			itemIndex = screens[screenIndex].screenItems.findIndex((obj) => obj.itemId === action.payload.itemId);
 
-			screens[screenIndex].screenItems[itemIndex] = { ...screens[screenIndex].screenItems[itemIndex], ...data };
+			screens[screenIndex].screenItems[itemIndex] = { ...screens[screenIndex].screenItems[itemIndex], ...action.payload.data };
 
 			return {
 				...state,

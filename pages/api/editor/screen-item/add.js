@@ -60,8 +60,6 @@ export default async function AddScreenHandler(req, res) {
 	// create new screen item in the db
 	try {
 		const newScreenItemData = { ...req.body.screenItem, screenId };
-		const newScreenItemSettings = JSON.stringify(newScreenItemData.settings);
-		newScreenItemData.settings = newScreenItemSettings;
 		const newScreenItem = await ScreenItem.create(newScreenItemData);
 
 		if (!newScreenItem) {
