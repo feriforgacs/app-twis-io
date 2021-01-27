@@ -44,14 +44,15 @@ export default function Screen({ screen, screenIndex }) {
 				type: item.type,
 				orderIndex: screen.screenItems.length,
 				settings: {
-					top: droppedItemY,
-					left: droppedItemX,
-					width: item.size.width,
-					height: item.size.height,
+					top: `${droppedItemY}px`,
+					left: `${droppedItemX}px`,
+					width: `${Math.round(item.size.width)}px`,
+					height: `${Math.round(item.size.height)}px`,
 				},
 			};
 
-			addScreenItem(screenIndex, newScreenItem);
+			// add new item to state and save to db
+			addScreenItem(screenIndex, newScreenItem, screen._id);
 
 			/**
 			 * @todo set screen to active screen

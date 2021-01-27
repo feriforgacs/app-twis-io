@@ -273,7 +273,7 @@ export const GlobalProvider = ({ children }) => {
 	 * @param {int} screenIndex the index of the screen the item was dropped
 	 * @param {obj} newScreenItem new screen item object
 	 */
-	const addScreenItem = async (screenIndex, newScreenItem) => {
+	const addScreenItem = async (screenIndex, newScreenItem, screenDbId) => {
 		// add screen item to global state
 		dispatch({
 			type: "ADD_SCREEN_ITEM",
@@ -287,9 +287,10 @@ export const GlobalProvider = ({ children }) => {
 		let source = axios.CancelToken.source();
 		try {
 			const result = await axios.post(
-				`${process.env.APP_URL}/api/editor/screenitem/add`,
+				`${process.env.APP_URL}/api/editor/screen-item/add`,
 				{
 					campaignId: state.campaign._id,
+					screenId: screenDbId,
 					screenItem: newScreenItem,
 				},
 				{
