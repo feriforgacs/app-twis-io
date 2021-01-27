@@ -4,6 +4,7 @@ export default function AppReducer(state, action) {
 	let data;
 	let screenIndex;
 	let itemIndex;
+	let screenItems;
 
 	switch (action.type) {
 		/**
@@ -165,15 +166,12 @@ export default function AppReducer(state, action) {
 		 * Remove screen item
 		 */
 		case "REMOVE_SCREEN_ITEM":
-			console.log("remove screen item");
-			console.log(action.payload);
 			screens = [...state.screens];
 			// find screen index based on screen id
 			index = screens.findIndex((obj) => obj.screenId === action.payload.screenId);
-			console.log(screens[index].screenItems);
 			// remove screen item based on screen index and screen item id
-			screens[index].screenItems.filter((screenItem) => screenItem.itemId === "kamu");
-			console.log(screens[index].screenItems);
+			screenItems = screens[index].screenItems.filter((screenItem) => screenItem.itemId !== action.payload.itemId);
+			screens[index].screenItems = screenItems;
 
 			return {
 				...state,
