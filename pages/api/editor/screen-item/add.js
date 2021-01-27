@@ -5,7 +5,6 @@ import initMiddleware from "../../../../lib/InitMiddleware";
 import AuthCheck from "../../../../lib/AuthCheck";
 import DatabaseConnect from "../../../../lib/DatabaseConnect";
 import Campaign from "../../../../models/Campaign";
-/* import Screen from "../../../../models/editor/Screen"; */
 import ScreenItem from "../../../../models/editor/ScreenItem";
 
 const cors = initMiddleware(

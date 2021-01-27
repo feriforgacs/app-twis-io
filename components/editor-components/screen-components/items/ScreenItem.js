@@ -1,3 +1,13 @@
+import Image from "./Image";
+import Sticker from "./Sticker";
+import Text from "./Text";
+
 export default function ScreenItem({ screenItem, screenItemIndex }) {
-	return <div>I am a screen item 😄</div>;
+	return (
+		<>
+			{screenItem.type === "image" && <Image data={screenItem} screenItemIndex={screenItemIndex} />}
+			{screenItem.type === "sticker" && <Sticker data={screenItem} screenItemIndex={screenItemIndex} />}
+			{screenItem.type === "text" && <Text data={screenItem} screenItemIndex={screenItemIndex} />}
+		</>
+	);
 }

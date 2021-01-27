@@ -11,6 +11,14 @@ const screenItemSchema = new mongoose.Schema({
 		required: [true, "Item type is required"],
 		default: "text",
 	},
+	content: {
+		type: String,
+		trim: true,
+	},
+	src: {
+		type: String,
+		trim: true,
+	},
 	orderIndex: {
 		type: Number,
 		required: [true, "Screen item order index is required"],

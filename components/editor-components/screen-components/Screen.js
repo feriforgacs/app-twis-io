@@ -42,6 +42,8 @@ export default function Screen({ screen, screenIndex }) {
 				itemId: uuidv4(),
 				screenId: screen.screenId,
 				type: item.type,
+				content: item.content || "",
+				src: item.src || "",
 				orderIndex: screen.screenItems.length,
 				settings: {
 					top: `${droppedItemY}px`,
@@ -52,6 +54,7 @@ export default function Screen({ screen, screenIndex }) {
 			};
 
 			// add new item to state and save to db
+			// the screen._id parameter is necessary to create the screen and item connection in the db
 			addScreenItem(screenIndex, newScreenItem, screen._id);
 
 			/**
