@@ -164,6 +164,7 @@ export const GlobalProvider = ({ children }) => {
 			orderIndex: state.screens.length - 2,
 			background: "#ffffff",
 			campaignId: state.campaign._id,
+			screenItems: [],
 		};
 		// add screen to state
 		dispatch({

@@ -79,11 +79,21 @@ export default async function AddScreenHandler(req, res) {
 			return res.status(400).json({ success: false });
 		}
 
-		const newScreen = await Screen.create(req.body.screen);
+		const newScreenData = req.body.screen;
+		// remove the emty screen items array that was sent along in the request
+		delete newScreenData.screenItems;
+
+		const newScreen = await Screen.create(newScreenData);
 
 		if (!newScreen) {
 			return res.status(400).json({ success: false });
 		}
+
+		/**
+		 * @todo add one screen item to the new screen
+		 * @todo temporary fix, there should be at least one screen item on every new screen
+		 */
+		newScreen.screenItems = [];
 
 		return res.status(200).json({ success: true, screen: newScreen });
 	} catch (error) {

@@ -44,7 +44,7 @@ export default function Screen({ screen, screenIndex }) {
 				type: item.type,
 				content: item.content || "",
 				src: item.src || "",
-				orderIndex: screen.screenItems.length,
+				orderIndex: screen.screenItems ? screen.screenItems.length : 0,
 				settings: {
 					top: `${droppedItemY}px`,
 					left: `${droppedItemX}px`,
@@ -106,7 +106,7 @@ export default function Screen({ screen, screenIndex }) {
 					}}
 				>
 					<div ref={screenRef} className={`${styles.screenBody} ${isOver ? styles.screenBodyDropover : ""}`}>
-						{screen.screenItems.length > 0 && screen.screenItems.map((screenItem, index) => <ScreenItem key={index} screenItem={screenItem} screenItemIndex={index} />)}
+						{screen.screenItems && screen.screenItems.length > 0 && screen.screenItems.map((screenItem, index) => <ScreenItem key={index} screenItem={screenItem} screenItemIndex={index} />)}
 					</div>
 				</div>
 			</div>
