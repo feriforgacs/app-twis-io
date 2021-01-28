@@ -211,6 +211,7 @@ export const GlobalProvider = ({ children }) => {
 				return;
 			}
 
+			// update screen in state with database id
 			dispatch({
 				type: "UPDATE_SCREEN",
 				payload: {
@@ -220,6 +221,12 @@ export const GlobalProvider = ({ children }) => {
 					},
 				},
 			});
+
+			// scroll to newly added screen
+			setTimeout(() => {
+				document.getElementById(`screen-${screenType}-${screenId}`).scrollIntoView();
+			}, 100);
+
 			return;
 		} catch (error) {
 			if (axios.isCancel(error)) {

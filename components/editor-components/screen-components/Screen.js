@@ -85,6 +85,7 @@ export default function Screen({ screen, screenIndex }) {
 				onClick={() => {
 					setActiveScreen(screen);
 				}}
+				id={`screen-${screen.type}-${screen.screenId}`}
 			>
 				<div className={styles.screenActions}>
 					<button className={`${styles.buttonScreen} ${styles.buttonScreenSettings}`}>
