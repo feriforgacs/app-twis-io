@@ -8,9 +8,10 @@ import Image from "next/image";
 import ReactTooltip from "react-tooltip";
 import ScreenAddActions from "./ScreenAddActions";
 import ScreenItem from "./items/ScreenItem";
+import axios from "axios";
 
 export default function Screen({ screen, screenIndex }) {
-	const { addScreenItem } = useContext(GlobalContext);
+	const { addScreenItem, activeScreen, setActiveScreen, setActiveScreenItem } = useContext(GlobalContext);
 
 	const screenTypeNames = {
 		start: "Start Screen",
@@ -58,17 +59,33 @@ export default function Screen({ screen, screenIndex }) {
 			addScreenItem(screenIndex, newScreenItem, screen._id);
 
 			/**
-			 * @todo set screen to active screen
-			 * @todo set item as active item
-			 * @todo trigger unsplash download if necessary
+			 * Set screen to active screen
 			 */
+			setActiveScreen(screen);
+
+			/**
+			 * Set item as active item
+			 */
+			setActiveScreenItem(newScreenItem);
+
+			/**
+			 * Trigger unsplash download if necessary
+			 */
+			if (item.unsplashImage && item.unsplashId) {
+				axios(`${process.env.APP_URL}/api/editor/stock-photo/download?id=${item.unsplashId}`);
+			}
 		},
 	});
 
 	return (
 		<>
 			{screen.type === "endSuccess" && <ScreenAddActions />}
-			<div className={styles.screen}>
+			<div
+				className={styles.screen}
+				onClick={() => {
+					setActiveScreen(screen);
+				}}
+			>
 				<div className={styles.screenActions}>
 					<button className={`${styles.buttonScreen} ${styles.buttonScreenSettings}`}>
 						<Image src="/images/editor/icons/icon-cog.svg" width={18} height={18} alt="Screen settings icon" />
@@ -105,7 +122,7 @@ export default function Screen({ screen, screenIndex }) {
 						position: `relative`,
 					}}
 				>
-					<div ref={screenRef} className={`${styles.screenBody} ${isOver ? styles.screenBodyDropover : ""}`}>
+					<div ref={screenRef} className={`${styles.screenBody} ${isOver ? styles.screenBodyDropover : ""} ${activeScreen !== "" && activeScreen.screenId === screen.screenId ? styles.screenBodyActive : ""}`}>
 						{screen.screenItems && screen.screenItems.length > 0 && screen.screenItems.map((screenItem, index) => <ScreenItem key={index} screenItem={screenItem} screenItemIndex={index} />)}
 					</div>
 				</div>
