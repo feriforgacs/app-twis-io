@@ -51,7 +51,9 @@ export default function Screen({ screen, screenIndex }) {
 					left: droppedItemX,
 					width: Math.round(item.size.width),
 					height: Math.round(item.size.height),
-					transform: "translateX(0) translateY(0) rotate(0deg)",
+					translateX: 0,
+					translateY: 0,
+					rotate: 0,
 				},
 			};
 
