@@ -6,5 +6,5 @@ export default function Sticker({ data, screenItemIndex }) {
 		left: data.settings.left,
 		position: "absolute",
 	};
-	return <img src={data.src} style={imageStyle} />;
+	return <img id={`${data.type}-${data.itemId}`} className="screen-item" src={data.src} style={imageStyle} />;
 }
