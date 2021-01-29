@@ -166,6 +166,34 @@ export default function Body() {
 							},
 						});
 					}}
+					rotatable={true}
+					throttleRotate={0}
+					rotationPosition="top"
+					onRotateStart={({ set }) => {
+						set(activeScreenItem.settings.rotate || 0);
+					}}
+					onRotate={({ target, beforeRotate }) => {
+						target.style.transform = `translateX(${activeScreenItem.settings.translateX}px) translateY(${activeScreenItem.settings.translateY}px) rotate(${beforeRotate}deg)`;
+						activeScreenItemRotate = beforeRotate;
+					}}
+					onRotateEnd={() => {
+						// update screen item translate settings in local state and also save it to the database
+						updateScreenItem(activeScreen.orderIndex, activeScreenItem.orderIndex, activeScreenItem.itemId, {
+							settings: {
+								...activeScreenItem.settings,
+								rotate: activeScreenItemRotate,
+							},
+						});
+
+						// update active screen item settings to properly set new falues for upcoming translations
+						setActiveScreenItem({
+							...activeScreenItem,
+							settings: {
+								...activeScreenItem.settings,
+								rotate: activeScreenItemRotate,
+							},
+						});
+					}}
 				/>
 			)}
 
