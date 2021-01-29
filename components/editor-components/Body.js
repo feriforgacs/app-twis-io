@@ -101,7 +101,7 @@ export default function Body() {
 						activeScreenItemTranslateY = beforeTranslate[1];
 					}}
 					onDragEnd={() => {
-						updateScreenItem(activeScreen.orderIndex, activeScreenItem.orderIndex, {
+						updateScreenItem(activeScreen.orderIndex, activeScreenItem.orderIndex, activeScreenItem._id, {
 							settings: {
 								...activeScreenItem.settings,
 								translateX: activeScreenItemTranslateX,

@@ -18,7 +18,7 @@ export const config = {
 	},
 };
 
-export default async function UploadHandler(req, res) {
+export default async function MediaUploadHandler(req, res) {
 	await cors(req, res);
 
 	const authStatus = await AuthCheck(req, res);

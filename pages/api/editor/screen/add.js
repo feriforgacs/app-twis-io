@@ -13,7 +13,7 @@ const cors = initMiddleware(
 	})
 );
 
-export default async function AddScreenHandler(req, res) {
+export default async function ScreenAddHandler(req, res) {
 	await cors(req, res);
 
 	const authStatus = await AuthCheck(req, res);

@@ -13,7 +13,7 @@ const cors = initMiddleware(
 	})
 );
 
-export default async function ScreenItemAddHandler(req, res) {
+export default async function ItemUpdateHandler(req, res) {
 	await cors(req, res);
 
 	const authStatus = await AuthCheck(req, res);
@@ -22,10 +22,10 @@ export default async function ScreenItemAddHandler(req, res) {
 	}
 
 	let campaignId;
-	let screenId;
+	let screenItemId;
 
-	if (!req.body.campaignId || !req.body.screenId) {
-		return res.status(400).json({ success: false, error: "missing campaign or screen id" });
+	if (!req.body.campaignId || !req.body.screenItemId) {
+		return res.status(400).json({ success: false, error: "missing campaign or screen item id" });
 	}
 
 	// validate campaign id parameter
@@ -36,10 +36,10 @@ export default async function ScreenItemAddHandler(req, res) {
 	}
 
 	// validate screen id parameter
-	if (mongoose.Types.ObjectId.isValid(req.body.screenId)) {
-		screenId = req.body.screenId;
+	if (mongoose.Types.ObjectId.isValid(req.body.screenItemId)) {
+		screenItemId = req.body.screenItemId;
 	} else {
-		return res.status(400).json({ success: false, error: "invalid screen id" });
+		return res.status(400).json({ success: false, error: "invalid screen item id" });
 	}
 
 	await DatabaseConnect();
@@ -56,18 +56,15 @@ export default async function ScreenItemAddHandler(req, res) {
 		return res.status(400).json({ success: false, error });
 	}
 
-	// create new screen item in the db
+	// update screen item data
 	try {
-		const newScreenItemData = { ...req.body.screenItem, screenId };
-		const newScreenItem = await ScreenItem.create(newScreenItemData);
-
-		if (!newScreenItem) {
+		const result = await ScreenItem.findOneAndUpdate({ _id: screenItemId }, { ...req.body.screenItemUpdatedData });
+		if (!result) {
 			return res.status(400).json({ success: false });
 		}
 
-		return res.status(200).json({ success: true, screenItem: newScreenItem });
+		return res.status(200).json({ success: true });
 	} catch (error) {
-		console.log(error);
-		return res.status(400).json({ success: false, error });
+		return res.status(400).json({ success: false });
 	}
 }

@@ -12,7 +12,7 @@ const cors = initMiddleware(
 	})
 );
 
-export default async function UpdateHandler(req, res) {
+export default async function CampaignUpdateHandler(req, res) {
 	await cors(req, res);
 
 	const authStatus = await AuthCheck(req, res);

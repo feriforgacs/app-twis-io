@@ -392,20 +392,68 @@ export const GlobalProvider = ({ children }) => {
 	 * Update screen item data
 	 * @param {int} screenIndex The index of the screen where the screen item is
 	 * @param {int} screenItemIndex The index of the screen item to update
+	 * @param {string} screenItemId The db id of the item
 	 * @param {obj} screenItemData The data to update the screen item to
 	 */
-	const updateScreenItem = (screenIndex, screenItemIndex, screenItemUpdateData) => {
-		console.log(screenItemUpdateData);
+	const updateScreenItem = async (screenIndex, screenItemIndex, screenItemDbId, screenItemUpdatedData) => {
+		// update screen item data in local state
 		dispatch({
 			type: "UPDATE_SCREEN_ITEM",
 			payload: {
 				screenIndex,
 				screenItemIndex,
 				data: {
-					...screenItemUpdateData,
+					...screenItemUpdatedData,
 				},
 			},
 		});
+
+		// update screen item data in the db
+		let source = axios.CancelToken.source();
+		try {
+			const result = await axios.post(
+				`${process.env.APP_URL}/api/editor/screen-item/update`,
+				{
+					campaignId: state.campaign._id,
+					screenItemId: screenItemDbId,
+					screenItemUpdatedData,
+				},
+				{
+					headers: {
+						"Content-Type": "application/json",
+					},
+				},
+				{ cancelToken: source.token }
+			);
+
+			if (result.data.success !== true) {
+				console.log(result);
+				// set error
+				dispatch({
+					type: "SET_ERROR",
+					payload: {
+						error: true,
+						errorMessage: "Can't save changes. Please wait a minute and try again",
+					},
+				});
+				return;
+			}
+		} catch (error) {
+			if (axios.isCancel(error)) {
+				return;
+			}
+
+			console.log(error);
+			// set error
+			dispatch({
+				type: "SET_ERROR",
+				payload: {
+					error: true,
+					errorMessage: "Can't save changes. Please wait a minute and try again",
+				},
+			});
+			return;
+		}
 	};
 
 	return (

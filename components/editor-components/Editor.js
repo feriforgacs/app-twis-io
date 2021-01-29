@@ -27,7 +27,7 @@ export default function Editor({ campaignId }) {
 							<Sidebar />
 							<Body />
 						</DndProvider>
-						{error && <Toast onClose={() => setError(false, "")} duration={3000} type={"error"} content={errorMessage} />}
+						{error && <Toast onClose={() => setError(false, "")} duration={4000} type={"error"} content={errorMessage} />}
 					</div>
 				</>
 			)}
