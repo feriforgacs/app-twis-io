@@ -5,7 +5,7 @@ import styles from "./Body.module.scss";
 import ScreenList from "./screen-components/ScreenList";
 
 export default function Body() {
-	const { resetActiveScreen, activeScreenItem, resetActiveScreenItem } = useContext(GlobalContext);
+	const { activeScreen, resetActiveScreen, activeScreenItem, setActiveScreenItem, resetActiveScreenItem, updateScreenItem } = useContext(GlobalContext);
 	const [moveableTarget, setMoveableTarget] = useState();
 
 	/**
@@ -73,128 +73,52 @@ export default function Body() {
 				}
 			}}
 		>
-			{activeScreenItem !== "" && activeScreenItem.moveable !== false && (
-				<>
-					<p style={{ position: "fixed", top: "300px", left: "400px", zIndex: "9999999", border: "1px solid red" }}>MOVEABLE</p>
-					<Moveable
-						snappable={true}
-						snapThreshold={5}
-						snapGap={true}
-						snapElement={true}
-						snapVertical={true}
-						snapHorizontal={true}
-						snapCenter={true}
-						snapDigit={0}
-						origin={false}
-						edge={false}
-						renderDirections={["nw", "n", "ne", "w", "e", "sw", "s", "se"]}
-						className={`moveable-${activeScreenItem.id}`}
-						target={moveableTarget}
-						/** draggable */
-						draggable={true}
-						throttleDrag={0}
-						onDragStart={({ set }) => {
-							set([activeScreenItem.position.translateX, activeScreenItem.position.translateY]);
-						}}
-						onDrag={({ target, beforeTranslate }) => {
-							target.style.transform = `translateX(${beforeTranslate[0]}px) translateY(${beforeTranslate[1]}px) rotate(${activeScreenItem.position.rotate}deg)`;
-							activeScreenItemTranslateX = beforeTranslate[0];
-							activeScreenItemTranslateY = beforeTranslate[1];
-						}}
-						onDragEnd={() => {
-							/*updateScreenItem(activeScreenItem.screen, activeScreenItem.screenIndex, activeScreenItem.index, {
-							...activeScreenItem,
-							position: {
-								...activeScreenItem.position,
+			{activeScreenItem !== "" && (
+				<Moveable
+					snappable={true}
+					snapThreshold={5}
+					snapGap={true}
+					snapElement={true}
+					snapVertical={true}
+					snapHorizontal={true}
+					snapCenter={true}
+					snapDigit={0}
+					origin={false}
+					edge={false}
+					renderDirections={["nw", "n", "ne", "w", "e", "sw", "s", "se"]}
+					className={`moveable-${activeScreenItem.type}-${activeScreenItem.itemId}`}
+					target={moveableTarget}
+					draggable={true}
+					throttleDrag={0}
+					onDragStart={({ set }) => {
+						const startTranslateX = activeScreenItem.settings.translateX || 0;
+						const startTranslateY = activeScreenItem.settings.translateY || 0;
+						set([startTranslateX, startTranslateY]);
+					}}
+					onDrag={({ target, beforeTranslate }) => {
+						target.style.transform = `translateX(${beforeTranslate[0]}px) translateY(${beforeTranslate[1]}px) rotate(${activeScreenItem.settings.rotate || 0}deg)`;
+						activeScreenItemTranslateX = beforeTranslate[0];
+						activeScreenItemTranslateY = beforeTranslate[1];
+					}}
+					onDragEnd={() => {
+						updateScreenItem(activeScreen.orderIndex, activeScreenItem.orderIndex, {
+							settings: {
+								...activeScreenItem.settings,
 								translateX: activeScreenItemTranslateX,
 								translateY: activeScreenItemTranslateY,
 							},
 						});
+
 						setActiveScreenItem({
 							...activeScreenItem,
-							position: {
-								...activeScreenItem.position,
+							settings: {
+								...activeScreenItem.settings,
 								translateX: activeScreenItemTranslateX,
 								translateY: activeScreenItemTranslateY,
-							},
-						});*/
-						}}
-						resizable={true}
-						throttleResize={0}
-						keepRatio={activeScreenItem.type === "sticker" || activeScreenItem.type === "image"}
-						onResizeStart={({ target, set, setOrigin, dragStart }) => {
-							setOrigin(["%", "%"]);
-							const style = window.getComputedStyle(target);
-							const cssWidth = parseFloat(style.width);
-							const cssHeight = parseFloat(style.height);
-							set([cssWidth, cssHeight]);
-							dragStart && dragStart.set([activeScreenItem.position.translateX, activeScreenItem.position.translateY]);
-							activeScreenItemWidth = cssWidth;
-							activeScreenItemHeight = cssHeight;
-						}}
-						onResize={({ target, width, height, drag }) => {
-							target.style.width = `${width}px`;
-							target.style.height = `${height}px`;
-							target.style.transform = `translateX(${drag.beforeTranslate[0]}px) translateY(${drag.beforeTranslate[1]}px) rotate(${activeScreenItem.position.rotate}deg)`;
-							activeScreenItemTranslateX = drag.beforeTranslate[0];
-							activeScreenItemTranslateY = drag.beforeTranslate[1];
-							activeScreenItemWidth = width;
-							activeScreenItemHeight = height;
-						}}
-						onResizeEnd={() => {
-							/*updateScreenItem(activeScreenItem.screen, activeScreenItem.screenIndex, activeScreenItem.index, {
-							...activeScreenItem,
-							position: {
-								...activeScreenItem.position,
-								translateX: activeScreenItemTranslateX,
-								translateY: activeScreenItemTranslateY,
-							},
-							size: {
-								width: activeScreenItemWidth,
-								height: activeScreenItemHeight,
 							},
 						});
-						setActiveScreenItem({
-							...activeScreenItem,
-							position: {
-								...activeScreenItem.position,
-								translateX: activeScreenItemTranslateX,
-								translateY: activeScreenItemTranslateY,
-							},
-							size: {
-								width: activeScreenItemWidth,
-								height: activeScreenItemHeight,
-							},
-						});*/
-						}}
-						rotatable={true}
-						throttleRotate={0}
-						rotationPosition="top"
-						onRotateStart={({ set }) => {
-							set(activeScreenItem.position.rotate);
-						}}
-						onRotate={({ target, beforeRotate }) => {
-							target.style.transform = `translateX(${activeScreenItem.position.translateX}px) translateY(${activeScreenItem.position.translateY}px) rotate(${beforeRotate}deg)`;
-							activeScreenItemRotate = beforeRotate;
-						}}
-						onRotateEnd={() => {
-							/*updateScreenItem(activeScreenItem.screen, activeScreenItem.screenIndex, activeScreenItem.index, {
-							...activeScreenItem,
-							position: {
-								...activeScreenItem.position,
-								rotate: activeScreenItemRotate,
-							},
-						});
-						setActiveScreenItem({
-							...activeScreenItem,
-							position: {
-								...activeScreenItem.position,
-								rotate: activeScreenItemRotate,
-							},
-						});*/
-						}}
-					/>
-				</>
+					}}
+				/>
 			)}
 
 			<ScreenList />

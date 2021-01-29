@@ -388,6 +388,26 @@ export const GlobalProvider = ({ children }) => {
 		setActiveScreenItem("");
 	};
 
+	/**
+	 * Update screen item data
+	 * @param {int} screenIndex The index of the screen where the screen item is
+	 * @param {int} screenItemIndex The index of the screen item to update
+	 * @param {obj} screenItemData The data to update the screen item to
+	 */
+	const updateScreenItem = (screenIndex, screenItemIndex, screenItemUpdateData) => {
+		console.log(screenItemUpdateData);
+		dispatch({
+			type: "UPDATE_SCREEN_ITEM",
+			payload: {
+				screenIndex,
+				screenItemIndex,
+				data: {
+					...screenItemUpdateData,
+				},
+			},
+		});
+	};
+
 	return (
 		<GlobalContext.Provider
 			value={{
@@ -410,6 +430,7 @@ export const GlobalProvider = ({ children }) => {
 				addScreenItem,
 				setActiveScreenItem,
 				resetActiveScreenItem,
+				updateScreenItem,
 			}}
 		>
 			{children}

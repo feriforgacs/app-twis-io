@@ -151,10 +151,13 @@ export default function AppReducer(state, action) {
 		 */
 		case "UPDATE_SCREEN_ITEM":
 			screens = [...state.screens];
-			// find screen index based on screen id
-			screenIndex = screens.findIndex((obj) => obj.screenId === action.payload.screenId);
-			itemIndex = screens[screenIndex].screenItems.findIndex((obj) => obj.itemId === action.payload.itemId);
+			// use screen index passed along in payload, or find screen index based on screen id
+			screenIndex = action.payload.screenIndex !== undefined ? action.payload.screenIndex : screens.findIndex((obj) => obj.screenId === action.payload.screenId);
+			// use item index passed along in payload, or find item index based on item id
+			itemIndex = action.payload.screenItemIndex !== undefined ? action.payload.screenItemIndex : screens[screenIndex].screenItems.findIndex((obj) => obj.itemId === action.payload.itemId);
 
+			console.log(action.payload.data);
+			// update screen item data
 			screens[screenIndex].screenItems[itemIndex] = { ...screens[screenIndex].screenItems[itemIndex], ...action.payload.data };
 
 			return {
