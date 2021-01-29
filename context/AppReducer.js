@@ -156,7 +156,6 @@ export default function AppReducer(state, action) {
 			// use item index passed along in payload, or find item index based on item id
 			itemIndex = action.payload.screenItemIndex !== undefined ? action.payload.screenItemIndex : screens[screenIndex].screenItems.findIndex((obj) => obj.itemId === action.payload.itemId);
 
-			console.log(action.payload.data);
 			// update screen item data
 			screens[screenIndex].screenItems[itemIndex] = { ...screens[screenIndex].screenItems[itemIndex], ...action.payload.data };
 

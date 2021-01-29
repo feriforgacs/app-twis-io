@@ -101,6 +101,7 @@ export default function Body() {
 						activeScreenItemTranslateY = beforeTranslate[1];
 					}}
 					onDragEnd={() => {
+						// update screen item translate settings in local state and also save it to the database
 						updateScreenItem(activeScreen.orderIndex, activeScreenItem.orderIndex, activeScreenItem.itemId, {
 							settings: {
 								...activeScreenItem.settings,
@@ -109,12 +110,59 @@ export default function Body() {
 							},
 						});
 
+						// update active screen item settings to properly set new falues for upcoming translations
 						setActiveScreenItem({
 							...activeScreenItem,
 							settings: {
 								...activeScreenItem.settings,
 								translateX: activeScreenItemTranslateX,
 								translateY: activeScreenItemTranslateY,
+							},
+						});
+					}}
+					resizable={true}
+					throttleResize={0}
+					keepRatio={activeScreenItem.type === "sticker" || activeScreenItem.type === "image"}
+					onResizeStart={({ target, set, setOrigin, dragStart }) => {
+						setOrigin(["%", "%"]);
+						const style = window.getComputedStyle(target);
+						const cssWidth = parseFloat(style.width);
+						const cssHeight = parseFloat(style.height);
+						set([cssWidth, cssHeight]);
+						dragStart && dragStart.set([activeScreenItem.settings.translateX, activeScreenItem.settings.translateY]);
+						activeScreenItemWidth = cssWidth;
+						activeScreenItemHeight = cssHeight;
+					}}
+					onResize={({ target, width, height, drag }) => {
+						target.style.width = `${width}px`;
+						target.style.height = `${height}px`;
+						target.style.transform = `translateX(${drag.beforeTranslate[0]}px) translateY(${drag.beforeTranslate[1]}px) rotate(${activeScreenItem.settings.rotate || 0}deg)`;
+						activeScreenItemTranslateX = drag.beforeTranslate[0];
+						activeScreenItemTranslateY = drag.beforeTranslate[1];
+						activeScreenItemWidth = width;
+						activeScreenItemHeight = height;
+					}}
+					onResizeEnd={() => {
+						// update screen item translate settings in local state and also save it to the database
+						updateScreenItem(activeScreen.orderIndex, activeScreenItem.orderIndex, activeScreenItem.itemId, {
+							settings: {
+								...activeScreenItem.settings,
+								translateX: activeScreenItemTranslateX,
+								translateY: activeScreenItemTranslateY,
+								width: activeScreenItemWidth,
+								height: activeScreenItemHeight,
+							},
+						});
+
+						// update active screen item settings to properly set new falues for upcoming translations
+						setActiveScreenItem({
+							...activeScreenItem,
+							settings: {
+								...activeScreenItem.settings,
+								translateX: activeScreenItemTranslateX,
+								translateY: activeScreenItemTranslateY,
+								width: activeScreenItemWidth,
+								height: activeScreenItemHeight,
 							},
 						});
 					}}
