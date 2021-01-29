@@ -28,18 +28,13 @@ export default async function ItemUpdateHandler(req, res) {
 		return res.status(400).json({ success: false, error: "missing campaign or screen item id" });
 	}
 
+	screenItemId = req.body.screenItemId; // this is not the mongodb document id, but the generated uuid of the screen item
+
 	// validate campaign id parameter
 	if (mongoose.Types.ObjectId.isValid(req.body.campaignId)) {
 		campaignId = req.body.campaignId;
 	} else {
 		return res.status(400).json({ success: false, error: "invalid campaign id" });
-	}
-
-	// validate screen id parameter
-	if (mongoose.Types.ObjectId.isValid(req.body.screenItemId)) {
-		screenItemId = req.body.screenItemId;
-	} else {
-		return res.status(400).json({ success: false, error: "invalid screen item id" });
 	}
 
 	await DatabaseConnect();
@@ -58,7 +53,7 @@ export default async function ItemUpdateHandler(req, res) {
 
 	// update screen item data
 	try {
-		const result = await ScreenItem.findOneAndUpdate({ _id: screenItemId }, { ...req.body.screenItemUpdatedData });
+		const result = await ScreenItem.findOneAndUpdate({ itemId: screenItemId }, { ...req.body.screenItemUpdatedData });
 		if (!result) {
 			return res.status(400).json({ success: false });
 		}

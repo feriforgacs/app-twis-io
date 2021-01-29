@@ -342,6 +342,7 @@ export const GlobalProvider = ({ children }) => {
 					},
 				},
 			});
+
 			return;
 		} catch (error) {
 			if (axios.isCancel(error)) {
@@ -392,10 +393,10 @@ export const GlobalProvider = ({ children }) => {
 	 * Update screen item data
 	 * @param {int} screenIndex The index of the screen where the screen item is
 	 * @param {int} screenItemIndex The index of the screen item to update
-	 * @param {string} screenItemId The db id of the item
+	 * @param {string} screenItemId The generated uuid of the screen item
 	 * @param {obj} screenItemData The data to update the screen item to
 	 */
-	const updateScreenItem = async (screenIndex, screenItemIndex, screenItemDbId, screenItemUpdatedData) => {
+	const updateScreenItem = async (screenIndex, screenItemIndex, screenItemId, screenItemUpdatedData) => {
 		// update screen item data in local state
 		dispatch({
 			type: "UPDATE_SCREEN_ITEM",
@@ -415,7 +416,7 @@ export const GlobalProvider = ({ children }) => {
 				`${process.env.APP_URL}/api/editor/screen-item/update`,
 				{
 					campaignId: state.campaign._id,
-					screenItemId: screenItemDbId,
+					screenItemId: screenItemId, // this is not the DB id, it is the generated uuid
 					screenItemUpdatedData,
 				},
 				{
