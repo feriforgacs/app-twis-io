@@ -59,8 +59,14 @@ export default async function ItemDeleteHandler(req, res) {
 		}
 
 		/**
-		 * @todo - change order index of every item on the screen
+		 * Update items order index
 		 */
+		await ScreenItem.updateMany(
+			{ screenId: result.screenId, orderIndex: { $gt: result.orderIndex } },
+			{
+				$inc: { orderIndex: -1 },
+			}
+		);
 
 		return res.status(200).json({ success: true });
 	} catch (error) {
