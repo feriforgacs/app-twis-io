@@ -5,6 +5,7 @@ export default function AppReducer(state, action) {
 	let screenIndex;
 	let itemIndex;
 	let screenItems;
+	let screenItemsTemp;
 
 	switch (action.type) {
 		/**
@@ -173,7 +174,11 @@ export default function AppReducer(state, action) {
 			index = action.payload.screenIndex !== undefined ? action.payload.screenIndex : screens.findIndex((obj) => obj.screenId === action.payload.screenId);
 
 			// remove screen item based on screen index and screen item id
-			screenItems = screens[index].screenItems.filter((screenItem) => screenItem.itemId !== action.payload.itemId);
+			screenItemsTemp = screens[index].screenItems.filter((screenItem) => screenItem.itemId !== action.payload.itemId);
+
+			// change items order index
+			screenItems = screenItemsTemp.map((screenItem, index) => ({ ...screenItem, orderIndex: index }));
+
 			screens[index].screenItems = screenItems;
 
 			return {

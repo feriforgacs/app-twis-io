@@ -34,8 +34,6 @@ export default function Screen({ screen, screenIndex }) {
 			const droppedItemX = Math.floor(offset.x - dropTargetXy.left) < 0 ? 0 : Math.floor(offset.x - dropTargetXy.left);
 			const droppedItemY = Math.floor(offset.y - dropTargetXy.top) < 0 ? 0 : Math.floor(offset.y - dropTargetXy.top);
 
-			console.log(item);
-
 			/**
 			 * Add item to screen items
 			 */

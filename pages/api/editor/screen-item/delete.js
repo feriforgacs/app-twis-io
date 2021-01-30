@@ -24,8 +24,6 @@ export default async function ItemDeleteHandler(req, res) {
 	let campaignId;
 	let screenItemId;
 
-	console.log(req.body.campaignId, req.body.screenItemId);
-
 	if (!req.body.campaignId || !req.body.screenItemId) {
 		return res.status(400).json({ success: false, error: "missing campaign or screen item id" });
 	}
@@ -59,6 +57,10 @@ export default async function ItemDeleteHandler(req, res) {
 		if (!result) {
 			return res.status(400).json({ success: false });
 		}
+
+		/**
+		 * @todo - change order index of every item on the screen
+		 */
 
 		return res.status(200).json({ success: true });
 	} catch (error) {
