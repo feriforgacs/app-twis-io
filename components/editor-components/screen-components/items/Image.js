@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { GlobalContext } from "../../../../context/GlobalState";
 
 export default function Image({ data }) {
-	const { activeScreenItem, setActiveScreenItem } = useContext(GlobalContext);
+	const { activeScreenItem, setActiveScreenItem, removeScreenItem, activeScreen } = useContext(GlobalContext);
 	const screenItemActive = activeScreenItem.itemId === data.itemId;
 	const imageStyle = {
 		height: `${data.settings.height || 0}px`,
@@ -17,5 +17,14 @@ export default function Image({ data }) {
 		imageStyle.cursor = "move";
 	}
 
-	return <img onClick={() => setActiveScreenItem(data)} id={`${data.type}-${data.itemId}`} className="screen-item" src={data.src} style={imageStyle} />;
+	return (
+		<>
+			<img onClick={() => setActiveScreenItem(data)} id={`${data.type}-${data.itemId}`} className="screen-item" src={data.src} style={imageStyle} />
+			{screenItemActive && (
+				<button className="screen-item__action" onClick={() => removeScreenItem(activeScreen.orderIndex, data.itemId)}>
+					del
+				</button>
+			)}
+		</>
+	);
 }

@@ -169,8 +169,9 @@ export default function AppReducer(state, action) {
 		 */
 		case "REMOVE_SCREEN_ITEM":
 			screens = [...state.screens];
-			// find screen index based on screen id
-			index = screens.findIndex((obj) => obj.screenId === action.payload.screenId);
+			// use screen index passed along in payload, or find screen index based on screen id
+			index = action.payload.screenIndex !== undefined ? action.payload.screenIndex : screens.findIndex((obj) => obj.screenId === action.payload.screenId);
+
 			// remove screen item based on screen index and screen item id
 			screenItems = screens[index].screenItems.filter((screenItem) => screenItem.itemId !== action.payload.itemId);
 			screens[index].screenItems = screenItems;

@@ -457,6 +457,70 @@ export const GlobalProvider = ({ children }) => {
 		}
 	};
 
+	/**
+	 * Remove screen item
+	 * @param {int} screenIndex The index of the screen where the screen item is
+	 * @param {string} itemId The generated uuid of the screen item
+	 */
+	const removeScreenItem = async (screenIndex, itemId) => {
+		// remove screen item from state
+		dispatch({
+			type: "REMOVE_SCREEN_ITEM",
+			payload: {
+				screenIndex,
+				itemId,
+			},
+		});
+		// reset active screen item
+		resetActiveScreenItem();
+
+		// remove screen item from the database
+		let source = axios.CancelToken.source();
+		try {
+			const result = await axios.delete(
+				`${process.env.APP_URL}/api/editor/screen-item/delete`,
+				{
+					data: {
+						campaignId: state.campaign._id,
+						screenItemId: itemId, // this is not the DB id, it is the generated uuid
+					},
+					headers: {
+						"Content-Type": "application/json",
+					},
+				},
+				{ cancelToken: source.token }
+			);
+
+			if (result.data.success !== true) {
+				console.log(result);
+				// set error
+				dispatch({
+					type: "SET_ERROR",
+					payload: {
+						error: true,
+						errorMessage: "Can't remove item. Reload the page and try again",
+					},
+				});
+				return;
+			}
+		} catch (error) {
+			if (axios.isCancel(error)) {
+				return;
+			}
+
+			console.log(error);
+			// set error
+			dispatch({
+				type: "SET_ERROR",
+				payload: {
+					error: true,
+					errorMessage: "Can't remove item. Reload the page and try again",
+				},
+			});
+			return;
+		}
+	};
+
 	return (
 		<GlobalContext.Provider
 			value={{
@@ -480,6 +544,7 @@ export const GlobalProvider = ({ children }) => {
 				setActiveScreenItem,
 				resetActiveScreenItem,
 				updateScreenItem,
+				removeScreenItem,
 			}}
 		>
 			{children}
