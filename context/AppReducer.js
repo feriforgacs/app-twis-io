@@ -110,11 +110,15 @@ export default function AppReducer(state, action) {
 				// use screen index that was sent with the payload
 				index = action.payload.index;
 			}
+
+			// remove screen from state
 			screens.splice(index, 1);
 
-			// update order index of last two screens
-			screens[screens.length - 2].orderIndex = screens.length - 2; // success end screen
-			screens[screens.length - 1].orderIndex = screens.length - 1; // failure end screen
+			// update order index of screens that are following the removed screen
+			for (index; index < screens.length; index++) {
+				screens[index].orderIndex = index;
+			}
+
 			return {
 				...state,
 				screens,
@@ -174,6 +178,7 @@ export default function AppReducer(state, action) {
 			index = action.payload.screenIndex !== undefined ? action.payload.screenIndex : screens.findIndex((obj) => obj.screenId === action.payload.screenId);
 
 			// remove screen item based on screen index and screen item id
+			// the screen item id is not the db id, but the generated uuid
 			screenItemsTemp = screens[index].screenItems.filter((screenItem) => screenItem.itemId !== action.payload.itemId);
 
 			// change items order index

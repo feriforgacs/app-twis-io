@@ -6,14 +6,15 @@ import AuthCheck from "../../../../lib/AuthCheck";
 import DatabaseConnect from "../../../../lib/DatabaseConnect";
 import Campaign from "../../../../models/Campaign";
 import Screen from "../../../../models/editor/Screen";
+import ScreenItem from "../../../../models/editor/ScreenItem";
 
 const cors = initMiddleware(
 	Cors({
-		methods: ["POST"],
+		methods: ["DELETE"],
 	})
 );
 
-export default async function ScreenAddHandler(req, res) {
+export default async function ScreenDeleteHandler(req, res) {
 	await cors(req, res);
 
 	const authStatus = await AuthCheck(req, res);
@@ -22,22 +23,19 @@ export default async function ScreenAddHandler(req, res) {
 	}
 
 	let campaignId;
+	let screenId;
 
-	if (!req.body.campaignId) {
-		return res.status(400).json({ success: false, error: "missing campaign id" });
+	if (!req.body.campaignId || !req.body.screenId) {
+		return res.status(400).json({ success: false, error: "missing campaign or screen item id" });
 	}
+
+	screenId = req.body.screenId; // this is not the mongodb document id, but the generated uuid of the screen item
 
 	// validate campaign id parameter
 	if (mongoose.Types.ObjectId.isValid(req.body.campaignId)) {
 		campaignId = req.body.campaignId;
 	} else {
 		return res.status(400).json({ success: false, error: "invalid campaign id" });
-	}
-
-	const newScreenData = req.body.screen;
-
-	if (!newScreenData) {
-		return res.status(400).json({ success: false, error: "missing new screen data" });
 	}
 
 	await DatabaseConnect();
@@ -54,38 +52,32 @@ export default async function ScreenAddHandler(req, res) {
 		return res.status(400).json({ success: false, error });
 	}
 
-	// create new screen in the db
+	// delete screen
 	try {
-		// update success screen and failure screen indexes in the db
-		const screenIndexUpdateResult = await Screen.updateMany(
-			{ campaignId: campaignId, orderIndex: { $gte: req.body.screen.orderIndex } },
-			{
-				$inc: { orderIndex: +1 },
-			}
-		);
-
-		if (!screenIndexUpdateResult) {
-			return res.status(400).json({ success: false });
-		}
-
-		// remove the empty screen items array that was sent along in the request
-		delete newScreenData.screenItems;
-
-		const newScreen = await Screen.create(newScreenData);
-
-		if (!newScreen) {
+		// remove screen
+		const result = await Screen.findOneAndDelete({ screenId: screenId });
+		if (!result) {
 			return res.status(400).json({ success: false });
 		}
 
 		/**
-		 * @todo add one screen item to the new screen
-		 * @todo temporary fix, there should be at least one screen item on every new screen
+		 * Update screens order index
+		 * Update only those screens where the order index is higher than the order index of the deleted screen
+		 * if deleted screen's order index is 3, update items where order index is 4, 5, 6
 		 */
-		newScreen.screenItems = [];
+		await Screen.updateMany(
+			{ campaignId: campaignId, orderIndex: { $gte: result.orderIndex } },
+			{
+				$inc: { orderIndex: -1 },
+			}
+		);
 
-		return res.status(200).json({ success: true, screen: newScreen });
+		// remove screen items
+		await ScreenItem.deleteMany({ screenId: result._id });
+
+		return res.status(200).json({ success: true });
 	} catch (error) {
 		console.log(error);
-		return res.status(400).json({ success: false, error });
+		return res.status(400).json({ success: false });
 	}
 }

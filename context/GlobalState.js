@@ -155,9 +155,6 @@ export const GlobalProvider = ({ children }) => {
 	 * @param {string} screenId New screen's unique id
 	 */
 	const addScreen = async (screenType, screenId) => {
-		const successScreenId = state.screens[state.screens.length - 2]._id;
-		const failureScreenId = state.screens[state.screens.length - 1]._id;
-
 		const newScreen = {
 			screenId,
 			type: screenType,
@@ -180,8 +177,6 @@ export const GlobalProvider = ({ children }) => {
 				{
 					campaignId: state.campaign._id,
 					screen: newScreen,
-					successScreenId, // sending along to update order index
-					failureScreenId, // sending along to update order index
 				},
 				{
 					headers: {
@@ -205,7 +200,7 @@ export const GlobalProvider = ({ children }) => {
 				// remove screen from state
 				dispatch({
 					type: "REMOVE_SCREEN",
-					payload: screenId,
+					payload: { screenId },
 				});
 
 				return;
@@ -246,7 +241,7 @@ export const GlobalProvider = ({ children }) => {
 			// remove screen from state
 			dispatch({
 				type: "REMOVE_SCREEN",
-				payload: screenId,
+				payload: { screenId },
 			});
 			return;
 		}
@@ -268,6 +263,67 @@ export const GlobalProvider = ({ children }) => {
 	 */
 	const resetActiveScreen = () => {
 		setActiveScreen("");
+	};
+
+	/**
+	 * Remove screen
+	 * @param {string} screenId UUID of the screen to be removed
+	 */
+	const removeScreen = async (screenId) => {
+		// remove screen from state
+		dispatch({
+			type: "REMOVE_SCREEN",
+			payload: { screenId },
+		});
+
+		// reset active screen
+		resetActiveScreen();
+
+		// remove screen from the database
+		let source = axios.CancelToken.source();
+		try {
+			const result = await axios.delete(
+				`${process.env.APP_URL}/api/editor/screen/delete`,
+				{
+					data: {
+						campaignId: state.campaign._id,
+						screenId, // this is not the DB id, it is the generated uuid
+					},
+					headers: {
+						"Content-Type": "application/json",
+					},
+				},
+				{ cancelToken: source.token }
+			);
+
+			if (result.data.success !== true) {
+				console.log(result);
+				// set error
+				dispatch({
+					type: "SET_ERROR",
+					payload: {
+						error: true,
+						errorMessage: "Can't remove screen. Reload the page and try again",
+					},
+				});
+				return;
+			}
+		} catch (error) {
+			if (axios.isCancel(error)) {
+				return;
+			}
+
+			console.log(error);
+			// set error
+			dispatch({
+				type: "SET_ERROR",
+				payload: {
+					error: true,
+					errorMessage: "Can't remove screen. Reload the page and try again",
+				},
+			});
+			return;
+		}
 	};
 
 	/**
@@ -537,9 +593,14 @@ export const GlobalProvider = ({ children }) => {
 				setError,
 				loadCampaignData,
 				updateCampaignData,
+
+				// screen actions
 				addScreen,
 				setActiveScreen,
 				resetActiveScreen,
+				removeScreen,
+
+				// screen item actions
 				addScreenItem,
 				setActiveScreenItem,
 				resetActiveScreenItem,

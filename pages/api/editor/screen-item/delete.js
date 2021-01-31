@@ -51,7 +51,7 @@ export default async function ItemDeleteHandler(req, res) {
 		return res.status(400).json({ success: false, error });
 	}
 
-	// update screen item data
+	// delete screen item
 	try {
 		const result = await ScreenItem.findOneAndDelete({ itemId: screenItemId });
 		if (!result) {
@@ -60,6 +60,8 @@ export default async function ItemDeleteHandler(req, res) {
 
 		/**
 		 * Update items order index
+		 * Update only those items where the order index is higher than the order index of the deleted item
+		 * if deleted item's order index is 3, update items where order index is 4, 5, 6
 		 */
 		await ScreenItem.updateMany(
 			{ screenId: result.screenId, orderIndex: { $gt: result.orderIndex } },
