@@ -37,7 +37,7 @@
 	position: relative;
 
 	input {
-		background: #253747;
+		background: #253747 url(../../../../public/images/editor/icons/icon-search.svg) no-repeat 0.4rem center;
 		border: 1px solid #425d74;
 		border-radius: 5px;
 		box-sizing: border-box;
@@ -52,17 +52,6 @@
 		&:focus {
 			box-shadow: 0 0 10px #5a38fc;
 		}
-	}
-
-	&::after {
-		background: url(../../../../public/images/editor/icons/icon-search.svg) no-repeat center center;
-		content: "";
-		display: block;
-		height: 35px;
-		left: 1.1rem;
-		position: absolute;
-		top: 0.2rem;
-		width: 35px;
 	}
 
 	p {
