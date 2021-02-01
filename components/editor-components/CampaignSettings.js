@@ -49,36 +49,42 @@ export default function CampaignSettings() {
 				</p>
 			</div>
 
-			<div className={styles.settingsPanelSection}>
-				<label className={styles.settingsPanelLabel}>Campaign Visible From</label>
-				<DayPickerInput
-					format={dateFormat}
-					parseDate={parseDate}
-					value={dateFnsFormat(new Date(visibleFrom), dateFormat)}
-					dayPickerProps={{ disabledDays: { before: new Date() }, firstDayOfWeek: 1 }}
-					onDayChange={(day) => {
-						setVisibleFrom(day);
-						updateCampaignData("visibleFrom", day);
-					}}
-				/>
-				<p className={styles.settingsPanelHelp}>From this date, the visitors of the campaign can submit their answers to the questions.</p>
-			</div>
+			{active && (
+				<>
+					<div className={styles.settingsPanelSection}>
+						<label className={styles.settingsPanelLabel}>Campaign Visible From</label>
+						<DayPickerInput
+							format={dateFormat}
+							parseDate={parseDate}
+							value={dateFnsFormat(new Date(visibleFrom), dateFormat)}
+							inputProps={{ readOnly: true }}
+							dayPickerProps={{ disabledDays: { before: new Date() }, firstDayOfWeek: 1 }}
+							onDayChange={(day) => {
+								setVisibleFrom(day);
+								updateCampaignData("visibleFrom", day);
+							}}
+						/>
+						<p className={styles.settingsPanelHelp}>From this date, the visitors of the campaign can submit their answers to the questions.</p>
+					</div>
 
-			<div className={styles.settingsPanelSection}>
-				<label className={styles.settingsPanelLabel}>Campaign Visible To</label>
-				<DayPickerInput
-					formatDate={formatDate}
-					format={dateFormat}
-					parseDate={parseDate}
-					value={dateFnsFormat(new Date(visibleTo), dateFormat)}
-					dayPickerProps={{ disabledDays: { before: new Date(visibleFrom) }, firstDayOfWeek: 1 }}
-					onDayChange={(day) => {
-						setVisibleTo(day);
-						updateCampaignData("visibleTo", day);
-					}}
-				/>
-				<p className={styles.settingsPanelHelp}>This is the last date when your players can’t submit their answers.</p>
-			</div>
+					<div className={styles.settingsPanelSection}>
+						<label className={styles.settingsPanelLabel}>Campaign Visible To</label>
+						<DayPickerInput
+							formatDate={formatDate}
+							format={dateFormat}
+							parseDate={parseDate}
+							value={dateFnsFormat(new Date(visibleTo), dateFormat)}
+							inputProps={{ readOnly: true }}
+							dayPickerProps={{ disabledDays: { before: new Date(visibleFrom) }, firstDayOfWeek: 1 }}
+							onDayChange={(day) => {
+								setVisibleTo(day);
+								updateCampaignData("visibleTo", day);
+							}}
+						/>
+						<p className={styles.settingsPanelHelp}>This is the last date when your players can’t submit their answers.</p>
+					</div>
+				</>
+			)}
 		</div>
 	);
 }
