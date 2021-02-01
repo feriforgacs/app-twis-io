@@ -57,3 +57,45 @@
 		stroke: #fff;
 	}
 }
+
+.buttonCampaignSettings {
+	align-items: center;
+	background: #4428c6;
+	border: none;
+	border-radius: 3px;
+	color: #fff;
+	cursor: pointer;
+	display: flex;
+	line-height: 1.8rem;
+	margin: 0 1rem 0 auto;
+	padding: 0 0.5rem 0 1rem;
+
+	&:hover {
+		background: #2307a5;
+	}
+
+	svg {
+		margin-left: 0.5rem;
+	}
+}
+
+.buttonShare {
+	align-items: center;
+	background: #4428c6;
+	border: none;
+	border-radius: 3px;
+	color: #fff;
+	cursor: pointer;
+	display: flex;
+	line-height: 1.8rem;
+	margin: 0 1rem 0 0;
+	padding: 0 0.5rem 0 1rem;
+
+	&:hover {
+		background: #2307a5;
+	}
+
+	svg {
+		margin-left: 0.5rem;
+	}
+}
