@@ -95,12 +95,7 @@ export default function Screen({ screen, screenIndex }) {
 					</button>
 					{screen.type === "question" || screen.type === "info" ? <ScreenAdditionalActions screenId={screen.screenId} /> : ""}
 				</div>
-				<div
-					ref={drop}
-					style={{
-						position: `relative`,
-					}}
-				>
+				<div ref={drop} className={styles.screenBodyContainer}>
 					<div ref={screenRef} className={`${styles.screenBody} ${isOver ? styles.screenBodyDropover : ""} ${activeScreen !== "" && activeScreen.screenId === screen.screenId ? styles.screenBodyActive : ""}`}>
 						{screen.screenItems && screen.screenItems.length > 0 && screen.screenItems.map((screenItem, index) => <ScreenItem key={index} screenItem={screenItem} />)}
 					</div>

@@ -1,0 +1,39 @@
+.campaignSettingsPanel {
+	background: #fff;
+	border-left: 1px solid #eee;
+	font-size: 1rem;
+	height: calc(100vh - 60px);
+	overflow-y: auto;
+	position: fixed;
+	top: 60px;
+	right: 0;
+	width: 330px;
+	z-index: 20;
+}
+
+.settingsPanelSection {
+	padding: 1rem;
+}
+
+.settingsPanelLabel {
+	align-items: center;
+	display: flex;
+	font-weight: bold;
+	margin: 0 0 0.5rem;
+
+	span {
+		margin-left: 0.5rem;
+	}
+}
+
+.settingsPanelHelp {
+	color: #555;
+	font-size: 0.8rem;
+	line-height: 1.2rem;
+	margin: 0;
+	padding: 0;
+
+	strong {
+		color: #333;
+	}
+}

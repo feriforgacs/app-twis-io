@@ -5,10 +5,12 @@ import Image from "next/image";
 import Head from "next/head";
 import { GlobalContext } from "../../context/GlobalState";
 import styles from "./Header.module.scss";
+import CampaignSettings from "./CampaignSettings";
 
 export default function Header() {
 	const { campaign, updateCampaignData } = useContext(GlobalContext);
 	const [name, setName] = useState(campaign.name);
+	const [campsignSettingsVisible, toggleCampaignSettings] = useState(false);
 	const router = useRouter();
 
 	const updateData = (campaignName) => {
@@ -62,13 +64,20 @@ export default function Header() {
 					</span>
 				</form>
 
-				<button className={styles.buttonCampaignSettings}>
+				<button className={styles.buttonCampaignSettings} onClick={() => toggleCampaignSettings(!campsignSettingsVisible)}>
 					Campaign Settings{" "}
-					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-						<circle cx="12" cy="12" r="1"></circle>
-						<circle cx="19" cy="12" r="1"></circle>
-						<circle cx="5" cy="12" r="1"></circle>
-					</svg>
+					{campsignSettingsVisible ? (
+						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+							<line x1="18" y1="6" x2="6" y2="18"></line>
+							<line x1="6" y1="6" x2="18" y2="18"></line>
+						</svg>
+					) : (
+						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+							<circle cx="12" cy="12" r="1"></circle>
+							<circle cx="19" cy="12" r="1"></circle>
+							<circle cx="5" cy="12" r="1"></circle>
+						</svg>
+					)}
 				</button>
 				<button className={styles.buttonShare}>
 					Share{" "}
@@ -81,6 +90,8 @@ export default function Header() {
 					</svg>
 				</button>
 			</div>
+
+			{campsignSettingsVisible && <CampaignSettings />}
 		</>
 	);
 }
