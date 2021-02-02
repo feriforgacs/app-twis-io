@@ -6,6 +6,7 @@ import DayPickerInput from "react-day-picker/DayPickerInput";
 import { DateUtils } from "react-day-picker";
 import dateFnsFormat from "date-fns/format";
 import dateFnsParse from "date-fns/parse";
+import { DebounceInput } from "react-debounce-input";
 import "react-day-picker/lib/style.css";
 
 export default function CampaignSettings() {
@@ -81,10 +82,22 @@ export default function CampaignSettings() {
 								updateCampaignData("visibleTo", day);
 							}}
 						/>
-						<p className={styles.settingsPanelHelp}>This is the last date when your players can’t submit their answers.</p>
+						<p className={styles.settingsPanelHelp}>This is the last date when your players can submit their answers.</p>
 					</div>
 				</>
 			)}
+
+			<div className={styles.settingsPanelSection}>
+				<label className={styles.settingsPanelLabel}>Share Title</label>
+				<DebounceInput className={styles.settingsPanelInput} minLength="3" debounceTimeout="1000" value={campaign.ogTitle || ""} onChange={(e) => updateCampaignData("ogTitle", e.target.value)} />
+				<p className={styles.settingsPanelHelp}>The title of your campaign page as you would like for it to appear when shared of Facebook, Twitter, etc.</p>
+			</div>
+
+			<div className={styles.settingsPanelSection}>
+				<label className={styles.settingsPanelLabel}>Share Description</label>
+				<DebounceInput className={styles.settingsPanelTextarea} element="textarea" minLength="3" debounceTimeout="1000" value={campaign.ogDescription || ""} onChange={(e) => updateCampaignData("ogDescription", e.target.value)} />
+				<p className={styles.settingsPanelHelp}>A brief description of the campaign, usually between 2 and 4 sentences. This will displayed below the title of the post on Facebook, Twitter, etc.</p>
+			</div>
 		</div>
 	);
 }

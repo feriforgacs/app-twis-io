@@ -37,3 +37,36 @@
 		color: #333;
 	}
 }
+
+.settingsPanelInput {
+	box-sizing: border-box;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	font-size: 0.8rem;
+	line-height: 2.3rem;
+	margin: 0 0 0.5rem;
+	padding: 0 1rem 0;
+	width: 100%;
+
+	&:focus {
+		outline: none;
+		box-shadow: 0 0 10px #cbc2f5;
+	}
+}
+
+.settingsPanelTextarea {
+	box-sizing: border-box;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	font-size: 0.8rem;
+	min-height: 4rem;
+	line-height: 1.3rem;
+	margin: 0 0 0.5rem;
+	padding: 0.5rem 1rem;
+	width: 100%;
+
+	&:focus {
+		outline: none;
+		box-shadow: 0 0 10px #cbc2f5;
+	}
+}
