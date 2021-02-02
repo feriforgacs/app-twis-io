@@ -95,7 +95,6 @@ export default function CampaignSettings() {
 			if (uploadResult.data.success !== true) {
 				// remove upload preview image from state
 				setShareImagePreview("");
-
 				console.log(uploadResult);
 				setToastMessage("Can't upload image. Please, try again.");
 				setToastType("error");
@@ -119,6 +118,57 @@ export default function CampaignSettings() {
 		}
 
 		setUploading(false);
+	};
+
+	const removeShareImage = async () => {
+		if (confirm("Are you sure you want to delete the Share Image")) {
+			setDeleting(true);
+
+			if (requestCancelToken) {
+				requestCancelToken.cancel();
+			}
+
+			let source = axios.CancelToken.source();
+			setRequestCancelToken(source);
+
+			try {
+				const deleteResult = await axios.delete(
+					`${process.env.APP_URL}/api/editor/campaign/share-image/delete`,
+					{
+						data: {
+							campaignId: campaign._id,
+						},
+						headers: {
+							"Content-Type": "application/json",
+						},
+					},
+					{ cancelToken: source.token }
+				);
+
+				// check upload result
+				if (deleteResult.data.success !== true) {
+					console.log(deleteResult);
+					setToastMessage("Can't delete share image. Please, try again.");
+					setToastType("error");
+					setToastDuration(3000);
+					setToastVisible(true);
+				} else {
+					// remove share image from state
+					setShareImage("");
+				}
+			} catch (error) {
+				if (axios.isCancel(error)) {
+					return;
+				}
+				console.log(error);
+				setToastMessage("Can't delete share image. Please, try again.");
+				setToastType("error");
+				setToastDuration(3000);
+				setToastVisible(true);
+			}
+
+			setDeleting(false);
+		}
 	};
 
 	return (
@@ -200,11 +250,11 @@ export default function CampaignSettings() {
 				<div className={styles.settingsPanelImagePreview}>
 					{shareImagePreview && uploading && <ImageUploadPreview thumb={shareImagePreview} caption={"Share Image"} />}
 					{shareImage && !uploading && <img src={shareImage} alt="Share Image" />}
-					{shareImage && !uploading && <Button buttonType="buttonOutlineDanger" label={`${deleting ? "Deleting image..." : "Delete Share Image"}`} disabled={deleting} />}
+					{shareImage && !uploading && <Button buttonType="buttonOutlineDanger" label={`${deleting ? "Deleting image..." : "Delete Share Image"}`} disabled={deleting || uploading} onClick={() => removeShareImage()} />}
 				</div>
 
 				<div className={styles.imageUploadContainer}>
-					<Button label={`${uploading ? "Uploading image..." : "Upload Share Image"}`} disabled={uploading} />
+					<Button label={`${uploading ? "Uploading image..." : "Upload Share Image"}`} disabled={uploading || deleting} />
 					<input type="file" accept=".jpg,.jpeg,.gif,.png,.svg" onChange={(e) => readSelectedImage(e)} name="image" disabled={uploading} />
 					<small>(max 2MB)</small>
 				</div>
