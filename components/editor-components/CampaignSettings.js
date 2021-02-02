@@ -14,7 +14,7 @@ import "react-day-picker/lib/style.css";
 import styles from "./CampaignSettings.module.scss";
 
 export default function CampaignSettings() {
-	const { campaign, updateCampaignData } = useContext(GlobalContext);
+	const { campaign, updateCampaignData, updateCampaignDataState } = useContext(GlobalContext);
 	const [active, setActive] = useState(campaign.status === "active" || false);
 	const [visibleFrom, setVisibleFrom] = useState(new Date(campaign.visibleFrom) || new Date());
 	const [visibleTo, setVisibleTo] = useState(new Date(campaign.visibleTo) || new Date());
@@ -103,6 +103,7 @@ export default function CampaignSettings() {
 			} else {
 				// add share image to state
 				setShareImage(uploadResult.data.image);
+				updateCampaignDataState("ogImage", uploadResult.data.image);
 			}
 		} catch (error) {
 			if (axios.isCancel(error)) {
@@ -155,6 +156,7 @@ export default function CampaignSettings() {
 				} else {
 					// remove share image from state
 					setShareImage("");
+					updateCampaignDataState("ogImage", "");
 				}
 			} catch (error) {
 				if (axios.isCancel(error)) {

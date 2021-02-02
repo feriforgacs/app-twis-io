@@ -144,6 +144,23 @@ export const GlobalProvider = ({ children }) => {
 	};
 
 	/**
+	 * Update campaign data only in state, not in db
+	 * This is a helper function to avoid double api requests
+	 * @param {string} key The key of the field to update
+	 * @param {string} value The value of the field to update to
+	 */
+	const updateCampaignDataState = (key, value) => {
+		dispatch({
+			type: "UPDATE_CAMPAIGN_DATA",
+			payload: {
+				key,
+				value,
+			},
+		});
+		return;
+	};
+
+	/**
 	 * ==============================
 	 * ======= SCREEN ACTIONS =======
 	 * ==============================
@@ -593,6 +610,7 @@ export const GlobalProvider = ({ children }) => {
 				setError,
 				loadCampaignData,
 				updateCampaignData,
+				updateCampaignDataState,
 
 				// screen actions
 				addScreen,
