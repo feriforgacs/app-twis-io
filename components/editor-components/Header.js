@@ -3,24 +3,16 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
 import Head from "next/head";
+import { DebounceInput } from "react-debounce-input";
 import { GlobalContext } from "../../context/GlobalState";
 import styles from "./Header.module.scss";
 import CampaignSettings from "./CampaignSettings";
 
 export default function Header() {
 	const { loading, campaign, updateCampaignData } = useContext(GlobalContext);
-	const [name, setName] = useState(campaign.name);
+	const [name, setName] = useState(campaign.name || "");
 	const [campsignSettingsVisible, toggleCampaignSettings] = useState(false);
 	const router = useRouter();
-
-	const updateData = (campaignName) => {
-		if (campaignName.length <= 3) {
-			alert("Campaign name should be at least 3 characters long");
-			return;
-		}
-
-		updateCampaignData("name", campaignName);
-	};
 
 	useEffect(() => {
 		setName(campaign.name);
@@ -48,7 +40,19 @@ export default function Header() {
 
 				<span className={styles.separator}>&#8725;</span>
 
-				<form
+				<div className={styles.campaignNameContainer}>
+					<DebounceInput
+						minLength="3"
+						debounceTimeout="1000"
+						value={name || ""}
+						onChange={(e) => {
+							updateCampaignData("name", e.target.value);
+							setName(e.target.value);
+						}}
+					/>
+				</div>
+
+				{/* <form
 					className={styles.campaignNameContainer}
 					onSubmit={(e) => {
 						e.preventDefault();
@@ -58,12 +62,9 @@ export default function Header() {
 				>
 					<input type="text" value={name || ""} onChange={(e) => setName(e.target.value)} disabled={loading} />
 					<span className={styles.editIcon}>
-						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#000000" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
-							<polygon points="14 2 18 6 7 17 3 17 3 13 14 2"></polygon>
-							<line x1="3" y1="20" x2="20" y2="20"></line>
-						</svg>
+						
 					</span>
-				</form>
+				</form> */}
 
 				<button className={styles.buttonCampaignSettings} disabled={loading} onClick={() => toggleCampaignSettings(!campsignSettingsVisible)}>
 					Campaign Settings{" "}

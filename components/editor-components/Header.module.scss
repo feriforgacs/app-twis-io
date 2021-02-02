@@ -31,7 +31,7 @@
 .campaignNameContainer {
 	position: relative;
 	input {
-		background: none;
+		background: #5a38fd url("../../public/images/editor/icons/icon-pencil.svg") no-repeat 220px 5px;
 		border: 1px solid #9680fe;
 		border-radius: 3px;
 		box-sizing: border-box;
@@ -39,7 +39,7 @@
 		height: 1.8rem;
 		line-height: 1.8rem;
 		outline: none;
-		padding: 0 0.5rem;
+		padding: 0 1.7rem 0 0.5rem;
 		position: relative;
 		width: 250px;
 		z-index: 20;
