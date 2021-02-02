@@ -19,6 +19,7 @@ export default function CampaignSettings() {
 	const [visibleFrom, setVisibleFrom] = useState(new Date(campaign.visibleFrom) || new Date());
 	const [visibleTo, setVisibleTo] = useState(new Date(campaign.visibleTo) || new Date());
 	const [uploading, setUploading] = useState(false);
+	const [deleting, setDeleting] = useState(false);
 	const [requestCancelToken, setRequestCancelToken] = useState();
 	const [shareImage, setShareImage] = useState(campaign.ogImage || "");
 	const [shareImagePreview, setShareImagePreview] = useState();
@@ -79,6 +80,7 @@ export default function CampaignSettings() {
 			const uploadResult = await axios.put(
 				`${process.env.APP_URL}/api/editor/campaign/share-image/upload`,
 				{
+					campaignId: campaign._id,
 					image,
 				},
 				{
@@ -101,6 +103,7 @@ export default function CampaignSettings() {
 				setToastVisible(true);
 			} else {
 				// add share image to state
+				setShareImage(uploadResult.data.image);
 			}
 		} catch (error) {
 			if (axios.isCancel(error)) {
@@ -197,6 +200,7 @@ export default function CampaignSettings() {
 				<div className={styles.settingsPanelImagePreview}>
 					{shareImagePreview && uploading && <ImageUploadPreview thumb={shareImagePreview} caption={"Share Image"} />}
 					{shareImage && !uploading && <img src={shareImage} alt="Share Image" />}
+					{shareImage && !uploading && <Button buttonType="buttonOutlineDanger" label={`${deleting ? "Deleting image..." : "Delete Share Image"}`} disabled={deleting} />}
 				</div>
 
 				<div className={styles.imageUploadContainer}>

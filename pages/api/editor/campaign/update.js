@@ -22,17 +22,20 @@ export default async function CampaignUpdateHandler(req, res) {
 	}
 
 	let campaignId;
+
+	if (!req.body.campaignId) {
+		return res.status(400).json({ success: false, error: "missing campaign id" });
+	}
+
 	if (req.body.campaignId && req.body.campaignId !== "") {
 		// validate campaign id parameter
 		if (mongoose.Types.ObjectId.isValid(req.body.campaignId)) {
 			campaignId = req.body.campaignId;
 		} else {
-			res.status(400).json({ success: false, error: "invalid campaign id" });
-			return;
+			return res.status(400).json({ success: false, error: "invalid campaign id" });
 		}
 	} else {
-		res.status(400).json({ success: false, error: "invalid campaign id" });
-		return;
+		return res.status(400).json({ success: false, error: "invalid campaign id" });
 	}
 
 	await DatabaseConnect();

@@ -8,7 +8,7 @@ import styles from "./Header.module.scss";
 import CampaignSettings from "./CampaignSettings";
 
 export default function Header() {
-	const { campaign, updateCampaignData } = useContext(GlobalContext);
+	const { loading, campaign, updateCampaignData } = useContext(GlobalContext);
 	const [name, setName] = useState(campaign.name);
 	const [campsignSettingsVisible, toggleCampaignSettings] = useState(false);
 	const router = useRouter();
@@ -54,8 +54,9 @@ export default function Header() {
 						e.preventDefault();
 						updateData(name);
 					}}
+					disabled={loading}
 				>
-					<input type="text" value={name || ""} onChange={(e) => setName(e.target.value)} />
+					<input type="text" value={name || ""} onChange={(e) => setName(e.target.value)} disabled={loading} />
 					<span className={styles.editIcon}>
 						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#000000" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
 							<polygon points="14 2 18 6 7 17 3 17 3 13 14 2"></polygon>
@@ -64,7 +65,7 @@ export default function Header() {
 					</span>
 				</form>
 
-				<button className={styles.buttonCampaignSettings} onClick={() => toggleCampaignSettings(!campsignSettingsVisible)}>
+				<button className={styles.buttonCampaignSettings} disabled={loading} onClick={() => toggleCampaignSettings(!campsignSettingsVisible)}>
 					Campaign Settings{" "}
 					{campsignSettingsVisible ? (
 						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -79,7 +80,7 @@ export default function Header() {
 						</svg>
 					)}
 				</button>
-				<button className={styles.buttonShare}>
+				<button className={styles.buttonShare} disabled={loading}>
 					Share{" "}
 					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
 						<circle cx="18" cy="5" r="3"></circle>
