@@ -70,3 +70,34 @@
 		box-shadow: 0 0 10px #cbc2f5;
 	}
 }
+
+.imageUploadContainer {
+	padding: 0;
+	position: relative;
+
+	input {
+		background: none;
+		border: none;
+		box-sizing: border-box;
+		cursor: pointer;
+		font-size: 0.8rem;
+		height: 2.3rem;
+		left: 0;
+		line-height: 2.3rem;
+		margin: 0;
+		opacity: 0;
+		padding: 0;
+		position: absolute;
+		top: 0;
+		width: 100%;
+	}
+
+	small {
+		color: #555;
+		display: block;
+		font-size: 0.7rem;
+		margin-bottom: 1rem;
+		margin-top: 0.4rem;
+		text-align: center;
+	}
+}
