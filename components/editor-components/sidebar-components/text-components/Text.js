@@ -17,16 +17,12 @@ export default function Text({ text }) {
 	let textStyle = {
 		fontFamily: text.settings.fontFamily,
 		fontSize: `${text.settings.fontSize}px`,
-		color: "#ffffff",
+		color: "#ffffff", // this is necessary to make the text content "visible" on the sidebar, when the item get's dropped on the screen, it'll use the color that was defined in item.settings
 		textAlign: text.settings.align,
-		fontWeight: ``,
-		fontStyle: ``,
-		textDecoration: ``,
+		fontWeight: text.settings.bold ? 700 : 400,
+		fontStyle: text.settings.italic ? `italic` : `normal`,
+		textDecoration: text.settings.underline ? `underline` : `none`,
 	};
-
-	textStyle.fontWeight = text.settings.bold ? 700 : 400;
-	textStyle.fontStyle = text.settings.italic ? `italic` : `normal`;
-	textStyle.textDecoration = text.settings.underline ? `underline` : `none`;
 
 	return (
 		<div ref={drag} className={`${styles.optionText} ${styles.option} ${isDragging && "item--dragged"} ${text.settings.classNames}`} style={textStyle}>
