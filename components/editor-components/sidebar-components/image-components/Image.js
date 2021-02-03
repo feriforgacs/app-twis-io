@@ -7,7 +7,7 @@ const Image = ({ thumb, src, caption, width, height, unsplashImage = false, unsp
 		item: {
 			type: ItemTypes.IMAGE,
 			src,
-			size: {
+			settings: {
 				width: 137, // @todo change this to dynamic value, at the moment this is the width of the image in the sidebar
 				height: (137 / width) * height,
 			},

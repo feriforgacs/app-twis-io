@@ -45,10 +45,9 @@ export default function Screen({ screen, screenIndex }) {
 				src: item.src || "",
 				orderIndex: screen.screenItems ? screen.screenItems.length : 0,
 				settings: {
+					...item.settings,
 					top: droppedItemY,
 					left: droppedItemX,
-					width: Math.round(item.size.width),
-					height: Math.round(item.size.height),
 					translateX: 0,
 					translateY: 0,
 					rotate: 0,

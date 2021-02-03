@@ -1,0 +1,55 @@
+const TextTemplates = [
+	{
+		name: `Headline Text Block`,
+		content: `Heading text block`,
+		settings: {
+			fontFamily: ``,
+			fontSize: 28,
+			color: `#ffffff`,
+			highlightColor: ``,
+			bold: true,
+			italic: false,
+			underline: false,
+			align: `left`,
+			classNames: ``,
+			width: 250,
+			height: 55,
+		},
+	},
+	{
+		name: `Subheading Text Block`,
+		content: `Subheading text block`,
+		settings: {
+			fontFamily: ``,
+			fontSize: 20,
+			color: `#ffffff`,
+			highlightColor: ``,
+			bold: true,
+			italic: false,
+			underline: false,
+			align: `left`,
+			classNames: ``,
+			width: 250,
+			height: 55,
+		},
+	},
+	{
+		name: `Body Text Block`,
+		content: `Body text block`,
+		settings: {
+			fontFamily: ``,
+			fontSize: 16,
+			color: `#ffffff`,
+			highlightColor: ``,
+			bold: false,
+			italic: false,
+			underline: false,
+			align: `left`,
+			classNames: ``,
+			width: 250,
+			height: 55,
+		},
+	},
+];
+
+export default TextTemplates;

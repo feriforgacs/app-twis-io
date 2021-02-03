@@ -52,20 +52,6 @@ export default function Header() {
 					/>
 				</div>
 
-				{/* <form
-					className={styles.campaignNameContainer}
-					onSubmit={(e) => {
-						e.preventDefault();
-						updateData(name);
-					}}
-					disabled={loading}
-				>
-					<input type="text" value={name || ""} onChange={(e) => setName(e.target.value)} disabled={loading} />
-					<span className={styles.editIcon}>
-						
-					</span>
-				</form> */}
-
 				<button className={styles.buttonCampaignSettings} disabled={loading} onClick={() => toggleCampaignSettings(!campsignSettingsVisible)}>
 					Campaign Settings{" "}
 					{campsignSettingsVisible ? (

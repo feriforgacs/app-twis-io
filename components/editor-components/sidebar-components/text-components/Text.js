@@ -1,5 +1,36 @@
+import { useDrag } from "react-dnd";
+import { ItemTypes } from "../../../../utils/Items";
 import styles from "../ElementOptions.module.scss";
 
-export default function Text({ additionalClasses = "", text = "Text block" }) {
-	return <div className={`${styles.optionText} ${styles.option} ${additionalClasses}`}>{text}</div>;
+export default function Text({ text }) {
+	const [{ isDragging }, drag] = useDrag({
+		item: {
+			type: ItemTypes.TEXT,
+			content: text.content,
+			settings: text.settings,
+		},
+		collect: (monitor) => ({
+			isDragging: !!monitor.isDragging(),
+		}),
+	});
+
+	let textStyle = {
+		fontFamily: text.settings.fontFamily,
+		fontSize: `${text.settings.fontSize}px`,
+		color: text.settings.color,
+		textAlign: text.settings.align,
+		fontWeight: ``,
+		fontStyle: ``,
+		textDecoration: ``,
+	};
+
+	textStyle.fontWeight = text.settings.bold ? 700 : 400;
+	textStyle.fontStyle = text.settings.italic ? `italic` : `normal`;
+	textStyle.textDecoration = text.settings.underline ? `underline` : `none`;
+
+	return (
+		<div ref={drag} className={`${styles.optionText} ${styles.option} ${isDragging && "item--dragged"} ${text.settings.classNames}`} style={textStyle}>
+			<span>{text.content}</span>
+		</div>
+	);
 }
