@@ -52,6 +52,15 @@ export default function AppReducer(state, action) {
 			};
 
 		/**
+		 * Enable or disable moveable
+		 */
+		case "SET_MOVEABLE_DISABLED":
+			return {
+				...state,
+				moveableDisabled: action.payload,
+			};
+
+		/**
 		 * ==============================
 		 * ======= SCREEN ACTIONS =======
 		 * ==============================

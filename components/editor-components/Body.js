@@ -5,7 +5,7 @@ import styles from "./Body.module.scss";
 import ScreenList from "./screen-components/ScreenList";
 
 export default function Body() {
-	const { activeScreen, resetActiveScreen, activeScreenItem, setActiveScreenItem, resetActiveScreenItem, updateScreenItem } = useContext(GlobalContext);
+	const { activeScreen, resetActiveScreen, activeScreenItem, setActiveScreenItem, resetActiveScreenItem, updateScreenItem, moveableDisabled } = useContext(GlobalContext);
 	const [moveableTarget, setMoveableTarget] = useState();
 
 	/**
@@ -73,7 +73,7 @@ export default function Body() {
 				}
 			}}
 		>
-			{activeScreenItem !== "" && (
+			{activeScreenItem !== "" && !moveableDisabled && (
 				<Moveable
 					snappable={true}
 					snapThreshold={5}
@@ -101,6 +101,10 @@ export default function Body() {
 						activeScreenItemTranslateY = beforeTranslate[1];
 					}}
 					onDragEnd={() => {
+						// check previous values, return if no changes were made
+						if (activeScreenItem.settings.translateX === activeScreenItemTranslateX && activeScreenItem.settings.translateY === activeScreenItemTranslateY) {
+							return;
+						}
 						// update screen item translate settings in local state and also save it to the database
 						updateScreenItem(activeScreen.orderIndex, activeScreenItem.orderIndex, activeScreenItem.itemId, {
 							settings: {
@@ -143,6 +147,10 @@ export default function Body() {
 						activeScreenItemHeight = height;
 					}}
 					onResizeEnd={() => {
+						// check previous values, return if no changes were made
+						if (activeScreenItem.settings.translateX === activeScreenItemTranslateX && activeScreenItem.settings.translateY === activeScreenItemTranslateY && activeScreenItem.settings.width === activeScreenItemWidth && activeScreenItem.settings.height === activeScreenItemHeight) {
+							return;
+						}
 						// update screen item translate settings in local state and also save it to the database
 						updateScreenItem(activeScreen.orderIndex, activeScreenItem.orderIndex, activeScreenItem.itemId, {
 							settings: {
@@ -177,6 +185,10 @@ export default function Body() {
 						activeScreenItemRotate = beforeRotate;
 					}}
 					onRotateEnd={() => {
+						// check previous values, return if no changes were made
+						if (activeScreenItem.settings.rotate === activeScreenItemRotate) {
+							return;
+						}
 						// update screen item translate settings in local state and also save it to the database
 						updateScreenItem(activeScreen.orderIndex, activeScreenItem.orderIndex, activeScreenItem.itemId, {
 							settings: {

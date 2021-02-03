@@ -13,6 +13,7 @@ let InitialState = {
 	activeScreen: "",
 	activeScreenItem: "",
 	activeItemSettings: "",
+	moveableDisabled: false,
 	campaign: {},
 	screens: [],
 };
@@ -37,6 +38,14 @@ export const GlobalProvider = ({ children }) => {
 			},
 		});
 	};
+
+	const setMoveableDisabled = (disabled) => {
+		dispatch({
+			type: "SET_MOVEABLE_DISABLED",
+			payload: disabled,
+		});
+	};
+
 	/**
 	 * Get campaign data from the database
 	 * @param {string} campaignId Campaign mongodb id
@@ -604,6 +613,7 @@ export const GlobalProvider = ({ children }) => {
 				criticalErrorMessage: state.criticalErrorMessage,
 				activeScreen: state.activeScreen,
 				activeScreenItem: state.activeScreenItem,
+				moveableDisabled: state.moveableDisabled,
 				campaign: state.campaign,
 				screens: state.screens,
 
@@ -611,6 +621,7 @@ export const GlobalProvider = ({ children }) => {
 				loadCampaignData,
 				updateCampaignData,
 				updateCampaignDataState,
+				setMoveableDisabled,
 
 				// screen actions
 				addScreen,
