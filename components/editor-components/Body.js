@@ -14,7 +14,7 @@ export default function Body() {
 	 */
 	const handleClickOutside = useCallback(
 		(event) => {
-			if (event.target.classList && !event.target.classList.contains(`moveable-control`) && !event.target.classList.contains(`screen-item`) && !event.target.classList.contains(`screen-item__action`)) {
+			if (event.target.classList && !event.target.classList.contains(`moveable-control`) && !event.target.classList.contains(`screen-item`) && !event.target.classList.contains(`screen-item-children`) && !event.target.classList.contains(`screen-item__action`)) {
 				resetActiveScreenItem();
 			}
 		},

@@ -17,7 +17,7 @@ export default function Text({ text }) {
 	let textStyle = {
 		fontFamily: text.settings.fontFamily,
 		fontSize: `${text.settings.fontSize}px`,
-		color: text.settings.color,
+		color: "#ffffff",
 		textAlign: text.settings.align,
 		fontWeight: ``,
 		fontStyle: ``,
