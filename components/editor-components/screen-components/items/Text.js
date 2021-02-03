@@ -21,8 +21,10 @@ export default function Text({ data }) {
 		// disable content editable
 		setEditableDisabled(true);
 
-		// update screen item in state and db
-		updateScreenItem(activeScreen.orderIndex, activeScreenItem.orderIndex, activeScreenItem.itemId, { content: text.current });
+		if (text.current !== data.content) {
+			// update screen item in state and db
+			updateScreenItem(activeScreen.orderIndex, activeScreenItem.orderIndex, activeScreenItem.itemId, { content: text.current });
+		}
 
 		// set active screen item to current item
 		setActiveScreenItem({ ...data, content: text.current });
@@ -57,8 +59,10 @@ export default function Text({ data }) {
 			// disable editable
 			setEditableDisabled(true);
 
-			// update screen item data in state and db
-			updateScreenItem(activeScreen.orderIndex, activeScreenItem.orderIndex, activeScreenItem.itemId, { content: text.current });
+			if (text.current !== data.content) {
+				// update screen item in state and db
+				updateScreenItem(activeScreen.orderIndex, activeScreenItem.orderIndex, activeScreenItem.itemId, { content: text.current });
+			}
 
 			// set current item as active
 			setActiveScreenItem({ ...data, content: text.current });
