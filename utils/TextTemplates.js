@@ -12,8 +12,8 @@ const TextTemplates = [
 			underline: false,
 			align: `left`,
 			classNames: ``,
-			width: 280,
-			height: 55,
+			width: 251,
+			height: 42,
 		},
 	},
 	{
@@ -29,8 +29,8 @@ const TextTemplates = [
 			underline: false,
 			align: `left`,
 			classNames: ``,
-			width: 280,
-			height: 55,
+			width: 214,
+			height: 30,
 		},
 	},
 	{
@@ -46,8 +46,8 @@ const TextTemplates = [
 			underline: false,
 			align: `left`,
 			classNames: ``,
-			width: 280,
-			height: 55,
+			width: 113,
+			height: 24,
 		},
 	},
 ];
