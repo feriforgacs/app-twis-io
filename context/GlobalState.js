@@ -425,7 +425,7 @@ export const GlobalProvider = ({ children }) => {
 			});
 
 			/**
-			 * @todo - update screen items db id in state
+			 * @todo - update screen items db id in state - Not sure if this is necessary
 			 */
 
 			return;
@@ -451,9 +451,6 @@ export const GlobalProvider = ({ children }) => {
 			});
 			return;
 		}
-		/**
-		 * @todo update screen items' db _id in state
-		 */
 	};
 
 	/**

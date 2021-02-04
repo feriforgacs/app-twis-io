@@ -3,6 +3,8 @@ import Moveable from "react-moveable";
 import { GlobalContext } from "../../context/GlobalState";
 import styles from "./Body.module.scss";
 import ScreenList from "./screen-components/ScreenList";
+import ScreenSettings from "./screen-components/ScreenSettings";
+import ItemSettings from "./screen-components/ItemSettings";
 
 export default function Body() {
 	const { activeScreen, resetActiveScreen, activeScreenItem, setActiveScreenItem, resetActiveScreenItem, updateScreenItem, moveableDisabled } = useContext(GlobalContext);
@@ -210,6 +212,8 @@ export default function Body() {
 			)}
 
 			<ScreenList />
+			<ScreenSettings visible={activeScreen ? true : false} />
+			<ItemSettings visible={activeScreenItem ? true : false} />
 		</div>
 	);
 }
