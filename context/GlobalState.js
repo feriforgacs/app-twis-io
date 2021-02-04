@@ -195,6 +195,11 @@ export const GlobalProvider = ({ children }) => {
 			payload: newScreen,
 		});
 
+		// scroll to newly added screen
+		setTimeout(() => {
+			document.getElementById(`screen-${screenType}-${screenId}`).scrollIntoView({ behavior: "smooth" });
+		}, 100);
+
 		// save screen to the database
 		let source = axios.CancelToken.source();
 		try {
@@ -242,11 +247,6 @@ export const GlobalProvider = ({ children }) => {
 					},
 				},
 			});
-
-			// scroll to newly added screen
-			setTimeout(() => {
-				document.getElementById(`screen-${screenType}-${screenId}`).scrollIntoView({ behavior: "smooth" });
-			}, 100);
 
 			return;
 		} catch (error) {
@@ -350,6 +350,34 @@ export const GlobalProvider = ({ children }) => {
 			});
 			return;
 		}
+	};
+
+	/**
+	 * Remove screen
+	 * @param {string} screenId UUID of the screen to be duplicated
+	 * @param {obj} newScreenData new screen data with all information and screen items
+	 */
+	const duplicateScreen = async (screenId, newScreenData) => {
+		// update local state
+		dispatch({
+			type: "DUPLICATE_SCREEN",
+			payload: {
+				screenId,
+				newScreenData,
+			},
+		});
+
+		// scroll to duplicated screen
+		setTimeout(() => {
+			document.getElementById(`screen-${newScreenData.type}-${newScreenData.screenId}`).scrollIntoView({ behavior: "smooth" });
+		}, 200);
+
+		/**
+		 * @todo save new screen to the database
+		 * @todo remove screen from state on error
+		 * @todo update screen db _id in state
+		 * @todo update screen items' db _id in state
+		 */
 	};
 
 	/**
@@ -628,6 +656,7 @@ export const GlobalProvider = ({ children }) => {
 				setActiveScreen,
 				resetActiveScreen,
 				removeScreen,
+				duplicateScreen,
 
 				// screen item actions
 				addScreenItem,

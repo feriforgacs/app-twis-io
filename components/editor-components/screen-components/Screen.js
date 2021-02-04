@@ -92,7 +92,7 @@ export default function Screen({ screen, screenIndex }) {
 						<Image src="/images/editor/icons/icon-cog.svg" width={18} height={18} alt="Screen settings icon" />
 						<span className={styles.buttonLabel}>{screenTypeNames[screen.type]}</span>
 					</button>
-					{screen.type === "question" || screen.type === "info" ? <ScreenAdditionalActions screenId={screen.screenId} /> : ""}
+					{screen.type === "question" || screen.type === "info" ? <ScreenAdditionalActions screen={screen} /> : ""}
 				</div>
 				<div ref={drop} className={styles.screenBodyContainer}>
 					<div ref={screenRef} className={`${styles.screenBody} ${isOver ? styles.screenBodyDropover : ""} ${activeScreen !== "" && activeScreen.screenId === screen.screenId ? styles.screenBodyActive : ""}`}>

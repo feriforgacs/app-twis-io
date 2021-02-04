@@ -134,6 +134,26 @@ export default function AppReducer(state, action) {
 			};
 
 		/**
+		 * Duplicate screen
+		 */
+		case "DUPLICATE_SCREEN":
+			screens = [...state.screens];
+
+			// find screen index based in screen uuid
+			index = screens.findIndex((obj) => obj.screenId === action.payload.screenId);
+
+			// add new screen item to state after index
+			screens.splice(index + 1, 0, action.payload.newScreenData);
+
+			// update screens order index
+
+			return {
+				...state,
+				activeScreen: action.payload.newScreenData, // set duplicated screen as active
+				screens,
+			};
+
+		/**
 		 * Set active screen
 		 */
 		case "SET_ACTIVE_SCREEN":
