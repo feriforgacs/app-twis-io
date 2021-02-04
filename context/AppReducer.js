@@ -152,7 +152,6 @@ export default function AppReducer(state, action) {
 
 			return {
 				...state,
-				activeScreen: action.payload.newScreenData, // set duplicated screen as active
 				screens,
 			};
 

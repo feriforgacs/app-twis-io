@@ -195,11 +195,6 @@ export const GlobalProvider = ({ children }) => {
 			payload: newScreen,
 		});
 
-		// scroll to newly added screen
-		setTimeout(() => {
-			document.getElementById(`screen-${screenType}-${screenId}`).scrollIntoView({ behavior: "smooth" });
-		}, 100);
-
 		// save screen to the database
 		let source = axios.CancelToken.source();
 		try {
@@ -236,6 +231,11 @@ export const GlobalProvider = ({ children }) => {
 
 				return;
 			}
+
+			// scroll to newly added screen
+			setTimeout(() => {
+				document.getElementById(`screen-${screenType}-${screenId}`).scrollIntoView({ behavior: "smooth" });
+			}, 100);
 
 			// update screen in state with database id
 			dispatch({
@@ -367,15 +367,91 @@ export const GlobalProvider = ({ children }) => {
 			},
 		});
 
-		// scroll to duplicated screen
-		setTimeout(() => {
-			document.getElementById(`screen-${newScreenData.type}-${newScreenData.screenId}`).scrollIntoView({ behavior: "smooth" });
-		}, 200);
-
 		/**
-		 * @todo save new screen to the database
-		 * @todo remove screen from state on error
-		 * @todo update screen db _id in state
+		 * save new screen to the database
+		 */
+		// save screen to the database
+		let source = axios.CancelToken.source();
+		try {
+			const result = await axios.post(
+				`${process.env.APP_URL}/api/editor/screen/duplicate`,
+				{
+					campaignId: state.campaign._id,
+					screen: newScreenData,
+				},
+				{
+					headers: {
+						"Content-Type": "application/json",
+					},
+				},
+				{ cancelToken: source.token }
+			);
+
+			if (result.data.success !== true) {
+				console.log(result);
+				// set error
+				dispatch({
+					type: "SET_ERROR",
+					payload: {
+						error: true,
+						errorMessage: "Can't duplicate screen",
+					},
+				});
+
+				// remove screen from state
+				dispatch({
+					type: "REMOVE_SCREEN",
+					payload: { screenId: newScreenData.screenId },
+				});
+
+				return;
+			}
+
+			// scroll to duplicated screen
+			setTimeout(() => {
+				document.getElementById(`screen-${newScreenData.type}-${newScreenData.screenId}`).scrollIntoView({ behavior: "smooth" });
+				setActiveScreen(newScreenData);
+			}, 100);
+
+			// update screen in state with database id
+			dispatch({
+				type: "UPDATE_SCREEN",
+				payload: {
+					screenId: newScreenData.screenId,
+					data: {
+						_id: result.data.screen._id,
+					},
+				},
+			});
+
+			/**
+			 * @todo - update screen items db id in state
+			 */
+
+			return;
+		} catch (error) {
+			if (axios.isCancel(error)) {
+				return;
+			}
+
+			console.log(error);
+			// set error
+			dispatch({
+				type: "SET_ERROR",
+				payload: {
+					error: true,
+					errorMessage: "Can't duplicate screen",
+				},
+			});
+
+			// remove screen from state
+			dispatch({
+				type: "REMOVE_SCREEN",
+				payload: { screenId: newScreenData.screenId },
+			});
+			return;
+		}
+		/**
 		 * @todo update screen items' db _id in state
 		 */
 	};
