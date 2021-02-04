@@ -145,7 +145,10 @@ export default function AppReducer(state, action) {
 			// add new screen item to state after index
 			screens.splice(index + 1, 0, action.payload.newScreenData);
 
-			// update screens order index
+			// update order index of screens that are following the duplicated screen
+			for (index + 2; index < screens.length; index++) {
+				screens[index].orderIndex = index;
+			}
 
 			return {
 				...state,
