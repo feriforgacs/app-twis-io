@@ -64,7 +64,7 @@ export default function CampaignSettings() {
 	};
 
 	/**
-	 * Upload new share image
+	 * Upload share image
 	 */
 	const uploadImage = async (image) => {
 		setUploading(true);
@@ -121,6 +121,9 @@ export default function CampaignSettings() {
 		setUploading(false);
 	};
 
+	/**
+	 * Delete OG image
+	 */
 	const removeShareImage = async () => {
 		if (confirm("Are you sure you want to delete the Share Image")) {
 			setDeleting(true);

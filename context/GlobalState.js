@@ -245,7 +245,7 @@ export const GlobalProvider = ({ children }) => {
 
 			// scroll to newly added screen
 			setTimeout(() => {
-				document.getElementById(`screen-${screenType}-${screenId}`).scrollIntoView();
+				document.getElementById(`screen-${screenType}-${screenId}`).scrollIntoView({ behavior: "smooth" });
 			}, 100);
 
 			return;
