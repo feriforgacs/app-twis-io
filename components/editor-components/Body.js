@@ -16,7 +16,7 @@ export default function Body() {
 	 */
 	const handleClickOutside = useCallback(
 		(event) => {
-			if (event.target.classList && !event.target.classList.contains(`moveable-control`) && !event.target.classList.contains(`screen-item`) && !event.target.classList.contains(`screen-item-children`) && !event.target.classList.contains(`screen-item__action`)) {
+			if (event.target.classList && !event.target.classList.contains(`moveable-control`) && !event.target.classList.contains(`screen-item`) && !event.target.classList.contains(`screen-item-children`) && !event.target.classList.contains(`screen-item__action`) && !event.target.classList.contains(`item-settings`)) {
 				resetActiveScreenItem();
 			}
 		},
@@ -116,7 +116,7 @@ export default function Body() {
 							},
 						});
 
-						// update active screen item settings to properly set new falues for upcoming translations
+						// update active screen item settings to properly set new values for upcoming translations
 						setActiveScreenItem({
 							...activeScreenItem,
 							settings: {
@@ -213,7 +213,7 @@ export default function Body() {
 
 			<ScreenList />
 			<ScreenSettings visible={activeScreen ? true : false} />
-			<ItemSettings visible={activeScreenItem ? true : false} />
+			{activeScreenItem && <ItemSettings />}
 		</div>
 	);
 }

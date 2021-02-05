@@ -79,6 +79,7 @@ export default function Text({ data }) {
 		transform: `translateX(${data.settings.translateX}px) translateY(${data.settings.translateY}px) rotate(${data.settings.rotate}deg)`,
 		top: `${data.settings.top}px`,
 		left: `${data.settings.left}px`,
+		opacity: data.settings.opacity || 1,
 		position: "absolute",
 	};
 

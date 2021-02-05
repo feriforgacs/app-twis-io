@@ -10,6 +10,7 @@ export default function Image({ data }) {
 		top: `${data.settings.top || 0}px`,
 		left: `${data.settings.left || 0}px`,
 		transform: `translateX(${data.settings.translateX || 0}px) translateY(${data.settings.translateY || 0}px) rotate(${data.settings.rotate || 0}deg)`,
+		opacity: data.settings.opacity || 1,
 		position: "absolute",
 	};
 

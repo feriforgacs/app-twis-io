@@ -573,7 +573,7 @@ export const GlobalProvider = ({ children }) => {
 	};
 
 	/**
-	 * Update screen item data
+	 * Update screen item data in state and in db
 	 * @param {int} screenIndex The index of the screen where the screen item is
 	 * @param {int} screenItemIndex The index of the screen item to update
 	 * @param {string} screenItemId The generated uuid of the screen item
@@ -638,6 +638,26 @@ export const GlobalProvider = ({ children }) => {
 			});
 			return;
 		}
+	};
+
+	/**
+	 * Update screen item data only in state, without saving to the db
+	 * @param {int} screenIndex The index of the screen where the screen item is
+	 * @param {int} screenItemIndex The index of the screen item to update
+	 * @param {obj} screenItemData The data to update the screen item to
+	 */
+	const updateScreenItemInState = async (screenIndex, screenItemIndex, screenItemUpdatedData) => {
+		// update screen item data in local state
+		dispatch({
+			type: "UPDATE_SCREEN_ITEM",
+			payload: {
+				screenIndex,
+				screenItemIndex,
+				data: {
+					...screenItemUpdatedData,
+				},
+			},
+		});
 	};
 
 	/**
@@ -736,6 +756,7 @@ export const GlobalProvider = ({ children }) => {
 				setActiveScreenItem,
 				resetActiveScreenItem,
 				updateScreenItem,
+				updateScreenItemInState,
 				removeScreenItem,
 			}}
 		>
