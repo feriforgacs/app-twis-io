@@ -61,19 +61,7 @@ export default function Text({ data }) {
 				event.preventDefault();
 			}
 
-			// disable editable
-			setEditableDisabled(true);
-
-			if (text.current !== data.content) {
-				// update screen item in state and db
-				updateScreenItem(activeScreen.orderIndex, activeScreenItem.orderIndex, activeScreenItem.itemId, { content: text.current });
-			}
-
-			// set current item as active
-			setActiveScreenItem({ ...data, content: text.current });
-
-			// enable moveable
-			setMoveableDisabled(false);
+			handleBlur();
 		}
 	};
 
