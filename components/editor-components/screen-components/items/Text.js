@@ -21,6 +21,11 @@ export default function Text({ data }) {
 		// disable content editable
 		setEditableDisabled(true);
 
+		/**
+		 * Update text block height based on the height of the text
+		 * const newHeight = document.querySelector(`#text-${activeScreenItem.itemId} span`).offsetHeight;
+		 */
+
 		if (text.current !== data.content) {
 			// update screen item in state and db
 			updateScreenItem(activeScreen.orderIndex, activeScreenItem.orderIndex, activeScreenItem.itemId, { content: text.current });
