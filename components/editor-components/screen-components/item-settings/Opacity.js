@@ -5,15 +5,20 @@ import styles from "../ScreenSettings.module.scss";
 
 export default function Opacity() {
 	const { activeScreen, activeScreenItem, updateScreenItem, updateScreenItemInState, setActiveScreenItem } = useContext(GlobalContext);
+	let itemOpacity = 100;
+	if (activeScreenItem.settings.opacity) {
+		itemOpacity = activeScreenItem.settings.opacity * 100;
+	}
 
 	return (
 		<div className={`${styles.settingsSection} item-settings`}>
 			<label className={`${styles.settingsLabel} item-settings`}>Opacity</label>
 			<ReactSlider
-				defaultValue={activeScreenItem.settings.opacity || 100}
+				defaultValue={itemOpacity}
+				value={itemOpacity}
 				className="horizontal-slider item-settings"
-				thumbClassName="example-thumb item-settings"
-				trackClassName="example-track item-settings"
+				thumbClassName="horizontal-slider__thumb item-settings"
+				trackClassName="horizontal-slider__track item-settings"
 				onAfterChange={(value) => {
 					const opacity = value / 100;
 					// update screen item data in state and save to the db
