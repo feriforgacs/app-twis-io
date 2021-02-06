@@ -6,7 +6,7 @@ import styles from "../ScreenSettings.module.scss";
 export default function Opacity() {
 	const { activeScreen, activeScreenItem, updateScreenItem, updateScreenItemInState, setActiveScreenItem } = useContext(GlobalContext);
 	let itemOpacity = 100;
-	if (typeof activeScreenItem.settings.opacity !== undefined) {
+	if (activeScreenItem.settings.opacity || activeScreenItem.settings.opacity === 0) {
 		itemOpacity = activeScreenItem.settings.opacity * 100;
 	}
 
@@ -40,7 +40,6 @@ export default function Opacity() {
 				}}
 				onChange={(value) => {
 					const opacity = value / 100;
-					console.log(opacity);
 					// update screen item data in state for live preview
 					updateScreenItemInState(activeScreen.orderIndex, activeScreenItem.orderIndex, {
 						settings: {
