@@ -310,9 +310,6 @@ export const GlobalProvider = ({ children }) => {
 			payload: { screenId },
 		});
 
-		// reset active screen
-		unsetActiveScreen();
-
 		// remove screen from the database
 		let source = axios.CancelToken.source();
 		try {

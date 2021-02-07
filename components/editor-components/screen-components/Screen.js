@@ -82,27 +82,36 @@ export default function Screen({ screen, screenIndex }) {
 	return (
 		<>
 			{screen.type === "endSuccess" && <ScreenAddActions />}
-			<div
-				className={styles.screen}
-				onClick={(e) => {
-					setActiveScreen(screen);
-
-					// unset active screen item
-					if (!e.target.classList.contains("screen-item")) {
-						unsetActiveScreenItem();
-					}
-				}}
-				id={`screen-${screen.type}-${screen.screenId}`}
-			>
+			<div className={styles.screen} id={`screen-${screen.type}-${screen.screenId}`}>
 				<div className={styles.screenActions}>
-					<button className={`${styles.buttonScreen} ${styles.buttonScreenSettings}`}>
+					<button
+						className={`${styles.buttonScreen} ${styles.buttonScreenSettings}`}
+						onClick={(e) => {
+							setActiveScreen(screen);
+							// unset active screen item
+							if (!e.target.classList.contains("screen-item")) {
+								unsetActiveScreenItem();
+							}
+						}}
+					>
 						<Image src="/images/editor/icons/icon-cog.svg" width={18} height={18} alt="Screen settings icon" />
 						<span className={styles.buttonLabel}>{screenTypeNames[screen.type]}</span>
 					</button>
 					{screen.type === "question" || screen.type === "info" ? <ScreenAdditionalActions screen={screen} /> : ""}
 				</div>
 				<div ref={drop} className={styles.screenBodyContainer}>
-					<div ref={screenRef} className={`${styles.screenBody} ${isOver ? styles.screenBodyDropover : ""} ${screenActive ? styles.screenBodyActive : ""}`} style={{ background: screen.background }}>
+					<div
+						ref={screenRef}
+						onClick={(e) => {
+							setActiveScreen(screen);
+							// unset active screen item
+							if (!e.target.classList.contains("screen-item")) {
+								unsetActiveScreenItem();
+							}
+						}}
+						className={`${styles.screenBody} ${isOver ? styles.screenBodyDropover : ""} ${screenActive ? styles.screenBodyActive : ""}`}
+						style={{ background: screen.background }}
+					>
 						{screen.screenItems && screen.screenItems.length > 0 && screen.screenItems.map((screenItem, index) => <ScreenItem key={index} screenItem={screenItem} />)}
 					</div>
 				</div>

@@ -48,7 +48,7 @@ export default function ScreenAdditionalActions({ screen }) {
 
 	return (
 		<>
-			<div className={styles.screenAdditionalActions}>
+			<div className={styles.screenAdditionalActions} id={`screen-additional-actions--${screen.screenId}`}>
 				<button data-for="screenAction" data-tip="Move up" className={`${styles.buttonScreen} ${styles.buttonScreenMoveUp}`}>
 					<Image src="/images/editor/icons/icon-move-up.svg" width={18} height={18} alt="Move screen up icon" title="Move up" />
 				</button>
