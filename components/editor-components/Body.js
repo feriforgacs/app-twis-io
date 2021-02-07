@@ -61,7 +61,7 @@ export default function Body() {
 				}
 			}}
 		>
-			{activeScreenItem !== "" && !moveableDisabled && (
+			{activeScreenItem && !moveableDisabled && (
 				<Moveable
 					snappable={true}
 					snapThreshold={5}

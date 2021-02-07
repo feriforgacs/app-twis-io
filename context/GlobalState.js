@@ -679,8 +679,6 @@ export const GlobalProvider = ({ children }) => {
 				itemId,
 			},
 		});
-		// reset active screen item
-		unsetActiveScreenItem();
 
 		// remove screen item from the database
 		let source = axios.CancelToken.source();
