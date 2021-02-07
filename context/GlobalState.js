@@ -195,6 +195,9 @@ export const GlobalProvider = ({ children }) => {
 			payload: newScreen,
 		});
 
+		setActiveScreen(newScreen);
+		unsetActiveScreenItem();
+
 		// save screen to the database
 		let source = axios.CancelToken.source();
 		try {
@@ -667,15 +670,15 @@ export const GlobalProvider = ({ children }) => {
 
 	/**
 	 * Remove screen item
-	 * @param {int} screenIndex The index of the screen where the screen item is
+	 * @param {string} screenId The generated uuid  of the screen where the screen item is
 	 * @param {string} itemId The generated uuid of the screen item
 	 */
-	const removeScreenItem = async (screenIndex, itemId) => {
+	const removeScreenItem = async (screenId, itemId) => {
 		// remove screen item from state
 		dispatch({
 			type: "REMOVE_SCREEN_ITEM",
 			payload: {
-				screenIndex,
+				screenId,
 				itemId,
 			},
 		});

@@ -1,12 +1,14 @@
 import { useContext } from "react";
 import { GlobalContext } from "../../../context/GlobalState";
 import styles from "./ScreenSettings.module.scss";
+import ItemAdditionalActions from "./ItemAdditionalActions";
 import Opacity from "./item-settings/Opacity";
 
 export default function ItemSettings() {
 	const { unsetActiveScreen, unsetActiveScreenItem } = useContext(GlobalContext);
 	return (
 		<div className={`${styles.settings} item-settings`}>
+			<ItemAdditionalActions />
 			<div className={`${styles.settingsHeader} item-settings`}>
 				Item Settings
 				<button

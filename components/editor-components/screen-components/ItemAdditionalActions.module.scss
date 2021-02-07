@@ -1,0 +1,30 @@
+.additionalActions {
+	background: #fff;
+	border-radius: 3px;
+	box-shadow: 0px 0px 3px rgb(0 0 0 / 10%);
+	position: fixed;
+	right: 340px;
+	top: 70px;
+	width: 40px;
+}
+
+.button {
+	align-items: center;
+	background: none;
+	border: none;
+	border-radius: 3px;
+	box-sizing: border-box;
+	color: #555;
+	cursor: pointer;
+	display: flex;
+	height: 40px;
+	justify-content: center;
+	opacity: 0.8;
+	outline: none;
+	padding: 0.3rem;
+	width: 40px;
+
+	&:hover {
+		opacity: 1;
+	}
+}
