@@ -235,6 +235,11 @@ export const GlobalProvider = ({ children }) => {
 			// scroll to newly added screen
 			setTimeout(() => {
 				document.getElementById(`screen-${screenType}-${screenId}`).scrollIntoView({ behavior: "smooth" });
+
+				setActiveScreen({
+					...newScreen,
+					_id: result.data.screen._id,
+				});
 			}, 100);
 
 			// update screen in state with database id
