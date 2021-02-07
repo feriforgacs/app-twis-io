@@ -7,7 +7,7 @@ import ScreenSettings from "./screen-components/ScreenSettings";
 import ItemSettings from "./screen-components/ItemSettings";
 
 export default function Body() {
-	const { activeScreen, resetActiveScreen, activeScreenItem, setActiveScreenItem, resetActiveScreenItem, updateScreenItem, moveableDisabled } = useContext(GlobalContext);
+	const { activeScreen, unsetActiveScreen, activeScreenItem, setActiveScreenItem, unsetActiveScreenItem, updateScreenItem, moveableDisabled } = useContext(GlobalContext);
 	const [moveableTarget, setMoveableTarget] = useState();
 
 	/**
@@ -55,9 +55,9 @@ export default function Body() {
 			onMouseDown={(e) => {
 				if (e.target && e.target.id === "editor__body") {
 					// unset active screen
-					resetActiveScreen();
+					unsetActiveScreen();
 					// unset active screen item
-					resetActiveScreenItem();
+					unsetActiveScreenItem();
 				}
 			}}
 		>

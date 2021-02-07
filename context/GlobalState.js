@@ -292,7 +292,7 @@ export const GlobalProvider = ({ children }) => {
 	/**
 	 * Helper function to reset active screen in global state
 	 */
-	const resetActiveScreen = () => {
+	const unsetActiveScreen = () => {
 		setActiveScreen("");
 	};
 
@@ -308,7 +308,7 @@ export const GlobalProvider = ({ children }) => {
 		});
 
 		// reset active screen
-		resetActiveScreen();
+		unsetActiveScreen();
 
 		// remove screen from the database
 		let source = axios.CancelToken.source();
@@ -573,7 +573,7 @@ export const GlobalProvider = ({ children }) => {
 	/**
 	 * Helper function to reset active screen item
 	 */
-	const resetActiveScreenItem = () => {
+	const unsetActiveScreenItem = () => {
 		setActiveScreenItem("");
 	};
 
@@ -680,7 +680,7 @@ export const GlobalProvider = ({ children }) => {
 			},
 		});
 		// reset active screen item
-		resetActiveScreenItem();
+		unsetActiveScreenItem();
 
 		// remove screen item from the database
 		let source = axios.CancelToken.source();
@@ -752,14 +752,14 @@ export const GlobalProvider = ({ children }) => {
 				// screen actions
 				addScreen,
 				setActiveScreen,
-				resetActiveScreen,
+				unsetActiveScreen,
 				removeScreen,
 				duplicateScreen,
 
 				// screen item actions
 				addScreenItem,
 				setActiveScreenItem,
-				resetActiveScreenItem,
+				unsetActiveScreenItem,
 				updateScreenItem,
 				updateScreenItemInState,
 				removeScreenItem,
