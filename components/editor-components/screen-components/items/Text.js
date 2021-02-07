@@ -91,15 +91,24 @@ export default function Text({ data }) {
 	};
 
 	return (
-		<div onClick={() => editableDisabled && setActiveScreenItem(data)} style={textContainerStyle} id={`${data.type}-${data.itemId}`} className="screen-item">
-			<span className="screen-item-children" style={textStyle}>
+		<div
+			onClick={() => {
+				if (editableDisabled) {
+					setActiveScreenItem(data);
+				}
+			}}
+			style={textContainerStyle}
+			id={`${data.type}-${data.itemId}`}
+			className="screen-item"
+		>
+			<span className="screen-item" style={textStyle}>
 				<ContentEditable
 					style={textStyle}
 					innerRef={editableContent}
 					html={text.current}
 					onBlur={handleBlur}
 					onChange={handleChange}
-					className="screen-item-children"
+					className="screen-item"
 					tagName="span"
 					disabled={editableDisabled}
 					onDoubleClick={() => {

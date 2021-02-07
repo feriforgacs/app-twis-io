@@ -11,7 +11,7 @@ import ScreenItem from "./items/ScreenItem";
 import ScreenAdditionalActions from "./ScreenAdditionalActions";
 
 export default function Screen({ screen, screenIndex }) {
-	const { addScreenItem, activeScreen, setActiveScreen, setActiveScreenItem } = useContext(GlobalContext);
+	const { addScreenItem, activeScreen, setActiveScreen, activeScreenItem, setActiveScreenItem, resetActiveScreenItem } = useContext(GlobalContext);
 
 	const screenTypeNames = {
 		start: "Start Screen",
@@ -77,13 +77,20 @@ export default function Screen({ screen, screenIndex }) {
 		},
 	});
 
+	const screenActive = activeScreen !== "" && activeScreen.screenId === screen.screenId && !activeScreenItem;
+
 	return (
 		<>
 			{screen.type === "endSuccess" && <ScreenAddActions />}
 			<div
 				className={styles.screen}
-				onClick={() => {
+				onClick={(e) => {
 					setActiveScreen(screen);
+
+					// unset active screen item
+					if (!e.target.classList.contains("screen-item")) {
+						resetActiveScreenItem();
+					}
 				}}
 				id={`screen-${screen.type}-${screen.screenId}`}
 			>
@@ -95,7 +102,7 @@ export default function Screen({ screen, screenIndex }) {
 					{screen.type === "question" || screen.type === "info" ? <ScreenAdditionalActions screen={screen} /> : ""}
 				</div>
 				<div ref={drop} className={styles.screenBodyContainer}>
-					<div ref={screenRef} className={`${styles.screenBody} ${isOver ? styles.screenBodyDropover : ""} ${activeScreen !== "" && activeScreen.screenId === screen.screenId ? styles.screenBodyActive : ""}`} style={{ background: screen.background }}>
+					<div ref={screenRef} className={`${styles.screenBody} ${isOver ? styles.screenBodyDropover : ""} ${screenActive ? styles.screenBodyActive : ""}`} style={{ background: screen.background }}>
 						{screen.screenItems && screen.screenItems.length > 0 && screen.screenItems.map((screenItem, index) => <ScreenItem key={index} screenItem={screenItem} />)}
 					</div>
 				</div>

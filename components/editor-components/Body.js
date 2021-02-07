@@ -1,4 +1,4 @@
-import { useContext, useEffect, useCallback, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Moveable from "react-moveable";
 import { GlobalContext } from "../../context/GlobalState";
 import styles from "./Body.module.scss";
@@ -11,28 +11,11 @@ export default function Body() {
 	const [moveableTarget, setMoveableTarget] = useState();
 
 	/**
-	 * Remove moveable from current item on click outside
-	 * @param {obj} event Event object
-	 */
-	const handleClickOutside = useCallback(
-		(event) => {
-			if (event.target.classList && !event.target.classList.contains(`moveable-control`) && !event.target.classList.contains(`screen-item`) && !event.target.classList.contains(`screen-item-children`) && !event.target.classList.contains(`screen-item__action`) && !event.target.classList.contains(`item-settings`)) {
-				resetActiveScreenItem();
-			}
-		},
-		[resetActiveScreenItem]
-	);
-
-	/**
-	 * Set active screen item on blobal state when clicking on an item
+	 * Set active screen item in global state when clicking on an item
 	 */
 	useEffect(() => {
-		document.addEventListener("mousedown", handleClickOutside, true);
 		setMoveableTarget(document.getElementById(`${activeScreenItem.type}-${activeScreenItem.itemId}`));
-		return () => {
-			document.removeEventListener("mousedown", handleClickOutside, true);
-		};
-	}, [handleClickOutside, activeScreenItem]);
+	}, [setMoveableTarget, activeScreenItem]);
 
 	/**
 	 * Set start values for rotate, resize, move
@@ -71,7 +54,10 @@ export default function Body() {
 			className={styles.body}
 			onMouseDown={(e) => {
 				if (e.target && e.target.id === "editor__body") {
+					// unset active screen
 					resetActiveScreen();
+					// unset active screen item
+					resetActiveScreenItem();
 				}
 			}}
 		>
