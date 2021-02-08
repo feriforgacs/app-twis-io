@@ -72,6 +72,9 @@ const campaignSchema = new mongoose.Schema({
 		type: String,
 		default: "There was an error during the process. Please, wait a few seconds and try again.",
 	},
+	fonts: {
+		type: Array,
+	},
 	createdAt: {
 		type: Date,
 		default: Date.now,
