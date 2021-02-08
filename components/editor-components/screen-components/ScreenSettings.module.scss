@@ -49,14 +49,45 @@
 
 .settingsSection {
 	padding: 1rem;
+	position: relative;
 }
 
 .colorPickerButton {
 	background: none;
-	border: 1px solid #ccc;
+	border: 2px solid #fff;
 	border-radius: 3px;
+	box-shadow: 0 0 0 2px #ccc;
 	cursor: pointer;
 	height: 50px;
+	margin-left: 2px;
 	outline: none;
 	width: 50px;
+}
+
+.colorPickerContainer {
+	box-shadow: rgb(0 0 0 / 15%) 0px 0px 16px;
+	left: 1rem;
+	position: absolute;
+	top: calc(100% - 0.8rem);
+}
+
+.customColorContainer {
+	border-top: 1px solid rgb(238, 238, 238);
+	padding: 10px;
+	width: 200px;
+
+	label {
+		color: #222;
+		display: block;
+		font-size: 0.7rem;
+		margin-bottom: 0.5rem;
+	}
+
+	input {
+		border: 1px solid #eee;
+		box-sizing: border-box;
+		font-size: 0.8rem;
+		padding: 0.5rem 0.2rem;
+		width: 100%;
+	}
 }

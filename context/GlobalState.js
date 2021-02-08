@@ -12,7 +12,6 @@ let InitialState = {
 	criticalErrorMessage: "😢  An error occured. Please, refresh the page and try again.",
 	activeScreen: "",
 	activeScreenItem: "",
-	activeItemSettings: "",
 	moveableDisabled: false,
 	campaign: {},
 	screens: [],
