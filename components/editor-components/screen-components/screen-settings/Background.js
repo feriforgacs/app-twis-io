@@ -11,20 +11,26 @@ export default function Background() {
 	const colirPickerContainerRef = useRef();
 
 	const handleClickOutside = (e) => {
-		if (colirPickerContainerRef.current && !colirPickerContainerRef.current.contains(e.target)) {
+		if (!colirPickerContainerRef.current.contains(e.target)) {
 			setColorPickerVisible(false);
 		}
 	};
 
 	useEffect(() => {
 		setBackground(activeScreen.background);
+	}, [activeScreen]);
 
-		document.addEventListener("mousedown", handleClickOutside);
+	useEffect(() => {
+		if (colorPickerVisible) {
+			document.addEventListener("mousedown", handleClickOutside);
+		} else {
+			document.removeEventListener("mousedown", handleClickOutside);
+		}
 
 		return () => {
 			document.removeEventListener("mousedown", handleClickOutside);
 		};
-	}, [activeScreen]);
+	}, [colorPickerVisible]);
 
 	return (
 		<div className={`${styles.settingsSection} screen-settings`}>
