@@ -83,7 +83,6 @@ export default function AppReducer(state, action) {
 			};
 
 		/**
-		 * @todo
 		 * Update screen item
 		 */
 		case "UPDATE_SCREEN":

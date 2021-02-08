@@ -198,7 +198,7 @@ export default function Body() {
 			)}
 
 			<ScreenList />
-			<ScreenSettings visible={activeScreen ? true : false} />
+			{activeScreen && <ScreenSettings />}
 			{activeScreenItem && <ItemSettings />}
 		</div>
 	);

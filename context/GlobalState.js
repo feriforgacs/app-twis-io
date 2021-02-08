@@ -459,6 +459,44 @@ export const GlobalProvider = ({ children }) => {
 	};
 
 	/**
+	 * Update screen data in state and in the db
+	 * @param {string} screenId UUID of the screen to be updated
+	 * @param {obj} screenUpdateData screen data to be updated
+	 */
+	const updateScreen = async (screenId, screenUpdateData) => {
+		dispatch({
+			type: "UPDATE_SCREEN",
+			payload: {
+				screenId,
+				data: {
+					...screenUpdateData,
+				},
+			},
+		});
+
+		/**
+		 * @todo - database methods
+		 */
+	};
+
+	/**
+	 * Update screen data only in state
+	 * @param {string} screenId UUID of the screen to be updated
+	 * @param {obj} screenUpdateData screen data to be updated
+	 */
+	const updateScreenInState = async (screenId, screenUpdateData) => {
+		dispatch({
+			type: "UPDATE_SCREEN",
+			payload: {
+				screenId,
+				data: {
+					...screenUpdateData,
+				},
+			},
+		});
+	};
+
+	/**
 	 * ==============================
 	 * ======== ITEM ACTIONS ========
 	 * ==============================
@@ -753,6 +791,8 @@ export const GlobalProvider = ({ children }) => {
 				unsetActiveScreen,
 				removeScreen,
 				duplicateScreen,
+				updateScreen,
+				updateScreenInState,
 
 				// screen item actions
 				addScreenItem,

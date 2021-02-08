@@ -50,3 +50,13 @@
 .settingsSection {
 	padding: 1rem;
 }
+
+.colorPickerButton {
+	background: none;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	cursor: pointer;
+	height: 50px;
+	outline: none;
+	width: 50px;
+}

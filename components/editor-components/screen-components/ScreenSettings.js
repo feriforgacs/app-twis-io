@@ -1,11 +1,12 @@
 import { useContext } from "react";
 import { GlobalContext } from "../../../context/GlobalState";
 import styles from "./ScreenSettings.module.scss";
+import Background from "./screen-settings/Background";
 
-export default function ScreenSettings({ visible }) {
+export default function ScreenSettings() {
 	const { unsetActiveScreen, unsetActiveScreenItem } = useContext(GlobalContext);
 	return (
-		<div className={`${styles.settings} ${visible ? "" : "hidden"}`}>
+		<div className={styles.settings}>
 			<div className={styles.settingsHeader}>
 				Screen Settings
 				<button
@@ -21,6 +22,7 @@ export default function ScreenSettings({ visible }) {
 					</svg>
 				</button>
 			</div>
+			<Background />
 		</div>
 	);
 }
