@@ -3,9 +3,10 @@ import { GlobalContext } from "../../../context/GlobalState";
 import styles from "./ScreenSettings.module.scss";
 import ItemAdditionalActions from "./ItemAdditionalActions";
 import Opacity from "./item-settings/Opacity";
+import Font from "./item-settings/Font";
 
 export default function ItemSettings() {
-	const { unsetActiveScreen, unsetActiveScreenItem } = useContext(GlobalContext);
+	const { activeScreenItem, unsetActiveScreen, unsetActiveScreenItem } = useContext(GlobalContext);
 	return (
 		<div className={`${styles.settings} item-settings`}>
 			<ItemAdditionalActions />
@@ -25,6 +26,7 @@ export default function ItemSettings() {
 				</button>
 			</div>
 			<Opacity />
+			{activeScreenItem.type === "text" && <Font />}
 		</div>
 	);
 }
