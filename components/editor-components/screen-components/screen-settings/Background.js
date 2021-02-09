@@ -8,10 +8,10 @@ export default function Background() {
 	const [background, setBackground] = useState(activeScreen.background || "#ffffff");
 	const [colorPickerVisible, setColorPickerVisible] = useState(false);
 
-	const colirPickerContainerRef = useRef();
+	const colorPickerContainerRef = useRef();
 
 	const handleClickOutside = (e) => {
-		if (!colirPickerContainerRef.current.contains(e.target)) {
+		if (!colorPickerContainerRef.current.contains(e.target)) {
 			setColorPickerVisible(false);
 		}
 	};
@@ -37,7 +37,7 @@ export default function Background() {
 			<label className={`${styles.settingsLabel} screen-settings`}>Background</label>
 			<button className={styles.colorPickerButton} onClick={() => setColorPickerVisible(true)} style={{ background }}></button>
 			{colorPickerVisible && (
-				<div className={styles.colorPickerContainer} ref={colirPickerContainerRef}>
+				<div className={styles.colorPickerContainer} ref={colorPickerContainerRef}>
 					<SketchPicker
 						className="colorpicker"
 						color={background}

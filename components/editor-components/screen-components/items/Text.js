@@ -83,12 +83,13 @@ export default function Text({ data }) {
 	let textStyle = {
 		background: data.settings.highlightColor,
 		color: data.settings.color,
-		fontFamily: data.settings.fontFamily,
 		fontSize: `${data.settings.fontSize}px`,
 		fontWeight: data.settings.bold ? 700 : 400,
 		fontStyle: data.settings.italic ? `italic` : `normal`,
 		textDecoration: data.settings.underline ? `underline` : `none`,
 	};
+
+	const fontFamilyClass = data.settings.fontFamily !== "" ? `font--${data.settings.fontFamily}` : `font--arial`;
 
 	return (
 		<div
@@ -99,7 +100,7 @@ export default function Text({ data }) {
 			}}
 			style={textContainerStyle}
 			id={`${data.type}-${data.itemId}`}
-			className="screen-item"
+			className={`screen-item ${fontFamilyClass}`}
 		>
 			<span className="screen-item" style={textStyle}>
 				<ContentEditable
