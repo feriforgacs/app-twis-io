@@ -3,7 +3,8 @@ import { GlobalContext } from "../../../context/GlobalState";
 import styles from "./ScreenSettings.module.scss";
 import ItemAdditionalActions from "./ItemAdditionalActions";
 import Opacity from "./item-settings/Opacity";
-import Font from "./item-settings/Font";
+import FontFamily from "./item-settings/FontFamily";
+import FontSize from "./item-settings/FontSize";
 
 export default function ItemSettings() {
 	const { activeScreenItem, unsetActiveScreen, unsetActiveScreenItem } = useContext(GlobalContext);
@@ -26,7 +27,14 @@ export default function ItemSettings() {
 				</button>
 			</div>
 			<Opacity />
-			{activeScreenItem.type === "text" && <Font />}
+			{activeScreenItem.type === "text" ? (
+				<>
+					<FontFamily />
+					<FontSize />
+				</>
+			) : (
+				""
+			)}
 		</div>
 	);
 }

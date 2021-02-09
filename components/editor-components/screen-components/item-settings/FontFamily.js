@@ -3,7 +3,7 @@ import { GlobalContext } from "../../../../context/GlobalState";
 import styles from "../ScreenSettings.module.scss";
 import FontFamilies from "../../../../utils/FontFamilies";
 
-export default function Font() {
+export default function FontFamily() {
 	const { activeScreen, activeScreenItem, setActiveScreenItem, updateScreenItem, updateCampaignFonts } = useContext(GlobalContext);
 	const [fontFamily, setFontFamily] = useState(activeScreenItem.settings.fontFamily || "arial");
 	const [fontSelectorVisible, setFontSelectorVisible] = useState(false);
@@ -46,7 +46,7 @@ export default function Font() {
 		<div className={`${styles.settingsSection} item-settings`}>
 			<label className={`${styles.settingsLabel} item-settings`}>Font</label>
 			<div className={styles.fontFamilySelector}>
-				<span className={styles.fontFamilySelected} onClick={() => setFontSelectorVisible(true)}>
+				<span className={`${styles.fontFamilySelected} ${fontSelectorVisible && styles.fontFamilySelectedActive}`} onClick={() => setFontSelectorVisible(true)}>
 					<img src={`/images/editor/fonts/font-${FontFamilies[fontFamily].key}.svg`} alt={FontFamilies[fontFamily].name} />
 				</span>
 				{fontSelectorVisible && (
@@ -59,7 +59,9 @@ export default function Font() {
 									updateScreenItem(activeScreen.orderIndex, activeScreenItem.orderIndex, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, fontFamily: font } });
 									setActiveScreenItem({ ...activeScreenItem, settings: { ...activeScreenItem.settings, fontFamily: font } });
 									updateCampaignFonts(font);
+									setFontSelectorVisible(false);
 								}}
+								className={`${fontFamily === font ? styles.fontFamilySelectorListItemSelected : ""}`}
 							>
 								<img src={`/images/editor/fonts/font-${FontFamilies[font].key}.svg`} alt={FontFamilies[font].name} />
 								{fontFamily === font && (

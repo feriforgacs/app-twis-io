@@ -92,7 +92,8 @@
 	}
 }
 
-.fontFamilySelector {
+.fontFamilySelector,
+.fontSizeSelector {
 	position: relative;
 }
 
@@ -109,7 +110,13 @@
 	width: 100%;
 }
 
-.fontFamilySelectorList {
+.fontFamilySelectedActive {
+	box-shadow: 0 0 10px #cbc2f5;
+}
+
+.fontFamilySelectorList,
+.fontSizeSelectorList {
+	background: #fff;
 	box-shadow: rgb(0 0 0 / 15%) 0px 0px 16px;
 	list-style-type: none;
 	margin: 0;
@@ -120,6 +127,7 @@
 	position: absolute;
 	top: 2.5rem;
 	width: 100%;
+	z-index: 20;
 
 	li {
 		cursor: pointer;
@@ -132,8 +140,44 @@
 	}
 }
 
-.fontFamilyListSelected {
+.fontFamilyListSelected,
+.fontSizeListSelected {
 	position: absolute;
 	right: 1rem;
 	top: 0.5rem;
+}
+
+.fontSizeInput {
+	&::-webkit-outer-spin-button,
+	&::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
+	-moz-appearance: textfield;
+
+	box-sizing: border-box;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	font-size: 0.8rem;
+	line-height: 2.3rem;
+	margin: 0 0 0.5rem;
+	padding: 0 1rem;
+	width: 100%;
+
+	&:focus {
+		outline: none;
+		box-shadow: 0 0 10px #cbc2f5;
+	}
+}
+
+li.fontSizeSelectorListItem {
+	font-size: 0.8rem;
+	height: 2rem;
+	line-height: 2rem;
+	padding: 0.25rem 1rem;
+}
+
+.fontSizeSelectorListItemSelected,
+.fontFamilySelectorListItemSelected {
+	background: #f7f7f7;
 }

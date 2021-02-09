@@ -187,7 +187,6 @@ export default function CampaignSettings() {
 							updateCampaignData("status", campaign.status === "active" ? "draft" : "active");
 						}}
 						checked={active}
-						offColor="#34495b"
 						onColor="#159c5b"
 					/>
 					<span>
