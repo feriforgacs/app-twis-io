@@ -37,6 +37,10 @@ export default async function ItemUpdateHandler(req, res) {
 		return res.status(400).json({ success: false, error: "invalid campaign id" });
 	}
 
+	if (!req.body.screenItemUpdatedData) {
+		return res.status(400).json({ success: false, error: "missing update data" });
+	}
+
 	await DatabaseConnect();
 
 	const session = await getSession({ req });

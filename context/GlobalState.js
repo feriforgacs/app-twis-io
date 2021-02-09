@@ -173,20 +173,35 @@ export const GlobalProvider = ({ children }) => {
 	 * @param {strong} fontFamily Selected font family
 	 */
 	const updateCampaignFonts = async (fontFamily) => {
-		if (state.campaign.fonts && state.campaign.fonts.includes(fontFamily)) {
-			// font already used in campaign, no need to add it again
-			return;
+		if (!state.campaign.fonts || !state.campaign.fonts.includes(fontFamily)) {
+			// update campaign fonts in state
+			dispatch({
+				type: "UPDATE_CAMPAIGN_FONTS",
+				payload: fontFamily,
+			});
 		}
 
-		// update campaign fonts in state
-		dispatch({
-			type: "UPDATE_CAMPAIGN_FONTS",
-			payload: fontFamily,
+		/**
+		 * Check all used fonts
+		 */
+		let campaignFonts = [];
+		const itemsWithFontFamily = ["text", "button", "question", "answer", "form"];
+		state.screens.forEach((screen) => {
+			if (screen.screenItems.length > 0) {
+				screen.screenItems.forEach((screenItem) => {
+					if (itemsWithFontFamily.includes(screenItem.type) && !campaignFonts.includes(screenItem.settings.fontFamily)) {
+						campaignFonts.push(screenItem.settings.fontFamily);
+					}
+				});
+			}
 		});
 
-		/**
-		 * @todo update campaign fonts in the database
-		 */
+		const currentCampaignFonts = [...state.campaign.fonts].sort();
+		campaignFonts.sort();
+
+		if (currentCampaignFonts !== campaignFonts) {
+			updateCampaignData("fonts", campaignFonts);
+		}
 	};
 
 	/**
