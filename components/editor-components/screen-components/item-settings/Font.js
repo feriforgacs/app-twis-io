@@ -4,7 +4,7 @@ import styles from "../ScreenSettings.module.scss";
 import FontFamilies from "../../../../utils/FontFamilies";
 
 export default function Font() {
-	const { activeScreen, activeScreenItem, updateScreenItem, updateCampaignFonts } = useContext(GlobalContext);
+	const { activeScreen, activeScreenItem, setActiveScreenItem, updateScreenItem, updateCampaignFonts } = useContext(GlobalContext);
 	const [fontFamily, setFontFamily] = useState(activeScreenItem.settings.fontFamily || "arial");
 	const [fontSelectorVisible, setFontSelectorVisible] = useState(false);
 
@@ -56,8 +56,9 @@ export default function Font() {
 								key={FontFamilies[font].key}
 								onClick={() => {
 									setFontFamily(font);
-									updateCampaignFonts(font);
 									updateScreenItem(activeScreen.orderIndex, activeScreenItem.orderIndex, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, fontFamily: font } });
+									setActiveScreenItem({ ...activeScreenItem, settings: { ...activeScreenItem.settings, fontFamily: font } });
+									updateCampaignFonts(font);
 								}}
 							>
 								<img src={`/images/editor/fonts/font-${FontFamilies[font].key}.svg`} alt={FontFamilies[font].name} />
