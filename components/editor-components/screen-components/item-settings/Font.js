@@ -10,16 +10,26 @@ export default function Font() {
 
 	const fontFamilySelectorRef = useRef();
 
+	/**
+	 * Update font family of active screen item
+	 */
+	useEffect(() => {
+		setFontFamily(activeScreenItem.settings.fontFamily || "arial");
+	}, [activeScreenItem]);
+
+	/**
+	 * Close font family selector on click outside
+	 * @param {obj} e Click event object
+	 */
 	const handleClickOutside = (e) => {
 		if (!fontFamilySelectorRef.current.contains(e.target)) {
 			setFontSelectorVisible(false);
 		}
 	};
 
-	useEffect(() => {
-		setFontFamily(activeScreenItem.settings.fontFamily || "arial");
-	}, [activeScreenItem]);
-
+	/**
+	 * Close font family selector on click outside
+	 */
 	useEffect(() => {
 		if (fontSelectorVisible) {
 			document.addEventListener("mousedown", handleClickOutside);

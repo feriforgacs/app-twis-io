@@ -7,15 +7,20 @@ import { DebounceInput } from "react-debounce-input";
 import { GlobalContext } from "../../context/GlobalState";
 import styles from "./Header.module.scss";
 import CampaignSettings from "./CampaignSettings";
+import FontFamilies from "../../utils/FontFamilies";
 
 export default function Header() {
 	const { loading, campaign, updateCampaignData } = useContext(GlobalContext);
-	const [name, setName] = useState(campaign.name || "");
+	const [name, setName] = useState(campaign.name || "loading...");
 	const [campsignSettingsVisible, toggleCampaignSettings] = useState(false);
+	const [campaignFonts, setCampaignFonts] = useState(campaign.fonts || []);
 	const router = useRouter();
 
 	useEffect(() => {
 		setName(campaign.name);
+
+		// update campaign fonts
+		setCampaignFonts(campaign.fonts);
 	}, [campaign]);
 
 	return (
@@ -24,6 +29,8 @@ export default function Header() {
 				<title>
 					{name} - {process.env.APP_NAME}
 				</title>
+				{campaignFonts && campaignFonts.length > 0 && <link rel="preconnect" href="https://fonts.gstatic.com" />}
+				{campaignFonts && campaignFonts.map((font, index) => FontFamilies[font].url !== "" && <link key={index} href={FontFamilies[font].url} rel="stylesheet" />)}
 			</Head>
 			<div id="editor__header" className={styles.header}>
 				<div className={styles.logoContainer}>

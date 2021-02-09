@@ -169,6 +169,27 @@ export const GlobalProvider = ({ children }) => {
 	};
 
 	/**
+	 * Update font families used by the campaign
+	 * @param {strong} fontFamily Selected font family
+	 */
+	const updateCampaignFonts = async (fontFamily) => {
+		if (state.campaign.fonts && state.campaign.fonts.includes(fontFamily)) {
+			// font already used in campaign, no need to add it again
+			return;
+		}
+
+		// update campaign fonts in state
+		dispatch({
+			type: "UPDATE_CAMPAIGN_FONTS",
+			payload: fontFamily,
+		});
+
+		/**
+		 * @todo update campaign fonts in the database
+		 */
+	};
+
+	/**
 	 * ==============================
 	 * ======= SCREEN ACTIONS =======
 	 * ==============================
@@ -828,6 +849,7 @@ export const GlobalProvider = ({ children }) => {
 				loadCampaignData,
 				updateCampaignData,
 				updateCampaignDataState,
+				updateCampaignFonts,
 				setMoveableDisabled,
 
 				// screen actions
