@@ -2,6 +2,7 @@ export default function AppReducer(state, action) {
 	let screens;
 	let index;
 	let data;
+	let campaignFonts;
 	let screenIndex;
 	let itemIndex;
 	let screenItems;
@@ -29,7 +30,7 @@ export default function AppReducer(state, action) {
 			};
 
 		/**
-		 * Set campaign initial state (when editor loas)
+		 * Set campaign initial state (when editor loads)
 		 */
 		case "SET_CAMPAIGN_INITIAL_STATE":
 			return {
@@ -40,7 +41,7 @@ export default function AppReducer(state, action) {
 			};
 
 		/**
-		 * Update campaign data in the database
+		 * Update campaign data
 		 */
 		case "UPDATE_CAMPAIGN_DATA":
 			return {
@@ -51,6 +52,19 @@ export default function AppReducer(state, action) {
 				},
 			};
 
+		/**
+		 * Update campaign fonts
+		 */
+		case "UPDATE_CAMPAIGN_FONTS":
+			campaignFonts = [...state.campaign.fonts];
+			campaignFonts.push(action.payload);
+			return {
+				...state,
+				campaign: {
+					...state.campaign,
+					fonts: campaignFonts,
+				},
+			};
 		/**
 		 * Enable or disable moveable
 		 */
