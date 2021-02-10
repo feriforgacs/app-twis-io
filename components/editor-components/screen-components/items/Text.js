@@ -87,6 +87,7 @@ export default function Text({ data }) {
 		fontWeight: data.settings.bold ? 700 : 400,
 		fontStyle: data.settings.italic ? `italic` : `normal`,
 		textDecoration: data.settings.underline ? `underline` : `none`,
+		textTransform: data.settings.uppercase ? `uppercase` : `none`,
 	};
 
 	const fontFamilyClass = data.settings.fontFamily !== "" ? `font--${data.settings.fontFamily}` : `font--arial`;

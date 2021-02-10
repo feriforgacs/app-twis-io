@@ -181,3 +181,35 @@ li.fontSizeSelectorListItem {
 .fontFamilySelectorListItemSelected {
 	background: #f7f7f7;
 }
+
+.fontStyleSettings {
+	display: flex;
+	justify-content: space-around;
+}
+
+.fontStyleButton {
+	background: none;
+	border: none;
+	border-radius: 3px;
+	box-sizing: border-box;
+	cursor: pointer;
+	height: 35px;
+	line-height: 35px;
+	outline: none;
+	opacity: 0.6;
+	padding: 0.2rem 0 0;
+	width: 35px;
+
+	&:hover {
+		background: #f7f7f7;
+	}
+}
+
+.fontStyleButtonActive {
+	background: #eee;
+	opacity: 1;
+
+	&:hover {
+		background: #eee;
+	}
+}
