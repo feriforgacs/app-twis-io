@@ -30,7 +30,7 @@ export default function Header() {
 					{name} - {process.env.APP_NAME}
 				</title>
 				{campaignFonts && campaignFonts.length > 0 && <link rel="preconnect" href="https://fonts.gstatic.com" />}
-				{campaignFonts && campaignFonts.map((font, index) => FontFamilies[font].url !== "" && <link key={index} href={FontFamilies[font].url} rel="stylesheet" />)}
+				{campaignFonts && campaignFonts.map((font, index) => font !== "" && FontFamilies[font].url !== "" && <link key={index} href={FontFamilies[font].url} rel="stylesheet" />)}
 			</Head>
 			<div id="editor__header" className={styles.header}>
 				<div className={styles.logoContainer}>
