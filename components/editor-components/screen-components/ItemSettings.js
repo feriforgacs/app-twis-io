@@ -7,6 +7,8 @@ import FontFamily from "./item-settings/FontFamily";
 import FontSize from "./item-settings/FontSize";
 import FontStyle from "./item-settings/FontStyle";
 import TextAlign from "./item-settings/TextAlign";
+import FontColor from "./item-settings/FontColor";
+import FontBackgroundColor from "./item-settings/FontBackgroundColor";
 
 export default function ItemSettings() {
 	const { activeScreenItem, unsetActiveScreen, unsetActiveScreenItem } = useContext(GlobalContext);
@@ -33,6 +35,8 @@ export default function ItemSettings() {
 				<>
 					<FontStyle />
 					<TextAlign />
+					<FontColor />
+					<FontBackgroundColor />
 					<FontFamily />
 					<FontSize />
 				</>

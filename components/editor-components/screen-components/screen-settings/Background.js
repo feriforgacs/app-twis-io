@@ -58,6 +58,9 @@ export default function Background() {
 							onChange={(e) => {
 								setBackground(e.target.value);
 								updateScreenInState(activeScreen.screenId, { background: e.target.value });
+								/**
+								 * @todo save data to db
+								 */
 							}}
 						/>
 					</div>
