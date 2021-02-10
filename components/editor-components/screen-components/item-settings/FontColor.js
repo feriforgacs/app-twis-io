@@ -72,6 +72,9 @@ export default function FontColor() {
 										color: e.target.value,
 									},
 								});
+								/**
+								 * @todo save data to db
+								 */
 							}}
 						/>
 					</div>
