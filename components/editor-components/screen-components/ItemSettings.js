@@ -6,6 +6,7 @@ import Opacity from "./item-settings/Opacity";
 import FontFamily from "./item-settings/FontFamily";
 import FontSize from "./item-settings/FontSize";
 import FontStyle from "./item-settings/FontStyle";
+import TextAlign from "./item-settings/TextAlign";
 
 export default function ItemSettings() {
 	const { activeScreenItem, unsetActiveScreen, unsetActiveScreenItem } = useContext(GlobalContext);
@@ -31,6 +32,7 @@ export default function ItemSettings() {
 			{activeScreenItem.type === "text" ? (
 				<>
 					<FontStyle />
+					<TextAlign />
 					<FontFamily />
 					<FontSize />
 				</>
