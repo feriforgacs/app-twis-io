@@ -66,6 +66,7 @@ export default function Text({ data }) {
 	};
 
 	let textContainerStyle = {
+		background: data.settings.highlightColor,
 		textAlign: data.settings.align,
 		width: `${data.settings.width}px`,
 		height: `${data.settings.height}px`,
@@ -81,7 +82,6 @@ export default function Text({ data }) {
 	}
 
 	let textStyle = {
-		background: data.settings.highlightColor,
 		color: data.settings.color,
 		fontSize: `${data.settings.fontSize}px`,
 		fontWeight: data.settings.bold ? 700 : 400,
