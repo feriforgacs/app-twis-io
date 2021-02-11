@@ -45,7 +45,10 @@ export default async function CampaignCreateHandler(req, res) {
 			screenId: uuidv4(),
 			type: "start",
 			orderIndex: 0,
-			background: "linear-gradient(135.57deg, rgb(164, 38, 184) 0%, rgb(78, 156, 239) 93.45%)",
+			background: {
+				type: "gradient",
+				color: "linear-gradient(135.57deg, rgb(164, 38, 184) 0%, rgb(78, 156, 239) 93.45%)",
+			},
 			campaignId: campaign._id,
 		};
 
@@ -56,7 +59,10 @@ export default async function CampaignCreateHandler(req, res) {
 			screenId: uuidv4(),
 			type: "endSuccess",
 			orderIndex: 1,
-			background: "linear-gradient(rgb(15, 191, 33), rgb(10, 206, 171))",
+			background: {
+				type: "gradient",
+				color: "linear-gradient(rgb(15, 191, 33), rgb(10, 206, 171))",
+			},
 			campaignId: campaign._id,
 		};
 
@@ -67,7 +73,10 @@ export default async function CampaignCreateHandler(req, res) {
 			screenId: uuidv4(),
 			type: "endFailure",
 			orderIndex: 2,
-			background: "linear-gradient(rgb(191, 68, 15), rgb(206, 22, 10))",
+			background: {
+				type: "gradient",
+				color: "linear-gradient(rgb(191, 68, 15), rgb(206, 22, 10))",
+			},
 			campaignId: campaign._id,
 		};
 

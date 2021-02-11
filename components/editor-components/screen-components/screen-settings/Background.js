@@ -50,20 +50,6 @@ export default function Background() {
 							setActiveScreen({ ...activeScreen, background: color.hex });
 						}}
 					/>
-					<div className={styles.customColorContainer}>
-						<label>Custom Background</label>
-						<input
-							type="text"
-							value={background}
-							onChange={(e) => {
-								setBackground(e.target.value);
-								updateScreenInState(activeScreen.screenId, { background: e.target.value });
-								/**
-								 * @todo save data to db
-								 */
-							}}
-						/>
-					</div>
 				</div>
 			)}
 		</div>

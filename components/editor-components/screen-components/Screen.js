@@ -110,7 +110,7 @@ export default function Screen({ screen, screenIndex }) {
 							}
 						}}
 						className={`${styles.screenBody} ${isOver ? styles.screenBodyDropover : ""} ${screenActive ? styles.screenBodyActive : ""}`}
-						style={{ background: screen.background }}
+						style={{ background: screen.background.color }}
 					>
 						{screen.screenItems && screen.screenItems.length > 0 && screen.screenItems.map((screenItem, index) => <ScreenItem key={index} screenItem={screenItem} />)}
 					</div>

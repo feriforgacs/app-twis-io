@@ -18,8 +18,11 @@ const screenSchema = new mongoose.Schema(
 			default: 0,
 		},
 		background: {
-			type: String,
-			default: "#ffffff",
+			type: Object,
+			default: {
+				type: "solid",
+				color: "#ffffff",
+			},
 		},
 		campaignId: {
 			type: mongoose.Schema.ObjectId,
