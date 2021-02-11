@@ -220,7 +220,10 @@ export const GlobalProvider = ({ children }) => {
 			screenId,
 			type: screenType,
 			orderIndex: state.screens.length - 2,
-			background: "#ffffff",
+			background: {
+				type: "solid",
+				color: "#ffffff",
+			},
 			campaignId: state.campaign._id,
 			screenItems: [],
 		};

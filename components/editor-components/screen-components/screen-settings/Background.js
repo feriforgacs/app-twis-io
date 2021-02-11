@@ -5,7 +5,7 @@ import styles from "../ScreenSettings.module.scss";
 
 export default function Background() {
 	const { activeScreen, setActiveScreen, updateScreen, updateScreenInState } = useContext(GlobalContext);
-	const [background, setBackground] = useState(activeScreen.background || "#ffffff");
+	const [background, setBackground] = useState(activeScreen.background.color || "#ffffff");
 	const [colorPickerVisible, setColorPickerVisible] = useState(false);
 
 	const colorPickerContainerRef = useRef();
@@ -17,7 +17,7 @@ export default function Background() {
 	};
 
 	useEffect(() => {
-		setBackground(activeScreen.background);
+		setBackground(activeScreen.background.color);
 	}, [activeScreen]);
 
 	useEffect(() => {
@@ -43,11 +43,11 @@ export default function Background() {
 						color={background}
 						onChange={(color) => {
 							setBackground(color.hex);
-							updateScreenInState(activeScreen.screenId, { background: color.hex });
+							updateScreenInState(activeScreen.screenId, { background: { type: "solid", color: color.hex } });
 						}}
 						onChangeComplete={(color) => {
-							updateScreen(activeScreen.screenId, { background: color.hex });
-							setActiveScreen({ ...activeScreen, background: color.hex });
+							updateScreen(activeScreen.screenId, { background: { type: "solid", color: color.hex } });
+							setActiveScreen({ ...activeScreen, background: { type: "solid", color: color.hex } });
 						}}
 					/>
 				</div>
