@@ -8,8 +8,11 @@ export default function Background() {
 	const { activeScreen, setActiveScreen, updateScreen, updateScreenInState } = useContext(GlobalContext);
 	const [background, setBackground] = useState(activeScreen.background.color || "#ffffff");
 	const [backgroundType, setBackgroundType] = useState(activeScreen.background.type || "solid");
+
+	const [gradientColorPicker, setGradientColorPicker] = useState("start");
 	const [gradientStartColor, setGradientStartColor] = useState("#ffffff");
 	const [gradientEndColor, setGradientEndColor] = useState("#eeeeee");
+
 	const [colorPickerVisible, setColorPickerVisible] = useState(false);
 
 	const colorPickerContainerRef = useRef();
@@ -26,8 +29,9 @@ export default function Background() {
 		if (activeScreen.background.color !== "solid") {
 			const gradientSettings = GradientParser("linear-gradient(135.57deg, rgb(164, 38, 184) 0%, rgb(78, 156, 239) 93.45%)");
 
-			setGradientStartColor(gradientSettings[0].colorStops[0]);
-			setGradientEndColor(gradientSettings[0].colorStops[1]);
+			setGradientStartColor(`rgb(${gradientSettings[0].colorStops[0].value[0]}, ${gradientSettings[0].colorStops[0].value[1]}, ${gradientSettings[0].colorStops[0].value[2]})`);
+
+			setGradientEndColor(`rgb(${gradientSettings[0].colorStops[1].value[0]}, ${gradientSettings[0].colorStops[1].value[1]}, ${gradientSettings[0].colorStops[1].value[2]})`);
 		} else {
 			setGradientStartColor(activeScreen.background.color);
 			setGradientEndColor(activeScreen.background.color);
@@ -53,35 +57,82 @@ export default function Background() {
 			{colorPickerVisible && (
 				<div className={styles.colorPickerContainer} ref={colorPickerContainerRef}>
 					<div className={styles.backgroundTypeTabs}>
-						<button className={`${styles.backgroundTypeTab} ${backgroundType === "solid" ? styles.backgroundTypeTabActive : ""}`} onClick={() => setBackgroundType("solid")}>
-							Solid Color
+						<button
+							className={`${styles.backgroundTypeTab} ${backgroundType === "solid" ? styles.backgroundTypeTabActive : ""}`}
+							onClick={
+								() => setBackgroundType("solid")
+								/**
+								 * @todo update current background type and colors in state and db
+								 */
+							}
+						>
+							Solid
 						</button>
 
-						<button className={`${styles.backgroundTypeTab} ${backgroundType === "gradient" ? styles.backgroundTypeTabActive : ""}`} onClick={() => setBackgroundType("gradient")}>
-							Linear Gradient
+						<button
+							className={`${styles.backgroundTypeTab} ${backgroundType === "gradient" ? styles.backgroundTypeTabActive : ""}`}
+							onClick={
+								() => setBackgroundType("gradient")
+								/**
+								 * @todo update current background type and colors in state and db
+								 */
+							}
+						>
+							Gradient
 						</button>
 					</div>
 
-					<div className={styles.gradientColors} style={{ background }}>
-						<button className={styles.gradientColorsButton} style={{ background: gradientStartColor }}>
-							start color
-						</button>
-						<button className={styles.gradientColorsButton} style={{ background: gradientEndColor }}>
-							end color
-						</button>
-					</div>
+					{backgroundType === "gradient" && (
+						<div className={styles.gradientColors} style={{ background }}>
+							<button className={`${styles.gradientColorsButton} ${gradientColorPicker === "start" ? styles.gradientColorsButtonActive : ""}`} style={{ background: gradientStartColor }} onClick={() => setGradientColorPicker("start")}>
+								start
+							</button>
+
+							<button className={`${styles.gradientColorsButton} ${gradientColorPicker === "end" ? styles.gradientColorsButtonActive : ""}`} style={{ background: gradientEndColor }} onClick={() => setGradientColorPicker("end")}>
+								end
+							</button>
+						</div>
+					)}
 
 					<SketchPicker
 						disableAlpha={true}
 						className="colorpicker"
-						color={background}
+						color={backgroundType === "solid" ? background : gradientColorPicker === "start" ? gradientStartColor : gradientEndColor}
 						onChange={(color) => {
-							setBackground(color.hex);
-							updateScreenInState(activeScreen.screenId, { background: { type: "solid", color: color.hex } });
+							let backgroundColor;
+							if (backgroundType === "solid") {
+								backgroundColor = color.hex;
+							} else {
+								if (gradientColorPicker === "start") {
+									// set gradient start color
+									setGradientStartColor(`rgb(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b})`);
+									backgroundColor = `linear-gradient(rgb(${color.rgb}), ${gradientEndColor})`;
+								} else {
+									// set gradient end color
+									setGradientEndColor(`rgb(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b})`);
+									backgroundColor = `linear-gradient(${gradientStartColor}, rgb(${color.rgb}))`;
+								}
+							}
+							setBackground(backgroundColor);
+							updateScreenInState(activeScreen.screenId, { background: { type: backgroundType, color: backgroundColor } });
 						}}
 						onChangeComplete={(color) => {
-							updateScreen(activeScreen.screenId, { background: { type: "solid", color: color.hex } });
-							setActiveScreen({ ...activeScreen, background: { type: "solid", color: color.hex } });
+							let backgroundColor;
+							if (backgroundType === "solid") {
+								backgroundColor = color.hex;
+							} else {
+								if (gradientColorPicker === "start") {
+									// set gradient start color
+									setGradientStartColor(`rgb(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b})`);
+									backgroundColor = `linear-gradient(rgb(${color.rgb}), ${gradientEndColor})`;
+								} else {
+									// set gradient end color
+									setGradientEndColor(`rgb(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b})`);
+									backgroundColor = `linear-gradient(${gradientStartColor}, rgb(${color.rgb}))`;
+								}
+							}
+							updateScreen(activeScreen.screenId, { background: { type: backgroundType, color: backgroundColor } });
+							setActiveScreen({ ...activeScreen, background: { type: backgroundType, color: backgroundColor } });
 						}}
 					/>
 				</div>
