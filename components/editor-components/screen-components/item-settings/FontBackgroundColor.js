@@ -19,7 +19,7 @@ export default function FontBackgroundColor() {
 	const colorPickerContainerRef = useRef();
 
 	const handleClickOutside = (e) => {
-		if (!colorPickerContainerRef.current.contains(e.target)) {
+		if (colorPickerContainerRef.current && !colorPickerContainerRef.current.contains(e.target)) {
 			setColorPickerVisible(false);
 		}
 	};

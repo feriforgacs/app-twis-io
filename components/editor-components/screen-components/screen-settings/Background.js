@@ -11,7 +11,7 @@ export default function Background() {
 	const colorPickerContainerRef = useRef();
 
 	const handleClickOutside = (e) => {
-		if (!colorPickerContainerRef.current.contains(e.target)) {
+		if (colorPickerContainerRef.current && !colorPickerContainerRef.current.contains(e.target)) {
 			setColorPickerVisible(false);
 		}
 	};
@@ -39,6 +39,7 @@ export default function Background() {
 			{colorPickerVisible && (
 				<div className={styles.colorPickerContainer} ref={colorPickerContainerRef}>
 					<SketchPicker
+						disableAlpha={true}
 						className="colorpicker"
 						color={background}
 						onChange={(color) => {
