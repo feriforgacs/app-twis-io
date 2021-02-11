@@ -5,7 +5,12 @@ const TextTemplates = [
 		settings: {
 			fontFamily: ``,
 			fontSize: 28,
-			color: `#333333`,
+			color: {
+				r: 51,
+				g: 51,
+				b: 51,
+				a: 1,
+			},
 			highlightColor: ``,
 			bold: true,
 			italic: false,
@@ -23,7 +28,12 @@ const TextTemplates = [
 		settings: {
 			fontFamily: ``,
 			fontSize: 20,
-			color: `#333333`,
+			color: {
+				r: 51,
+				g: 51,
+				b: 51,
+				a: 1,
+			},
 			highlightColor: ``,
 			bold: true,
 			italic: false,
@@ -41,7 +51,12 @@ const TextTemplates = [
 		settings: {
 			fontFamily: ``,
 			fontSize: 16,
-			color: `#333333`,
+			color: {
+				r: 51,
+				g: 51,
+				b: 51,
+				a: 1,
+			},
 			highlightColor: ``,
 			bold: false,
 			italic: false,

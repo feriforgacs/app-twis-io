@@ -6,7 +6,14 @@ import styles from "../ScreenSettings.module.scss";
 export default function FontColor() {
 	const { activeScreen, activeScreenItem, setActiveScreenItem, updateScreenItem, updateScreenItemInState } = useContext(GlobalContext);
 
-	const [color, setColor] = useState(activeScreenItem.settings.color || "#333333");
+	const [color, setColor] = useState(
+		activeScreenItem.settings.color || {
+			r: 51,
+			g: 51,
+			b: 51,
+			a: 1,
+		}
+	);
 	const [colorPickerVisible, setColorPickerVisible] = useState(false);
 
 	/**
@@ -39,45 +46,26 @@ export default function FontColor() {
 	return (
 		<div className={`${styles.settingsSection} screen-settings`}>
 			<label className={`${styles.settingsLabel} screen-settings`}>Color</label>
-			<button className={styles.colorPickerButton} onClick={() => setColorPickerVisible(true)} style={{ background: color }}></button>
+			<button className={styles.colorPickerButton} onClick={() => setColorPickerVisible(true)} style={{ background: `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})` }}></button>
 			{colorPickerVisible && (
 				<div className={styles.colorPickerContainer} ref={colorPickerContainerRef}>
 					<SketchPicker
 						className="colorpicker"
 						color={color}
 						onChange={(color) => {
-							setColor(color.hex);
+							setColor(color.rgb);
 							updateScreenItemInState(activeScreen.orderIndex, activeScreenItem.orderIndex, {
 								settings: {
 									...activeScreenItem.settings,
-									color: color.hex,
+									color: color.rgb,
 								},
 							});
 						}}
 						onChangeComplete={(color) => {
-							updateScreenItem(activeScreen.orderIndex, activeScreenItem.orderIndex, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, color: color.hex } });
-							setActiveScreenItem({ ...activeScreenItem, settings: { ...activeScreenItem.settings, color: color.hex } });
+							updateScreenItem(activeScreen.orderIndex, activeScreenItem.orderIndex, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, color: color.rgb } });
+							setActiveScreenItem({ ...activeScreenItem, settings: { ...activeScreenItem.settings, color: color.rgb } });
 						}}
 					/>
-					<div className={styles.customColorContainer}>
-						<label>Custom Color</label>
-						<input
-							type="text"
-							value={color}
-							onChange={(e) => {
-								setColor(e.target.value);
-								updateScreenItemInState(activeScreen.orderIndex, activeScreenItem.orderIndex, {
-									settings: {
-										...activeScreenItem.settings,
-										color: e.target.value,
-									},
-								});
-								/**
-								 * @todo save data to db
-								 */
-							}}
-						/>
-					</div>
 				</div>
 			)}
 		</div>

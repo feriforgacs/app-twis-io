@@ -66,7 +66,7 @@ export default function Text({ data }) {
 	};
 
 	let textContainerStyle = {
-		background: data.settings.highlightColor,
+		background: `rgba(${data.settings.highlightColor.r}, ${data.settings.highlightColor.g}, ${data.settings.highlightColor.b}, ${data.settings.highlightColor.a})`,
 		textAlign: data.settings.align,
 		width: `${data.settings.width}px`,
 		height: `${data.settings.height}px`,
@@ -82,7 +82,7 @@ export default function Text({ data }) {
 	}
 
 	let textStyle = {
-		color: data.settings.color,
+		color: `rgba(${data.settings.color.r}, ${data.settings.color.g}, ${data.settings.color.b}, ${data.settings.color.a})`,
 		fontSize: `${data.settings.fontSize}px`,
 		fontWeight: data.settings.bold ? 700 : 400,
 		fontStyle: data.settings.italic ? `italic` : `normal`,
