@@ -2784,6 +2784,11 @@ graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.2.0
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.5.tgz#bc18864a6c9fc7b303f2e2abdb9155ad178fbe29"
   integrity sha512-kBBSQbz2K0Nyn+31j/w36fUfxkBW9/gfwRWdUY1ULReH3iokVJgddZAFcD1D0xlgTmFxJCbUkUclAlc6/IDJkw==
 
+gradient-parser@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/gradient-parser/-/gradient-parser-1.0.0.tgz#c55ad3e08ca9c143da68199a0e0c9aa10e655ec2"
+  integrity sha512-jgzhZ031DXZ8PpVfl3Ir9YiHJ8NDF+SwO1nmwnvOyi8ACZ6dxztQ/X71Rmx+rUG0HhKCXVIl6sppOz3C2u360w==
+
 has-ansi@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/has-ansi/-/has-ansi-2.0.0.tgz#34f5049ce1ecdf2b0649af3ef24e45ed35416d91"

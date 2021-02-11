@@ -16,6 +16,7 @@
 		"date-fns": "^2.16.1",
 		"escape-string-regexp": "^4.0.0",
 		"exceljs": "^4.2.0",
+		"gradient-parser": "^1.0.0",
 		"mongodb": "^3.6.3",
 		"mongoose": "^5.11.10",
 		"next": "10.0.3",
