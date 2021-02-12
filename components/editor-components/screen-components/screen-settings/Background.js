@@ -83,7 +83,15 @@ export default function Background() {
 						/>
 					)}
 
-					{backgroundType === "gradient" && <GradientPicker onSelect={() => alert("click")} />}
+					{backgroundType === "gradient" && (
+						<GradientPicker
+							onSelect={(gradient) => {
+								setBackground(gradient);
+								updateScreen(activeScreen.screenId, { background: { type: backgroundType, color: gradient } });
+								setActiveScreen({ ...activeScreen, background: { type: backgroundType, color: gradient } });
+							}}
+						/>
+					)}
 				</div>
 			)}
 		</div>
