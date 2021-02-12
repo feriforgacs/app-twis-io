@@ -1,3 +1,32 @@
-const Gradients = ["linear-gradient(0deg, rgba(255,0,0,1) 0%, rgba(164,0,0,1) 100%)", "linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%)", "linear-gradient(to right, #12c2e9, #c471ed, #f64f59)", "linear-gradient(to bottom, #ff0099, #493240)", "linear-gradient(to bottom, #8a2387, #e94057, #f27121)", "linear-gradient(to bottom, #ed213a, #93291e)", "linear-gradient(to bottom, #11998e, #38ef7d)", "linear-gradient(to bottom, #fc5c7d, #6a82fb)", "linear-gradient(to bottom, #03001e, #7303c0, #ec38bc, #fdeff9)", "linear-gradient(to bottom, #7f00ff, #e100ff)", "linear-gradient(to bottom, #c0c0aa, #1cefff)"];
+const Gradients = [
+	"linear-gradient(0deg, rgba(255,0,0,1) 0%, rgba(164,0,0,1) 100%)",
+	"linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%)",
+	"linear-gradient(to right, #12c2e9, #c471ed, #f64f59)",
+	"linear-gradient(to bottom, #ff0099, #493240)",
+	"linear-gradient(to bottom, #8a2387, #e94057, #f27121)",
+	"linear-gradient(to bottom, #ed213a, #93291e)",
+	"linear-gradient(to bottom, #11998e, #38ef7d)",
+	"linear-gradient(to bottom, #fc5c7d, #6a82fb)",
+	"linear-gradient(to bottom, #03001e, #7303c0, #ec38bc, #fdeff9)",
+	"linear-gradient(to bottom, #7f00ff, #e100ff)",
+	"linear-gradient(to bottom, #c0c0aa, #1cefff)",
+	"linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%)",
+	"linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d)",
+	"radial-gradient(circle farthest-corner at 35% 90%, #fec564, transparent 50%), radial-gradient(circle farthest-corner at 0 140%, #fec564, transparent 50%), radial-gradient(ellipse farthest-corner at 0 -25%, #5258cf, transparent 50%), radial-gradient(ellipse farthest-corner at 20% -50%, #5258cf, transparent 50%), radial-gradient(ellipse farthest-corner at 100% 0, #893dc2, transparent 50%), radial-gradient(ellipse farthest-corner at 60% -20%, #893dc2, transparent 50%), radial-gradient(ellipse farthest-corner at 100% 100%, #d9317a, transparent), linear-gradient(#6559ca, #bc318f 30%, #e33f5f 50%, #f77638 70%, #fec66d 100%)",
+	"radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%)",
+	"linear-gradient(45deg, #85FFBD 0%, #FFFB7D 100%)",
+	"linear-gradient(45deg, #FA8BFF 0%, #2BD2FF 52%, #2BFF88 90%)",
+	"linear-gradient(to bottom, #ff9a9e, #fad0c4)",
+	"linear-gradient(to bottom, #ff9a9e, #fecfef)",
+	"linear-gradient(to bottom, #a1c4fd, #c2e9fb)",
+	"linear-gradient(45deg, #fdfcfb 0%, #e2d1c3 100%)",
+	"linear-gradient(45deg, #93a5cf 0%, #e4efe9 100%)",
+	"linear-gradient(45deg, #13547a 0%, #80d0c7 100%)",
+	"linear-gradient(45deg, #93a5cf 0%, #e4efe9 100%)",
+	"linear-gradient(45deg, #868f96 0%, #596164 100%)",
+	"linear-gradient(45deg, #09203f 0%, #537895 100%)",
+	"linear-gradient(45deg, #1e3c72 0%, #2a5298 100%)",
+	"linear-gradient(45deg, #434343 0%, #000000 100%)",
+];
 
 export default Gradients;

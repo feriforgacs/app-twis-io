@@ -1,0 +1,54 @@
+.gradientPickerContainer {
+	box-sizing: border-box;
+	width: 220px;
+}
+
+.gradientSampleButtons {
+	border-bottom: 1px solid rgb(238, 238, 238);
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	margin-bottom: 10px;
+	padding: 10px 10px 0 10px;
+}
+
+.gradientSampleButton {
+	border: none;
+	border-radius: 3px;
+	box-sizing: border-box;
+	box-shadow: rgb(0 0 0 / 15%) 0px 0px 0px 1px inset;
+	cursor: pointer;
+	display: block;
+	height: 45px;
+	margin: 0 0 10px 0;
+	outline: none;
+	width: 45px;
+}
+
+.gradientSampleButtonActive {
+	border: 2px solid #fff;
+	box-shadow: 0 0 0 2px #149c5b;
+	cursor: default;
+}
+
+.customBackgroundContainer {
+	padding: 0 10px 10px;
+}
+
+.customBackgroundLabel {
+	font-size: 0.8rem;
+	font-weight: bold;
+}
+
+.customBackgroundInput {
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	box-sizing: border-box;
+	font-size: 0.8rem;
+	height: 1.7rem;
+	line-height: 1.7rem;
+	margin-top: 5px;
+	outline: none;
+	padding: 0 0.5rem;
+	width: 100%;
+}

@@ -216,8 +216,39 @@ li.fontSizeSelectorListItem {
 	}
 }
 
+.backgroundTypeTabs {
+	border-radius: 3px;
+	box-sizing: border-box;
+	display: flex;
+	margin: 10px 10px 0;
+	overflow: hidden;
+}
+
+.backgroundTypeTab {
+	background: #fff;
+	border: 1px solid #eee;
+	border-radius: 0 3px 3px 0;
+	cursor: pointer;
+	flex: 1;
+	font-size: 0.7rem;
+	font-weight: 400;
+	height: 1.7rem;
+	line-height: 1.6rem;
+	outline: none;
+	text-transform: uppercase;
+
+	&:first-child {
+		border-radius: 3px 0 0 3px;
+		border-right: none;
+	}
+}
+
 .backgroundTypeTabActive {
-	background: red;
+	background: #149c5b;
+	border: 1px solid #149c5b;
+	color: #fff;
+	cursor: default;
+	font-weight: bold;
 }
 
 .gradientColorsButtonActive {

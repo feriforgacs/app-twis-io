@@ -42,27 +42,11 @@ export default function Background() {
 			{colorPickerVisible && (
 				<div className={styles.colorPickerContainer} ref={colorPickerContainerRef}>
 					<div className={styles.backgroundTypeTabs}>
-						<button
-							className={`${styles.backgroundTypeTab} ${backgroundType === "solid" ? styles.backgroundTypeTabActive : ""}`}
-							onClick={
-								() => setBackgroundType("solid")
-								/**
-								 * @todo update current background type and colors in state and db
-								 */
-							}
-						>
+						<button className={`${styles.backgroundTypeTab} ${backgroundType === "solid" ? styles.backgroundTypeTabActive : ""}`} onClick={() => setBackgroundType("solid")}>
 							Solid
 						</button>
 
-						<button
-							className={`${styles.backgroundTypeTab} ${backgroundType === "gradient" ? styles.backgroundTypeTabActive : ""}`}
-							onClick={
-								() => setBackgroundType("gradient")
-								/**
-								 * @todo update current background type and colors in state and db
-								 */
-							}
-						>
+						<button className={`${styles.backgroundTypeTab} ${backgroundType === "gradient" ? styles.backgroundTypeTabActive : ""}`} onClick={() => setBackgroundType("gradient")}>
 							Gradient
 						</button>
 					</div>
@@ -90,6 +74,7 @@ export default function Background() {
 								updateScreen(activeScreen.screenId, { background: { type: backgroundType, color: gradient } });
 								setActiveScreen({ ...activeScreen, background: { type: backgroundType, color: gradient } });
 							}}
+							background={background}
 						/>
 					)}
 				</div>
