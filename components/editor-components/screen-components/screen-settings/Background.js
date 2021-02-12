@@ -21,6 +21,7 @@ export default function Background() {
 
 	useEffect(() => {
 		setBackground(activeScreen.background.color);
+		setBackgroundType(activeScreen.background.type);
 	}, [activeScreen]);
 
 	useEffect(() => {
