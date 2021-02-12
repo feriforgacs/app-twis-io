@@ -2,6 +2,7 @@ import { useContext, useState, useEffect, useRef } from "react";
 import { SketchPicker } from "react-color";
 import { GlobalContext } from "../../../../context/GlobalState";
 import styles from "../ScreenSettings.module.scss";
+import GradientPicker from "./GradientPicker";
 
 export default function Background() {
 	const { activeScreen, setActiveScreen, updateScreen, updateScreenInState } = useContext(GlobalContext);
@@ -66,19 +67,23 @@ export default function Background() {
 						</button>
 					</div>
 
-					<SketchPicker
-						disableAlpha={true}
-						className="colorpicker"
-						color={background}
-						onChange={(color) => {
-							setBackground(color.hex);
-							updateScreenInState(activeScreen.screenId, { background: { type: backgroundType, color: color.hex } });
-						}}
-						onChangeComplete={(color) => {
-							updateScreen(activeScreen.screenId, { background: { type: backgroundType, color: color.hex } });
-							setActiveScreen({ ...activeScreen, background: { type: backgroundType, color: color.hex } });
-						}}
-					/>
+					{backgroundType === "solid" && (
+						<SketchPicker
+							disableAlpha={true}
+							className="colorpicker"
+							color={background}
+							onChange={(color) => {
+								setBackground(color.hex);
+								updateScreenInState(activeScreen.screenId, { background: { type: backgroundType, color: color.hex } });
+							}}
+							onChangeComplete={(color) => {
+								updateScreen(activeScreen.screenId, { background: { type: backgroundType, color: color.hex } });
+								setActiveScreen({ ...activeScreen, background: { type: backgroundType, color: color.hex } });
+							}}
+						/>
+					)}
+
+					{backgroundType === "gradient" && <GradientPicker onSelect={() => alert("click")} />}
 				</div>
 			)}
 		</div>

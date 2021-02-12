@@ -1,0 +1,3 @@
+const Gradients = ["linear-gradient(0deg, rgba(255,0,0,1) 0%, rgba(164,0,0,1) 100%)", "linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%)", "linear-gradient(to right, #12c2e9, #c471ed, #f64f59)", "linear-gradient(to bottom, #ff0099, #493240)", "linear-gradient(to bottom, #8a2387, #e94057, #f27121)", "linear-gradient(to bottom, #ed213a, #93291e)", "linear-gradient(to bottom, #11998e, #38ef7d)", "linear-gradient(to bottom, #fc5c7d, #6a82fb)", "linear-gradient(to bottom, #03001e, #7303c0, #ec38bc, #fdeff9)", "linear-gradient(to bottom, #7f00ff, #e100ff)", "linear-gradient(to bottom, #c0c0aa, #1cefff)"];
+
+export default Gradients;
