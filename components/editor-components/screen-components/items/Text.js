@@ -66,7 +66,7 @@ export default function Text({ data }) {
 	};
 
 	let textContainerStyle = {
-		background: `rgba(${data.settings.highlightColor.r}, ${data.settings.highlightColor.g}, ${data.settings.highlightColor.b}, ${data.settings.highlightColor.a})`,
+		background: data.settings.highlightColor.backgroundColor,
 		textAlign: data.settings.align,
 		width: `${data.settings.width}px`,
 		height: `${data.settings.height}px`,

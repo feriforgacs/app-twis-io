@@ -1,19 +1,24 @@
 import { useContext, useState, useEffect, useRef } from "react";
 import { SketchPicker } from "react-color";
 import { GlobalContext } from "../../../../context/GlobalState";
+import GradientPicker from "../screen-settings/GradientPicker";
 import styles from "../ScreenSettings.module.scss";
 
 export default function FontBackgroundColor() {
 	const { activeScreen, activeScreenItem, setActiveScreenItem, updateScreenItem, updateScreenItemInState } = useContext(GlobalContext);
 
-	const [color, setColor] = useState(activeScreenItem.settings.highlightColor || "");
+	const [background, setBackground] = useState(activeScreenItem.settings.highlightColor.background || ""); // this is to handle the background that was picked
+	const [backgroundColor, setBackgroundColor] = useState(activeScreenItem.settings.highlightColor.backgroundColor || ""); // this is to handle the background color that is displayed
 	const [colorPickerVisible, setColorPickerVisible] = useState(false);
+	const [backgroundType, setBackgroundType] = useState(activeScreenItem.settings.highlightColor.type || "solid");
 
 	/**
 	 * Update settings on active item change
 	 */
 	useEffect(() => {
-		setColor(activeScreenItem.settings.highlightColor);
+		setBackground(activeScreenItem.settings.highlightColor.background);
+		setBackgroundColor(activeScreenItem.settings.highlightColor.backgroundColor);
+		setBackgroundType(activeScreenItem.settings.highlightColor.type || "solid");
 	}, [activeScreenItem]);
 
 	const colorPickerContainerRef = useRef();
@@ -39,33 +44,86 @@ export default function FontBackgroundColor() {
 	return (
 		<div className={`${styles.settingsSection} screen-settings`}>
 			<label className={`${styles.settingsLabel} screen-settings`}>Background Color</label>
-			<button className={styles.colorPickerButton} onClick={() => setColorPickerVisible(true)} style={{ background: `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})` }}></button>
+			<button className={styles.colorPickerButton} onClick={() => setColorPickerVisible(true)} style={{ background: backgroundColor }}></button>
 			{colorPickerVisible && (
 				<div className={styles.colorPickerContainer} ref={colorPickerContainerRef}>
-					<SketchPicker
-						className="colorpicker"
-						color={
-							color || {
-								r: 255,
-								g: 255,
-								b: 255,
-								a: 1,
+					<div className={styles.backgroundTypeTabs}>
+						<button className={`${styles.backgroundTypeTab} ${backgroundType === "solid" ? styles.backgroundTypeTabActive : ""}`} onClick={() => setBackgroundType("solid")}>
+							Solid
+						</button>
+
+						<button className={`${styles.backgroundTypeTab} ${backgroundType === "gradient" ? styles.backgroundTypeTabActive : ""}`} onClick={() => setBackgroundType("gradient")}>
+							Gradient
+						</button>
+					</div>
+					{backgroundType === "solid" && (
+						<SketchPicker
+							className="colorpicker"
+							color={
+								background || {
+									r: 255,
+									g: 255,
+									b: 255,
+									a: 1,
+								}
 							}
-						}
-						onChange={(color) => {
-							setColor(color.rgb);
-							updateScreenItemInState(activeScreen.orderIndex, activeScreenItem.orderIndex, {
-								settings: {
-									...activeScreenItem.settings,
-									highlightColor: color.rgb,
-								},
-							});
-						}}
-						onChangeComplete={(color) => {
-							updateScreenItem(activeScreen.orderIndex, activeScreenItem.orderIndex, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, highlightColor: color.rgb } });
-							setActiveScreenItem({ ...activeScreenItem, settings: { ...activeScreenItem.settings, highlightColor: color.rgb } });
-						}}
-					/>
+							onChange={(color) => {
+								setBackground(color.rgb);
+								updateScreenItemInState(activeScreen.orderIndex, activeScreenItem.orderIndex, {
+									settings: {
+										...activeScreenItem.settings,
+										highlightColor: {
+											type: backgroundType,
+											backgroundColor: `rgba(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b}, ${color.rgb.a})`,
+											background: color.rgb,
+										},
+									},
+								});
+							}}
+							onChangeComplete={(color) => {
+								updateScreenItem(activeScreen.orderIndex, activeScreenItem.orderIndex, activeScreenItem.itemId, {
+									settings: {
+										...activeScreenItem.settings,
+										highlightColor: {
+											type: backgroundType,
+											backgroundColor: `rgba(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b}, ${color.rgb.a})`,
+											background: color.rgb,
+										},
+									},
+								});
+								setActiveScreenItem({ ...activeScreenItem, settings: { ...activeScreenItem.settings, highlightColor: { type: backgroundType, backgroundColor: `rgba(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b}, ${color.rgb.a})`, background: color.rgb } } });
+							}}
+						/>
+					)}
+
+					{backgroundType === "gradient" && (
+						<GradientPicker
+							background={backgroundColor}
+							onSelect={(background) => {
+								updateScreenItem(activeScreen.orderIndex, activeScreenItem.orderIndex, activeScreenItem.itemId, {
+									settings: {
+										...activeScreenItem.settings,
+										highlightColor: {
+											...activeScreenItem.settings.highlightColor,
+											type: backgroundType,
+											backgroundColor: background,
+										},
+									},
+								});
+								setActiveScreenItem({
+									...activeScreenItem,
+									settings: {
+										...activeScreenItem.settings,
+										highlightColor: {
+											...activeScreenItem.settings.highlightColor,
+											type: backgroundType,
+											backgroundColor: background,
+										},
+									},
+								});
+							}}
+						/>
+					)}
 				</div>
 			)}
 		</div>
