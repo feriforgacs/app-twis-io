@@ -1,4 +1,4 @@
-import { useContext, useCallback, useEffect } from "react";
+import { useContext } from "react";
 import { GlobalContext } from "../../../../context/GlobalState";
 import ReactTooltip from "react-tooltip";
 import Image from "next/image";
@@ -6,6 +6,9 @@ import styles from "../ItemAdditionalActions.module.scss";
 
 export default function Position() {
 	const { activeScreenItem, activeScreen, updateItemOrder } = useContext(GlobalContext);
+	/**
+	 * @todo - set active screen item on activescreenitem change
+	 */
 	return (
 		<>
 			<button data-for="itemAction" data-tip="Bring to front" className={`${styles.button} ${styles.buttonPosition}`} onClick={() => alert("to front")}>
