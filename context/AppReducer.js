@@ -144,9 +144,17 @@ export default function AppReducer(state, action) {
 				screens[index].orderIndex = index;
 			}
 
+			if (state.activeScreen.screenId === action.payload.screenId) {
+				// unset active screen
+				return {
+					...state,
+					activeScreen: "",
+					screens,
+				};
+			}
+
 			return {
 				...state,
-				activeScreen: "",
 				screens,
 			};
 

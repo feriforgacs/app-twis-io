@@ -275,12 +275,14 @@ export const GlobalProvider = ({ children }) => {
 
 			// scroll to newly added screen
 			setTimeout(() => {
-				document.getElementById(`screen-${screenType}-${screenId}`).scrollIntoView({ behavior: "smooth" });
-
-				setActiveScreen({
-					...newScreen,
-					_id: result.data.screen._id,
-				});
+				const addedScreen = document.getElementById(`screen-${screenType}-${screenId}`);
+				if (addedScreen) {
+					addedScreen.scrollIntoView({ behavior: "smooth" });
+					setActiveScreen({
+						...newScreen,
+						_id: result.data.screen._id,
+					});
+				}
 			}, 100);
 
 			// update screen in state with database id
@@ -452,8 +454,11 @@ export const GlobalProvider = ({ children }) => {
 
 			// scroll to duplicated screen
 			setTimeout(() => {
-				document.getElementById(`screen-${newScreenData.type}-${newScreenData.screenId}`).scrollIntoView({ behavior: "smooth" });
-				setActiveScreen(newScreenData);
+				const duplicatedScreen = document.getElementById(`screen-${newScreenData.type}-${newScreenData.screenId}`);
+				if (duplicatedScreen) {
+					duplicatedScreen.scrollIntoView({ behavior: "smooth" });
+					setActiveScreen(newScreenData);
+				}
 			}, 100);
 
 			// update screen in state with database id
