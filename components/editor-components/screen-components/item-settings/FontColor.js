@@ -54,7 +54,7 @@ export default function FontColor() {
 						color={color}
 						onChange={(color) => {
 							setColor(color.rgb);
-							updateScreenItemInState(activeScreen.orderIndex, activeScreenItem.orderIndex, {
+							updateScreenItemInState(activeScreen.screenId, activeScreenItem.itemId, {
 								settings: {
 									...activeScreenItem.settings,
 									color: color.rgb,
@@ -62,7 +62,7 @@ export default function FontColor() {
 							});
 						}}
 						onChangeComplete={(color) => {
-							updateScreenItem(activeScreen.orderIndex, activeScreenItem.orderIndex, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, color: color.rgb } });
+							updateScreenItem(activeScreen.screenId, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, color: color.rgb } });
 							setActiveScreenItem({ ...activeScreenItem, settings: { ...activeScreenItem.settings, color: color.rgb } });
 						}}
 					/>

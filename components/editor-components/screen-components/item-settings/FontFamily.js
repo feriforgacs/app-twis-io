@@ -56,7 +56,7 @@ export default function FontFamily() {
 								key={FontFamilies[font].key}
 								onClick={() => {
 									setFontFamily(font);
-									updateScreenItem(activeScreen.orderIndex, activeScreenItem.orderIndex, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, fontFamily: font } });
+									updateScreenItem(activeScreen.screenId, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, fontFamily: font } });
 									setActiveScreenItem({ ...activeScreenItem, settings: { ...activeScreenItem.settings, fontFamily: font } });
 									updateCampaignFonts(font);
 									setFontSelectorVisible(false);

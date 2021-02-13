@@ -54,7 +54,7 @@ export default function FontSize() {
 					debounceTimeout="300"
 					onChange={(e) => {
 						const fontSize = parseInt(e.target.value);
-						updateScreenItem(activeScreen.orderIndex, activeScreenItem.orderIndex, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, fontSize: fontSize } });
+						updateScreenItem(activeScreen.screenId, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, fontSize: fontSize } });
 						setActiveScreenItem({ ...activeScreenItem, settings: { ...activeScreenItem.settings, fontSize: fontSize } });
 					}}
 					onFocus={() => setFontSizeSelectorVisible(true)}
@@ -67,7 +67,7 @@ export default function FontSize() {
 								className={`${styles.fontSizeSelectorListItem} ${fontSize === size ? styles.fontSizeSelectorListItemSelected : ""}`}
 								onClick={() => {
 									setFontSize(size);
-									updateScreenItem(activeScreen.orderIndex, activeScreenItem.orderIndex, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, fontSize: size } });
+									updateScreenItem(activeScreen.screenId, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, fontSize: size } });
 									setActiveScreenItem({ ...activeScreenItem, settings: { ...activeScreenItem.settings, fontSize: size } });
 									setFontSizeSelectorVisible(false);
 								}}

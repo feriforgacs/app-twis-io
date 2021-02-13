@@ -56,7 +56,7 @@ export default function Screen({ screen, screenIndex }) {
 
 			// add new item to state and save to db
 			// the screen._id parameter is necessary to create the screen and item connection in the db
-			addScreenItem(screenIndex, newScreenItem, screen._id);
+			addScreenItem(newScreenItem, screen._id);
 
 			/**
 			 * Set screen to active screen

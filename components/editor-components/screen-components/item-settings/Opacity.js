@@ -22,7 +22,7 @@ export default function Opacity() {
 				onAfterChange={(value) => {
 					const opacity = value / 100;
 					// update screen item data in state and save to the db
-					updateScreenItem(activeScreen.orderIndex, activeScreenItem.orderIndex, activeScreenItem.itemId, {
+					updateScreenItem(activeScreen.screenId, activeScreenItem.itemId, {
 						settings: {
 							...activeScreenItem.settings,
 							opacity,
@@ -41,7 +41,7 @@ export default function Opacity() {
 				onChange={(value) => {
 					const opacity = value / 100;
 					// update screen item data in state for live preview
-					updateScreenItemInState(activeScreen.orderIndex, activeScreenItem.orderIndex, {
+					updateScreenItemInState(activeScreen.screenId, activeScreenItem.itemId, {
 						settings: {
 							...activeScreenItem.settings,
 							opacity,

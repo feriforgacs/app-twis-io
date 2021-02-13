@@ -206,7 +206,16 @@ export default function AppReducer(state, action) {
 		 */
 		case "ADD_SCREEN_ITEM":
 			screens = [...state.screens];
-			screens[action.payload.screenIndex].screenItems.push(action.payload.newScreenItem);
+			// find screen index in screens array by screenId
+			index = screens.findIndex((obj) => obj.screenId === action.payload.newScreenItem.screenId);
+
+			if (!index) {
+				return {
+					...state,
+				};
+			}
+
+			screens[index].screenItems.push(action.payload.newScreenItem);
 
 			return {
 				...state,
@@ -218,10 +227,10 @@ export default function AppReducer(state, action) {
 		 */
 		case "UPDATE_SCREEN_ITEM":
 			screens = [...state.screens];
-			// use screen index passed along in payload, or find screen index based on screen id
-			screenIndex = action.payload.screenIndex !== undefined ? action.payload.screenIndex : screens.findIndex((obj) => obj.screenId === action.payload.screenId);
-			// use item index passed along in payload, or find item index based on item id
-			itemIndex = action.payload.screenItemIndex !== undefined ? action.payload.screenItemIndex : screens[screenIndex].screenItems.findIndex((obj) => obj.itemId === action.payload.itemId);
+			// find screen index based on screen id
+			screenIndex = screens.findIndex((obj) => obj.screenId === action.payload.screenId);
+			// find item index based on item id
+			itemIndex = screens[screenIndex].screenItems.findIndex((obj) => obj.itemId === action.payload.itemId);
 
 			// update screen item data
 			screens[screenIndex].screenItems[itemIndex] = { ...screens[screenIndex].screenItems[itemIndex], ...action.payload.data };
@@ -271,17 +280,28 @@ export default function AppReducer(state, action) {
 		 */
 		case "REMOVE_SCREEN_ITEM":
 			screens = [...state.screens];
-			// use screen index passed along in payload, or find screen index based on screen id
-			index = action.payload.screenIndex !== undefined ? action.payload.screenIndex : screens.findIndex((obj) => obj.screenId === action.payload.screenId);
+			// find screen index based on screen id
+			screenIndex = screens.findIndex((obj) => obj.screenId === action.payload.screenId);
+			itemIndex = screens[screenIndex].screenItems.findIndex((obj) => obj.itemId === action.payload.itemId);
+			currentItem = screens[screenIndex].screenItems[itemIndex];
 
 			// remove screen item based on screen index and screen item id
 			// the screen item id is not the db id, but the generated uuid
-			screenItemsTemp = screens[index].screenItems.filter((screenItem) => screenItem.itemId !== action.payload.itemId);
+			screenItemsTemp = screens[screenIndex].screenItems.filter((screenItem) => screenItem.itemId !== action.payload.itemId);
 
 			// change items order index
-			screenItems = screenItemsTemp.map((screenItem, index) => ({ ...screenItem, orderIndex: index }));
+			screenItems = screenItemsTemp.map((screenItem) => {
+				if (screenItem.orderIndex > currentItem.orderIndex) {
+					return {
+						...screenItem,
+						orderIndex: screenItem.orderIndex - 1,
+					};
+				} else {
+					return { ...screenItem };
+				}
+			});
 
-			screens[index].screenItems = screenItems;
+			screens[screenIndex].screenItems = screenItems;
 
 			return {
 				...state,

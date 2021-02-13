@@ -94,7 +94,7 @@ export default function Body() {
 							return;
 						}
 						// update screen item translate settings in local state and also save it to the database
-						updateScreenItem(activeScreen.orderIndex, activeScreenItem.orderIndex, activeScreenItem.itemId, {
+						updateScreenItem(activeScreen.screenId, activeScreenItem.itemId, {
 							settings: {
 								...activeScreenItem.settings,
 								translateX: activeScreenItemTranslateX,
@@ -140,7 +140,7 @@ export default function Body() {
 							return;
 						}
 						// update screen item translate settings in local state and also save it to the database
-						updateScreenItem(activeScreen.orderIndex, activeScreenItem.orderIndex, activeScreenItem.itemId, {
+						updateScreenItem(activeScreen.screenId, activeScreenItem.itemId, {
 							settings: {
 								...activeScreenItem.settings,
 								translateX: activeScreenItemTranslateX,
@@ -178,7 +178,7 @@ export default function Body() {
 							return;
 						}
 						// update screen item translate settings in local state and also save it to the database
-						updateScreenItem(activeScreen.orderIndex, activeScreenItem.orderIndex, activeScreenItem.itemId, {
+						updateScreenItem(activeScreen.screenId, activeScreenItem.itemId, {
 							settings: {
 								...activeScreenItem.settings,
 								rotate: activeScreenItemRotate,

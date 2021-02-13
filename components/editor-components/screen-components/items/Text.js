@@ -28,7 +28,7 @@ export default function Text({ data }) {
 
 		if (text.current !== data.content) {
 			// update screen item in state and db
-			updateScreenItem(activeScreen.orderIndex, activeScreenItem.orderIndex, activeScreenItem.itemId, { content: text.current });
+			updateScreenItem(activeScreen.screenId, activeScreenItem.itemId, { content: text.current });
 		}
 
 		// set active screen item to current item

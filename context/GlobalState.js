@@ -60,7 +60,7 @@ export const GlobalProvider = ({ children }) => {
 				dispatch({
 					type: "SET_CRITICAL_ERROR",
 					payload: {
-						errorMessage: "Can't get campaign data from the database",
+						errorMessage: "Can't get campaign data from the database. Please, refresh the page to try again.",
 					},
 				});
 				return;
@@ -83,7 +83,7 @@ export const GlobalProvider = ({ children }) => {
 			dispatch({
 				type: "SET_CRITICAL_ERROR",
 				payload: {
-					errorMessage: "Can't get campaign data from the database",
+					errorMessage: "Can't get campaign data from the database. Please, refresh the page to try again.",
 				},
 			});
 			return;
@@ -593,15 +593,14 @@ export const GlobalProvider = ({ children }) => {
 
 	/**
 	 * Add new item to a screen
-	 * @param {int} screenIndex the index of the screen the item was dropped
 	 * @param {obj} newScreenItem new screen item object
+	 * @param {string} screenDbId db id of the screen where the item should be added
 	 */
-	const addScreenItem = async (screenIndex, newScreenItem, screenDbId) => {
+	const addScreenItem = async (newScreenItem, screenDbId) => {
 		// add screen item to global state
 		dispatch({
 			type: "ADD_SCREEN_ITEM",
 			payload: {
-				screenIndex,
 				newScreenItem,
 			},
 		});
@@ -706,18 +705,17 @@ export const GlobalProvider = ({ children }) => {
 
 	/**
 	 * Update screen item data in state and in db
-	 * @param {int} screenIndex The index of the screen where the screen item is
-	 * @param {int} screenItemIndex The index of the screen item to update
-	 * @param {string} screenItemId The generated uuid of the screen item
-	 * @param {obj} screenItemData The data to update the screen item to
+	 * @param {string} screenId The generated uuid of the screen
+	 * @param {string} itemId The generated uuid of the screen item
+	 * @param {obj} screenItemUpdatedData The updated data of the screen item
 	 */
-	const updateScreenItem = async (screenIndex, screenItemIndex, screenItemId, screenItemUpdatedData) => {
+	const updateScreenItem = async (screenId, itemId, screenItemUpdatedData) => {
 		// update screen item data in local state
 		dispatch({
 			type: "UPDATE_SCREEN_ITEM",
 			payload: {
-				screenIndex,
-				screenItemIndex,
+				screenId,
+				itemId,
 				data: {
 					...screenItemUpdatedData,
 				},
@@ -731,7 +729,7 @@ export const GlobalProvider = ({ children }) => {
 				`${process.env.APP_URL}/api/editor/screen-item/update`,
 				{
 					campaignId: state.campaign._id,
-					screenItemId: screenItemId, // this is not the DB id, it is the generated uuid
+					itemId: itemId, // this is not the DB id, it is the generated uuid
 					screenItemUpdatedData,
 				},
 				{
@@ -774,17 +772,17 @@ export const GlobalProvider = ({ children }) => {
 
 	/**
 	 * Update screen item data only in state, without saving to the db
-	 * @param {int} screenIndex The index of the screen where the screen item is
-	 * @param {int} screenItemIndex The index of the screen item to update
+	 * @param {string} screenId The uuid of the screen where the item is
+	 * @param {string} itemId The uuid of the updated item
 	 * @param {obj} screenItemData The data to update the screen item to
 	 */
-	const updateScreenItemInState = async (screenIndex, screenItemIndex, screenItemUpdatedData) => {
+	const updateScreenItemInState = async (screenId, itemId, screenItemUpdatedData) => {
 		// update screen item data in local state
 		dispatch({
 			type: "UPDATE_SCREEN_ITEM",
 			payload: {
-				screenIndex,
-				screenItemIndex,
+				screenId,
+				itemId,
 				data: {
 					...screenItemUpdatedData,
 				},
@@ -832,7 +830,7 @@ export const GlobalProvider = ({ children }) => {
 				{
 					data: {
 						campaignId: state.campaign._id,
-						screenItemId: itemId, // this is not the DB id, it is the generated uuid
+						itemId, // this is not the DB id, it is the generated uuid
 					},
 					headers: {
 						"Content-Type": "application/json",

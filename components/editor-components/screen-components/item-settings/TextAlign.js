@@ -25,7 +25,7 @@ export default function TextAlign() {
 					onClick={() => {
 						if (align !== "left") {
 							setAlign("left");
-							updateScreenItem(activeScreen.orderIndex, activeScreenItem.orderIndex, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, align: "left" } });
+							updateScreenItem(activeScreen.screenId, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, align: "left" } });
 							setActiveScreenItem({ ...activeScreenItem, settings: { ...activeScreenItem.settings, align: "left" } });
 						}
 					}}
@@ -42,7 +42,7 @@ export default function TextAlign() {
 					onClick={() => {
 						if (align !== "center") {
 							setAlign("center");
-							updateScreenItem(activeScreen.orderIndex, activeScreenItem.orderIndex, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, align: "center" } });
+							updateScreenItem(activeScreen.screenId, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, align: "center" } });
 							setActiveScreenItem({ ...activeScreenItem, settings: { ...activeScreenItem.settings, align: "center" } });
 						}
 					}}
@@ -59,7 +59,7 @@ export default function TextAlign() {
 					onClick={() => {
 						if (align !== "right") {
 							setAlign("right");
-							updateScreenItem(activeScreen.orderIndex, activeScreenItem.orderIndex, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, align: "right" } });
+							updateScreenItem(activeScreen.screenId, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, align: "right" } });
 							setActiveScreenItem({ ...activeScreenItem, settings: { ...activeScreenItem.settings, align: "right" } });
 						}
 					}}
@@ -76,7 +76,7 @@ export default function TextAlign() {
 					onClick={() => {
 						if (align !== "justify") {
 							setAlign("justify");
-							updateScreenItem(activeScreen.orderIndex, activeScreenItem.orderIndex, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, align: "justify" } });
+							updateScreenItem(activeScreen.screenId, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, align: "justify" } });
 							setActiveScreenItem({ ...activeScreenItem, settings: { ...activeScreenItem.settings, align: "justify" } });
 						}
 					}}

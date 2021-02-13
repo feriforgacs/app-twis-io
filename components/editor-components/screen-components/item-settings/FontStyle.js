@@ -30,7 +30,7 @@ export default function FontStyle() {
 					className={`${styles.fontStyleButton} ${bold ? styles.fontStyleButtonActive : ""}`}
 					onClick={() => {
 						setBold(!bold);
-						updateScreenItem(activeScreen.orderIndex, activeScreenItem.orderIndex, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, bold: !bold } });
+						updateScreenItem(activeScreen.screenId, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, bold: !bold } });
 						setActiveScreenItem({ ...activeScreenItem, settings: { ...activeScreenItem.settings, bold: !bold } });
 					}}
 				>
@@ -46,7 +46,7 @@ export default function FontStyle() {
 					className={`${styles.fontStyleButton} ${italic ? styles.fontStyleButtonActive : ""}`}
 					onClick={() => {
 						setItalic(!italic);
-						updateScreenItem(activeScreen.orderIndex, activeScreenItem.orderIndex, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, italic: !italic } });
+						updateScreenItem(activeScreen.screenId, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, italic: !italic } });
 						setActiveScreenItem({ ...activeScreenItem, settings: { ...activeScreenItem.settings, italic: !italic } });
 					}}
 				>
@@ -61,7 +61,7 @@ export default function FontStyle() {
 					className={`${styles.fontStyleButton} ${underline ? styles.fontStyleButtonActive : ""}`}
 					onClick={() => {
 						setUnderline(!underline);
-						updateScreenItem(activeScreen.orderIndex, activeScreenItem.orderIndex, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, underline: !underline } });
+						updateScreenItem(activeScreen.screenId, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, underline: !underline } });
 						setActiveScreenItem({ ...activeScreenItem, settings: { ...activeScreenItem.settings, underline: !underline } });
 					}}
 				>
@@ -77,7 +77,7 @@ export default function FontStyle() {
 					className={`${styles.fontStyleButton} ${uppercase ? styles.fontStyleButtonActive : ""}`}
 					onClick={() => {
 						setUppercase(!uppercase);
-						updateScreenItem(activeScreen.orderIndex, activeScreenItem.orderIndex, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, uppercase: !uppercase } });
+						updateScreenItem(activeScreen.screenId, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, uppercase: !uppercase } });
 						setActiveScreenItem({ ...activeScreenItem, settings: { ...activeScreenItem.settings, uppercase: !uppercase } });
 					}}
 				>

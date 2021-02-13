@@ -69,7 +69,7 @@ export default function FontBackgroundColor() {
 							}
 							onChange={(color) => {
 								setBackground(color.rgb);
-								updateScreenItemInState(activeScreen.orderIndex, activeScreenItem.orderIndex, {
+								updateScreenItemInState(activeScreen.screenId, activeScreenItem.itemId, {
 									settings: {
 										...activeScreenItem.settings,
 										highlightColor: {
@@ -81,7 +81,7 @@ export default function FontBackgroundColor() {
 								});
 							}}
 							onChangeComplete={(color) => {
-								updateScreenItem(activeScreen.orderIndex, activeScreenItem.orderIndex, activeScreenItem.itemId, {
+								updateScreenItem(activeScreen.screenId, activeScreenItem.itemId, {
 									settings: {
 										...activeScreenItem.settings,
 										highlightColor: {
@@ -100,7 +100,7 @@ export default function FontBackgroundColor() {
 						<GradientPicker
 							background={backgroundColor}
 							onSelect={(background) => {
-								updateScreenItem(activeScreen.orderIndex, activeScreenItem.orderIndex, activeScreenItem.itemId, {
+								updateScreenItem(activeScreen.screenId, activeScreenItem.itemId, {
 									settings: {
 										...activeScreenItem.settings,
 										highlightColor: {
