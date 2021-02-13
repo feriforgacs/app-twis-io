@@ -7,6 +7,10 @@ export default function AppReducer(state, action) {
 	let itemIndex;
 	let screenItems;
 	let screenItemsTemp;
+	let screenItemOrderIndex;
+	let currentItem;
+	let previousItem;
+	let nextItem;
 
 	switch (action.type) {
 		/**
@@ -208,6 +212,40 @@ export default function AppReducer(state, action) {
 
 			// update screen item data
 			screens[screenIndex].screenItems[itemIndex] = { ...screens[screenIndex].screenItems[itemIndex], ...action.payload.data };
+
+			return {
+				...state,
+				screens,
+			};
+
+		/**
+		 * Update item order on screen
+		 */
+		case "UPDATE_SCREEN_ITEM_ORDER":
+			screenIndex = state.screens.findIndex((obj) => obj.screenId === action.payload.screenId);
+			itemIndex = state.screens[screenIndex].screenItems.findIndex((obj) => obj.itemId === action.payload.itemId);
+
+			screenItems = [...state.screens[screenIndex].screenItems];
+			screenItemOrderIndex = screenItems[itemIndex].orderIndex;
+
+			if (action.payload.direction === "forward" && screenItems.length > screenItemOrderIndex + 1) {
+				// move the item forward, increase the order index by one
+				screenItems[itemIndex].orderIndex = screenItems[itemIndex].orderIndex + 1;
+				// decrease the order index of the previous item in the array
+				screenItems[itemIndex + 1].orderIndex = screenItems[itemIndex + 1].orderIndex - 1;
+
+				// switch items in array to keep index in sync with order index
+				currentItem = { ...screenItems[itemIndex] };
+				nextItem = { ...screenItems[itemIndex + 1] };
+				screenItems[itemIndex] = nextItem;
+				screenItems[itemIndex + 1] = currentItem;
+			}
+
+			screens = [...state.screens];
+			// update changes in state
+			screens[screenIndex].screenItems = screenItems;
+
+			// update order index in active screen item
 
 			return {
 				...state,

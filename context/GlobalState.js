@@ -788,6 +788,23 @@ export const GlobalProvider = ({ children }) => {
 	};
 
 	/**
+	 * Update the order of an item on a screen
+	 * @param {string} screenId The uuid of the screen where the item is
+	 * @param {string} itemId The uuid of the item
+	 * @param {string} direction The direction of the order change (forward, backward, front, back)
+	 */
+	const updateItemOrder = async (screenId, itemId, direction) => {
+		dispatch({
+			type: "UPDATE_SCREEN_ITEM_ORDER",
+			payload: {
+				screenId,
+				itemId,
+				direction,
+			},
+		});
+	};
+
+	/**
 	 * Remove screen item
 	 * @param {string} screenId The generated uuid  of the screen where the screen item is
 	 * @param {string} itemId The generated uuid of the screen item
@@ -885,6 +902,7 @@ export const GlobalProvider = ({ children }) => {
 				unsetActiveScreenItem,
 				updateScreenItem,
 				updateScreenItemInState,
+				updateItemOrder,
 				removeScreenItem,
 			}}
 		>

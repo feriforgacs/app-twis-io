@@ -5,14 +5,14 @@ import Image from "next/image";
 import styles from "../ItemAdditionalActions.module.scss";
 
 export default function Position() {
-	const { activeScreenItem, activeScreen } = useContext(GlobalContext);
+	const { activeScreenItem, activeScreen, updateItemOrder } = useContext(GlobalContext);
 	return (
 		<>
 			<button data-for="itemAction" data-tip="Bring to front" className={`${styles.button} ${styles.buttonPosition}`} onClick={() => alert("to front")}>
 				<Image src="/images/editor/icons/icon-to-front.svg" width={18} height={18} alt="To front icon" title="To front" />
 			</button>
 
-			<button data-for="itemAction" data-tip="Bring forward" className={`${styles.button} ${styles.buttonPosition}`} onClick={() => alert("forward")}>
+			<button data-for="itemAction" data-tip="Bring forward" className={`${styles.button} ${styles.buttonPosition}`} onClick={() => updateItemOrder(activeScreen.screenId, activeScreenItem.itemId, "forward")}>
 				<Image src="/images/editor/icons/icon-forward.svg" width={18} height={18} alt="Forward icon" title="Forward" />
 			</button>
 
