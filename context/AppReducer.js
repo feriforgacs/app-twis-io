@@ -128,13 +128,14 @@ export default function AppReducer(state, action) {
 		 */
 		case "REMOVE_SCREEN":
 			screens = [...state.screens];
-			index = 0;
-			if (action.payload.screenId) {
-				// find screen index in screens array by screenId
-				index = screens.findIndex((obj) => obj.screenId === action.payload.screenId);
-			} else {
-				// use screen index that was sent with the payload
-				index = action.payload.index;
+
+			// find screen index in screens array by screenId
+			index = screens.findIndex((obj) => obj.screenId === action.payload.screenId);
+
+			if (!index) {
+				return {
+					...state,
+				};
 			}
 
 			// remove screen from state
@@ -244,8 +245,9 @@ export default function AppReducer(state, action) {
 			screens = [...state.screens];
 			// update changes in state
 			screens[screenIndex].screenItems = screenItems;
-
-			// update order index in active screen item
+			/**
+			 * @todo update active screen item
+			 */
 
 			return {
 				...state,

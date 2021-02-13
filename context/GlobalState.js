@@ -157,7 +157,7 @@ export const GlobalProvider = ({ children }) => {
 	 * @param {string} key The key of the field to update
 	 * @param {string} value The value of the field to update to
 	 */
-	const updateCampaignDataState = (key, value) => {
+	const updateCampaignDataInState = (key, value) => {
 		dispatch({
 			type: "UPDATE_CAMPAIGN_DATA",
 			payload: {
@@ -213,7 +213,7 @@ export const GlobalProvider = ({ children }) => {
 	/**
 	 * Add new screen
 	 * @param {string} screenType The type of the screen we'd like to add
-	 * @param {string} screenId New screen's unique id
+	 * @param {string} screenId New screen's uuid
 	 */
 	const addScreen = async (screenType, screenId) => {
 		const newScreen = {
@@ -883,7 +883,7 @@ export const GlobalProvider = ({ children }) => {
 				setError,
 				loadCampaignData,
 				updateCampaignData,
-				updateCampaignDataState,
+				updateCampaignDataInState,
 				updateCampaignFonts,
 				setMoveableDisabled,
 
