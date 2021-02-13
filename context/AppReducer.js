@@ -1,80 +1,60 @@
-export default function AppReducer(state, action) {
-	let screens;
-	let index;
-	let data;
-	let campaignFonts;
-	let screenIndex;
-	let itemIndex;
-	let screenItems;
-	let screenItemsTemp;
-	let screenItemOrderIndex;
-	let currentScreenItem;
+import SetCriticalError from "./global-reducers/SetCriticalError";
+import SetError from "./global-reducers/SetError";
+import SetMoveableDisabled from "./global-reducers/SetMoveableDisabled";
 
+import SetCampaignInitialState from "./campaign-reducers/SetCampaignInitialState";
+import UpdateCampaignData from "./campaign-reducers/UpdateCampaignData";
+import UpdateCampaignFonts from "./campaign-reducers/UpdateCampaignFonts";
+
+import AddScreen from "./screen-reducers/AddScreen";
+import UpdateScreen from "./screen-reducers/UpdateScreen";
+import RemoveScreen from "./screen-reducers/RemoveScreen";
+import DuplicateScreen from "./screen-reducers/DuplicateScreen";
+import SetActiveScreen from "./screen-reducers/SetActiveScreen";
+
+import AddScreenItem from "./item-reducers/AddScreenItem";
+import UpdateScreenItem from "./item-reducers/UpdateScreenItem";
+import UpdateScreenItemOrder from "./item-reducers/UpdateScreenItemOrder";
+import RemoveScreenItem from "./item-reducers/RemoveScreenItem";
+import SetActiveScreenItem from "./item-reducers/SetActiveScreenItem";
+
+export default function AppReducer(state, action) {
 	switch (action.type) {
 		/**
 		 * Set critical error state
 		 */
 		case "SET_CRITICAL_ERROR":
-			return {
-				...state,
-				criticalError: true,
-				criticalErrorMessage: action.payload.errorMessage,
-			};
+			return SetCriticalError(state, action);
 
 		/**
 		 * Set error state
 		 */
 		case "SET_ERROR":
-			return {
-				...state,
-				error: action.payload.error,
-				errorMessage: action.payload.errorMessage,
-			};
+			return SetError(state, action);
+
+		/**
+		 * Enable or disable moveable
+		 */
+		case "SET_MOVEABLE_DISABLED":
+			return SetMoveableDisabled(state, action);
 
 		/**
 		 * Set campaign initial state (when editor loads)
 		 */
 		case "SET_CAMPAIGN_INITIAL_STATE":
-			return {
-				...state,
-				loading: false,
-				campaign: action.payload.campaign,
-				screens: action.payload.screens,
-			};
+			return SetCampaignInitialState(state, action);
 
 		/**
 		 * Update campaign data
 		 */
 		case "UPDATE_CAMPAIGN_DATA":
-			return {
-				...state,
-				campaign: {
-					...state.campaign,
-					[action.payload.key]: action.payload.value,
-				},
-			};
+			return UpdateCampaignData(state, action);
 
 		/**
 		 * Update campaign fonts
 		 */
 		case "UPDATE_CAMPAIGN_FONTS":
-			campaignFonts = [...state.campaign.fonts];
-			campaignFonts.push(action.payload);
-			return {
-				...state,
-				campaign: {
-					...state.campaign,
-					fonts: campaignFonts,
-				},
-			};
-		/**
-		 * Enable or disable moveable
-		 */
-		case "SET_MOVEABLE_DISABLED":
-			return {
-				...state,
-				moveableDisabled: action.payload,
-			};
+			return UpdateCampaignFonts(state, action);
 
 		/**
 		 * ==============================
@@ -85,113 +65,31 @@ export default function AppReducer(state, action) {
 		 * Add new screen
 		 */
 		case "ADD_SCREEN":
-			screens = [...state.screens];
-			index = screens.length - 2; // insert new screen before end screens
-			screens.splice(index, 0, action.payload);
-
-			// update order index of last two screens
-			screens[screens.length - 2].orderIndex = screens.length - 2; // success end screen
-			screens[screens.length - 1].orderIndex = screens.length - 1; // failure end screen
-
-			return {
-				...state,
-				screens,
-			};
+			return AddScreen(state, action);
 
 		/**
 		 * Update screen item
 		 */
 		case "UPDATE_SCREEN":
-			screens = [...state.screens];
-			index = screens.findIndex((obj) => obj.screenId === action.payload.screenId);
-
-			if (!index === -1) {
-				return {
-					...state,
-				};
-			}
-
-			data = action.payload.data;
-
-			screens[index] = { ...screens[index], ...data };
-			return {
-				...state,
-				screens,
-			};
+			return UpdateScreen(state, action);
 
 		/**
 		 * Remove screen
 		 */
 		case "REMOVE_SCREEN":
-			screens = [...state.screens];
-
-			// find screen index in screens array by screenId
-			index = screens.findIndex((obj) => obj.screenId === action.payload.screenId);
-
-			if (!index === -1) {
-				return {
-					...state,
-				};
-			}
-
-			// remove screen from state
-			screens.splice(index, 1);
-
-			// update order index of screens that are following the removed screen
-			for (index; index < screens.length; index++) {
-				screens[index].orderIndex = index;
-			}
-
-			if (state.activeScreen.screenId === action.payload.screenId) {
-				// unset active screen
-				return {
-					...state,
-					activeScreen: "",
-					screens,
-				};
-			}
-
-			return {
-				...state,
-				screens,
-			};
+			return RemoveScreen(state, action);
 
 		/**
 		 * Duplicate screen
 		 */
 		case "DUPLICATE_SCREEN":
-			screens = [...state.screens];
-
-			// find screen index based in screen uuid
-			index = screens.findIndex((obj) => obj.screenId === action.payload.screenId);
-
-			if (!index === -1) {
-				return {
-					...state,
-				};
-			}
-
-			// add new screen item to state after index
-			screens.splice(index + 1, 0, action.payload.newScreenData);
-
-			// update order index of screens that are following the duplicated screen
-			for (index + 2; index < screens.length; index++) {
-				screens[index].orderIndex = index;
-			}
-
-			return {
-				...state,
-				screens,
-			};
+			return DuplicateScreen(state, action);
 
 		/**
 		 * Set active screen
 		 */
 		case "SET_ACTIVE_SCREEN":
-			return {
-				...state,
-				activeScreen: action.payload,
-			};
+			return SetActiveScreen(state, action);
 
 		/**
 		 * ==============================
@@ -203,114 +101,32 @@ export default function AppReducer(state, action) {
 		 * Add new item to screen
 		 */
 		case "ADD_SCREEN_ITEM":
-			screens = [...state.screens];
-			// find screen index in screens array by screenId
-			index = screens.findIndex((obj) => obj.screenId === action.payload.newScreenItem.screenId);
-
-			if (!index === -1) {
-				return {
-					...state,
-				};
-			}
-
-			screens[index].screenItems.push(action.payload.newScreenItem);
-
-			return {
-				...state,
-				screens,
-			};
+			return AddScreenItem(state, action);
 
 		/**
 		 * Update screen item data
 		 */
 		case "UPDATE_SCREEN_ITEM":
-			screens = [...state.screens];
-			// find screen index based on screen id
-			screenIndex = screens.findIndex((obj) => obj.screenId === action.payload.screenId);
-			// find item index based on item id
-			itemIndex = screens[screenIndex].screenItems.findIndex((obj) => obj.itemId === action.payload.itemId);
-
-			// update screen item data
-			screens[screenIndex].screenItems[itemIndex] = { ...screens[screenIndex].screenItems[itemIndex], ...action.payload.data };
-
-			return {
-				...state,
-				screens,
-			};
+			return UpdateScreenItem(state, action);
 
 		/**
 		 * Update item order on screen
 		 */
 		case "UPDATE_SCREEN_ITEM_ORDER":
-			screenIndex = state.screens.findIndex((obj) => obj.screenId === action.payload.screenId);
-			itemIndex = state.screens[screenIndex].screenItems.findIndex((obj) => obj.itemId === action.payload.itemId);
-
-			screenItems = [...state.screens[screenIndex].screenItems];
-			screenItemOrderIndex = screenItems[itemIndex].orderIndex;
-
-			if (action.payload.direction === "forward" && screenItems.length > screenItemOrderIndex + 1) {
-				// move the item forward, increase the order index by one
-				screenItems[itemIndex].orderIndex = screenItems[itemIndex].orderIndex + 1;
-				// decrease the order index of the previous item in the array
-				screenItems[itemIndex + 1].orderIndex = screenItems[itemIndex + 1].orderIndex - 1;
-			}
-
-			screens = [...state.screens];
-			// update changes in state
-			screens[screenIndex].screenItems = screenItems;
-			/**
-			 * @todo update active screen item
-			 */
-
-			return {
-				...state,
-				activeScreenItem: screenItems[itemIndex],
-				screens,
-			};
+			return UpdateScreenItemOrder(state, action);
 
 		/**
 		 * Remove screen item
 		 */
 		case "REMOVE_SCREEN_ITEM":
-			screens = [...state.screens];
-			// find screen index based on screen id
-			screenIndex = screens.findIndex((obj) => obj.screenId === action.payload.screenId);
-			itemIndex = screens[screenIndex].screenItems.findIndex((obj) => obj.itemId === action.payload.itemId);
-			currentScreenItem = screens[screenIndex].screenItems[itemIndex];
-
-			// remove screen item based on screen index and screen item id
-			// the screen item id is not the db id, but the generated uuid
-			screenItemsTemp = screens[screenIndex].screenItems.filter((screenItem) => screenItem.itemId !== action.payload.itemId);
-
-			// change items order index
-			screenItems = screenItemsTemp.map((screenItem) => {
-				if (screenItem.orderIndex > currentScreenItem.orderIndex) {
-					return {
-						...screenItem,
-						orderIndex: screenItem.orderIndex - 1,
-					};
-				} else {
-					return { ...screenItem };
-				}
-			});
-
-			screens[screenIndex].screenItems = screenItems;
-
-			return {
-				...state,
-				activeScreenItem: "",
-				activeScreen: "",
-				screens,
-			};
+			return RemoveScreenItem(state, action);
 
 		/**
 		 * Set active screen item
 		 */
 		case "SET_ACTIVE_SCREEN_ITEM":
-			return {
-				...state,
-				activeScreenItem: action.payload,
-			};
+			return SetActiveScreenItem(state, action);
+
 		default:
 			return state;
 	}
