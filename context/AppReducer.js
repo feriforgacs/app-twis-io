@@ -8,9 +8,7 @@ export default function AppReducer(state, action) {
 	let screenItems;
 	let screenItemsTemp;
 	let screenItemOrderIndex;
-	let currentItem;
-	let previousItem;
-	let nextItem;
+	let currentScreenItem;
 
 	switch (action.type) {
 		/**
@@ -107,7 +105,7 @@ export default function AppReducer(state, action) {
 			screens = [...state.screens];
 			index = screens.findIndex((obj) => obj.screenId === action.payload.screenId);
 
-			if (!index) {
+			if (!index === -1) {
 				return {
 					...state,
 				};
@@ -130,7 +128,7 @@ export default function AppReducer(state, action) {
 			// find screen index in screens array by screenId
 			index = screens.findIndex((obj) => obj.screenId === action.payload.screenId);
 
-			if (!index) {
+			if (!index === -1) {
 				return {
 					...state,
 				};
@@ -167,7 +165,7 @@ export default function AppReducer(state, action) {
 			// find screen index based in screen uuid
 			index = screens.findIndex((obj) => obj.screenId === action.payload.screenId);
 
-			if (!index) {
+			if (!index === -1) {
 				return {
 					...state,
 				};
@@ -209,7 +207,7 @@ export default function AppReducer(state, action) {
 			// find screen index in screens array by screenId
 			index = screens.findIndex((obj) => obj.screenId === action.payload.newScreenItem.screenId);
 
-			if (!index) {
+			if (!index === -1) {
 				return {
 					...state,
 				};
@@ -255,12 +253,6 @@ export default function AppReducer(state, action) {
 				screenItems[itemIndex].orderIndex = screenItems[itemIndex].orderIndex + 1;
 				// decrease the order index of the previous item in the array
 				screenItems[itemIndex + 1].orderIndex = screenItems[itemIndex + 1].orderIndex - 1;
-
-				// switch items in array to keep index in sync with order index
-				currentItem = { ...screenItems[itemIndex] };
-				nextItem = { ...screenItems[itemIndex + 1] };
-				screenItems[itemIndex] = nextItem;
-				screenItems[itemIndex + 1] = currentItem;
 			}
 
 			screens = [...state.screens];
@@ -272,6 +264,7 @@ export default function AppReducer(state, action) {
 
 			return {
 				...state,
+				activeScreenItem: screenItems[itemIndex],
 				screens,
 			};
 
@@ -283,7 +276,7 @@ export default function AppReducer(state, action) {
 			// find screen index based on screen id
 			screenIndex = screens.findIndex((obj) => obj.screenId === action.payload.screenId);
 			itemIndex = screens[screenIndex].screenItems.findIndex((obj) => obj.itemId === action.payload.itemId);
-			currentItem = screens[screenIndex].screenItems[itemIndex];
+			currentScreenItem = screens[screenIndex].screenItems[itemIndex];
 
 			// remove screen item based on screen index and screen item id
 			// the screen item id is not the db id, but the generated uuid
@@ -291,7 +284,7 @@ export default function AppReducer(state, action) {
 
 			// change items order index
 			screenItems = screenItemsTemp.map((screenItem) => {
-				if (screenItem.orderIndex > currentItem.orderIndex) {
+				if (screenItem.orderIndex > currentScreenItem.orderIndex) {
 					return {
 						...screenItem,
 						orderIndex: screenItem.orderIndex - 1,

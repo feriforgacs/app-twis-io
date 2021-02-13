@@ -805,6 +805,10 @@ export const GlobalProvider = ({ children }) => {
 				direction,
 			},
 		});
+
+		/**
+		 * @todo - update item order in the db
+		 */
 	};
 
 	/**

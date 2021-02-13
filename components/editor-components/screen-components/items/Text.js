@@ -74,6 +74,7 @@ export default function Text({ data }) {
 		top: `${data.settings.top}px`,
 		left: `${data.settings.left}px`,
 		opacity: typeof data.settings.opacity !== undefined ? data.settings.opacity : 1,
+		zIndex: data.orderIndex,
 		position: "absolute",
 	};
 
