@@ -806,9 +806,52 @@ export const GlobalProvider = ({ children }) => {
 			},
 		});
 
-		/**
-		 * @todo - update item order in the db
-		 */
+		// update item order in the db
+		let source = axios.CancelToken.source();
+		try {
+			const result = await axios.post(
+				`${process.env.APP_URL}/api/editor/screen-item/position`,
+				{
+					campaignId: state.campaign._id,
+					itemId: itemId, // this is not the DB id, it is the generated uuid
+					direction,
+				},
+				{
+					headers: {
+						"Content-Type": "application/json",
+					},
+				},
+				{ cancelToken: source.token }
+			);
+
+			if (result.data.success !== true) {
+				console.log(result);
+				// set error
+				dispatch({
+					type: "SET_ERROR",
+					payload: {
+						error: true,
+						errorMessage: "Can't save changes. Please reload the page and try again",
+					},
+				});
+				return;
+			}
+		} catch (error) {
+			if (axios.isCancel(error)) {
+				return;
+			}
+
+			console.log(error);
+			// set error
+			dispatch({
+				type: "SET_ERROR",
+				payload: {
+					error: true,
+					errorMessage: "Can't save changes. Please reload the page and try again",
+				},
+			});
+			return;
+		}
 	};
 
 	/**

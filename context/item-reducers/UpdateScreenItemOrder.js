@@ -56,10 +56,6 @@ export default function UpdateScreenItemOrder(state, action) {
 		screenItems = updatedItems;
 	}
 
-	/**
-	 * @todo move to back
-	 */
-
 	let screens = [...state.screens];
 	// update changes in state
 	screens[screenIndex].screenItems = screenItems;
