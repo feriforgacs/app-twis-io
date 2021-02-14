@@ -15,8 +15,27 @@ export default function UpdateScreenItemOrder(state, action) {
 		screenItems[previousItemIndex].orderIndex = newOrderIndex - 1;
 
 		// move the item forward, increase the order index by one
-		screenItems[itemIndex].orderIndex = screenItems[itemIndex].orderIndex + 1;
+		screenItems[itemIndex].orderIndex = newOrderIndex;
+	} else if (action.payload.direction === "front" && screenItems.length > screenItemOrderIndex + 1) {
+		newOrderIndex = screenItems.length - 1;
+
+		// decrese the order index of every item where the order index is higher than the current items order index
+		let updatedItems = screenItems.map((screenItem) => {
+			if (screenItem.orderIndex > screenItemOrderIndex) {
+				screenItem.orderIndex = screenItem.orderIndex - 1;
+			}
+			return screenItem;
+		});
+
+		// move the item to front
+		updatedItems[itemIndex].orderIndex = newOrderIndex;
+		screenItems = updatedItems;
 	}
+
+	/**
+	 * @todo move backward
+	 * @todo move to back
+	 */
 
 	let screens = [...state.screens];
 	// update changes in state

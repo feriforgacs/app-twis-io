@@ -11,7 +11,7 @@ export default function Position() {
 	 */
 	return (
 		<>
-			<button data-for="itemAction" data-tip="Bring to front" className={`${styles.button} ${styles.buttonPosition}`} onClick={() => alert("to front")}>
+			<button data-for="itemAction" data-tip="Bring to front" className={`${styles.button} ${styles.buttonPosition}`} onClick={() => updateItemOrder(activeScreen.screenId, activeScreenItem.itemId, "front")}>
 				<Image src="/images/editor/icons/icon-to-front.svg" width={18} height={18} alt="To front icon" title="To front" />
 			</button>
 
