@@ -23,7 +23,7 @@ export default function Position() {
 				<Image src="/images/editor/icons/icon-backward.svg" width={18} height={18} alt="Backward icon" title="Backward" />
 			</button>
 
-			<button data-for="itemAction" data-tip="Send to back" className={`${styles.button} ${styles.buttonPosition}`} onClick={() => alert("To back")}>
+			<button data-for="itemAction" data-tip="Send to back" className={`${styles.button} ${styles.buttonPosition}`} onClick={() => updateItemOrder(activeScreen.screenId, activeScreenItem.itemId, "back")}>
 				<Image src="/images/editor/icons/icon-to-back.svg" width={18} height={18} alt="To back icon" title="To back" />
 			</button>
 			<ReactTooltip id="itemAction" place="bottom" type="dark" effect="solid" getContent={(dataTip) => `${dataTip}`} />

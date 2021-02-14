@@ -16,7 +16,7 @@ export default function UpdateScreenItemOrder(state, action) {
 		nextItemIndex = screenItems.findIndex((obj) => obj.orderIndex === newOrderIndex);
 		screenItems[nextItemIndex].orderIndex = newOrderIndex - 1;
 
-		// move the item forward, increase the order index by one
+		// bring the item forward, increase the order index by one
 		screenItems[itemIndex].orderIndex = newOrderIndex;
 	} else if (action.payload.direction === "front" && screenItems.length > screenItemOrderIndex + 1) {
 		newOrderIndex = screenItems.length - 1;
@@ -29,7 +29,7 @@ export default function UpdateScreenItemOrder(state, action) {
 			return screenItem;
 		});
 
-		// move the item to front
+		// bring the item to front
 		updatedItems[itemIndex].orderIndex = newOrderIndex;
 		screenItems = updatedItems;
 	} else if (action.payload.direction === "backward" && screenItemOrderIndex > 0) {
@@ -38,12 +38,25 @@ export default function UpdateScreenItemOrder(state, action) {
 		previousItemIndex = screenItems.findIndex((obj) => obj.orderIndex === newOrderIndex);
 		screenItems[previousItemIndex].orderIndex = newOrderIndex + 1;
 
-		// move the item backward, decrease the order index by one
+		// send the item backward, decrease the order index by one
 		screenItems[itemIndex].orderIndex = newOrderIndex;
+	} else if (action.payload.direction === "back" && screenItemOrderIndex > 0) {
+		newOrderIndex = 0;
+
+		// increase the order index of every item where the order index is smaller than the current items order index
+		updatedItems = screenItems.map((screenItem) => {
+			if (screenItem.orderIndex < screenItemOrderIndex) {
+				screenItem.orderIndex = screenItem.orderIndex + 1;
+			}
+			return screenItem;
+		});
+
+		// send the item to back
+		updatedItems[itemIndex].orderIndex = newOrderIndex;
+		screenItems = updatedItems;
 	}
 
 	/**
-	 * @todo move backward
 	 * @todo move to back
 	 */
 
