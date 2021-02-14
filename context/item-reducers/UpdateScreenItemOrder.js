@@ -7,12 +7,14 @@ export default function UpdateScreenItemOrder(state, action) {
 
 	let newOrderIndex;
 	let previousItemIndex;
+	let nextItemIndex;
+	let updatedItems;
 
 	if (action.payload.direction === "forward" && screenItems.length > screenItemOrderIndex + 1) {
 		newOrderIndex = screenItems[itemIndex].orderIndex + 1;
-		// decrease the order index of the previous item in the array
-		previousItemIndex = screenItems.findIndex((obj) => obj.orderIndex === newOrderIndex);
-		screenItems[previousItemIndex].orderIndex = newOrderIndex - 1;
+		// decrease the order index of the next item in the items array
+		nextItemIndex = screenItems.findIndex((obj) => obj.orderIndex === newOrderIndex);
+		screenItems[nextItemIndex].orderIndex = newOrderIndex - 1;
 
 		// move the item forward, increase the order index by one
 		screenItems[itemIndex].orderIndex = newOrderIndex;
@@ -20,7 +22,7 @@ export default function UpdateScreenItemOrder(state, action) {
 		newOrderIndex = screenItems.length - 1;
 
 		// decrese the order index of every item where the order index is higher than the current items order index
-		let updatedItems = screenItems.map((screenItem) => {
+		updatedItems = screenItems.map((screenItem) => {
 			if (screenItem.orderIndex > screenItemOrderIndex) {
 				screenItem.orderIndex = screenItem.orderIndex - 1;
 			}
@@ -30,6 +32,14 @@ export default function UpdateScreenItemOrder(state, action) {
 		// move the item to front
 		updatedItems[itemIndex].orderIndex = newOrderIndex;
 		screenItems = updatedItems;
+	} else if (action.payload.direction === "backward" && screenItemOrderIndex > 0) {
+		newOrderIndex = screenItems[itemIndex].orderIndex - 1;
+		// increase the order index of the previous item in the items array
+		previousItemIndex = screenItems.findIndex((obj) => obj.orderIndex === newOrderIndex);
+		screenItems[previousItemIndex].orderIndex = newOrderIndex + 1;
+
+		// move the item backward, decrease the order index by one
+		screenItems[itemIndex].orderIndex = newOrderIndex;
 	}
 
 	/**

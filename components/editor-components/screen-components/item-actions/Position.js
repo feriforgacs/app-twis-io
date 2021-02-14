@@ -19,7 +19,7 @@ export default function Position() {
 				<Image src="/images/editor/icons/icon-forward.svg" width={18} height={18} alt="Forward icon" title="Forward" />
 			</button>
 
-			<button data-for="itemAction" data-tip="Send backward" className={`${styles.button} ${styles.buttonPosition}`} onClick={() => alert("backward")}>
+			<button data-for="itemAction" data-tip="Send backward" className={`${styles.button} ${styles.buttonPosition}`} onClick={() => updateItemOrder(activeScreen.screenId, activeScreenItem.itemId, "backward")}>
 				<Image src="/images/editor/icons/icon-backward.svg" width={18} height={18} alt="Backward icon" title="Backward" />
 			</button>
 
