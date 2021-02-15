@@ -1,4 +1,4 @@
-const TextTemplates = [
+const TextTypes = [
 	{
 		name: `Headline Text Block`,
 		content: `Heading text block`,
@@ -82,4 +82,4 @@ const TextTemplates = [
 	},
 ];
 
-export default TextTemplates;
+export default TextTypes;

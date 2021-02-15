@@ -1,0 +1,21 @@
+.screen-button {
+	line-height: 50px;
+	height: 50px;
+	width: 200px;
+
+	&--classic {
+		border-radius: 5px;
+	}
+
+	&--square-outlined {
+		background: none;
+	}
+
+	&--rounded {
+		border-radius: 200px;
+	}
+
+	&--rounded-outlined {
+		border-radius: 200px;
+	}
+}
