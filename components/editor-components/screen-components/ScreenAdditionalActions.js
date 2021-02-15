@@ -57,11 +57,27 @@ export default function ScreenAdditionalActions({ screen }) {
 					<Image src="/images/editor/icons/icon-move-down.svg" width={18} height={18} alt="Move screen down icon" title="Move down" />
 				</button>
 
-				<button data-for="screenAction" data-tip="Duplicate screen" className={`${styles.buttonScreen} ${styles.buttonScreenDuplicate}`} onClick={() => copyScreen()}>
+				<button
+					data-for="screenAction"
+					data-tip="Duplicate screen"
+					className={`${styles.buttonScreen} ${styles.buttonScreenDuplicate}`}
+					onClick={() => {
+						copyScreen();
+						ReactTooltip.hide();
+					}}
+				>
 					<Image src="/images/editor/icons/icon-duplicate.svg" width={18} height={18} alt="Duplicate screen icon" title="Duplicate screen" />
 				</button>
 
-				<button data-for="screenAction" data-tip="Delete screen" className={`${styles.buttonScreen} ${styles.buttonScreenDelete}`} onClick={() => removeScreen(screen.screenId)}>
+				<button
+					data-for="screenAction"
+					data-tip="Delete screen"
+					className={`${styles.buttonScreen} ${styles.buttonScreenDelete}`}
+					onClick={() => {
+						removeScreen(screen.screenId);
+						ReactTooltip.hide();
+					}}
+				>
 					<Image src="/images/editor/icons/icon-delete.svg" width={18} height={18} alt="Delete screen icon" title="Delete screen" />
 				</button>
 			</div>
