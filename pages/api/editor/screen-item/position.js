@@ -98,7 +98,9 @@ export default async function ItemPositionUpdateHandler(req, res) {
 				const nextItemPromise = ScreenItem.findOneAndUpdate(
 					{ screenId: currentItem.screenId, orderIndex: newOrderIndex },
 					{
-						orderIndex: +1,
+						$inc: {
+							orderIndex: -1,
+						},
 					}
 				);
 
@@ -107,21 +109,30 @@ export default async function ItemPositionUpdateHandler(req, res) {
 				const [nextItemResult, currentItemResult] = await Promise.all([nextItemPromise, currentItemPromise]);
 
 				if (!nextItemResult || !currentItemResult) {
-					res.status(200).json({ success: true });
+					return res.status(400).json({ success: false });
 				}
 			} catch (error) {
 				return res.status(400).json({ success: false, error });
 			}
 
-			break;
+			return res.status(200).json({ success: true });
 
 		case "front":
+			/**
+			 * @todo
+			 */
 			break;
 
 		case "backward":
+			/**
+			 * @todo
+			 */
 			break;
 
 		case "back":
+			/**
+			 * @todo
+			 */
 			break;
 
 		default:
