@@ -11,19 +11,55 @@ export default function Position() {
 	 */
 	return (
 		<>
-			<button data-for="itemAction" data-tip="Bring to front" className={`${styles.button} ${styles.buttonPosition}`} onClick={() => updateItemOrder(activeScreen.screenId, activeScreenItem.itemId, "front")} disabled={activeScreenItem.orderIndex === activeScreen.screenItems.length - 1}>
+			<button
+				data-for="itemAction"
+				data-tip="Bring to front"
+				className={`${styles.button} ${styles.buttonPosition}`}
+				onClick={() => {
+					updateItemOrder(activeScreen.screenId, activeScreenItem.itemId, "front");
+					ReactTooltip.hide();
+				}}
+				disabled={activeScreenItem.orderIndex === activeScreen.screenItems.length - 1}
+			>
 				<Image src="/images/editor/icons/icon-to-front.svg" width={18} height={18} alt="To front icon" title="To front" />
 			</button>
 
-			<button data-for="itemAction" data-tip="Bring forward" className={`${styles.button} ${styles.buttonPosition}`} onClick={() => updateItemOrder(activeScreen.screenId, activeScreenItem.itemId, "forward")} disabled={activeScreenItem.orderIndex === activeScreen.screenItems.length - 1}>
+			<button
+				data-for="itemAction"
+				data-tip="Bring forward"
+				className={`${styles.button} ${styles.buttonPosition}`}
+				onClick={() => {
+					updateItemOrder(activeScreen.screenId, activeScreenItem.itemId, "forward");
+					ReactTooltip.hide();
+				}}
+				disabled={activeScreenItem.orderIndex === activeScreen.screenItems.length - 1}
+			>
 				<Image src="/images/editor/icons/icon-forward.svg" width={18} height={18} alt="Forward icon" title="Forward" />
 			</button>
 
-			<button data-for="itemAction" data-tip="Send backward" className={`${styles.button} ${styles.buttonPosition}`} onClick={() => updateItemOrder(activeScreen.screenId, activeScreenItem.itemId, "backward")} disabled={activeScreenItem.orderIndex === 0}>
+			<button
+				data-for="itemAction"
+				data-tip="Send backward"
+				className={`${styles.button} ${styles.buttonPosition}`}
+				onClick={() => {
+					updateItemOrder(activeScreen.screenId, activeScreenItem.itemId, "backward");
+					ReactTooltip.hide();
+				}}
+				disabled={activeScreenItem.orderIndex === 0}
+			>
 				<Image src="/images/editor/icons/icon-backward.svg" width={18} height={18} alt="Backward icon" title="Backward" />
 			</button>
 
-			<button data-for="itemAction" data-tip="Send to back" className={`${styles.button} ${styles.buttonPosition}`} onClick={() => updateItemOrder(activeScreen.screenId, activeScreenItem.itemId, "back")} disabled={activeScreenItem.orderIndex === 0}>
+			<button
+				data-for="itemAction"
+				data-tip="Send to back"
+				className={`${styles.button} ${styles.buttonPosition}`}
+				onClick={() => {
+					updateItemOrder(activeScreen.screenId, activeScreenItem.itemId, "back");
+					ReactTooltip.hide();
+				}}
+				disabled={activeScreenItem.orderIndex === 0}
+			>
 				<Image src="/images/editor/icons/icon-to-back.svg" width={18} height={18} alt="To back icon" title="To back" />
 			</button>
 			<ReactTooltip id="itemAction" place="bottom" type="dark" effect="solid" getContent={(dataTip) => `${dataTip}`} />
