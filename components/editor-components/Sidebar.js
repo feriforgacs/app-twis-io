@@ -4,6 +4,7 @@ import Element from "./sidebar-components/Element";
 import TextList from "./sidebar-components/text-components/TextList";
 import ImageList from "./sidebar-components/image-components/ImageList";
 import StickerList from "./sidebar-components/sticker-components/StickerList";
+import ButtonList from "./sidebar-components/button-components/ButtonList";
 
 export default function Sidebar() {
 	const [activeElement, setActiveElement] = useState("text");
@@ -12,12 +13,14 @@ export default function Sidebar() {
 		<div id="editor__sidebar" className={styles.sidebar}>
 			<div id="sidebar__elements" className={styles.sidebarElements}>
 				<Element icon="text" label="Text" active={activeElement === "text"} onClick={() => setActiveElement("text")} />
+				<Element icon="button" label="Button" active={activeElement === "button"} onClick={() => setActiveElement("button")} />
 				<Element icon="image" label="Image" active={activeElement === "image"} onClick={() => setActiveElement("image")} />
 				<Element icon="sticker" label="Sticker" active={activeElement === "sticker"} onClick={() => setActiveElement("sticker")} />
 			</div>
 			<div id="sidebar__element-options" className={styles.sidebarElementOptions}>
 				<p>Drag and drop items to the screens</p>
 				<TextList active={activeElement === "text"} />
+				<ButtonList active={activeElement === "button"} />
 				<ImageList active={activeElement === "image"} />
 				<StickerList active={activeElement === "sticker"} />
 			</div>
