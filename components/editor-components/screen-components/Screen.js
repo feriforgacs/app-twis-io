@@ -10,7 +10,7 @@ import ScreenAddActions from "./ScreenAddActions";
 import ScreenItem from "./items/ScreenItem";
 import ScreenAdditionalActions from "./ScreenAdditionalActions";
 
-export default function Screen({ screen, screenIndex }) {
+export default function Screen({ screen }) {
 	const { addScreenItem, activeScreen, setActiveScreen, activeScreenItem, setActiveScreenItem, unsetActiveScreenItem } = useContext(GlobalContext);
 
 	const screenTypeNames = {
@@ -24,7 +24,7 @@ export default function Screen({ screen, screenIndex }) {
 	const screenRef = useRef();
 
 	const [{ isOver }, drop] = useDrop({
-		accept: [ItemTypes.TEXT, ItemTypes.IMAGE, ItemTypes.STICKER],
+		accept: [ItemTypes.TEXT, ItemTypes.IMAGE, ItemTypes.STICKER, ItemTypes.BUTTON],
 		collect: (monitor) => ({
 			isOver: !!monitor.isOver(),
 		}),

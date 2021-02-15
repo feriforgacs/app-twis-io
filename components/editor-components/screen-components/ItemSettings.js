@@ -31,7 +31,7 @@ export default function ItemSettings() {
 				</button>
 			</div>
 			<Opacity />
-			{activeScreenItem.type === "text" ? (
+			{activeScreenItem.type === "text" || activeScreenItem.type === "button" ? (
 				<>
 					<FontStyle />
 					<TextAlign />

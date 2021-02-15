@@ -14,7 +14,7 @@ export default function ScreenList() {
 					<SkeletonScreen />
 				</>
 			) : (
-				screens.map((screen, index) => <Screen key={screen.screenId} screen={screen} screenIndex={index} />)
+				screens.map((screen) => <Screen key={screen.screenId} screen={screen} />)
 			)}
 		</>
 	);
