@@ -23,7 +23,7 @@ const ButtonTypes = [
 			align: `center`,
 			classNames: `screen-button screen-button--classic`,
 			width: 200,
-			height: 40,
+			height: 50,
 		},
 	},
 	{
@@ -50,7 +50,7 @@ const ButtonTypes = [
 			align: `center`,
 			classNames: `screen-button screen-button--square`,
 			width: 200,
-			height: 40,
+			height: 50,
 		},
 	},
 	{
@@ -77,7 +77,7 @@ const ButtonTypes = [
 			align: `center`,
 			classNames: `screen-button screen-button--rounded`,
 			width: 200,
-			height: 40,
+			height: 50,
 		},
 	},
 	{
@@ -104,7 +104,7 @@ const ButtonTypes = [
 			align: `center`,
 			classNames: `screen-button screen-button--square-outlined`,
 			width: 200,
-			height: 40,
+			height: 50,
 		},
 	},
 	{
@@ -131,7 +131,7 @@ const ButtonTypes = [
 			align: `center`,
 			classNames: `screen-button screen-button--rounded-outlined`,
 			width: 200,
-			height: 40,
+			height: 50,
 		},
 	},
 ];

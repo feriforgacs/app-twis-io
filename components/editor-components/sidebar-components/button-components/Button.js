@@ -29,6 +29,7 @@ export default function Button({ button }) {
 		fontWeight: button.settings.bold ? 700 : 400,
 		fontStyle: button.settings.italic ? `italic` : `normal`,
 		textDecoration: button.settings.underline ? `underline` : `none`,
+		textTransform: button.settings.uppercase ? `uppercase` : `none`,
 	};
 
 	return (

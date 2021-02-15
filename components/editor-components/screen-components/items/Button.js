@@ -65,8 +65,11 @@ export default function Button({ data }) {
 		}
 	};
 
-	let textContainerStyle = {
-		background: data.settings.highlightColor.backgroundColor,
+	let buttonStyle = {
+		background: !data.settings.classNames.includes("outlined") ? data.settings.highlightColor.backgroundColor : "none",
+		borderStyle: data.settings.classNames.includes("outlined") ? "solid" : "none",
+		borderWidth: data.settings.classNames.includes("outlined") ? "2px" : "0",
+		borderColor: data.settings.classNames.includes("outlined") ? data.settings.highlightColor.backgroundColor : "none",
 		textAlign: data.settings.align,
 		width: `${data.settings.width}px`,
 		height: `${data.settings.height}px`,
@@ -79,10 +82,10 @@ export default function Button({ data }) {
 	};
 
 	if (screenItemActive && editableDisabled) {
-		textContainerStyle.cursor = "move";
+		buttonStyle.cursor = "move";
 	}
 
-	let textStyle = {
+	let buttonTextStyle = {
 		color: `rgba(${data.settings.color.r}, ${data.settings.color.g}, ${data.settings.color.b}, ${data.settings.color.a})`,
 		fontSize: `${data.settings.fontSize}px`,
 		fontWeight: data.settings.bold ? 700 : 400,
@@ -100,13 +103,13 @@ export default function Button({ data }) {
 					setActiveScreenItem(data);
 				}
 			}}
-			style={textContainerStyle}
+			style={buttonStyle}
 			id={`${data.type}-${data.itemId}`}
-			className={`screen-item ${fontFamilyClass}`}
+			className={`screen-item ${fontFamilyClass} ${data.settings.classNames ? data.settings.classNames : ""}`}
 		>
-			<span className="screen-item" style={textStyle}>
+			<span className="screen-item" style={buttonTextStyle}>
 				<ContentEditable
-					style={textStyle}
+					style={buttonTextStyle}
 					innerRef={editableContent}
 					html={text.current}
 					onBlur={handleBlur}

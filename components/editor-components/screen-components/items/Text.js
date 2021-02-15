@@ -102,7 +102,7 @@ export default function Text({ data }) {
 			}}
 			style={textContainerStyle}
 			id={`${data.type}-${data.itemId}`}
-			className={`screen-item ${fontFamilyClass}`}
+			className={`screen-item ${fontFamilyClass} ${data.settings.classNames ? data.settings.classNames : ""}`}
 		>
 			<span className="screen-item" style={textStyle}>
 				<ContentEditable

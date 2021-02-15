@@ -22,6 +22,7 @@ export default function Text({ text }) {
 		fontWeight: text.settings.bold ? 700 : 400,
 		fontStyle: text.settings.italic ? `italic` : `normal`,
 		textDecoration: text.settings.underline ? `underline` : `none`,
+		textTransform: text.settings.uppercase ? `uppercase` : `none`,
 	};
 
 	return (
