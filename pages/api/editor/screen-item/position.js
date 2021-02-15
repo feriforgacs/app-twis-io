@@ -119,9 +119,36 @@ export default async function ItemPositionUpdateHandler(req, res) {
 
 		case "front":
 			/**
-			 * @todo
+			 * Bring item to the front
 			 */
-			break;
+			newOrderIndex = screenItemsCount - 1;
+
+			try {
+				const screenItemsPromise = ScreenItem.updateMany(
+					{
+						screenId: currentItem.screenId,
+						orderIndex: { $gt: currentItem.orderIndex },
+						_id: { $ne: currentItem._id },
+					},
+					{
+						$inc: {
+							orderIndex: -1,
+						},
+					}
+				);
+
+				const currentItemPromise = ScreenItem.findOneAndUpdate({ _id: currentItem._id }, { orderIndex: newOrderIndex });
+
+				const [screenItemsResult, currentItemResult] = await Promise.all([screenItemsPromise, currentItemPromise]);
+
+				if (!screenItemsResult || !currentItemResult) {
+					return res.status(400).json({ success: false });
+				}
+			} catch (error) {
+				return res.status(400).json({ success: false, error });
+			}
+
+			return res.status(200).json({ success: true });
 
 		case "backward":
 			/**
