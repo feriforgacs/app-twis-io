@@ -152,19 +152,73 @@ export default async function ItemPositionUpdateHandler(req, res) {
 
 		case "backward":
 			/**
-			 * @todo
+			 * Send item backward
 			 */
-			break;
+			newOrderIndex = currentItem.orderIndex - 1;
+
+			if (newOrderIndex < 0) {
+				// item is already in the back, no update
+				res.status(200).json({ success: true });
+			}
+
+			// increase the order index of the previous item in the items array
+			try {
+				const previousItemPromise = ScreenItem.findOneAndUpdate(
+					{ screenId: currentItem.screenId, orderIndex: newOrderIndex },
+					{
+						$inc: {
+							orderIndex: +1,
+						},
+					}
+				);
+
+				const currentItemPromise = ScreenItem.findOneAndUpdate({ _id: currentItem._id }, { orderIndex: newOrderIndex });
+
+				const [previousItemResult, currentItemResult] = await Promise.all([previousItemPromise, currentItemPromise]);
+
+				if (!previousItemResult || !currentItemResult) {
+					return res.status(400).json({ success: false });
+				}
+			} catch (error) {
+				return res.status(400).json({ success: false, error });
+			}
+
+			return res.status(200).json({ success: true });
 
 		case "back":
 			/**
-			 * @todo
+			 * Send item to the back
 			 */
-			break;
+			newOrderIndex = 0;
+
+			try {
+				const screenItemsPromise = ScreenItem.updateMany(
+					{
+						screenId: currentItem.screenId,
+						orderIndex: { $lt: currentItem.orderIndex },
+						_id: { $ne: currentItem._id },
+					},
+					{
+						$inc: {
+							orderIndex: +1,
+						},
+					}
+				);
+
+				const currentItemPromise = ScreenItem.findOneAndUpdate({ _id: currentItem._id }, { orderIndex: newOrderIndex });
+
+				const [screenItemsResult, currentItemResult] = await Promise.all([screenItemsPromise, currentItemPromise]);
+
+				if (!screenItemsResult || !currentItemResult) {
+					return res.status(400).json({ success: false });
+				}
+			} catch (error) {
+				return res.status(400).json({ success: false, error });
+			}
+
+			return res.status(200).json({ success: true });
 
 		default:
-			break;
+			return res.status(400).json({ success: false });
 	}
-
-	return res.status(400).json({ success: false });
 }
