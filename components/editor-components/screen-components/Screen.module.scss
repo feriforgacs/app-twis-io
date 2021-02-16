@@ -22,13 +22,18 @@
 	outline: none;
 	padding: 0.3rem;
 
-	&:hover {
+	&:hover:not(:disabled) {
 		background: #ecebf1;
 		opacity: 1;
 	}
 
 	&:not(:first-child) {
 		margin: 0 0 0 0.25rem;
+	}
+
+	&:disabled {
+		cursor: default;
+		opacity: 0.5;
 	}
 }
 
