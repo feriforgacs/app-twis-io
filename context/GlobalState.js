@@ -599,9 +599,55 @@ export const GlobalProvider = ({ children }) => {
 			},
 		});
 
-		/**
-		 * @todo update order in the db
-		 */
+		// update screen order in the db
+		let source = axios.CancelToken.source();
+		try {
+			const result = await axios.post(
+				`${process.env.APP_URL}/api/editor/screen/order`,
+				{
+					campaignId: state.campaign._id,
+					screenId,
+					direction,
+				},
+				{
+					headers: {
+						"Content-Type": "application/json",
+					},
+				},
+				{ cancelToken: source.token }
+			);
+
+			if (result.data.success !== true) {
+				console.log(result);
+				// set error
+				dispatch({
+					type: "SET_ERROR",
+					payload: {
+						error: true,
+						errorMessage: "Can't move screen. Please, reload the page and try again",
+					},
+				});
+
+				return;
+			}
+
+			return;
+		} catch (error) {
+			if (axios.isCancel(error)) {
+				return;
+			}
+
+			console.log(error);
+			// set error
+			dispatch({
+				type: "SET_ERROR",
+				payload: {
+					error: true,
+					errorMessage: "Can't move screen. Please, reload the page and try again",
+				},
+			});
+			return;
+		}
 	};
 
 	/**
