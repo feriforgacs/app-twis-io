@@ -586,6 +586,25 @@ export const GlobalProvider = ({ children }) => {
 	};
 
 	/**
+	 * Move screen forward or backward
+	 * @param {string} screenId UUID of the selected screen
+	 * @param {string} direction direction of the order
+	 */
+	const updateScreenOrder = async (screenId, direction) => {
+		dispatch({
+			type: "UPDATE_SCREEN_ORDER",
+			payload: {
+				screenId,
+				direction,
+			},
+		});
+
+		/**
+		 * @todo update order in the db
+		 */
+	};
+
+	/**
 	 * ==============================
 	 * ======== ITEM ACTIONS ========
 	 * ==============================
@@ -945,6 +964,7 @@ export const GlobalProvider = ({ children }) => {
 				duplicateScreen,
 				updateScreen,
 				updateScreenInState,
+				updateScreenOrder,
 
 				// screen item actions
 				addScreenItem,

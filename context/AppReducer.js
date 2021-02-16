@@ -11,6 +11,7 @@ import UpdateScreen from "./screen-reducers/UpdateScreen";
 import RemoveScreen from "./screen-reducers/RemoveScreen";
 import DuplicateScreen from "./screen-reducers/DuplicateScreen";
 import SetActiveScreen from "./screen-reducers/SetActiveScreen";
+import UpdateScreenOrder from "./screen-reducers/UpdateScreenOrder";
 
 import AddScreenItem from "./item-reducers/AddScreenItem";
 import UpdateScreenItem from "./item-reducers/UpdateScreenItem";
@@ -90,6 +91,12 @@ export default function AppReducer(state, action) {
 		 */
 		case "SET_ACTIVE_SCREEN":
 			return SetActiveScreen(state, action);
+
+		/**
+		 * Change the order of a screen
+		 */
+		case "UPDATE_SCREEN_ORDER":
+			return UpdateScreenOrder(state, action);
 
 		/**
 		 * ==============================
