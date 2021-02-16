@@ -33,11 +33,11 @@ export default async function ScreenOrderHandler(req, res) {
 
 	switch (req.body.direction) {
 		case "up":
-			direction = 1;
+			direction = -1;
 			break;
 
 		case "down":
-			direction = -1;
+			direction = 1;
 			break;
 
 		default:
@@ -79,8 +79,6 @@ export default async function ScreenOrderHandler(req, res) {
 		if (!currentScreen) {
 			return res.status(400).json({ success: false });
 		}
-
-		console.log(currentScreen);
 
 		let siblingScreen;
 		if (direction > 0) {
