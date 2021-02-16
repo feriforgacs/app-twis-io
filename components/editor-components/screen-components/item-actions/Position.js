@@ -5,7 +5,7 @@ import Image from "next/image";
 import styles from "../ItemAdditionalActions.module.scss";
 
 export default function Position() {
-	const { activeScreenItem, activeScreen, updateItemOrder } = useContext(GlobalContext);
+	const { activeScreenItem, activeScreen, updateScreenItemOrder } = useContext(GlobalContext);
 	/**
 	 * @todo - set active screen item on activescreenitem change
 	 */
@@ -16,7 +16,7 @@ export default function Position() {
 				data-tip="Bring to front"
 				className={`${styles.button} ${styles.buttonPosition}`}
 				onClick={() => {
-					updateItemOrder(activeScreen.screenId, activeScreenItem.itemId, "front");
+					updateScreenItemOrder(activeScreen.screenId, activeScreenItem.itemId, "front");
 					ReactTooltip.hide();
 				}}
 				disabled={activeScreenItem.orderIndex === activeScreen.screenItems.length - 1}
@@ -29,7 +29,7 @@ export default function Position() {
 				data-tip="Bring forward"
 				className={`${styles.button} ${styles.buttonPosition}`}
 				onClick={() => {
-					updateItemOrder(activeScreen.screenId, activeScreenItem.itemId, "forward");
+					updateScreenItemOrder(activeScreen.screenId, activeScreenItem.itemId, "forward");
 					ReactTooltip.hide();
 				}}
 				disabled={activeScreenItem.orderIndex === activeScreen.screenItems.length - 1}
@@ -42,7 +42,7 @@ export default function Position() {
 				data-tip="Send backward"
 				className={`${styles.button} ${styles.buttonPosition}`}
 				onClick={() => {
-					updateItemOrder(activeScreen.screenId, activeScreenItem.itemId, "backward");
+					updateScreenItemOrder(activeScreen.screenId, activeScreenItem.itemId, "backward");
 					ReactTooltip.hide();
 				}}
 				disabled={activeScreenItem.orderIndex === 0}
@@ -55,7 +55,7 @@ export default function Position() {
 				data-tip="Send to back"
 				className={`${styles.button} ${styles.buttonPosition}`}
 				onClick={() => {
-					updateItemOrder(activeScreen.screenId, activeScreenItem.itemId, "back");
+					updateScreenItemOrder(activeScreen.screenId, activeScreenItem.itemId, "back");
 					ReactTooltip.hide();
 				}}
 				disabled={activeScreenItem.orderIndex === 0}
