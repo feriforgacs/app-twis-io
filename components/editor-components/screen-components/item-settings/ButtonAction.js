@@ -24,11 +24,36 @@ export default function ButtonAction() {
 			<div className={styles.buttonActionOptions}>
 				{actionOptions.map((actionOption, index) => (
 					<label key={index} className={`${action === actionOption.action ? styles.optionSelected : ""}`}>
-						<input name="button-action" value={actionOption.action} checked={action === actionOption.action} type="radio" onChange={() => setAction(actionOption.action)} />
+						<input
+							name="button-action"
+							value={actionOption.action}
+							checked={action === actionOption.action}
+							type="radio"
+							onChange={(e) => {
+								const action = e.target.value;
+								setAction(action);
+								updateScreenItem(activeScreen.screenId, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, action } });
+								setActiveScreenItem({ ...activeScreenItem, settings: { ...activeScreenItem.settings, action } });
+							}}
+						/>
 						{actionOption.label}
 					</label>
 				))}
-				{action === "url" && <DebounceInput type="url" className={styles.actionURLInput} value={actionURL} placeholder="https://..." debounceTimeout="300" onChange={(e) => {}} />}
+				{action === "url" && (
+					<DebounceInput
+						type="url"
+						className={styles.actionURLInput}
+						value={actionURL}
+						placeholder="https://..."
+						debounceTimeout="300"
+						onChange={(e) => {
+							const actionURL = e.target.value;
+							setActionURL(actionURL);
+							updateScreenItem(activeScreen.screenId, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, actionURL } });
+							setActiveScreenItem({ ...activeScreenItem, settings: { ...activeScreenItem.settings, actionURL } });
+						}}
+					/>
+				)}
 			</div>
 		</div>
 	);

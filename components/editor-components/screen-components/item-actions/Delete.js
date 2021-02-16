@@ -16,7 +16,7 @@ export default function Delete() {
 			const keyCode = event.keyCode || event.which;
 
 			// dont delete item if delete event happened in text input
-			if (event.target && event.target.type && (event.target.type === "text" || event.target.type === "textarea")) {
+			if (event.target && event.target.type && (event.target.type === "text" || event.target.type === "textarea" || event.target.type === "url" || event.target.type === "email" || event.target.type === "number")) {
 				return;
 			}
 
