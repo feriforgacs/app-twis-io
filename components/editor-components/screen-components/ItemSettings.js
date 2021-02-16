@@ -9,6 +9,7 @@ import FontStyle from "./item-settings/FontStyle";
 import TextAlign from "./item-settings/TextAlign";
 import FontColor from "./item-settings/FontColor";
 import FontBackgroundColor from "./item-settings/FontBackgroundColor";
+import ButtonAction from "./item-settings/ButtonAction";
 
 export default function ItemSettings() {
 	const { activeScreenItem, unsetActiveScreen, unsetActiveScreenItem } = useContext(GlobalContext);
@@ -16,7 +17,7 @@ export default function ItemSettings() {
 		<div className={`${styles.settings} item-settings`}>
 			<ItemAdditionalActions />
 			<div className={`${styles.settingsHeader} item-settings`}>
-				Item Settings
+				{activeScreenItem.type} Settings
 				<button
 					className={`${styles.settingsClose}`}
 					onClick={() => {
@@ -30,6 +31,7 @@ export default function ItemSettings() {
 					</svg>
 				</button>
 			</div>
+			{activeScreenItem.type === "button" && <ButtonAction />}
 			<Opacity />
 			{activeScreenItem.type === "text" || activeScreenItem.type === "button" ? (
 				<>
