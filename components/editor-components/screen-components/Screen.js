@@ -102,7 +102,7 @@ export default function Screen({ screen }) {
 				<div ref={drop} className={styles.screenBodyContainer}>
 					<div
 						ref={screenRef}
-						onClick={(e) => {
+						onMouseDown={(e) => {
 							setActiveScreen(screen);
 							// unset active screen item
 							if (!e.target.classList.contains("screen-item")) {
