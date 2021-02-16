@@ -66,10 +66,7 @@ export default function Button({ data }) {
 	};
 
 	let buttonStyle = {
-		background: !data.settings.classNames.includes("outlined") ? data.settings.highlightColor.backgroundColor : "none",
-		borderStyle: data.settings.classNames.includes("outlined") ? "solid" : "none",
-		borderWidth: data.settings.classNames.includes("outlined") ? "2px" : "0",
-		borderColor: data.settings.classNames.includes("outlined") ? data.settings.highlightColor.backgroundColor : "none",
+		background: data.settings.highlightColor.backgroundColor,
 		textAlign: data.settings.align,
 		width: `${data.settings.width}px`,
 		height: `${data.settings.height}px`,

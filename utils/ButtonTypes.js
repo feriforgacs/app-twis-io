@@ -80,7 +80,7 @@ const ButtonTypes = [
 			height: 50,
 		},
 	},
-	{
+	/* {
 		name: `Square Outlined`,
 		content: `Square Outlined`,
 		settings: {
@@ -133,7 +133,7 @@ const ButtonTypes = [
 			width: 200,
 			height: 50,
 		},
-	},
+	}, */
 ];
 
 export default ButtonTypes;
