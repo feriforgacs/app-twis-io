@@ -1,3 +1,54 @@
-export default function Form() {
-	return <div>I am a Form</div>;
+import { useContext } from "react";
+import { GlobalContext } from "../../../../context/GlobalState";
+import styles from "./Form.module.scss";
+
+export default function Form({ data }) {
+	const { activeScreenItem, setActiveScreenItem } = useContext(GlobalContext);
+	const screenItemActive = activeScreenItem.itemId === data.itemId;
+
+	let formStyle = {
+		background: data.settings.highlightColor.backgroundColor,
+		height: `${data.settings.height || 0}px`,
+		width: `${data.settings.width || 0}px`,
+		top: `${data.settings.top || 0}px`,
+		left: `${data.settings.left || 0}px`,
+		transform: `translateX(${data.settings.translateX || 0}px) translateY(${data.settings.translateY || 0}px) rotate(${data.settings.rotate || 0}deg)`,
+		textAlign: data.settings.align,
+		color: `rgba(${data.settings.color.r}, ${data.settings.color.g}, ${data.settings.color.b}, ${data.settings.color.a})`,
+		fontSize: `${data.settings.fontSize}px`,
+		fontWeight: data.settings.bold ? 700 : 400,
+		fontStyle: data.settings.italic ? `italic` : `normal`,
+		textDecoration: data.settings.underline ? `underline` : `none`,
+		textTransform: data.settings.uppercase ? `uppercase` : `none`,
+		opacity: typeof data.settings.opacity !== undefined ? data.settings.opacity : 1,
+		zIndex: data.orderIndex,
+		position: "absolute",
+	};
+
+	if (screenItemActive) {
+		formStyle.cursor = "move";
+	}
+
+	return (
+		<div onClick={() => setActiveScreenItem(data)} id={`${data.type}-${data.itemId}`} className={`screen-item ${styles.form}`} style={formStyle}>
+			<div className={`screen-item ${styles.formBody}`}>
+				<div className={`screen-item ${styles.formGroup}`}>
+					<label className={`screen-item ${styles.formLabel}`}>{data.settings.nameLabel || "Name"}</label>
+					<input type="text" disabled placeholder="Petra" className={`screen-item ${styles.formInput}`} />
+				</div>
+
+				<div className={`screen-item ${styles.formGroup}`}>
+					<label className={`screen-item ${styles.formLabel}`}>{data.settings.emailLabel || "Email address"}</label>
+					<input type="text" disabled placeholder="petra@twis.io" className={`screen-item ${styles.formInput}`} />
+				</div>
+
+				<div className={`screen-item ${styles.formGroup}`}>
+					<label className={`screen-item ${styles.legalLabel}`}>
+						<input type="checkbox" disabled className={`screen-item ${styles.legalCheckbox}`} />
+						{data.settings.termsLabel || "I've read and accept the terms & conditions"}
+					</label>
+				</div>
+			</div>
+		</div>
+	);
 }

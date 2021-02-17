@@ -10,6 +10,7 @@ import TextAlign from "./item-settings/TextAlign";
 import FontColor from "./item-settings/FontColor";
 import FontBackgroundColor from "./item-settings/FontBackgroundColor";
 import ButtonAction from "./item-settings/ButtonAction";
+import FormSettings from "./item-settings/FormSettings";
 
 export default function ItemSettings() {
 	const { activeScreenItem, unsetActiveScreen, unsetActiveScreenItem } = useContext(GlobalContext);
@@ -32,8 +33,9 @@ export default function ItemSettings() {
 				</button>
 			</div>
 			{activeScreenItem.type === "button" && <ButtonAction />}
+			{activeScreenItem.type === "form" && <FormSettings />}
 			<Opacity />
-			{activeScreenItem.type === "text" || activeScreenItem.type === "button" || activeScreenItem.type === "question" ? (
+			{activeScreenItem.type === "text" || activeScreenItem.type === "button" || activeScreenItem.type === "question" || activeScreenItem.type === "form" ? (
 				<>
 					<FontStyle />
 					<TextAlign />
