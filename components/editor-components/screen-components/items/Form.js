@@ -33,20 +33,24 @@ export default function Form({ data }) {
 		<div onClick={() => setActiveScreenItem(data)} id={`${data.type}-${data.itemId}`} className={`screen-item ${styles.form}`} style={formStyle}>
 			<div className={`screen-item ${styles.formBody}`}>
 				<div className={`screen-item ${styles.formGroup}`}>
-					<label className={`screen-item ${styles.formLabel}`}>{data.settings.nameLabel || "Name"}</label>
+					<label className={`screen-item ${styles.formLabel}`}>{data.settings.labelName || "Name"}</label>
 					<input type="text" disabled placeholder="Petra" className={`screen-item ${styles.formInput}`} />
 				</div>
 
 				<div className={`screen-item ${styles.formGroup}`}>
-					<label className={`screen-item ${styles.formLabel}`}>{data.settings.emailLabel || "Email address"}</label>
+					<label className={`screen-item ${styles.formLabel}`}>{data.settings.labelEmail || "Email address"}</label>
 					<input type="text" disabled placeholder="petra@twis.io" className={`screen-item ${styles.formInput}`} />
 				</div>
 
 				<div className={`screen-item ${styles.formGroup}`}>
-					<label className={`screen-item ${styles.legalLabel}`}>
+					<label className={`screen-item ${styles.labelLegal}`}>
 						<input type="checkbox" disabled className={`screen-item ${styles.legalCheckbox}`} />
 						{data.settings.termsLabel || "I've read and accept the terms & conditions"}
 					</label>
+				</div>
+
+				<div className={`screen-item ${styles.formGroup}`}>
+					<button className={`screen-item ${styles.submitButton}`}>{data.settings.labelSubmit || "Submit"}</button>
 				</div>
 			</div>
 		</div>

@@ -41,7 +41,7 @@ export default function Delete() {
 							break;
 
 						case "form":
-							itemType = "Forms";
+							itemType = "Data collection forms";
 							break;
 
 						default:
@@ -63,7 +63,7 @@ export default function Delete() {
 
 	return (
 		<>
-			{activeScreenItem.type !== "question" && (
+			{activeScreenItem.type !== "question" && activeScreenItem.type !== "form" && (
 				<>
 					<button data-for="itemAction" data-tip="Delete item" className={`${styles.button} ${styles.buttonDelete}`} onClick={() => removeScreenItem(activeScreen.screenId, activeScreenItem.itemId)}>
 						<Image src="/images/editor/icons/icon-delete.svg" width={18} height={18} alt="Delete item icon" title="Delete item" />
