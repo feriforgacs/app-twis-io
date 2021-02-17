@@ -52,9 +52,8 @@ export default function CampaignCreate() {
 
 		const campaign = await campaignCreateRequest.json();
 
-		setLoading(false);
-
 		if (campaign.success !== true) {
+			setLoading(false);
 			// error
 			setToastMessage("Can't create campaign. Please, try again.");
 			setToastType("error");

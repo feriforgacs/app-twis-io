@@ -62,7 +62,7 @@ export default async function CampaignDeleteHandler(req, res) {
 	}
 
 	/**
-	 * @todo - remove participants answer's from the database
+	 * @todo - remove participants' answers from the database
 	 */
 
 	// remove screens and screen items from the database
