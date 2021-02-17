@@ -7,6 +7,8 @@ import DatabaseConnect from "../../../lib/DatabaseConnect";
 import EventLog from "../../../lib/EventLog";
 import Campaign from "../../../models/Campaign";
 import Participant from "../../../models/Participant";
+import Screen from "../../../models/editor/Screen";
+import ScreenItem from "../../../models/editor/ScreenItem";
 
 const cors = initMiddleware(
 	Cors({
@@ -61,8 +63,28 @@ export default async function CampaignDeleteHandler(req, res) {
 
 	/**
 	 * @todo - remove participants answer's from the database
-	 * @todo - remove screens, screen items, etc
 	 */
+
+	// remove screens and screen items from the database
+	try {
+		// get campaign screens from the db
+		const screens = await Screen.find({ campaignId: campaignId });
+		if (screens) {
+			// get screen ids, so late we can use it to delete screen items
+			const screenIds = screens.map((screen) => screen._id);
+
+			if (screenIds.length > 0) {
+				// delete screen items
+				const screenItemDeletePromise = ScreenItem.deleteMany({ screenId: { $in: screenIds } });
+				// delete screens
+				const screenDeletePromise = Screen.deleteMany({ campaignId: campaignId });
+				await Promise.all([screenItemDeletePromise, screenDeletePromise]);
+			}
+		}
+	} catch (error) {
+		res.status(400).json({ success: false, error });
+		return;
+	}
 
 	// remove campaign from the database
 	try {
