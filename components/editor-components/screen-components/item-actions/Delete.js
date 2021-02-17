@@ -27,10 +27,27 @@ export default function Delete() {
 				event.preventDefault();
 				// delete active screen item
 
-				if (activeScreenItem.removeable !== false) {
+				if (activeScreenItem.settings.removeable !== false) {
 					removeScreenItem(activeScreen.screenId, activeScreenItem.itemId);
 				} else {
-					alert("This item cannot be removed");
+					let itemType = "This item";
+					switch (activeScreenItem.type) {
+						case "question":
+							itemType = "Questions";
+							break;
+
+						case "answers":
+							itemType = "Answers";
+							break;
+
+						case "form":
+							itemType = "Forms";
+							break;
+
+						default:
+							break;
+					}
+					alert(`${itemType} cannot be removed`);
 				}
 			}
 		},
@@ -46,10 +63,14 @@ export default function Delete() {
 
 	return (
 		<>
-			<button data-for="itemAction" data-tip="Delete item" className={`${styles.button} ${styles.buttonDelete}`} onClick={() => removeScreenItem(activeScreen.screenId, activeScreenItem.itemId)}>
-				<Image src="/images/editor/icons/icon-delete.svg" width={18} height={18} alt="Delete item icon" title="Delete item" />
-			</button>
-			<ReactTooltip id="itemAction" place="bottom" type="dark" effect="solid" getContent={(dataTip) => `${dataTip}`} />
+			{activeScreenItem.type !== "question" && (
+				<>
+					<button data-for="itemAction" data-tip="Delete item" className={`${styles.button} ${styles.buttonDelete}`} onClick={() => removeScreenItem(activeScreen.screenId, activeScreenItem.itemId)}>
+						<Image src="/images/editor/icons/icon-delete.svg" width={18} height={18} alt="Delete item icon" title="Delete item" />
+					</button>
+					<ReactTooltip id="itemAction" place="bottom" type="dark" effect="solid" getContent={(dataTip) => `${dataTip}`} />
+				</>
+			)}
 		</>
 	);
 }
