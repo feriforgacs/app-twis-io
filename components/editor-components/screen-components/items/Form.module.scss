@@ -18,6 +18,18 @@
 
 .formLabel {
 	margin-bottom: 0.5em;
+
+	span {
+		cursor: text;
+
+		&:hover {
+			opacity: 0.5;
+		}
+
+		&[contenteditable="true"] {
+			opacity: 1;
+		}
+	}
 }
 
 .formInput {

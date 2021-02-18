@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { GlobalContext } from "../../../../context/GlobalState";
 import styles from "./Form.module.scss";
+import Label from "./form-items/Label";
 
 export default function Form({ data }) {
 	const { activeScreenItem, setActiveScreenItem } = useContext(GlobalContext);
@@ -44,7 +45,9 @@ export default function Form({ data }) {
 		<div onClick={() => setActiveScreenItem(data)} id={`${data.type}-${data.itemId}`} className={`screen-item ${styles.form}`} style={formStyle}>
 			<div className={`screen-item ${styles.formBody}`}>
 				<div className={`screen-item ${styles.formGroup}`}>
-					<label className={`screen-item ${styles.formLabel}`}>{data.settings.labelName || "Name"}</label>
+					<label className={`screen-item ${styles.formLabel}`} title="Double click to edit">
+						<Label labelKey="labelName" value={data.settings.labelName || "Name"} />
+					</label>
 					<input type="text" disabled placeholder="Petra" className={`screen-item ${styles.formInput}`} />
 				</div>
 
