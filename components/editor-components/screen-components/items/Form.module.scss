@@ -6,6 +6,10 @@
 	justify-content: center;
 }
 
+.formBody {
+	width: 100%;
+}
+
 .formGroup {
 	display: flex;
 	flex-direction: column;
@@ -22,12 +26,8 @@
 	span {
 		cursor: text;
 
-		&:hover {
-			opacity: 0.5;
-		}
-
-		&[contenteditable="true"] {
-			opacity: 1;
+		&:hover:not(:focus) {
+			outline: 1px solid rgba(10, 231, 245, 0.4);
 		}
 	}
 }
@@ -40,6 +40,7 @@
 	box-shadow: rgb(0 0 0 / 15%) 0px 0px 0px 1px inset;
 	line-height: 2.5em;
 	padding: 0 1em;
+	width: 100%;
 }
 
 .labelLegal {
@@ -58,6 +59,7 @@
 	box-sizing: border-box;
 	height: 1.5em;
 	width: 1.5em;
+	flex: 0 0 1.5em;
 }
 
 .submitButton {

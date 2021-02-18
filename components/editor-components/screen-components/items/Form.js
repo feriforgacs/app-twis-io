@@ -52,20 +52,22 @@ export default function Form({ data }) {
 				</div>
 
 				<div className={`screen-item ${styles.formGroup}`}>
-					<label className={`screen-item ${styles.formLabel}`}>{data.settings.labelEmail || "Email address"}</label>
+					<label className={`screen-item ${styles.formLabel}`}>
+						<Label labelKey="labelEmail" value={data.settings.labelEmail || "Email address"} />
+					</label>
 					<input type="text" disabled placeholder="petra@twis.io" className={`screen-item ${styles.formInput}`} />
 				</div>
 
 				<div className={`screen-item ${styles.formGroup}`}>
 					<label className={`screen-item ${styles.labelLegal}`}>
-						<input type="checkbox" className={`screen-item ${styles.legalCheckbox}`} />
-						<span>{data.settings.termsLabel || "I've read and accept the terms & conditions"}</span>
+						<input type="checkbox" className={`screen-item ${styles.legalCheckbox}`} disabled />
+						<Label labelKey="labelTerms" value={data.settings.labelTerms || "I've read and accept the terms & conditions"} />
 					</label>
 				</div>
 
 				<div className={`screen-item ${styles.formGroup}`}>
 					<button className={`screen-item ${styles.submitButton}`} style={buttonStyle}>
-						{data.settings.labelSubmit || "Submit"}
+						<Label labelKey="labelSubmit" value={data.settings.labelSubmit || "Submit"} />
 					</button>
 				</div>
 			</div>
