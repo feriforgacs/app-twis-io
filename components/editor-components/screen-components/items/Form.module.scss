@@ -2,5 +2,60 @@
 	align-items: center;
 	border-radius: 3px;
 	display: flex;
+	padding: 1em;
 	justify-content: center;
+}
+
+.formGroup {
+	display: flex;
+	flex-direction: column;
+	margin: 0 auto 1.5em;
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+}
+
+.formLabel {
+	margin-bottom: 0.5em;
+}
+
+.formInput {
+	background: #fff;
+	border: none;
+	border-radius: 3px;
+	box-sizing: border-box;
+	box-shadow: rgb(0 0 0 / 15%) 0px 0px 0px 1px inset;
+	line-height: 2.5em;
+	padding: 0 1em;
+}
+
+.labelLegal {
+	display: flex;
+	align-items: center;
+	span {
+		margin-left: 1em;
+		text-decoration: underline;
+	}
+}
+
+.legalCheckbox {
+	background: #fff;
+	border: none;
+	border-radius: 3px;
+	box-sizing: border-box;
+	height: 1.5em;
+	width: 1.5em;
+}
+
+.submitButton {
+	border: none;
+	border-radius: 5px;
+	display: block;
+	font-weight: bold;
+	margin: 0 auto;
+	outline: none;
+	padding: 1em 2em;
+	text-align: center;
+	width: auto;
 }

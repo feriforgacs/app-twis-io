@@ -55,8 +55,8 @@ export default function Form({ data }) {
 
 				<div className={`screen-item ${styles.formGroup}`}>
 					<label className={`screen-item ${styles.labelLegal}`}>
-						<input type="checkbox" disabled className={`screen-item ${styles.legalCheckbox}`} />
-						{data.settings.termsLabel || "I've read and accept the terms & conditions"}
+						<input type="checkbox" className={`screen-item ${styles.legalCheckbox}`} />
+						<span>{data.settings.termsLabel || "I've read and accept the terms & conditions"}</span>
 					</label>
 				</div>
 
