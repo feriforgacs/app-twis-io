@@ -11,6 +11,8 @@ import FontColor from "./item-settings/FontColor";
 import FontBackgroundColor from "./item-settings/FontBackgroundColor";
 import ButtonAction from "./item-settings/ButtonAction";
 import FormSettings from "./item-settings/FormSettings";
+import FormSubmitButtonColor from "./item-settings/FormSubmitButtonColor";
+import FormSubmitButtonBackground from "./item-settings/FormSubmitButtonBackground";
 
 export default function ItemSettings() {
 	const { activeScreenItem, unsetActiveScreen, unsetActiveScreenItem } = useContext(GlobalContext);
@@ -43,6 +45,14 @@ export default function ItemSettings() {
 					<FontBackgroundColor />
 					<FontFamily />
 					<FontSize />
+				</>
+			) : (
+				""
+			)}
+			{activeScreenItem.type === "form" ? (
+				<>
+					<FormSubmitButtonColor />
+					<FormSubmitButtonBackground />
 				</>
 			) : (
 				""

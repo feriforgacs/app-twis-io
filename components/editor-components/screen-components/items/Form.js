@@ -7,12 +7,6 @@ export default function Form({ data }) {
 	const { activeScreenItem, setActiveScreenItem } = useContext(GlobalContext);
 	const screenItemActive = activeScreenItem.itemId === data.itemId;
 
-	/**
-	 * @todo separate style for submit button
-	 * @todo make button label contenteditable
-	 * @todo make field labels contenteditable
-	 */
-
 	let formStyle = {
 		background: data.settings.highlightColor.backgroundColor,
 		height: `${data.settings.height || 0}px`,
