@@ -34,8 +34,6 @@ export default function ItemSettings() {
 					</svg>
 				</button>
 			</div>
-			{activeScreenItem.type === "button" && <ButtonAction />}
-			{activeScreenItem.type === "form" && <FormSettings />}
 			<Opacity />
 			{activeScreenItem.type === "text" || activeScreenItem.type === "button" || activeScreenItem.type === "question" || activeScreenItem.type === "form" ? (
 				<>
@@ -57,6 +55,8 @@ export default function ItemSettings() {
 			) : (
 				""
 			)}
+			{activeScreenItem.type === "button" && <ButtonAction />}
+			{activeScreenItem.type === "form" && <FormSettings />}
 		</div>
 	);
 }

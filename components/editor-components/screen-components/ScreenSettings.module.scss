@@ -288,7 +288,8 @@ li.fontSizeSelectorListItem {
 	font-weight: bold;
 }
 
-.actionURLInput {
+.actionURLInput,
+.legalURLInput {
 	box-sizing: border-box;
 	border: 1px solid #ccc;
 	border-radius: 3px;
@@ -301,4 +302,8 @@ li.fontSizeSelectorListItem {
 		outline: none;
 		box-shadow: 0 0 10px #cbc2f5;
 	}
+}
+
+.legalURLInput {
+	margin-top: 0.5rem;
 }
