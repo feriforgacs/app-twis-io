@@ -6,6 +6,12 @@ export default function Form({ data }) {
 	const { activeScreenItem, setActiveScreenItem } = useContext(GlobalContext);
 	const screenItemActive = activeScreenItem.itemId === data.itemId;
 
+	/**
+	 * @todo separate style for submit button
+	 * @todo make button label contenteditable
+	 * @todo make field labels contenteditable
+	 */
+
 	let formStyle = {
 		background: data.settings.highlightColor.backgroundColor,
 		height: `${data.settings.height || 0}px`,
@@ -29,6 +35,11 @@ export default function Form({ data }) {
 		formStyle.cursor = "move";
 	}
 
+	let buttonStyle = {
+		background: data.settings.highlightColorButton.backgroundColor || "",
+		color: `rgba(${data.settings.colorButton.r}, ${data.settings.colorButton.g}, ${data.settings.colorButton.b}, ${data.settings.colorButton.a})`,
+	};
+
 	return (
 		<div onClick={() => setActiveScreenItem(data)} id={`${data.type}-${data.itemId}`} className={`screen-item ${styles.form}`} style={formStyle}>
 			<div className={`screen-item ${styles.formBody}`}>
@@ -50,7 +61,9 @@ export default function Form({ data }) {
 				</div>
 
 				<div className={`screen-item ${styles.formGroup}`}>
-					<button className={`screen-item ${styles.submitButton}`}>{data.settings.labelSubmit || "Submit"}</button>
+					<button className={`screen-item ${styles.submitButton}`} style={buttonStyle}>
+						{data.settings.labelSubmit || "Submit"}
+					</button>
 				</div>
 			</div>
 		</div>
