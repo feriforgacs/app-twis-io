@@ -1,6 +1,4 @@
 import { useEffect, useContext } from "react";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
 import { GlobalContext } from "../../context/GlobalState";
 import styles from "./Editor.module.scss";
 import Header from "./Header";
@@ -23,10 +21,8 @@ export default function Editor({ campaignId }) {
 				<>
 					<div id="editor" className={styles.editor}>
 						<Header />
-						<DndProvider backend={HTML5Backend}>
-							<Sidebar />
-							<Body />
-						</DndProvider>
+						<Sidebar />
+						<Body />
 						{error && <Toast onClose={() => setError(false, "")} duration={4000} type={"error"} content={errorMessage} />}
 					</div>
 				</>
