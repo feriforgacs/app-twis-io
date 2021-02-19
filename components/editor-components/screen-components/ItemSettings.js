@@ -10,7 +10,7 @@ import TextAlign from "./item-settings/TextAlign";
 import FontColor from "./item-settings/FontColor";
 import FontBackgroundColor from "./item-settings/FontBackgroundColor";
 import ButtonAction from "./item-settings/ButtonAction";
-import FormSettings from "./item-settings/FormSettings";
+import FormFieldsSettings from "./item-settings/FormFieldsSettings";
 import FormSubmitButtonColor from "./item-settings/FormSubmitButtonColor";
 import FormSubmitButtonBackground from "./item-settings/FormSubmitButtonBackground";
 import FormActionSettings from "./item-settings/FormActionSettings";
@@ -59,7 +59,7 @@ export default function ItemSettings() {
 			{activeScreenItem.type === "button" && <ButtonAction />}
 			{activeScreenItem.type === "form" && (
 				<>
-					<FormSettings />
+					<FormFieldsSettings />
 					<FormActionSettings />
 				</>
 			)}

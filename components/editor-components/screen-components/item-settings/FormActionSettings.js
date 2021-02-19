@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import { DebounceInput } from "react-debounce-input";
 import styles from "../ScreenSettings.module.scss";
 import { GlobalContext } from "../../../../context/GlobalState";
 
@@ -17,6 +18,8 @@ export default function FormActionSettings() {
 			label: "Redirect the user to a defined URL",
 		},
 	];
+
+	const [successRedirectURL, setSuccessRedirectURL] = useState(campaign.dataCollectionSuccessRedirectURL || "");
 
 	return (
 		<>
@@ -42,6 +45,29 @@ export default function FormActionSettings() {
 					))}
 				</div>
 			</div>
+			{dataCollectionSuccessAction === "popup" && (
+				<div className={`${styles.settingsSection} item-settings`}>
+					<label className={`${styles.settingsLabel} item-settings`}>Success message after form completion</label>
+				</div>
+			)}
+			{dataCollectionSuccessAction === "redirect" && (
+				<div className={`${styles.settingsSection} item-settings`}>
+					<label className={`${styles.settingsLabel} item-settings`}>Redirect the user to the following URL</label>
+
+					<DebounceInput
+						className={styles.redirectURLInput}
+						minLength="3"
+						placeholder="https://"
+						debounceTimeout="1000"
+						value={successRedirectURL}
+						onChange={(e) => {
+							const redirectURL = e.target.value;
+							setSuccessRedirectURL(redirectURL);
+							updateCampaignData("dataCollectionSuccessRedirectURL", redirectURL);
+						}}
+					/>
+				</div>
+			)}
 			<br />
 			- @todo success URL or Message
 			<br />

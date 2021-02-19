@@ -3,7 +3,7 @@ import { DebounceInput } from "react-debounce-input";
 import styles from "../ScreenSettings.module.scss";
 import { GlobalContext } from "../../../../context/GlobalState";
 
-export default function FormSettings() {
+export default function FormFieldsSettings() {
 	const { activeScreen, activeScreenItem, setActiveScreenItem, updateScreenItem } = useContext(GlobalContext);
 
 	const [collectName, setCollectName] = useState(activeScreenItem.settings.collectName || false);
