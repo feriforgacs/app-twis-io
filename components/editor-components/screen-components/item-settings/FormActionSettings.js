@@ -50,7 +50,13 @@ export default function FormActionSettings() {
 			{dataCollectionSuccessAction === "popup" && (
 				<div className={`${styles.settingsSection} item-settings`}>
 					<label className={`${styles.settingsLabel} item-settings`}>Success message after form completion</label>
-					<span className={styles.helpText}>This is the message that users will see after the data collection form was processed.</span>
+					<span className={styles.helpText}>
+						This is the message that users will see when the data collection form was processed successfully. You can use{" "}
+						<a href="https://www.markdownguide.org/cheat-sheet/" target="_blank" rel="noopener noreferrer">
+							markdown
+						</a>{" "}
+						to format your message.
+					</span>
 
 					<DebounceInput
 						element="textarea"

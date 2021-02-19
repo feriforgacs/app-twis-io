@@ -3,6 +3,5 @@ export default function SetActiveScreenItem(state, action) {
 		...state,
 		activeScreenItem: action.payload,
 		formResultPreview: "",
-		moveableDisabled: false,
 	};
 }

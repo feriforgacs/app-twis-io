@@ -5,9 +5,6 @@ span {
 		&:hover:not(:focus) {
 			outline: 1px solid rgba(10, 231, 245, 0.4);
 		}
-		&.active {
-			outline: none;
-		}
 	}
 
 	&[contenteditable="true"] {
@@ -23,7 +20,7 @@ span {
 	}
 
 	&.active {
-		&:hover {
+		&:hover:not(:focus) {
 			cursor: move;
 			opacity: 1;
 			outline: none;

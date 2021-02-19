@@ -7,7 +7,7 @@ import ScreenSettings from "./screen-components/ScreenSettings";
 import ItemSettings from "./screen-components/ItemSettings";
 
 export default function Body() {
-	const { activeScreen, unsetActiveScreen, activeScreenItem, setActiveScreenItem, unsetActiveScreenItem, updateScreenItem, moveableDisabled } = useContext(GlobalContext);
+	const { activeScreen, unsetActiveScreen, activeScreenItem, setActiveScreenItem, unsetActiveScreenItem, updateScreenItem, moveableDisabled, formResultPreview } = useContext(GlobalContext);
 	const [moveableTarget, setMoveableTarget] = useState();
 
 	/**
@@ -61,7 +61,7 @@ export default function Body() {
 				}
 			}}
 		>
-			{activeScreenItem && !moveableDisabled && (
+			{activeScreenItem && !moveableDisabled && !formResultPreview && (
 				<Moveable
 					snappable={true}
 					snapThreshold={5}
