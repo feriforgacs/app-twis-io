@@ -310,14 +310,15 @@ li.fontSizeSelectorListItem {
 	margin-top: 0.5rem;
 }
 
-.popupContentTextarea {
+.popupContentTextarea,
+.errorMessageTextare {
 	box-sizing: border-box;
 	border: 1px solid #ccc;
 	border-radius: 3px;
 	font-size: 0.8rem;
 	min-height: 10rem;
 	line-height: 1.3rem;
-	margin: 0 0 0.5rem;
+	margin: 0.5rem 0 0.5rem;
 	padding: 0.5rem 1rem;
 	width: 100%;
 

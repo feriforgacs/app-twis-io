@@ -8,6 +8,7 @@ export default function FormActionSettings() {
 
 	const [dataCollectionSuccessAction, setDataCollectionSuccessAction] = useState(campaign.dataCollectionSuccessAction || "popup");
 	const [dataCollectionSuccessPopupContent, setDataCollectionSuccessPopupContent] = useState(campaign.dataCollectionSuccessPopupContent || "Thank your for filling the form. We’ll get in touch with you if you are one of our lucky winners. Meanwhile, don’t forget to follow us on Instagram and feel free to visit our website as well.");
+	const [dataCollectionErrorMessage, setDataCollectionErrorMessage] = useState(campaign.dataCollectionErrorMessage || "There was an error during the process. Please, wait a few seconds and try again.");
 
 	const formSuccessActionOptions = [
 		{
@@ -49,6 +50,7 @@ export default function FormActionSettings() {
 			{dataCollectionSuccessAction === "popup" && (
 				<div className={`${styles.settingsSection} item-settings`}>
 					<label className={`${styles.settingsLabel} item-settings`}>Success message after form completion</label>
+					<span className={styles.helpText}>This is the message that users will see after the data collection form was processed.</span>
 
 					<DebounceInput
 						element="textarea"
@@ -82,11 +84,24 @@ export default function FormActionSettings() {
 					/>
 				</div>
 			)}
-			<br />
-			- @todo success URL or Message
-			<br />
-			- @todo error message
-			<br />
+
+			<div className={`${styles.settingsSection} item-settings`}>
+				<label className={`${styles.settingsLabel} item-settings`}>Error message after form completion</label>
+				<span className={styles.helpText}>This is the message that users will see if something goes wrong during the data collection process.</span>
+
+				<DebounceInput
+					element="textarea"
+					className={styles.errorMessageTextare}
+					minLength="3"
+					debounceTimeout="1000"
+					value={dataCollectionErrorMessage}
+					onChange={(e) => {
+						const content = e.target.value;
+						setDataCollectionErrorMessage(content);
+						updateCampaignData("dataCollectionErrorMessage", content);
+					}}
+				/>
+			</div>
 		</>
 	);
 }
