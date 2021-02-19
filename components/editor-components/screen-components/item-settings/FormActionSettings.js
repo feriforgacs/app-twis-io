@@ -7,6 +7,7 @@ export default function FormActionSettings() {
 	const { campaign, updateCampaignData } = useContext(GlobalContext);
 
 	const [dataCollectionSuccessAction, setDataCollectionSuccessAction] = useState(campaign.dataCollectionSuccessAction || "popup");
+	const [dataCollectionSuccessPopupContent, setDataCollectionSuccessPopupContent] = useState(campaign.dataCollectionSuccessPopupContent || "Thank your for filling the form. We’ll get in touch with you if you are one of our lucky winners. Meanwhile, don’t forget to follow us on Instagram and feel free to visit our website as well.");
 
 	const formSuccessActionOptions = [
 		{
@@ -48,6 +49,19 @@ export default function FormActionSettings() {
 			{dataCollectionSuccessAction === "popup" && (
 				<div className={`${styles.settingsSection} item-settings`}>
 					<label className={`${styles.settingsLabel} item-settings`}>Success message after form completion</label>
+
+					<DebounceInput
+						element="textarea"
+						className={styles.popupContentTextarea}
+						minLength="3"
+						debounceTimeout="1000"
+						value={dataCollectionSuccessPopupContent}
+						onChange={(e) => {
+							const content = e.target.value;
+							setDataCollectionSuccessPopupContent(content);
+							updateCampaignData("dataCollectionSuccessPopupContent", content);
+						}}
+					/>
 				</div>
 			)}
 			{dataCollectionSuccessAction === "redirect" && (
