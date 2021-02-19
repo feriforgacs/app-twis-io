@@ -190,7 +190,7 @@ export const GlobalProvider = ({ children }) => {
 			if (screen.screenItems.length > 0) {
 				screen.screenItems.forEach((screenItem) => {
 					if (itemsWithFontFamily.includes(screenItem.type) && !campaignFonts.includes(screenItem.settings.fontFamily)) {
-						campaignFonts.push(screenItem.settings.fontFamily);
+						screenItem.settings.fontFamily && campaignFonts.push(screenItem.settings.fontFamily);
 					}
 				});
 			}
