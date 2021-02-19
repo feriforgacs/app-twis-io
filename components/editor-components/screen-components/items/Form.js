@@ -5,7 +5,7 @@ import Label from "./form-items/Label";
 import Result from "./form-items/Result";
 
 export default function Form({ data }) {
-	const { activeScreenItem, setActiveScreenItem, formResultPreview } = useContext(GlobalContext);
+	const { activeScreenItem, setActiveScreenItem, formResultPreview, campaign } = useContext(GlobalContext);
 	const screenItemActive = activeScreenItem.itemId === data.itemId;
 
 	let formStyle = {
@@ -72,7 +72,7 @@ export default function Form({ data }) {
 					</div>
 				</div>
 			</div>
-			<Result status={formResultPreview} />
+			<Result status={formResultPreview} successContent={campaign.dataCollectionSuccessPopupContent} errorContent={campaign.dataCollectionErrorMessage} />
 		</>
 	);
 }
