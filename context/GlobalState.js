@@ -13,6 +13,7 @@ let InitialState = {
 	activeScreen: "",
 	activeScreenItem: "",
 	moveableDisabled: false,
+	formResultPreview: "",
 	campaign: {},
 	screens: [],
 };
@@ -38,10 +39,25 @@ export const GlobalProvider = ({ children }) => {
 		});
 	};
 
+	/**
+	 * Disable or enable moveable item
+	 * @param {bool} disabled Status of moveable
+	 */
 	const setMoveableDisabled = (disabled) => {
 		dispatch({
 			type: "SET_MOVEABLE_DISABLED",
 			payload: disabled,
+		});
+	};
+
+	/**
+	 * Preview the success or error state of the data collection form
+	 * @param {string} result The status of the form to preview - success or error
+	 */
+	const setFormResultPreview = (result) => {
+		dispatch({
+			type: "SET_FORM_RESULT_PREVIEW",
+			payload: result,
 		});
 	};
 
@@ -992,6 +1008,7 @@ export const GlobalProvider = ({ children }) => {
 				activeScreen: state.activeScreen,
 				activeScreenItem: state.activeScreenItem,
 				moveableDisabled: state.moveableDisabled,
+				formResultPreview: state.formResultPreview,
 				campaign: state.campaign,
 				screens: state.screens,
 
@@ -1001,6 +1018,7 @@ export const GlobalProvider = ({ children }) => {
 				updateCampaignDataInState,
 				updateCampaignFonts,
 				setMoveableDisabled,
+				setFormResultPreview,
 
 				// screen actions
 				addScreen,

@@ -2,9 +2,10 @@ import { useContext } from "react";
 import { GlobalContext } from "../../../../context/GlobalState";
 import styles from "./Form.module.scss";
 import Label from "./form-items/Label";
+import Result from "./form-items/Result";
 
 export default function Form({ data }) {
-	const { activeScreenItem, setActiveScreenItem } = useContext(GlobalContext);
+	const { activeScreenItem, setActiveScreenItem, formResultPreview } = useContext(GlobalContext);
 	const screenItemActive = activeScreenItem.itemId === data.itemId;
 
 	let formStyle = {
@@ -36,39 +37,42 @@ export default function Form({ data }) {
 	};
 
 	return (
-		<div onClick={() => setActiveScreenItem(data)} id={`${data.type}-${data.itemId}`} className={`screen-item ${styles.form}`} style={formStyle}>
-			<div className={`screen-item ${styles.formBody}`}>
-				{data.settings.collectName && (
+		<>
+			<div onClick={() => setActiveScreenItem(data)} id={`${data.type}-${data.itemId}`} className={`screen-item ${styles.form}`} style={formStyle}>
+				<div className={`screen-item ${styles.formBody}`}>
+					{data.settings.collectName && (
+						<div className={`screen-item ${styles.formGroup}`}>
+							<label className={`screen-item ${styles.formLabel}`} title="Double click to edit">
+								<Label labelKey="labelName" value={data.settings.labelName || "Name"} />
+							</label>
+							<input type="text" disabled placeholder="Petra" className={`screen-item ${styles.formInput}`} />
+						</div>
+					)}
+
+					{data.settings.collectEmail && (
+						<div className={`screen-item ${styles.formGroup}`}>
+							<label className={`screen-item ${styles.formLabel}`}>
+								<Label labelKey="labelEmail" value={data.settings.labelEmail || "Email address"} />
+							</label>
+							<input type="text" disabled placeholder="petra@twis.io" className={`screen-item ${styles.formInput}`} />
+						</div>
+					)}
+
 					<div className={`screen-item ${styles.formGroup}`}>
-						<label className={`screen-item ${styles.formLabel}`} title="Double click to edit">
-							<Label labelKey="labelName" value={data.settings.labelName || "Name"} />
+						<label className={`screen-item ${styles.labelLegal}`}>
+							<input type="checkbox" className={`screen-item ${styles.legalCheckbox}`} disabled />
+							<Label labelKey="labelTerms" value={data.settings.labelTerms || "I've read and accept the terms & conditions"} />
 						</label>
-						<input type="text" disabled placeholder="Petra" className={`screen-item ${styles.formInput}`} />
 					</div>
-				)}
 
-				{data.settings.collectEmail && (
 					<div className={`screen-item ${styles.formGroup}`}>
-						<label className={`screen-item ${styles.formLabel}`}>
-							<Label labelKey="labelEmail" value={data.settings.labelEmail || "Email address"} />
-						</label>
-						<input type="text" disabled placeholder="petra@twis.io" className={`screen-item ${styles.formInput}`} />
+						<button className={`screen-item ${styles.submitButton}`} style={buttonStyle}>
+							<Label labelKey="labelSubmit" value={data.settings.labelSubmit || "Submit"} />
+						</button>
 					</div>
-				)}
-
-				<div className={`screen-item ${styles.formGroup}`}>
-					<label className={`screen-item ${styles.labelLegal}`}>
-						<input type="checkbox" className={`screen-item ${styles.legalCheckbox}`} disabled />
-						<Label labelKey="labelTerms" value={data.settings.labelTerms || "I've read and accept the terms & conditions"} />
-					</label>
-				</div>
-
-				<div className={`screen-item ${styles.formGroup}`}>
-					<button className={`screen-item ${styles.submitButton}`} style={buttonStyle}>
-						<Label labelKey="labelSubmit" value={data.settings.labelSubmit || "Submit"} />
-					</button>
 				</div>
 			</div>
-		</div>
+			<Result status={formResultPreview} />
+		</>
 	);
 }

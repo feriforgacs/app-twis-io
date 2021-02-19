@@ -4,7 +4,7 @@ import styles from "../ScreenSettings.module.scss";
 import { GlobalContext } from "../../../../context/GlobalState";
 
 export default function FormActionSettings() {
-	const { campaign, updateCampaignData } = useContext(GlobalContext);
+	const { campaign, updateCampaignData, setFormResultPreview } = useContext(GlobalContext);
 
 	const [dataCollectionSuccessAction, setDataCollectionSuccessAction] = useState(campaign.dataCollectionSuccessAction || "popup");
 	const [dataCollectionSuccessPopupContent, setDataCollectionSuccessPopupContent] = useState(campaign.dataCollectionSuccessPopupContent || "Thank your for filling the form. We’ll get in touch with you if you are one of our lucky winners. Meanwhile, don’t forget to follow us on Instagram and feel free to visit our website as well.");
@@ -64,6 +64,13 @@ export default function FormActionSettings() {
 							updateCampaignData("dataCollectionSuccessPopupContent", content);
 						}}
 					/>
+					<button
+						onClick={() => {
+							setFormResultPreview("success");
+						}}
+					>
+						preview success
+					</button>
 				</div>
 			)}
 			{dataCollectionSuccessAction === "redirect" && (
@@ -101,6 +108,13 @@ export default function FormActionSettings() {
 						updateCampaignData("dataCollectionErrorMessage", content);
 					}}
 				/>
+				<button
+					onClick={() => {
+						setFormResultPreview("error");
+					}}
+				>
+					preview error
+				</button>
 			</div>
 		</>
 	);

@@ -1,6 +1,7 @@
 import SetCriticalError from "./global-reducers/SetCriticalError";
 import SetError from "./global-reducers/SetError";
 import SetMoveableDisabled from "./global-reducers/SetMoveableDisabled";
+import SetFormResultPreview from "./global-reducers/SetFormResultPreview";
 
 import SetCampaignInitialState from "./campaign-reducers/SetCampaignInitialState";
 import UpdateCampaignData from "./campaign-reducers/UpdateCampaignData";
@@ -38,6 +39,12 @@ export default function AppReducer(state, action) {
 		 */
 		case "SET_MOVEABLE_DISABLED":
 			return SetMoveableDisabled(state, action);
+
+		/**
+		 * Enable or disable moveable
+		 */
+		case "SET_FORM_RESULT_PREVIEW":
+			return SetFormResultPreview(state, action);
 
 		/**
 		 * Set campaign initial state (when editor loads)
