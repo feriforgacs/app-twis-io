@@ -1,0 +1,32 @@
+span {
+	&[contenteditable] {
+		cursor: text;
+
+		&:hover:not(:focus) {
+			outline: 1px solid rgba(10, 231, 245, 0.4);
+		}
+		&.active {
+			outline: none;
+		}
+	}
+
+	&[contenteditable="true"] {
+		cursor: text !important;
+		outline: 2px solid #0ae7f5;
+		opacity: 1;
+	}
+
+	&[contenteditable="false"] {
+		&:hover {
+			opacity: 0.8;
+		}
+	}
+
+	&.active {
+		&:hover {
+			cursor: move;
+			opacity: 1;
+			outline: none;
+		}
+	}
+}

@@ -65,18 +65,6 @@
 		height: auto;
 		line-height: 150%;
 		width: auto;
-
-		&[contenteditable="true"] {
-			cursor: text;
-			outline: 2px solid #0ae7f5;
-			opacity: 1;
-		}
-
-		&[contenteditable="false"] {
-			&:hover {
-				opacity: 0.8;
-			}
-		}
 	}
 }
 

@@ -78,10 +78,6 @@ export default function Text({ data }) {
 		position: "absolute",
 	};
 
-	if (screenItemActive && editableDisabled) {
-		textContainerStyle.cursor = "move";
-	}
-
 	let textStyle = {
 		color: `rgba(${data.settings.color.r}, ${data.settings.color.g}, ${data.settings.color.b}, ${data.settings.color.a})`,
 		fontSize: `${data.settings.fontSize}px`,
@@ -93,6 +89,15 @@ export default function Text({ data }) {
 
 	const fontFamilyClass = data.settings.fontFamily !== "" ? `font--${data.settings.fontFamily}` : `font--arial`;
 
+	if (screenItemActive && editableDisabled) {
+		textContainerStyle.cursor = "move";
+		textStyle.cursor = "move";
+	}
+
+	if (!screenItemActive) {
+		textStyle.cursor = "text";
+	}
+
 	return (
 		<div
 			onClick={() => {
@@ -102,36 +107,35 @@ export default function Text({ data }) {
 			}}
 			style={textContainerStyle}
 			id={`${data.type}-${data.itemId}`}
-			className={`screen-item ${fontFamilyClass} ${data.settings.classNames ? data.settings.classNames : ""}`}
+			className={`screen-item screen-item--text ${fontFamilyClass} ${data.settings.classNames ? data.settings.classNames : ""}`}
+			title="Single click to select, double click to edit text"
 		>
-			<span className="screen-item" style={textStyle}>
-				<ContentEditable
-					style={textStyle}
-					innerRef={editableContent}
-					html={text.current}
-					onBlur={handleBlur}
-					onChange={handleChange}
-					className="screen-item"
-					tagName="span"
-					disabled={editableDisabled}
-					onDoubleClick={() => {
-						// turn on content editable
-						setEditableDisabled(false);
+			<ContentEditable
+				style={textStyle}
+				innerRef={editableContent}
+				html={text.current}
+				onBlur={handleBlur}
+				onChange={handleChange}
+				className={`screen-item ${screenItemActive ? "active" : ""}`}
+				tagName="span"
+				disabled={editableDisabled}
+				onDoubleClick={() => {
+					// turn on content editable
+					setEditableDisabled(false);
 
-						// set active screen item to current item
-						setActiveScreenItem(data);
+					// set active screen item to current item
+					setActiveScreenItem(data);
 
-						// disable moveable
-						setMoveableDisabled(true);
+					// disable moveable
+					setMoveableDisabled(true);
 
-						setTimeout(() => {
-							editableContent.current.focus();
-						}, 200);
-					}}
-					onPaste={pastePlaintext}
-					onKeyPress={disableNewlines}
-				/>
-			</span>
+					setTimeout(() => {
+						editableContent.current.focus();
+					}, 200);
+				}}
+				onPaste={pastePlaintext}
+				onKeyPress={disableNewlines}
+			/>
 		</div>
 	);
 }
