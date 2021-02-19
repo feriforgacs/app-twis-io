@@ -1,11 +1,72 @@
 .result {
-	background: #f7f7f7;
+	background: #fff;
 	border-radius: 5px;
-	bottom: 1rem;
+	bottom: 0;
 	box-sizing: border-box;
-	left: 1rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	left: 0;
+	line-height: 1.5rem;
 	padding: 2rem;
 	position: absolute;
-	top: 1rem;
-	width: calc(100% - 2rem);
+	top: 0;
+	width: 100%;
+	pointer-events: none;
+
+	&::before {
+		background: #fff;
+		bottom: 0;
+		border-radius: 5px;
+		content: "";
+		height: calc(100% - 2rem);
+		left: 1rem;
+		top: 1rem;
+		position: absolute;
+		width: calc(100% - 2rem);
+		z-index: 0;
+	}
+
+	p {
+		z-index: 1;
+	}
+
+	a {
+		color: #555;
+		font-weight: bold;
+	}
+}
+
+.resultSuccess {
+	background: linear-gradient(rgb(15, 191, 33), rgb(10, 206, 171));
+}
+
+.resultError {
+	background: linear-gradient(to bottom, #ed213a, #93291e);
+}
+
+.resultIcon {
+	margin: 0 auto;
+	z-index: 1;
+
+	svg {
+		height: 60px;
+		width: 60px;
+		stroke: #0ec556;
+	}
+}
+
+.errorClose {
+	background: none;
+	border: none;
+	position: absolute;
+	right: 1rem;
+	top: 1.5rem;
+	z-index: 2;
+
+	svg {
+		height: 50px;
+		stroke: #888888;
+		width: 50px;
+	}
 }

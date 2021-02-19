@@ -6,18 +6,25 @@ export default function Result({ status, successContent, errorContent }) {
 		<div className="screen-item">
 			{status === "success" && (
 				<div className={`${styles.result} ${styles.resultSuccess}`}>
-					<span>
+					<span className={styles.resultIcon}>
 						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-							<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-							<polyline points="22 4 12 14.01 9 11.01"></polyline>
+							<polyline points="20 6 9 17 4 12"></polyline>
 						</svg>
 					</span>
-					<span>
-						<ReactMarkdown>{successContent}</ReactMarkdown>
-					</span>
+					<ReactMarkdown skipHtml={true}>{successContent}</ReactMarkdown>
 				</div>
 			)}
-			{status === "error" && <div className={`${styles.result} ${styles.resultError}`}>{errorContent}</div>}
+			{status === "error" && (
+				<div className={`${styles.result} ${styles.resultError}`}>
+					<button className={styles.errorClose}>
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
+							<line x1="15" y1="9" x2="9" y2="15"></line>
+							<line x1="9" y1="9" x2="15" y2="15"></line>
+						</svg>
+					</button>
+					<p>{errorContent}</p>
+				</div>
+			)}
 		</div>
 	);
 }
