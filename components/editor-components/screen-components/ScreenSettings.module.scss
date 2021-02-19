@@ -263,7 +263,8 @@ li.fontSizeSelectorListItem {
 	padding: 0;
 }
 
-.buttonActionOptions {
+.buttonActionOptions,
+.formSuccessActionOptions {
 	display: flex;
 	flex-direction: column;
 	font-size: 0.8rem;

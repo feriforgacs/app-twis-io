@@ -42,10 +42,9 @@ export default function FormSettings() {
 					</label>
 				</div>
 			</div>
-
 			<div className={`${styles.settingsSection} item-settings`}>
 				<label className={`${styles.settingsLabel} item-settings`}>Terms and Conditions URL</label>
-				<span className={styles.helpText}>To make sure that you can use the collected user information for marketing purposes, please, use the proper URL for your terms and conditions.</span>
+				<span className={styles.helpText}>To make sure that you can use the collected information for marketing purposes, please, use the proper URL for your terms and conditions.</span>
 
 				<DebounceInput
 					className={styles.legalURLInput}

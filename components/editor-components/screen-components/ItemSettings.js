@@ -13,6 +13,7 @@ import ButtonAction from "./item-settings/ButtonAction";
 import FormSettings from "./item-settings/FormSettings";
 import FormSubmitButtonColor from "./item-settings/FormSubmitButtonColor";
 import FormSubmitButtonBackground from "./item-settings/FormSubmitButtonBackground";
+import FormActionSettings from "./item-settings/FormActionSettings";
 
 export default function ItemSettings() {
 	const { activeScreenItem, unsetActiveScreen, unsetActiveScreenItem } = useContext(GlobalContext);
@@ -56,7 +57,12 @@ export default function ItemSettings() {
 				""
 			)}
 			{activeScreenItem.type === "button" && <ButtonAction />}
-			{activeScreenItem.type === "form" && <FormSettings />}
+			{activeScreenItem.type === "form" && (
+				<>
+					<FormSettings />
+					<FormActionSettings />
+				</>
+			)}
 		</div>
 	);
 }
