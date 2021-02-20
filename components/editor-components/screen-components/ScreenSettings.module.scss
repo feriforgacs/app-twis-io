@@ -332,3 +332,17 @@ li.fontSizeSelectorListItem {
 		box-shadow: 0 0 10px #cbc2f5;
 	}
 }
+
+.previewButton {
+	background: #f7f7f7;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	box-sizing: border-box;
+	color: #555;
+	cursor: pointer;
+	font-size: 0.8rem;
+	font-weight: bold;
+	line-height: 2.3rem;
+	outline: none;
+	width: 100%;
+}

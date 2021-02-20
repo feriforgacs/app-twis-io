@@ -1,7 +1,3 @@
-/**
- * @todo design for preview buttons
- * @todo manage state of preview buttons
- */
 import { useContext, useState } from "react";
 import { DebounceInput } from "react-debounce-input";
 import styles from "../ScreenSettings.module.scss";
@@ -77,6 +73,7 @@ export default function FormActionSettings() {
 						}}
 					/>
 					<button
+						className={styles.previewButton}
 						onClick={() => {
 							if (!previewActive || previewActive !== "success") {
 								setFormResultPreview("success");
@@ -127,6 +124,7 @@ export default function FormActionSettings() {
 					}}
 				/>
 				<button
+					className={styles.previewButton}
 					onClick={() => {
 						if (!previewActive || previewActive !== "error") {
 							setFormResultPreview("error");
