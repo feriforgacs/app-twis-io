@@ -27,6 +27,7 @@ export default function CampaignSettings() {
 	const [toastVisible, setToastVisible] = useState(false);
 	const [toastType, setToastType] = useState("default");
 	const [toastDuration, setToastDuration] = useState(3000);
+	const [successLimit, setSuccessLimit] = useState(campaign.successLimit || 0);
 
 	const dateFormat = "yyyy.MM.dd.";
 
@@ -235,6 +236,25 @@ export default function CampaignSettings() {
 					</div>
 				</>
 			)}
+
+			{/* Success limit */}
+			<div className={styles.settingsPanelSection}>
+				<label className={styles.settingsPanelLabel}>Correct Answer Limit</label>
+				<DebounceInput
+					className={styles.settingsPanelInput}
+					type="number"
+					min={0}
+					max={10}
+					debounceTimeout="1000"
+					value={successLimit || 0}
+					onChange={(e) => {
+						const limit = parseInt(e.target.value);
+						updateCampaignData("successLimit", limit);
+						setSuccessLimit(limit);
+					}}
+				/>
+				<p className={styles.settingsPanelHelp}>The number of questions your players have to answer properly to successfully complete the quiz. (eg.: 0 - users can successfully complete the quiz without any correct answers, eg.: 5 - at least 5 correct answers is needed to successfully complete the quiz)</p>
+			</div>
 
 			{/* Open Graph Data */}
 			<div className={styles.settingsPanelSection}>

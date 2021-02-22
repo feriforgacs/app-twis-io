@@ -39,6 +39,13 @@
 }
 
 .settingsPanelInput {
+	&::-webkit-outer-spin-button,
+	&::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
+	-moz-appearance: textfield;
+
 	box-sizing: border-box;
 	border: 1px solid #ccc;
 	border-radius: 3px;
