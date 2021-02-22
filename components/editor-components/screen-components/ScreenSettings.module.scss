@@ -334,15 +334,23 @@ li.fontSizeSelectorListItem {
 }
 
 .previewButton {
+	align-items: center;
 	background: #f7f7f7;
 	border: 1px solid #ccc;
 	border-radius: 3px;
 	box-sizing: border-box;
 	color: #555;
 	cursor: pointer;
+	display: flex;
 	font-size: 0.8rem;
 	font-weight: bold;
+	justify-content: center;
 	line-height: 2.3rem;
 	outline: none;
 	width: 100%;
+
+	svg {
+		margin-right: 5px;
+		width: 20px;
+	}
 }
