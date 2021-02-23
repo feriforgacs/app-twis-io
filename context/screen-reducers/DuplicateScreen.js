@@ -21,5 +21,6 @@ export default function DuplicateScreen(state, action) {
 	return {
 		...state,
 		screens,
+		activeScreenItem: "",
 	};
 }

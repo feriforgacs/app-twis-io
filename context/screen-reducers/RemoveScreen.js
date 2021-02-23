@@ -18,17 +18,20 @@ export default function RemoveScreen(state, action) {
 		screens[index].orderIndex = index;
 	}
 
-	if (state.activeScreen.screenId === action.payload.screenId) {
+	/* if (state.activeScreen.screenId === action.payload.screenId) {
 		// unset active screen
 		return {
 			...state,
 			activeScreen: "",
+			activeScreenItem: "",
 			screens,
 		};
-	}
+	} */
 
 	return {
 		...state,
+		activeScreen: "",
+		activeScreenItem: "",
 		screens,
 	};
 }
