@@ -59,7 +59,7 @@ export default function Header() {
 					/>
 				</div>
 
-				<button className={styles.buttonCampaignSettings} disabled={loading} onClick={() => toggleCampaignSettings(!campsignSettingsVisible)}>
+				<button className={`${styles.buttonCampaignSettings} button--campaign-settings`} disabled={loading} onClick={() => toggleCampaignSettings(!campsignSettingsVisible)}>
 					Campaign Settings{" "}
 					{campsignSettingsVisible ? (
 						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

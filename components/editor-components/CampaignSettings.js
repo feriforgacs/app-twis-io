@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import Switch from "react-switch";
 import { GlobalContext } from "../../context/GlobalState";
 import DayPickerInput from "react-day-picker/DayPickerInput";
@@ -14,7 +14,7 @@ import "react-day-picker/lib/style.css";
 import styles from "./CampaignSettings.module.scss";
 
 export default function CampaignSettings() {
-	const { campaign, updateCampaignData, updateCampaignDataInState } = useContext(GlobalContext);
+	const { campaign, updateCampaignData, updateCampaignDataInState, screens } = useContext(GlobalContext);
 	const [active, setActive] = useState(campaign.status === "active" || false);
 	const [visibleFrom, setVisibleFrom] = useState(new Date(campaign.visibleFrom) || new Date());
 	const [visibleTo, setVisibleTo] = useState(new Date(campaign.visibleTo) || new Date());
@@ -28,6 +28,12 @@ export default function CampaignSettings() {
 	const [toastType, setToastType] = useState("default");
 	const [toastDuration, setToastDuration] = useState(3000);
 	const [successLimit, setSuccessLimit] = useState(campaign.successLimit || 0);
+	const [questionScreens, setQuestionScreen] = useState(0);
+
+	useEffect(() => {
+		const questionScreens = screens.filter((screen) => screen.type === "question");
+		setQuestionScreen(questionScreens.length);
+	}, [screens]);
 
 	const dateFormat = "yyyy.MM.dd.";
 
@@ -244,7 +250,7 @@ export default function CampaignSettings() {
 					className={styles.settingsPanelInput}
 					type="number"
 					min={0}
-					max={10}
+					max={questionScreens}
 					debounceTimeout="1000"
 					value={successLimit || 0}
 					onChange={(e) => {
@@ -253,7 +259,11 @@ export default function CampaignSettings() {
 						setSuccessLimit(limit);
 					}}
 				/>
-				<p className={styles.settingsPanelHelp}>The number of questions your players have to answer properly to successfully complete the quiz. (eg.: 0 - users can successfully complete the quiz without any correct answers, eg.: 5 - at least 5 correct answers is needed to successfully complete the quiz)</p>
+				<p className={styles.settingsPanelHelp}>
+					The number of questions your players have to answer properly to successfully complete the quiz. <strong>(min 0, max {questionScreens})</strong>
+					<br />
+					eg.: 0 - users can successfully complete the quiz without any correct answers, eg.: 5 - at least 5 correct answers is needed to successfully complete the quiz
+				</p>
 			</div>
 
 			{/* Open Graph Data */}
