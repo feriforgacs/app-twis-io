@@ -1,10 +1,13 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { GlobalContext } from "../../../../context/GlobalState";
 import styles from "./Answers.module.scss";
+import Answer from "./answer-items/Answer";
 
 export default function Answers({ data }) {
 	const { activeScreenItem, setActiveScreenItem } = useContext(GlobalContext);
 	const screenItemActive = activeScreenItem.itemId === data.itemId;
+
+	const [correctAnswer, setCorrectAnswer] = useState(data.settings.correctAnswer || 0);
 
 	let answersStyle = {
 		height: `${data.settings.height || 0}px`,
@@ -34,7 +37,11 @@ export default function Answers({ data }) {
 	return (
 		<>
 			<div onClick={() => setActiveScreenItem(data)} id={`${data.type}-${data.itemId}`} className={`screen-item ${styles.answers}`} style={answersStyle}>
-				<div className={styles.answerItem}>Answer item</div>
+				<div className={`screen-item ${styles.answerItem}`} style={answerItemStyle}>
+					{data.settings.answers.map((answer, index) => (
+						<Answer key={index} answer={answer} index={index} correct={index === correctAnswer} setCorrectAnswer={setCorrectAnswer} />
+					))}
+				</div>
 			</div>
 		</>
 	);
