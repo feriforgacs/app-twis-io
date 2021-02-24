@@ -17,6 +17,7 @@ export default function Answer({ answer, index, correct, setCorrectAnswer, answe
 		<div className={`screen-item ${styles.answerOption} ${correct ? styles.answerOptionCorrect : ""}`} style={currentItemstyle}>
 			<div
 				className={`screen-item ${styles.choice} ${correct ? styles.choiceCorrect : ""}`}
+				title={`${correct ? "This is the correct answer" : "Set option as the correct answer"}`}
 				onClick={() => {
 					if (!correct) {
 						setCorrectAnswer(index);
