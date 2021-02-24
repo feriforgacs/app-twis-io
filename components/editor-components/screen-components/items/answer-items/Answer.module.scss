@@ -1,3 +1,17 @@
-.answer {
-	background: #fff;
+.answerOption {
+	display: flex;
+	margin-bottom: 0.5em;
+}
+
+.choice {
+	display: block;
+	height: 2em;
+	line-height: 2em;
+	text-align: center;
+	width: 2em;
+}
+
+.optionText {
+	height: 2em;
+	line-height: 2em;
 }
