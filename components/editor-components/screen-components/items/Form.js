@@ -36,9 +36,11 @@ export default function Form({ data }) {
 		color: `rgba(${data.settings.colorButton.r}, ${data.settings.colorButton.g}, ${data.settings.colorButton.b}, ${data.settings.colorButton.a})`,
 	};
 
+	const fontFamilyClass = data.settings.fontFamily !== "" ? `font--${data.settings.fontFamily}` : `font--arial`;
+
 	return (
 		<>
-			<div onClick={() => setActiveScreenItem(data)} id={`${data.type}-${data.itemId}`} className={`screen-item ${styles.form}`} style={formStyle}>
+			<div onClick={() => setActiveScreenItem(data)} id={`${data.type}-${data.itemId}`} className={`screen-item ${styles.form} ${fontFamilyClass}`} style={formStyle}>
 				<div className={`screen-item ${styles.formBody}`}>
 					{data.settings.collectName && (
 						<div className={`screen-item ${styles.formGroup}`}>

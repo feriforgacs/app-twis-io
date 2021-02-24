@@ -34,14 +34,15 @@ export default function Answers({ data }) {
 	if (screenItemActive) {
 		answersStyle.cursor = "move";
 	}
+
+	const fontFamilyClass = data.settings.fontFamily !== "" ? `font--${data.settings.fontFamily}` : `font--arial`;
+
 	return (
 		<>
-			<div onClick={() => setActiveScreenItem(data)} id={`${data.type}-${data.itemId}`} className={`screen-item ${styles.answers}`} style={answersStyle}>
-				<div className={`screen-item ${styles.answerItem}`}>
-					{data.settings.answers.map((answer, index) => (
-						<Answer key={index} answer={answer} index={index} correct={index === correctAnswer} setCorrectAnswer={setCorrectAnswer} answerItemStyle={answerItemStyle} />
-					))}
-				</div>
+			<div onClick={() => setActiveScreenItem(data)} id={`${data.type}-${data.itemId}`} className={`screen-item ${styles.answers} ${fontFamilyClass}`} style={answersStyle}>
+				{data.settings.answers.map((answer, index) => (
+					<Answer key={index} answer={answer} index={index} correct={index === correctAnswer} setCorrectAnswer={setCorrectAnswer} answerItemStyle={answerItemStyle} />
+				))}
 			</div>
 		</>
 	);
