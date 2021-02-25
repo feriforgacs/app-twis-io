@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { GlobalContext } from "../../../../../context/GlobalState";
+import AnswerText from "./AnswerText";
 import styles from "./Answer.module.scss";
 
 export default function Answer({ answer, index, correct, setCorrectAnswer, answerItemStyle, screenItemActive }) {
@@ -38,7 +39,9 @@ export default function Answer({ answer, index, correct, setCorrectAnswer, answe
 						answerChoices[index]
 					)}
 				</div>
-				<div className={`screen-item ${styles.optionText}`}>{answer}</div>
+				<div className={`screen-item ${styles.optionText}`}>
+					<AnswerText answer={answer} index={index} />
+				</div>
 			</div>
 		</>
 	);
