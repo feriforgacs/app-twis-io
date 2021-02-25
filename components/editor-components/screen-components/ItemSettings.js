@@ -14,6 +14,7 @@ import FormFieldsSettings from "./item-settings/FormFieldsSettings";
 import FormSubmitButtonColor from "./item-settings/FormSubmitButtonColor";
 import FormSubmitButtonBackground from "./item-settings/FormSubmitButtonBackground";
 import FormActionSettings from "./item-settings/FormActionSettings";
+import ItemInfo from "./item-settings/ItemInfo";
 
 export default function ItemSettings() {
 	const { activeScreenItem, unsetActiveScreen, unsetActiveScreenItem } = useContext(GlobalContext);
@@ -35,6 +36,8 @@ export default function ItemSettings() {
 					</svg>
 				</button>
 			</div>
+
+			<ItemInfo itemType={activeScreenItem.type} />
 			<Opacity />
 			{activeScreenItem.type === "text" || activeScreenItem.type === "button" || activeScreenItem.type === "question" || activeScreenItem.type === "form" || activeScreenItem.type === "answers" ? (
 				<>
