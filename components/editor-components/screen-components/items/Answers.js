@@ -41,7 +41,7 @@ export default function Answers({ data }) {
 		<>
 			<div onClick={() => setActiveScreenItem(data)} id={`${data.type}-${data.itemId}`} className={`screen-item ${styles.answers} ${fontFamilyClass}`} style={answersStyle}>
 				{data.settings.answers.map((answer, index) => (
-					<Answer key={index} answer={answer} index={index} correct={index === correctAnswer} setCorrectAnswer={setCorrectAnswer} answerItemStyle={answerItemStyle} />
+					<Answer key={index} answer={answer} index={index} screenItemActive={screenItemActive} correct={index === correctAnswer} setCorrectAnswer={setCorrectAnswer} answerItemStyle={answerItemStyle} />
 				))}
 			</div>
 		</>
