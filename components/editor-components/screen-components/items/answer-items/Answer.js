@@ -1,6 +1,10 @@
+import { useContext } from "react";
+import { GlobalContext } from "../../../../../context/GlobalState";
 import styles from "./Answer.module.scss";
 
 export default function Answer({ answer, index, correct, setCorrectAnswer, answerItemStyle, screenItemActive }) {
+	const { activeScreen, activeScreenItem, setActiveScreenItem, updateScreenItem } = useContext(GlobalContext);
+
 	const answerChoices = ["A", "B", "C", "D"];
 
 	let currentItemstyle = { ...answerItemStyle };
@@ -21,6 +25,8 @@ export default function Answer({ answer, index, correct, setCorrectAnswer, answe
 					onClick={() => {
 						if (!correct) {
 							setCorrectAnswer(index);
+							updateScreenItem(activeScreen.screenId, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, correctAnswer: index } });
+							setActiveScreenItem({ ...activeScreenItem, settings: { ...activeScreenItem.settings, correctAnswer: index } });
 						}
 					}}
 				>
