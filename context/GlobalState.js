@@ -201,7 +201,7 @@ export const GlobalProvider = ({ children }) => {
 		 * Check all used fonts
 		 */
 		let campaignFonts = [];
-		const itemsWithFontFamily = ["text", "button", "question", "answer", "form"];
+		const itemsWithFontFamily = ["text", "button", "question", "answers", "form"];
 		state.screens.forEach((screen) => {
 			if (screen.screenItems.length > 0) {
 				screen.screenItems.forEach((screenItem) => {

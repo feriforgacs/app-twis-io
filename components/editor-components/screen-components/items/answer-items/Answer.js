@@ -14,25 +14,26 @@ export default function Answer({ answer, index, correct, setCorrectAnswer, answe
 	}
 
 	return (
-		<div className={`screen-item ${styles.answerOption} ${correct ? styles.answerOptionCorrect : ""}`} style={currentItemstyle}>
-			<div
-				className={`screen-item ${styles.choice} ${correct && screenItemActive ? styles.choiceCorrect : ""}`}
-				title={`${correct ? "This is the correct answer" : "Set option as the correct answer"}`}
-				onClick={() => {
-					if (!correct) {
-						setCorrectAnswer(index);
-					}
-				}}
-			>
-				{correct && screenItemActive ? (
-					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-						<polyline points="20 6 9 17 4 12"></polyline>
-					</svg>
-				) : (
-					answerChoices[index]
-				)}
+		<>
+			<div className={`screen-item ${styles.answerOption} ${correct ? styles.answerOptionCorrect : ""}`} style={currentItemstyle}>
+				<div
+					className={`screen-item ${styles.choice} ${correct && screenItemActive ? styles.choiceCorrect : ""}`}
+					onClick={() => {
+						if (!correct) {
+							setCorrectAnswer(index);
+						}
+					}}
+				>
+					{correct && screenItemActive ? (
+						<svg className="screen-item" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+							<polyline className="screen-item" points="20 6 9 17 4 12"></polyline>
+						</svg>
+					) : (
+						answerChoices[index]
+					)}
+				</div>
+				<div className={`screen-item ${styles.optionText}`}>{answer}</div>
 			</div>
-			<div className={`screen-item ${styles.optionText}`}>{answer}</div>
-		</div>
+		</>
 	);
 }
