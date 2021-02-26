@@ -13,6 +13,7 @@
 	box-sizing: border-box;
 	cursor: pointer;
 	display: block;
+	flex: 1;
 	height: 1.6em;
 	line-height: 1.6em;
 	margin: 0.2em 0.5em 0.2em 0.2em;
@@ -32,6 +33,7 @@
 }
 
 .optionText {
+	flex: 11;
 	height: 2em;
 	line-height: 2em;
 }
