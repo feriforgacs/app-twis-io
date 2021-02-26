@@ -24,15 +24,13 @@ export default function Answer({ answer, index, correct, setCorrectAnswer, answe
 				<div
 					className={`screen-item ${styles.choice} ${correct && screenItemActive ? styles.choiceCorrect : ""}`}
 					onClick={() => {
-						if (!correct) {
-							setCorrectAnswer(index);
-							if (!activeScreenItem) {
-								updateScreenItem(screenId, itemSettings.itemId, { settings: { ...itemSettings.settings, correctAnswer: index } });
-								setActiveScreenItem({ ...itemSettings, settings: { ...itemSettings.settings, correctAnswer: index } });
-							} else {
-								updateScreenItem(screenId, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, correctAnswer: index } });
-								setActiveScreenItem({ ...activeScreenItem, settings: { ...activeScreenItem.settings, correctAnswer: index } });
-							}
+						setCorrectAnswer(index);
+						if (!activeScreenItem) {
+							updateScreenItem(screenId, itemSettings.itemId, { settings: { ...itemSettings.settings, correctAnswer: index } });
+							setActiveScreenItem({ ...itemSettings, settings: { ...itemSettings.settings, correctAnswer: index } });
+						} else {
+							updateScreenItem(screenId, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, correctAnswer: index } });
+							setActiveScreenItem({ ...activeScreenItem, settings: { ...activeScreenItem.settings, correctAnswer: index } });
 						}
 					}}
 				>
@@ -45,7 +43,7 @@ export default function Answer({ answer, index, correct, setCorrectAnswer, answe
 					)}
 				</div>
 				<div className={`screen-item ${styles.optionText}`}>
-					<AnswerText answer={answer} index={index} />
+					<AnswerText answer={answer} index={index} style={currentItemstyle} />
 				</div>
 			</div>
 		</>

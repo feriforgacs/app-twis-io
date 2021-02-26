@@ -14,6 +14,7 @@ import FormFieldsSettings from "./item-settings/FormFieldsSettings";
 import FormSubmitButtonColor from "./item-settings/FormSubmitButtonColor";
 import FormSubmitButtonBackground from "./item-settings/FormSubmitButtonBackground";
 import FormActionSettings from "./item-settings/FormActionSettings";
+import AnswersSettings from "./item-settings/AnswersSettings";
 import ItemInfo from "./item-settings/ItemInfo";
 
 export default function ItemSettings() {
@@ -38,6 +39,17 @@ export default function ItemSettings() {
 			</div>
 
 			<ItemInfo itemType={activeScreenItem.type} />
+
+			{activeScreenItem.type === "answers" && <AnswersSettings />}
+
+			{activeScreenItem.type === "button" && <ButtonAction />}
+			{activeScreenItem.type === "form" && (
+				<>
+					<FormFieldsSettings />
+					<FormActionSettings />
+				</>
+			)}
+
 			<Opacity />
 			{activeScreenItem.type === "text" || activeScreenItem.type === "button" || activeScreenItem.type === "question" || activeScreenItem.type === "form" || activeScreenItem.type === "answers" ? (
 				<>
@@ -51,19 +63,11 @@ export default function ItemSettings() {
 			) : (
 				""
 			)}
-			{activeScreenItem.type === "form" ? (
+
+			{activeScreenItem.type === "form" && (
 				<>
 					<FormSubmitButtonColor />
 					<FormSubmitButtonBackground />
-				</>
-			) : (
-				""
-			)}
-			{activeScreenItem.type === "button" && <ButtonAction />}
-			{activeScreenItem.type === "form" && (
-				<>
-					<FormFieldsSettings />
-					<FormActionSettings />
 				</>
 			)}
 		</div>

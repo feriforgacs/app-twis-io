@@ -296,7 +296,8 @@ li.fontSizeSelectorListItem {
 
 .actionURLInput,
 .legalURLInput,
-.redirectURLInput {
+.redirectURLInput,
+.emojiInput {
 	box-sizing: border-box;
 	border: 1px solid #ccc;
 	border-radius: 3px;
@@ -311,7 +312,8 @@ li.fontSizeSelectorListItem {
 	}
 }
 
-.legalURLInput {
+.legalURLInput,
+.emojiInput {
 	margin-top: 0.5rem;
 }
 
