@@ -3,7 +3,7 @@ import { GlobalContext } from "../../../../context/GlobalState";
 import styles from "./Answers.module.scss";
 import Answer from "./answer-items/Answer";
 
-export default function Answers({ data }) {
+export default function Answers({ data, screenId }) {
 	const { activeScreenItem, setActiveScreenItem } = useContext(GlobalContext);
 	const screenItemActive = activeScreenItem.itemId === data.itemId;
 
@@ -41,7 +41,7 @@ export default function Answers({ data }) {
 		<>
 			<div onClick={() => setActiveScreenItem(data)} id={`${data.type}-${data.itemId}`} className={`screen-item ${styles.answers} ${fontFamilyClass}`} style={answersStyle}>
 				{data.settings.answers.map((answer, index) => (
-					<Answer key={index} answer={answer} index={index} screenItemActive={screenItemActive} correct={index === correctAnswer} setCorrectAnswer={setCorrectAnswer} answerItemStyle={answerItemStyle} />
+					<Answer key={index} answer={answer} index={index} screenItemActive={screenItemActive} correct={index === correctAnswer} setCorrectAnswer={setCorrectAnswer} answerItemStyle={answerItemStyle} screenId={screenId} itemSettings={data} />
 				))}
 			</div>
 		</>

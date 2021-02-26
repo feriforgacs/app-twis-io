@@ -3,8 +3,8 @@ import { GlobalContext } from "../../../../../context/GlobalState";
 import AnswerText from "./AnswerText";
 import styles from "./Answer.module.scss";
 
-export default function Answer({ answer, index, correct, setCorrectAnswer, answerItemStyle, screenItemActive }) {
-	const { activeScreen, activeScreenItem, setActiveScreenItem, updateScreenItem } = useContext(GlobalContext);
+export default function Answer({ answer, index, correct, setCorrectAnswer, answerItemStyle, screenItemActive, screenId, itemSettings }) {
+	const { activeScreenItem, setActiveScreenItem, updateScreenItem } = useContext(GlobalContext);
 
 	const answerChoices = ["A", "B", "C", "D"];
 
@@ -26,8 +26,13 @@ export default function Answer({ answer, index, correct, setCorrectAnswer, answe
 					onClick={() => {
 						if (!correct) {
 							setCorrectAnswer(index);
-							updateScreenItem(activeScreen.screenId, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, correctAnswer: index } });
-							setActiveScreenItem({ ...activeScreenItem, settings: { ...activeScreenItem.settings, correctAnswer: index } });
+							if (!activeScreenItem) {
+								updateScreenItem(screenId, itemSettings.itemId, { settings: { ...itemSettings.settings, correctAnswer: index } });
+								setActiveScreenItem({ ...itemSettings, settings: { ...itemSettings.settings, correctAnswer: index } });
+							} else {
+								updateScreenItem(screenId, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, correctAnswer: index } });
+								setActiveScreenItem({ ...activeScreenItem, settings: { ...activeScreenItem.settings, correctAnswer: index } });
+							}
 						}
 					}}
 				>
