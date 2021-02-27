@@ -4,7 +4,7 @@ import styles from "../ScreenSettings.module.scss";
 import { GlobalContext } from "../../../../context/GlobalState";
 
 export default function FormActionSettings() {
-	const { campaign, updateCampaignData, setFormResultPreview, formResultPreview } = useContext(GlobalContext);
+	const { activeScreen, campaign, updateCampaignData, setFormResultPreview, formResultPreview } = useContext(GlobalContext);
 
 	const [dataCollectionSuccessAction, setDataCollectionSuccessAction] = useState(campaign.dataCollectionSuccessAction || "popup");
 	const [dataCollectionSuccessPopupContent, setDataCollectionSuccessPopupContent] = useState(campaign.dataCollectionSuccessPopupContent || "Thank your for filling the form. We’ll get in touch with you if you are one of our lucky winners. Meanwhile, don’t forget to follow us on Instagram and feel free to visit our website as well.");
@@ -79,6 +79,11 @@ export default function FormActionSettings() {
 					<button
 						className={styles.previewButton}
 						onClick={() => {
+							// scroll sreen to view
+							const formScreen = document.getElementById(`screen-${activeScreen.type}-${activeScreen.screenId}`);
+							if (formScreen) {
+								formScreen.scrollIntoView({ behavior: "smooth" });
+							}
 							if (!previewActive || previewActive !== "success") {
 								setFormResultPreview("success");
 								setPreviewActive("success");
@@ -145,6 +150,11 @@ export default function FormActionSettings() {
 				<button
 					className={styles.previewButton}
 					onClick={() => {
+						// scroll sreen to view
+						const formScreen = document.getElementById(`screen-${activeScreen.type}-${activeScreen.screenId}`);
+						if (formScreen) {
+							formScreen.scrollIntoView({ behavior: "smooth" });
+						}
 						if (!previewActive || previewActive !== "error") {
 							setFormResultPreview("error");
 							setPreviewActive("error");
