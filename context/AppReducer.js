@@ -1,3 +1,4 @@
+import UpdateState from "./global-reducers/UpdateState";
 import SetCriticalError from "./global-reducers/SetCriticalError";
 import SetError from "./global-reducers/SetError";
 import SetMoveableDisabled from "./global-reducers/SetMoveableDisabled";
@@ -22,6 +23,11 @@ import SetActiveScreenItem from "./item-reducers/SetActiveScreenItem";
 
 export default function AppReducer(state, action) {
 	switch (action.type) {
+		/**
+		 * Update item in state
+		 */
+		case "UPDATE_STATE":
+			return UpdateState(state, action);
 		/**
 		 * Set critical error state
 		 */

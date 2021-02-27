@@ -1,12 +1,17 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { DebounceInput } from "react-debounce-input";
 import styles from "../ScreenSettings.module.scss";
 import { GlobalContext } from "../../../../context/GlobalState";
 
 export default function AnswersSettings() {
-	const { activeScreen, activeScreenItem, setActiveScreenItem, updateScreenItem } = useContext(GlobalContext);
+	const { confettiPreview, activeScreen, activeScreenItem, setActiveScreenItem, updateScreenItem, updateState } = useContext(GlobalContext);
 
 	const [successEmoji, setSuccessEmoji] = useState(activeScreenItem.settings.successEmoji || "🎉");
+	const [confettiPreviewActive, setConfettiPreviewActive] = useState(confettiPreview);
+
+	useEffect(() => {
+		setConfettiPreviewActive(confettiPreview);
+	}, [confettiPreview]);
 
 	return (
 		<>
@@ -25,6 +30,13 @@ export default function AnswersSettings() {
 						setActiveScreenItem({ ...activeScreenItem, settings: { ...activeScreenItem.settings, successEmoji } });
 					}}
 				/>
+				<button
+					onClick={() => {
+						updateState("confettiPreview", !confettiPreviewActive);
+					}}
+				>
+					{confettiPreviewActive ? "stop preview" : "preview"}
+				</button>
 			</div>
 		</>
 	);

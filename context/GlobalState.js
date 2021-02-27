@@ -14,6 +14,7 @@ let InitialState = {
 	activeScreenItem: "",
 	moveableDisabled: false,
 	formResultPreview: "",
+	confettiPreview: false,
 	campaign: {},
 	screens: [],
 };
@@ -23,7 +24,21 @@ export const GlobalContext = createContext(InitialState);
 export const GlobalProvider = ({ children }) => {
 	const [state, dispatch] = useReducer(AppReducer, InitialState);
 
-	// Actions
+	/**
+	 * Update an item in state
+	 * @param {string} key Key of the item to update
+	 * @param {string|obj|int|bool} value Value of the item to be updated to
+	 */
+	const updateState = (key, value) => {
+		dispatch({
+			type: "UPDATE_STATE",
+			payload: {
+				key,
+				value,
+			},
+		});
+	};
+
 	/**
 	 * Set error status and error message in global state
 	 * @param {bool} errorStatus Error status - true: there is an error, false: no error, or error msg closed
@@ -1009,9 +1024,11 @@ export const GlobalProvider = ({ children }) => {
 				activeScreenItem: state.activeScreenItem,
 				moveableDisabled: state.moveableDisabled,
 				formResultPreview: state.formResultPreview,
+				confettiPreview: state.confettiPreview,
 				campaign: state.campaign,
 				screens: state.screens,
 
+				updateState,
 				setError,
 				loadCampaignData,
 				updateCampaignData,

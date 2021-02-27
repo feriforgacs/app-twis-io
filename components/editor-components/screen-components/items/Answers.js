@@ -2,9 +2,10 @@ import { useContext, useState } from "react";
 import { GlobalContext } from "../../../../context/GlobalState";
 import styles from "./Answers.module.scss";
 import Answer from "./answer-items/Answer";
+import EmojiConfetti from "./answer-items/EmojiConfetti";
 
 export default function Answers({ data, screenId }) {
-	const { activeScreenItem, setActiveScreenItem } = useContext(GlobalContext);
+	const { activeScreenItem, setActiveScreenItem, confettiPreview } = useContext(GlobalContext);
 	const screenItemActive = activeScreenItem.itemId === data.itemId;
 
 	const [correctAnswer, setCorrectAnswer] = useState(data.settings.correctAnswer || 0);
@@ -44,6 +45,7 @@ export default function Answers({ data, screenId }) {
 					<Answer key={index} answer={answer} index={index} screenItemActive={screenItemActive} correct={index === correctAnswer} setCorrectAnswer={setCorrectAnswer} answerItemStyle={answerItemStyle} screenId={screenId} itemSettings={data} />
 				))}
 			</div>
+			{confettiPreview && <EmojiConfetti successEmoji={data.settings.successEmoji || ""} />}
 		</>
 	);
 }

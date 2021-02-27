@@ -1,0 +1,90 @@
+.emojiConfetti {
+	animation: explode 1s ease infinite forwards;
+	display: flex;
+	flex-wrap: wrap;
+	font-size: 24px;
+	height: 0;
+	left: 50%;
+	position: absolute;
+	transform-origin: center;
+	top: 50%;
+	width: 0;
+}
+
+.emojiConfettiItem {
+	align-items: center;
+	display: flex;
+	height: 33.33333333%;
+	justify-content: center;
+	width: 33.33333333%;
+
+	&:nth-child(1) {
+		align-items: flex-end;
+		justify-content: flex-end;
+	}
+
+	&:nth-child(2) {
+		padding-top: 3rem;
+	}
+
+	&:nth-child(3) {
+		align-items: flex-end;
+		justify-content: flex-start;
+	}
+
+	&:nth-child(7) {
+		align-items: flex-start;
+		justify-content: flex-end;
+	}
+
+	&:nth-child(8) {
+		padding-bottom: 3rem;
+	}
+
+	&:nth-child(9) {
+		align-items: flex-start;
+		justify-content: flex-start;
+	}
+}
+
+.emoji {
+	animation: grow 1s ease infinite forwards;
+	opacity: 0;
+	transform: scale(0);
+}
+
+@keyframes explode {
+	60% {
+		height: 80%;
+		left: 10%;
+		top: 10%;
+		width: 80%;
+	}
+	80% {
+		height: 80%;
+		left: 10%;
+		top: 10%;
+		width: 80%;
+	}
+	100% {
+		height: 120%;
+		left: -10%;
+		top: -10%;
+		width: 120%;
+	}
+}
+
+@keyframes grow {
+	60% {
+		opacity: 1;
+		transform: scale(1);
+	}
+	80% {
+		opacity: 1;
+		transform: scale(1);
+	}
+	100% {
+		opacity: 0;
+		transform: scale(1.5);
+	}
+}
