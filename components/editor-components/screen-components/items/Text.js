@@ -18,6 +18,12 @@ export default function Text({ data }) {
 	 * Update state on blur and disable contenteditable
 	 */
 	const handleBlur = () => {
+		if (!text.current) {
+			alert("Text cannot be empty");
+			text.current = data.content;
+			return;
+		}
+
 		// disable content editable
 		setEditableDisabled(true);
 

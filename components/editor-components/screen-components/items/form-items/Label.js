@@ -17,6 +17,11 @@ export default function Label({ labelKey, value }) {
 	 * Update state on blur and disable contenteditable
 	 */
 	const handleBlur = () => {
+		if (!text.current) {
+			alert("Label cannot be empty");
+			text.current = value;
+			return false;
+		}
 		// disable content editable
 		setEditableDisabled(true);
 

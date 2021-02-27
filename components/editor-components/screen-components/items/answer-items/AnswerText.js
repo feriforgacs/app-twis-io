@@ -17,6 +17,11 @@ export default function AnswerText({ answer, index }) {
 	 * Update state on blur and disable contenteditable
 	 */
 	const handleBlur = () => {
+		if (!text.current) {
+			alert("Answer option cannot be empty");
+			text.current = answer;
+			return;
+		}
 		// disable content editable
 		setEditableDisabled(true);
 
