@@ -39,13 +39,11 @@ export default function Answers({ data, screenId }) {
 	const fontFamilyClass = data.settings.fontFamily !== "" ? `font--${data.settings.fontFamily}` : `font--arial`;
 
 	return (
-		<>
-			<div onClick={() => setActiveScreenItem(data)} id={`${data.type}-${data.itemId}`} className={`screen-item ${styles.answers} ${fontFamilyClass}`} style={answersStyle}>
-				{data.settings.answers.map((answer, index) => (
-					<Answer key={index} answer={answer} index={index} screenItemActive={screenItemActive} correct={index === correctAnswer} setCorrectAnswer={setCorrectAnswer} answerItemStyle={answerItemStyle} screenId={screenId} itemSettings={data} />
-				))}
-			</div>
+		<div onClick={() => setActiveScreenItem(data)} id={`${data.type}-${data.itemId}`} className={`screen-item ${styles.answers} ${fontFamilyClass}`} style={answersStyle}>
+			{data.settings.answers.map((answer, index) => (
+				<Answer key={index} answer={answer} index={index} screenItemActive={screenItemActive} correct={index === correctAnswer} setCorrectAnswer={setCorrectAnswer} answerItemStyle={answerItemStyle} screenId={screenId} itemSettings={data} />
+			))}
 			{confettiPreview && <EmojiConfetti successEmoji={data.settings.successEmoji || ""} />}
-		</>
+		</div>
 	);
 }
