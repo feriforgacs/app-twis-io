@@ -65,7 +65,7 @@ export const QuestionScreenTemplateItems = [
 		},
 	},
 	{
-		type: "text",
+		type: "question",
 		orderIndex: 0,
 		itemId: "GENERATE",
 		screenId: "ADD",
@@ -98,6 +98,7 @@ export const QuestionScreenTemplateItems = [
 			translateX: -21,
 			translateY: 25,
 			rotate: 0,
+			removeable: false,
 		},
 	},
 ];

@@ -6,6 +6,12 @@ import AuthCheck from "../../../lib/AuthCheck";
 import DatabaseConnect from "../../../lib/DatabaseConnect";
 import Campaign from "../../../models/Campaign";
 import Screen from "../../../models/editor/Screen";
+import ScreenItem from "../../../models/editor/ScreenItem";
+import { StartScreenTemplate, StartScreenTemplateItems } from "../../../utils/screen-templates/StartScreenTemplate";
+import { EndScreenSuccessTemplate, EndScreenSuccessTemplateItems } from "../../../utils/screen-templates/EndScreenSuccessTemplate";
+import { EndScreenFailureTemplate, EndScreenFailureTemplateItems } from "../../../utils/screen-templates/EndScreenFailureTemplate";
+import { QuestionScreenTemplate, QuestionScreenTemplateItems } from "../../../utils/screen-templates/QuestionScreenTemplate";
+import { InfoScreenTemplate, InfoScreenTemplateItems } from "../../../utils/screen-templates/InfoScreenTemplate";
 
 const cors = initMiddleware(
 	Cors({
@@ -41,56 +47,96 @@ export default async function CampaignCreateHandler(req, res) {
 		 * Create start screen, end screen success, end screen failure and first question or other first action screen
 		 */
 		// create start screen
-		const startScreen = {
-			screenId: uuidv4(),
-			type: "start",
-			orderIndex: 0,
-			background: {
-				type: "gradient",
-				color: "linear-gradient(135.57deg, rgb(164, 38, 184) 0%, rgb(78, 156, 239) 93.45%)",
-			},
-			campaignId: campaign._id,
-		};
+		const startScreen = StartScreenTemplate;
+		startScreen.screenId = uuidv4();
+		startScreen.campaignId = campaign._id;
 
 		const startScreenPromise = Screen.create(startScreen);
 
+		// create question screen
+		const questionScreen = QuestionScreenTemplate;
+		questionScreen.screenId = uuidv4();
+		questionScreen.campaignId = campaign._id;
+		questionScreen.orderIndex = 1;
+
+		const questionScreenPromise = Screen.create(questionScreen);
+
+		// create info screen
+		const infoScreen = InfoScreenTemplate;
+		infoScreen.screenId = uuidv4();
+		infoScreen.campaignId = campaign._id;
+		infoScreen.orderIndex = 2;
+
+		const infoscreenPromise = Screen.create(infoScreen);
+
 		// create end screen success
-		const endScreenSuccess = {
-			screenId: uuidv4(),
-			type: "endSuccess",
-			orderIndex: 1,
-			background: {
-				type: "gradient",
-				color: "linear-gradient(rgb(15, 191, 33), rgb(10, 206, 171))",
-			},
-			campaignId: campaign._id,
-		};
+		const endScreenSuccess = EndScreenSuccessTemplate;
+		endScreenSuccess.screenId = uuidv4();
+		endScreenSuccess.campaignId = campaign._id;
+		endScreenSuccess.orderIndex = 3;
 
 		const endScreenSuccessPromise = Screen.create(endScreenSuccess);
 
 		// create end screen failure
-		const endScreenFailure = {
-			screenId: uuidv4(),
-			type: "endFailure",
-			orderIndex: 2,
-			background: {
-				type: "gradient",
-				color: "linear-gradient(rgb(191, 68, 15), rgb(206, 22, 10))",
-			},
-			campaignId: campaign._id,
-		};
+		const endScreenFailure = EndScreenFailureTemplate;
+		endScreenFailure.screenId = uuidv4();
+		endScreenFailure.campaignId = campaign._id;
+		endScreenFailure.orderIndex = 4;
 
 		const endScreenFailurePromise = Screen.create(endScreenFailure);
 
-		await Promise.all([startScreenPromise, endScreenSuccessPromise, endScreenFailurePromise]);
+		const [newStartScreen, newQuestionScreen, newInfoScreen, newEndScreenSuccess, newEndScreenFailure] = await Promise.all([startScreenPromise, questionScreenPromise, infoscreenPromise, endScreenSuccessPromise, endScreenFailurePromise]);
+
+		if (!newStartScreen || !newQuestionScreen || !newInfoScreen || !newEndScreenSuccess || !newEndScreenFailure) {
+			return res.status(400).json({ success: false });
+		}
 
 		/**
-		 * @todo create campaign specific default screens - eg forst question screen for a quiz
+		 * Add default screen items to new screens
 		 */
+		// start screen items
+		let defaultScreenItems;
+		const startScreenItems = StartScreenTemplateItems;
+		startScreenItems.forEach((item, index) => {
+			startScreenItems[index].itemId = uuidv4();
+			startScreenItems[index].screenId = newStartScreen._id;
+		});
 
-		/**
-		 * @todo create default screen items
-		 */
+		// question screen items
+		const questionScreenItems = QuestionScreenTemplateItems;
+		questionScreenItems.forEach((item, index) => {
+			questionScreenItems[index].itemId = uuidv4();
+			questionScreenItems[index].screenId = newQuestionScreen._id;
+		});
+
+		// info screen items
+		const infoScreenItems = InfoScreenTemplateItems;
+		infoScreenItems.forEach((item, index) => {
+			infoScreenItems[index].itemId = uuidv4();
+			infoScreenItems[index].screenId = newInfoScreen._id;
+		});
+
+		// end screen success items
+		const endScreenSuccessItems = EndScreenSuccessTemplateItems;
+		endScreenSuccessItems.forEach((item, index) => {
+			endScreenSuccessItems[index].itemId = uuidv4();
+			endScreenSuccessItems[index].screenId = newEndScreenSuccess._id;
+		});
+
+		// end screen failure items
+		const endScreenFailureItems = EndScreenFailureTemplateItems;
+		endScreenFailureItems.forEach((item, index) => {
+			endScreenFailureItems[index].itemId = uuidv4();
+			endScreenFailureItems[index].screenId = newEndScreenFailure._id;
+		});
+
+		defaultScreenItems = [...startScreenItems, ...questionScreenItems, ...infoScreenItems, ...endScreenSuccessItems, ...endScreenFailureItems];
+
+		const newScreenItems = await ScreenItem.insertMany(defaultScreenItems);
+
+		if (!newScreenItems) {
+			return res.status(400).json({ success: false });
+		}
 
 		return res.status(200).json({
 			success: true,
