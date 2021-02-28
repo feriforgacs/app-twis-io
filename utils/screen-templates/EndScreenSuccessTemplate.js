@@ -1,0 +1,159 @@
+/**
+ * orderIndex should be added dinamically, based on the current screens in the campaign, by default it's 2
+ * screenId should be generated with uuid
+ * campaignId should be added based on the current campaign
+ */
+export const EndScreenSuccessTemplate = {
+	type: "endSuccess",
+	orderIndex: 2,
+	background: {
+		type: "gradient",
+		color: "linear-gradient(to bottom, #11998e, #38ef7d)",
+	},
+	screenId: "GENERATE",
+	campaignId: "ADD",
+};
+
+/**
+ * itemId should be generated with uuid
+ * screenId should be added based on the current screen - this is the object id of the screen in the db
+ */
+export const EndScreenSuccessTemplateItems = [
+	{
+		type: "text",
+		orderIndex: 0,
+		itemId: "GENERATE",
+		screenId: "ADD",
+		content: "🎉 Congratulations 🎉",
+		src: "",
+		settings: {
+			fontFamily: "",
+			fontSize: 28,
+			color: {
+				r: 255,
+				g: 255,
+				b: 255,
+				a: 1,
+			},
+			highlightColor: {
+				type: "solid",
+				background: {},
+				backgroundColor: "",
+			},
+			bold: true,
+			italic: false,
+			underline: false,
+			uppercase: false,
+			align: "center",
+			classNames: "",
+			width: 311,
+			height: 42,
+			top: 20,
+			left: 36,
+			translateX: -13,
+			translateY: 64,
+			rotate: 0,
+		},
+	},
+	{
+		type: "text",
+		orderIndex: 1,
+		itemId: "GENERATE",
+		screenId: "ADD",
+		content: "You successfully completed the quiz. All you need to do now is fill the form below and you'll be eligible to win a bunch of bananas 🍌",
+		src: "",
+		settings: {
+			fontFamily: "",
+			fontSize: 16,
+			color: {
+				r: 255,
+				g: 255,
+				b: 255,
+				a: 1,
+			},
+			highlightColor: {
+				type: "solid",
+				background: {},
+				backgroundColor: "",
+			},
+			bold: true,
+			italic: false,
+			underline: false,
+			uppercase: false,
+			align: "center",
+			classNames: "",
+			width: 291,
+			height: 103,
+			top: 94,
+			left: 34,
+			translateX: -5,
+			translateY: 49,
+			rotate: 0,
+		},
+	},
+	{
+		type: "form",
+		orderIndex: 2,
+		itemId: "GENERATE",
+		screenId: "ADD",
+		content: "",
+		src: "",
+		settings: {
+			fontFamily: "arial",
+			fontSize: 16,
+			color: {
+				r: 74,
+				g: 74,
+				b: 74,
+				a: 1,
+			},
+			colorButton: {
+				r: 255,
+				g: 255,
+				b: 255,
+				a: 1,
+			},
+			highlightColor: {
+				type: "solid",
+				backgroundColor: "rgba(255, 255, 255, 1)",
+				background: {
+					r: 255,
+					g: 255,
+					b: 255,
+					a: 1,
+				},
+			},
+			highlightColorButton: {
+				type: "gradient",
+				backgroundColor: "linear-gradient(to bottom, #ed213a, #93291e)",
+				background: {
+					r: 126,
+					g: 211,
+					b: 33,
+					a: 1,
+				},
+			},
+			bold: false,
+			italic: false,
+			underline: false,
+			uppercase: false,
+			align: "left",
+			classNames: "",
+			width: 289,
+			height: 323,
+			top: 123,
+			left: 18,
+			translateX: -0.2880765600002917,
+			translateY: 139.10391128500873,
+			rotate: 0,
+			removeable: false,
+			labelName: "Your name:",
+			labelEmail: "Your email address:",
+			labelTerms: "I read and accept the terms and conditions",
+			labelSubmit: "SUBMIT",
+			collectName: true,
+			collectEmail: true,
+			legalURL: "https://twis.io",
+		},
+	},
+];
