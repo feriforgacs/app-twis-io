@@ -63,7 +63,7 @@ export default function Delete() {
 
 	return (
 		<>
-			{activeScreenItem.type !== "question" && activeScreenItem.type !== "form" && activeScreenItem.type !== "answers" && activeScreenItem.settings.removeable && (
+			{activeScreenItem.type !== "question" && activeScreenItem.type !== "form" && activeScreenItem.type !== "answers" && activeScreenItem.settings.removeable !== false && (
 				<>
 					<button data-for="itemAction" data-tip="Delete item" className={`${styles.button} ${styles.buttonDelete}`} onClick={() => removeScreenItem(activeScreen.screenId, activeScreenItem.itemId)}>
 						<Image src="/images/editor/icons/icon-delete.svg" width={18} height={18} alt="Delete item icon" title="Delete item" />
