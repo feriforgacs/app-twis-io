@@ -1,6 +1,11 @@
+/**
+ * orderIndex should be added dinamically, based on the current screens in the campaign
+ * screenId should be generated with uuid
+ * campaignId should be added based on the current campaign
+ */
 export const QuestionScreenTemplate = {
 	type: "question",
-	orderIndex: 1,
+	orderIndex: "COUNT",
 	background: {
 		type: "gradient",
 		color: "linear-gradient(45deg, #FA8BFF 0%, #2BD2FF 52%, #2BFF88 90%)",
@@ -9,7 +14,11 @@ export const QuestionScreenTemplate = {
 	campaignId: "ADD",
 };
 
-export const QuestionScreenItems = [
+/**
+ * itemId should be generated with uuid
+ * screenId should be added based on the current screen - this is the object id of the screen in the db
+ */
+export const QuestionScreenTemplateItems = [
 	{
 		type: "answers",
 		orderIndex: 1,

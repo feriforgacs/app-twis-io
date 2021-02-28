@@ -1,3 +1,7 @@
+/**
+ * screenId should be generated with uuid
+ * campaignId should be added based on the current campaign
+ */
 export const StartScreenTemplate = {
 	type: "start",
 	orderIndex: 0,
@@ -9,7 +13,11 @@ export const StartScreenTemplate = {
 	campaignId: "ADD",
 };
 
-export const StartScreenItems = [
+/**
+ * itemId should be generated with uuid
+ * screenId should be added based on the current screen - this is the object id of the screen in the db
+ */
+export const StartScreenTemplateItems = [
 	{
 		type: "button",
 		orderIndex: 0,

@@ -47,7 +47,7 @@ export default function Form({ data }) {
 							<label className={`screen-item ${styles.formLabel}`} title="Double click to edit">
 								<Label labelKey="labelName" value={data.settings.labelName || "Name"} />
 							</label>
-							<input type="text" disabled placeholder="Petra" className={`screen-item ${styles.formInput}`} />
+							<input type="text" disabled placeholder="Feri" className={`screen-item ${styles.formInput}`} />
 						</div>
 					)}
 
@@ -56,7 +56,7 @@ export default function Form({ data }) {
 							<label className={`screen-item ${styles.formLabel}`}>
 								<Label labelKey="labelEmail" value={data.settings.labelEmail || "Email address"} />
 							</label>
-							<input type="text" disabled placeholder="petra@twis.io" className={`screen-item ${styles.formInput}`} />
+							<input type="text" disabled placeholder="feri@twis.io" className={`screen-item ${styles.formInput}`} />
 						</div>
 					)}
 
