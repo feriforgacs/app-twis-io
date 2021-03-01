@@ -2,9 +2,11 @@ import { useContext } from "react";
 import { GlobalContext } from "../../../context/GlobalState";
 import styles from "./ScreenSettings.module.scss";
 import Background from "./screen-settings/Background";
+import SuccessLimit from "../campaign-settings-components/SuccessLimit";
+import ScreenInfo from "./screen-settings/ScreenInfo";
 
 export default function ScreenSettings() {
-	const { unsetActiveScreen, unsetActiveScreenItem } = useContext(GlobalContext);
+	const { activeScreen, unsetActiveScreen, unsetActiveScreenItem } = useContext(GlobalContext);
 	return (
 		<div className={styles.settings}>
 			<div className={styles.settingsHeader}>
@@ -22,6 +24,8 @@ export default function ScreenSettings() {
 					</svg>
 				</button>
 			</div>
+			<ScreenInfo screenType={activeScreen.type} />
+			{activeScreen && (activeScreen.type === "endSuccess" || activeScreen.type === "endFailure") && <SuccessLimit />}
 			<Background />
 		</div>
 	);
