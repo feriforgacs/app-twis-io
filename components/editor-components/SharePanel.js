@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import styles from "./CampaignSettings.module.scss";
+import ScreenInfo from "./screen-components/screen-settings/ScreenInfo";
 
 export default function SharePanel({ hideSharePanel }) {
 	const sharePanelRef = useRef();
@@ -19,9 +20,8 @@ export default function SharePanel({ hideSharePanel }) {
 
 	return (
 		<div className={styles.campaignSettingsPanel} ref={sharePanelRef}>
+			<ScreenInfo screenType="sharePanel" />
 			<div className={styles.settingsPanelSection}>
-				<label className={styles.settingsPanelLabel}>Share Your Campaign</label>
-
 				<a href="https://twis.io" target="_blank" rel="noopener noreferrer" className={`${styles.shareButtonFacebook} ${styles.shareButton}`}>
 					<span className={styles.shareIcon}>
 						<svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 512 512" width="20" fill="#ffffff">

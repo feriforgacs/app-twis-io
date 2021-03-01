@@ -388,8 +388,9 @@ li.fontSizeSelectorListItem {
 	padding: 0.5rem 1rem 0.5rem 0.5rem;
 
 	svg {
-		height: 30px;
+		flex: 0 0 20px;
+		height: 20px;
 		margin-right: 0.5rem;
-		width: 30px;
+		width: 20px;
 	}
 }

@@ -4,6 +4,7 @@ export default function ScreenInfo({ screenType }) {
 	const infoText = {
 		endSuccess: "This is the screen participants will see once they successfully completed the quiz",
 		endFailure: "Participants, who were not able to provide enough correct answers will see this screen",
+		sharePanel: "You can update the share settings of your campaign (title, description and image) under the Campaign settings",
 	};
 	return (
 		<>
