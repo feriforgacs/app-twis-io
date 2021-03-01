@@ -8,9 +8,10 @@ import Toast from "../dashboard-components/Toast";
 import "react-day-picker/lib/style.css";
 import styles from "./CampaignSettings.module.scss";
 import Visibility from "./campaign-settings-components/Visibility";
+import SuccessLimit from "./campaign-settings-components/SuccessLimit";
 
 export default function CampaignSettings({ hideCampaignSettings }) {
-	const { campaign, updateCampaignData, updateCampaignDataInState, screens } = useContext(GlobalContext);
+	const { campaign, updateCampaignData, updateCampaignDataInState } = useContext(GlobalContext);
 
 	const [uploading, setUploading] = useState(false);
 	const [deleting, setDeleting] = useState(false);
@@ -21,13 +22,6 @@ export default function CampaignSettings({ hideCampaignSettings }) {
 	const [toastVisible, setToastVisible] = useState(false);
 	const [toastType, setToastType] = useState("default");
 	const [toastDuration, setToastDuration] = useState(3000);
-	const [successLimit, setSuccessLimit] = useState(campaign.successLimit || 0);
-	const [questionScreens, setQuestionScreen] = useState(0);
-
-	useEffect(() => {
-		const questionScreens = screens.filter((screen) => screen.type === "question");
-		setQuestionScreen(questionScreens.length);
-	}, [screens]);
 
 	const campaignSettingsRef = useRef();
 
@@ -182,28 +176,7 @@ export default function CampaignSettings({ hideCampaignSettings }) {
 		<div className={styles.campaignSettingsPanel} ref={campaignSettingsRef}>
 			<Visibility />
 
-			{/* Success limit */}
-			<div className={styles.settingsPanelSection}>
-				<label className={styles.settingsPanelLabel}>Correct Answer Limit</label>
-				<DebounceInput
-					className={styles.settingsPanelInput}
-					type="number"
-					min={0}
-					max={questionScreens}
-					debounceTimeout="1000"
-					value={successLimit || 0}
-					onChange={(e) => {
-						const limit = parseInt(e.target.value);
-						updateCampaignData("successLimit", limit);
-						setSuccessLimit(limit);
-					}}
-				/>
-				<p className={styles.settingsPanelHelp}>
-					The number of questions your players have to answer properly to successfully complete the quiz. <strong>(min 0, max {questionScreens})</strong>
-					<br />
-					eg.: 0 - users can successfully complete the quiz without any correct answers, eg.: 5 - at least 5 correct answers is needed to successfully complete the quiz
-				</p>
-			</div>
+			<SuccessLimit />
 
 			{/* Open Graph Data */}
 			<div className={styles.settingsPanelSection}>
