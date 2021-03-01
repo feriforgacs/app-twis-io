@@ -121,3 +121,60 @@
 		margin-bottom: 1rem;
 	}
 }
+
+.shareButton {
+	align-items: center;
+	background: #eee;
+	border-radius: 5px;
+	border: none;
+	box-sizing: border-box;
+	display: flex;
+	font-size: 0.9rem;
+	font-weight: bold;
+	height: 2.3rem;
+	margin: 0 0 0.5rem;
+	text-decoration: none;
+	width: 100%;
+}
+
+.shareIcon {
+	margin: 0.2rem 0.5rem 0;
+}
+
+.shareButtonFacebook {
+	background: #1877f2;
+	color: #fff;
+	margin-top: 1rem;
+
+	&:hover {
+		background: #4267b2;
+	}
+}
+
+.shareButtonTwitter {
+	background: #1b95e0;
+	color: #fff;
+
+	&:hover {
+		background: #0887d5;
+	}
+}
+
+.shareButtonTelegram {
+	background: #20a0e1;
+	color: #fff;
+
+	&:hover {
+		background: #0777b0;
+	}
+}
+
+.shareButtonEmail,
+.shareButtonLink {
+	background: #9aa6af;
+	color: #fff;
+
+	&:hover {
+		background: #82919b;
+	}
+}
