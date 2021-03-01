@@ -23,8 +23,11 @@ export default function UpdateScreenOrder(state, action) {
 		screens[screenIndex] = { ...nextScreen, orderIndex: nextScreen.orderIndex - 1 };
 	}
 
+	const saving = action.payload.saving ? action.payload.saving : false;
+
 	return {
 		...state,
+		saving,
 		screens,
 	};
 }

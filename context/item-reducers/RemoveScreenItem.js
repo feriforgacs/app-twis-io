@@ -23,8 +23,11 @@ export default function RemoveScreenItem(state, action) {
 
 	screens[screenIndex].screenItems = screenItems;
 
+	const saving = action.payload.saving ? action.payload.saving : false;
+
 	return {
 		...state,
+		saving,
 		activeScreenItem: "",
 		activeScreen: "",
 		screens,

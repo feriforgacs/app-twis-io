@@ -8,8 +8,11 @@ export default function UpdateScreenItem(state, action) {
 	// update screen item data
 	screens[screenIndex].screenItems[itemIndex] = { ...screens[screenIndex].screenItems[itemIndex], ...action.payload.data };
 
+	const saving = action.payload.saving ? action.payload.saving : false;
+
 	return {
 		...state,
+		saving,
 		screens,
 	};
 }

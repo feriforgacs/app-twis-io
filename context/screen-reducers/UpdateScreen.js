@@ -11,8 +11,12 @@ export default function UpdateScreen(state, action) {
 	let data = action.payload.data;
 
 	screens[index] = { ...screens[index], ...data };
+
+	const saving = action.payload.saving ? action.payload.saving : false;
+
 	return {
 		...state,
+		saving,
 		screens,
 	};
 }

@@ -11,8 +11,11 @@ export default function AddScreenItem(state, action) {
 
 	screens[index].screenItems.push(action.payload.newScreenItem);
 
+	const saving = action.payload.saving ? action.payload.saving : false;
+
 	return {
 		...state,
+		saving,
 		screens,
 	};
 }

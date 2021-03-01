@@ -18,8 +18,11 @@ export default function DuplicateScreen(state, action) {
 		screens[index].orderIndex = index;
 	}
 
+	const saving = action.payload.saving ? action.payload.saving : false;
+
 	return {
 		...state,
+		saving,
 		screens,
 		activeScreenItem: "",
 	};

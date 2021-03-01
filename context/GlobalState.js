@@ -127,6 +127,15 @@ export const GlobalProvider = ({ children }) => {
 	 * @param {string} value The value of the field to update to
 	 */
 	const updateCampaignData = async (key, value) => {
+		dispatch({
+			type: "UPDATE_CAMPAIGN_DATA",
+			payload: {
+				key,
+				value,
+				saving: true,
+			},
+		});
+
 		let source = axios.CancelToken.source();
 
 		try {
@@ -158,10 +167,10 @@ export const GlobalProvider = ({ children }) => {
 			}
 
 			dispatch({
-				type: "UPDATE_CAMPAIGN_DATA",
+				type: "UPDATE_STATE",
 				payload: {
-					key,
-					value,
+					key: "saving",
+					value: false,
 				},
 			});
 			return;
@@ -261,7 +270,7 @@ export const GlobalProvider = ({ children }) => {
 		// add screen to state
 		dispatch({
 			type: "ADD_SCREEN",
-			payload: newScreen,
+			payload: { newScreen, saving: true },
 		});
 
 		setActiveScreen(newScreen);
@@ -324,6 +333,7 @@ export const GlobalProvider = ({ children }) => {
 					data: {
 						_id: result.data.screen._id,
 					},
+					saving: false,
 				},
 			});
 
@@ -378,7 +388,7 @@ export const GlobalProvider = ({ children }) => {
 		// remove screen from state
 		dispatch({
 			type: "REMOVE_SCREEN",
-			payload: { screenId },
+			payload: { screenId, saving: true },
 		});
 
 		// remove screen from the database
@@ -410,6 +420,14 @@ export const GlobalProvider = ({ children }) => {
 				});
 				return;
 			}
+
+			dispatch({
+				type: "UPDATE_STATE",
+				payload: {
+					key: "saving",
+					value: false,
+				},
+			});
 		} catch (error) {
 			if (axios.isCancel(error)) {
 				return;
@@ -440,6 +458,7 @@ export const GlobalProvider = ({ children }) => {
 			payload: {
 				screenId,
 				newScreenData,
+				saving: true,
 			},
 		});
 
@@ -500,6 +519,7 @@ export const GlobalProvider = ({ children }) => {
 					data: {
 						_id: result.data.screen._id,
 					},
+					saving: false,
 				},
 			});
 
@@ -545,6 +565,7 @@ export const GlobalProvider = ({ children }) => {
 				data: {
 					...screenUpdateData,
 				},
+				saving: true,
 			},
 		});
 
@@ -579,6 +600,14 @@ export const GlobalProvider = ({ children }) => {
 
 				return;
 			}
+
+			dispatch({
+				type: "UPDATE_STATE",
+				payload: {
+					key: "saving",
+					value: false,
+				},
+			});
 
 			return;
 		} catch (error) {
@@ -627,6 +656,7 @@ export const GlobalProvider = ({ children }) => {
 			payload: {
 				screenId,
 				direction,
+				saving: true,
 			},
 		});
 
@@ -661,6 +691,14 @@ export const GlobalProvider = ({ children }) => {
 
 				return;
 			}
+
+			dispatch({
+				type: "UPDATE_STATE",
+				payload: {
+					key: "saving",
+					value: false,
+				},
+			});
 
 			return;
 		} catch (error) {
@@ -698,6 +736,7 @@ export const GlobalProvider = ({ children }) => {
 			type: "ADD_SCREEN_ITEM",
 			payload: {
 				newScreenItem,
+				saving: true,
 			},
 		});
 
@@ -750,6 +789,7 @@ export const GlobalProvider = ({ children }) => {
 					data: {
 						_id: result.data.screenItem._id,
 					},
+					saving: false,
 				},
 			});
 
@@ -815,6 +855,7 @@ export const GlobalProvider = ({ children }) => {
 				data: {
 					...screenItemUpdatedData,
 				},
+				saving: true,
 			},
 		});
 
@@ -848,6 +889,14 @@ export const GlobalProvider = ({ children }) => {
 				});
 				return;
 			}
+
+			dispatch({
+				type: "UPDATE_STATE",
+				payload: {
+					key: "saving",
+					value: false,
+				},
+			});
 		} catch (error) {
 			if (axios.isCancel(error)) {
 				return;
@@ -899,6 +948,7 @@ export const GlobalProvider = ({ children }) => {
 				screenId,
 				itemId,
 				direction,
+				saving: true,
 			},
 		});
 
@@ -932,6 +982,14 @@ export const GlobalProvider = ({ children }) => {
 				});
 				return;
 			}
+
+			dispatch({
+				type: "UPDATE_STATE",
+				payload: {
+					key: "saving",
+					value: false,
+				},
+			});
 		} catch (error) {
 			if (axios.isCancel(error)) {
 				return;
@@ -962,6 +1020,7 @@ export const GlobalProvider = ({ children }) => {
 			payload: {
 				screenId,
 				itemId,
+				saving: true,
 			},
 		});
 
@@ -994,6 +1053,14 @@ export const GlobalProvider = ({ children }) => {
 				});
 				return;
 			}
+
+			dispatch({
+				type: "UPDATE_STATE",
+				payload: {
+					key: "saving",
+					value: false,
+				},
+			});
 		} catch (error) {
 			if (axios.isCancel(error)) {
 				return;
@@ -1016,6 +1083,7 @@ export const GlobalProvider = ({ children }) => {
 		<GlobalContext.Provider
 			value={{
 				loading: state.loading,
+				saving: state.saving,
 				error: state.error,
 				errorMessage: state.errorMessage,
 				criticalError: state.criticalError,

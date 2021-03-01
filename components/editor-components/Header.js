@@ -8,6 +8,7 @@ import { GlobalContext } from "../../context/GlobalState";
 import styles from "./Header.module.scss";
 import CampaignSettings from "./CampaignSettings";
 import FontFamilies from "../../utils/FontFamilies";
+import SaveStatus from "./header-components/SaveStatus";
 
 export default function Header() {
 	const { loading, campaign, updateCampaignData } = useContext(GlobalContext);
@@ -58,6 +59,8 @@ export default function Header() {
 						}}
 					/>
 				</div>
+
+				<SaveStatus />
 
 				<button className={`${styles.buttonCampaignSettings} button--campaign-settings`} disabled={loading} onClick={() => toggleCampaignSettings(!campsignSettingsVisible)}>
 					Campaign Settings{" "}

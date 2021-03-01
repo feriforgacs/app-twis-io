@@ -28,8 +28,11 @@ export default function RemoveScreen(state, action) {
 		};
 	} */
 
+	const saving = action.payload.saving ? action.payload.saving : false;
+
 	return {
 		...state,
+		saving,
 		activeScreen: "",
 		activeScreenItem: "",
 		screens,

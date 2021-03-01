@@ -60,8 +60,11 @@ export default function UpdateScreenItemOrder(state, action) {
 	// update changes in state
 	screens[screenIndex].screenItems = screenItems;
 
+	const saving = action.payload.saving ? action.payload.saving : false;
+
 	return {
 		...state,
+		saving,
 		activeScreenItem: screenItems[itemIndex],
 		screens,
 	};
