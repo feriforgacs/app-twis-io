@@ -1,6 +1,9 @@
 import { createContext, useReducer } from "react";
+import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import AppReducer from "./AppReducer";
+import { QuestionScreenTemplate, QuestionScreenTemplateItems } from "../utils/screen-templates/QuestionScreenTemplate";
+import { InfoScreenTemplate, InfoScreenTemplateItems } from "../utils/screen-templates/InfoScreenTemplate";
 
 let InitialState = {
 	loading: true,
@@ -256,7 +259,20 @@ export const GlobalProvider = ({ children }) => {
 	 * @param {string} screenId New screen's uuid
 	 */
 	const addScreen = async (screenType, screenId) => {
-		const newScreen = {
+		const newScreen = screenType === "question" ? QuestionScreenTemplate : InfoScreenTemplate;
+		newScreen.screenId = screenId;
+		newScreen.campaignId = state.campaign._id;
+		newScreen.orderIndex = state.screens.length - 2;
+
+		const newScreenItems = screenType === "question" ? QuestionScreenTemplateItems : InfoScreenTemplateItems;
+
+		newScreenItems.forEach((item, index) => {
+			newScreenItems[index].itemId = uuidv4();
+		});
+
+		newScreen.screenItems = newScreenItems;
+
+		/* {
 			screenId,
 			type: screenType,
 			orderIndex: state.screens.length - 2,
@@ -266,7 +282,8 @@ export const GlobalProvider = ({ children }) => {
 			},
 			campaignId: state.campaign._id,
 			screenItems: [],
-		};
+		}; */
+
 		// add screen to state
 		dispatch({
 			type: "ADD_SCREEN",

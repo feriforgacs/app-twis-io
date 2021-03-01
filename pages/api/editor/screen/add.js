@@ -6,6 +6,7 @@ import AuthCheck from "../../../../lib/AuthCheck";
 import DatabaseConnect from "../../../../lib/DatabaseConnect";
 import Campaign from "../../../../models/Campaign";
 import Screen from "../../../../models/editor/Screen";
+import ScreenItem from "../../../../models/editor/ScreenItem";
 
 const cors = initMiddleware(
 	Cors({
@@ -68,7 +69,8 @@ export default async function ScreenAddHandler(req, res) {
 			return res.status(400).json({ success: false });
 		}
 
-		// remove the empty screen items array that was sent along in the request
+		// get screen items from the screen object, and remove it
+		const newScreenItems = [...newScreenData.screenItems];
 		delete newScreenData.screenItems;
 
 		const newScreen = await Screen.create(newScreenData);
@@ -77,11 +79,18 @@ export default async function ScreenAddHandler(req, res) {
 			return res.status(400).json({ success: false });
 		}
 
-		/**
-		 * @todo add one screen item to the new screen
-		 * @todo temporary fix, there should be at least one screen item on every new screen
-		 */
-		newScreen.screenItems = [];
+		// save screen items
+		newScreenItems.forEach((item, index) => {
+			newScreenItems[index].screenId = newScreen._id;
+		});
+
+		const newScreenItemsResult = await ScreenItem.insertMany(newScreenItems);
+
+		if (!newScreenItemsResult) {
+			return res.status(400).json({ success: false });
+		}
+
+		newScreen.screenItems = newScreenItems;
 
 		return res.status(200).json({ success: true, screen: newScreen });
 	} catch (error) {
