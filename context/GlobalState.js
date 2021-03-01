@@ -272,18 +272,6 @@ export const GlobalProvider = ({ children }) => {
 
 		newScreen.screenItems = newScreenItems;
 
-		/* {
-			screenId,
-			type: screenType,
-			orderIndex: state.screens.length - 2,
-			background: {
-				type: "solid",
-				color: "#ffffff",
-			},
-			campaignId: state.campaign._id,
-			screenItems: [],
-		}; */
-
 		// add screen to state
 		dispatch({
 			type: "ADD_SCREEN",

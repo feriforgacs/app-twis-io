@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import Switch from "react-switch";
 import { GlobalContext } from "../../context/GlobalState";
 import DayPickerInput from "react-day-picker/DayPickerInput";
@@ -13,7 +13,7 @@ import Toast from "../dashboard-components/Toast";
 import "react-day-picker/lib/style.css";
 import styles from "./CampaignSettings.module.scss";
 
-export default function CampaignSettings() {
+export default function CampaignSettings({ hideCampaignSettings }) {
 	const { campaign, updateCampaignData, updateCampaignDataInState, screens } = useContext(GlobalContext);
 	const [active, setActive] = useState(campaign.status === "active" || false);
 	const [visibleFrom, setVisibleFrom] = useState(new Date(campaign.visibleFrom) || new Date());
@@ -34,6 +34,21 @@ export default function CampaignSettings() {
 		const questionScreens = screens.filter((screen) => screen.type === "question");
 		setQuestionScreen(questionScreens.length);
 	}, [screens]);
+
+	const campaignSettingsRef = useRef();
+
+	const handleClickOutside = (e) => {
+		if (campaignSettingsRef.current && !campaignSettingsRef.current.contains(e.target)) {
+			hideCampaignSettings();
+		}
+	};
+
+	useEffect(() => {
+		document.addEventListener("click", handleClickOutside);
+		return () => {
+			document.removeEventListener("click", handleClickOutside);
+		};
+	});
 
 	const dateFormat = "yyyy.MM.dd.";
 
@@ -184,7 +199,7 @@ export default function CampaignSettings() {
 	};
 
 	return (
-		<div className={styles.campaignSettingsPanel}>
+		<div className={styles.campaignSettingsPanel} ref={campaignSettingsRef}>
 			{/* Campaign Status */}
 			<div className={styles.settingsPanelSection}>
 				<label className={styles.settingsPanelLabel}>

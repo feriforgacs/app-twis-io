@@ -24,6 +24,10 @@ export default function Header() {
 		setCampaignFonts(campaign.fonts);
 	}, [campaign]);
 
+	const hideCampaignSettings = () => {
+		toggleCampaignSettings(false);
+	};
+
 	return (
 		<>
 			<Head>
@@ -63,7 +67,7 @@ export default function Header() {
 				<SaveStatus />
 
 				<button className={`${styles.buttonCampaignSettings} button--campaign-settings`} disabled={loading} onClick={() => toggleCampaignSettings(!campsignSettingsVisible)}>
-					Campaign Settings{" "}
+					Settings{" "}
 					{campsignSettingsVisible ? (
 						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
 							<line x1="18" y1="6" x2="6" y2="18"></line>
@@ -87,9 +91,13 @@ export default function Header() {
 						<line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
 					</svg>
 				</button>
+
+				<button className={styles.buttonPublish} disabled={loading}>
+					Publish
+				</button>
 			</div>
 
-			{campsignSettingsVisible && <CampaignSettings />}
+			{campsignSettingsVisible && <CampaignSettings hideCampaignSettings={hideCampaignSettings} />}
 		</>
 	);
 }

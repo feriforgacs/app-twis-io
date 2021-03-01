@@ -101,3 +101,23 @@
 		margin-left: 0.5rem;
 	}
 }
+
+.buttonPublish {
+	align-items: center;
+	background: #159c5b;
+	border: none;
+	border-radius: 3px;
+	color: #fff;
+	cursor: pointer;
+	display: flex;
+	font-weight: 700;
+	line-height: 1.8rem;
+	margin: 0 1rem 0 0;
+	outline: none;
+	padding: 0 1rem;
+	text-transform: uppercase;
+
+	&:hover {
+		background: #08cd6e;
+	}
+}
