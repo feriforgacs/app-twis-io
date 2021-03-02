@@ -12,11 +12,14 @@ export default function PreviewPage({ campaign, errorMessage }) {
 	 * @todo display preview alert somewhere
 	 */
 
+	// display error message if there is one
+	if (errorMessage) return <p>{errorMessage}</p>;
+
 	return (
 		<>
 			<Head>
 				<title>
-					Preview - {campaign.name} - {process.env.SITE_NAME}
+					PREVIEW - {campaign.name} - {process.env.SITE_NAME}
 				</title>
 
 				{campaign.fonts.length > 0 && <link rel="preconnect" href="https://fonts.gstatic.com" />}
@@ -28,7 +31,7 @@ export default function PreviewPage({ campaign, errorMessage }) {
 				{campaign.ogDescription && <meta property="og:description" content={campaign.ogDescription} />}
 				{campaign.ogImage && <meta property="og:image" content={campaign.ogImage} />}
 			</Head>
-			<div>{errorMessage ? <p>{errorMessage}</p> : ""}Preview campaign</div>
+			<div>Preview campaign</div>
 		</>
 	);
 }
@@ -37,7 +40,7 @@ export async function getServerSideProps(context) {
 	const { id } = context.query;
 
 	let errorMessage = "";
-	let campaign;
+	let campaign = {};
 
 	// get campaign data from the database
 	try {
@@ -50,9 +53,9 @@ export async function getServerSideProps(context) {
 		if (campaign.success !== true) {
 			// error
 			errorMessage = "Can't get campaign data from the database. Please, wait a few minutes and try again";
-			return;
+		} else {
+			campaign = campaign.data;
 		}
-		campaign = campaign.data;
 	} catch (error) {
 		errorMessage = "Can't get campaign data from the database. Please, wait a few minutes and try again";
 	}
