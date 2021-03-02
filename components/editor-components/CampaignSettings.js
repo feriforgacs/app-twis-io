@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 import styles from "./CampaignSettings.module.scss";
-import Visibility from "./campaign-settings-components/Visibility";
 import SuccessLimit from "./campaign-settings-components/SuccessLimit";
 import OpenGraph from "./campaign-settings-components/OpenGraph";
 
@@ -22,7 +21,6 @@ export default function CampaignSettings({ hideCampaignSettings }) {
 
 	return (
 		<div className={styles.campaignSettingsPanel} ref={campaignSettingsRef}>
-			<Visibility />
 			<SuccessLimit />
 			<OpenGraph />
 		</div>

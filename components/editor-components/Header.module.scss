@@ -60,19 +60,19 @@
 
 .buttonCampaignSettings {
 	align-items: center;
-	background: #4428c6;
+	background: #4726e2;
 	border: none;
 	border-radius: 3px;
 	color: #fff;
 	cursor: pointer;
 	display: flex;
 	line-height: 1.8rem;
-	margin: 0 1rem 0 auto;
+	margin: 0 0.5rem 0 auto;
 	outline: none;
-	padding: 0 0.5rem 0 1rem;
+	padding: 0 1rem;
 
 	&:hover {
-		background: #2307a5;
+		background: #4428c6;
 	}
 
 	svg {
@@ -82,19 +82,19 @@
 
 .buttonShare {
 	align-items: center;
-	background: #4428c6;
+	background: #4726e2;
 	border: none;
 	border-radius: 3px;
 	color: #fff;
 	cursor: pointer;
 	display: flex;
 	line-height: 1.8rem;
-	margin: 0 1rem 0 0;
+	margin: 0 0.5rem 0 0;
 	outline: none;
-	padding: 0 0.5rem 0 1rem;
+	padding: 0 1rem;
 
 	&:hover {
-		background: #2307a5;
+		background: #4428c6;
 	}
 
 	svg {
