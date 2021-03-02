@@ -58,7 +58,7 @@
 	}
 }
 
-.buttonCampaignSettings {
+.buttonPreview {
 	align-items: center;
 	background: #4726e2;
 	border: none;
@@ -68,6 +68,28 @@
 	display: flex;
 	line-height: 1.8rem;
 	margin: 0 0.5rem 0 auto;
+	outline: none;
+	padding: 0 0.5rem 0 1rem;
+
+	&:hover {
+		background: #4428c6;
+	}
+
+	svg {
+		margin-left: 0.5rem;
+	}
+}
+
+.buttonCampaignSettings {
+	align-items: center;
+	background: #4726e2;
+	border: none;
+	border-radius: 3px;
+	color: #fff;
+	cursor: pointer;
+	display: flex;
+	line-height: 1.8rem;
+	margin: 0 0.5rem 0 0;
 	outline: none;
 	padding: 0 1rem;
 

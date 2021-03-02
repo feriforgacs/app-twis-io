@@ -12,7 +12,7 @@ import FontFamilies from "../../utils/FontFamilies";
 import SaveStatus from "./header-components/SaveStatus";
 
 export default function Header() {
-	const { loading, campaign, updateCampaignData } = useContext(GlobalContext);
+	const { loading, campaign, updateCampaignData, unsetActiveScreenItem, unsetActiveScreen } = useContext(GlobalContext);
 	const [name, setName] = useState(campaign.name || "loading...");
 	const [campsignSettingsVisible, setCampaignSettingsVisible] = useState(false);
 	const [publishPanelVisible, setPublishPanelVisible] = useState(false);
@@ -72,7 +72,23 @@ export default function Header() {
 
 				<SaveStatus />
 
-				<button className={`${styles.buttonCampaignSettings} button--campaign-settings`} disabled={loading} onClick={() => setCampaignSettingsVisible(!campsignSettingsVisible)}>
+				<a href={`/preview/${campaign._id}`} target="_blank" rel="noopener noreferrer" className={styles.buttonPreview}>
+					<span>Preview</span>
+					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
+						<g fill="none">
+							<path d="M18 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h5M15 3h6v6M10 14L20.2 3.8" />
+						</g>
+					</svg>
+				</a>
+				<button
+					className={`${styles.buttonCampaignSettings} button--campaign-settings`}
+					disabled={loading}
+					onClick={() => {
+						setCampaignSettingsVisible(!campsignSettingsVisible);
+						unsetActiveScreenItem();
+						unsetActiveScreen();
+					}}
+				>
 					Campaign settings
 				</button>
 
@@ -81,6 +97,8 @@ export default function Header() {
 					disabled={loading}
 					onClick={() => {
 						setPublishPanelVisible(!publishPanelVisible);
+						unsetActiveScreenItem();
+						unsetActiveScreen();
 					}}
 				>
 					Publish
