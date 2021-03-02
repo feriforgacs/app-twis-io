@@ -7,7 +7,6 @@ import { DebounceInput } from "react-debounce-input";
 import { GlobalContext } from "../../context/GlobalState";
 import styles from "./Header.module.scss";
 import CampaignSettings from "./CampaignSettings";
-import SharePanel from "./SharePanel";
 import PublishPanel from "./PublishPanel";
 import FontFamilies from "../../utils/FontFamilies";
 import SaveStatus from "./header-components/SaveStatus";
@@ -16,7 +15,6 @@ export default function Header() {
 	const { loading, campaign, updateCampaignData } = useContext(GlobalContext);
 	const [name, setName] = useState(campaign.name || "loading...");
 	const [campsignSettingsVisible, setCampaignSettingsVisible] = useState(false);
-	const [sharePanelVisible, setSharePanelVisible] = useState(false);
 	const [publishPanelVisible, setPublishPanelVisible] = useState(false);
 	const [campaignFonts, setCampaignFonts] = useState(campaign.fonts || []);
 	const router = useRouter();
@@ -30,10 +28,6 @@ export default function Header() {
 
 	const hideCampaignSettings = () => {
 		setCampaignSettingsVisible(false);
-	};
-
-	const hideSharePanel = () => {
-		setSharePanelVisible(false);
 	};
 
 	const hidePublishPanel = () => {
@@ -81,9 +75,6 @@ export default function Header() {
 				<button className={`${styles.buttonCampaignSettings} button--campaign-settings`} disabled={loading} onClick={() => setCampaignSettingsVisible(!campsignSettingsVisible)}>
 					Campaign settings
 				</button>
-				<button className={styles.buttonShare} disabled={loading} onClick={() => setSharePanelVisible(!sharePanelVisible)}>
-					Share
-				</button>
 
 				<button
 					className={styles.buttonPublish}
@@ -97,7 +88,6 @@ export default function Header() {
 			</div>
 
 			{campsignSettingsVisible && <CampaignSettings hideCampaignSettings={hideCampaignSettings} />}
-			{sharePanelVisible && <SharePanel hideSharePanel={hideSharePanel} />}
 			{publishPanelVisible && <PublishPanel hidePublishPanel={hidePublishPanel} />}
 		</>
 	);
