@@ -159,15 +159,6 @@
 	}
 }
 
-.shareButtonTelegram {
-	background: #20a0e1;
-	color: #fff;
-
-	&:hover {
-		background: #0777b0;
-	}
-}
-
 .shareButtonEmail,
 .shareButtonLink {
 	background: #9aa6af;
@@ -204,4 +195,17 @@
 	&:hover {
 		opacity: 1;
 	}
+}
+
+.campaignURL {
+	background: #fff url(../../public/images/editor/icons/icon-link.svg) no-repeat 0.5rem center;
+	box-sizing: border-box;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	font-size: 0.8rem;
+	line-height: 2.3rem;
+	margin: 0 0 0.5rem;
+	outline: none;
+	padding: 0 1rem 0 2.5rem;
+	width: 100%;
 }

@@ -21,6 +21,20 @@ export default function PublishPanel({ hidePublishPanel }) {
 
 	return (
 		<div className={styles.campaignSettingsPanel} ref={publishPanelRef}>
+			<div className={`${styles.settingsHeader} item-settings`}>
+				Publish and Share Campaign
+				<button
+					className={`${styles.settingsClose}`}
+					onClick={() => {
+						hidePublishPanel();
+					}}
+				>
+					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+						<line x1="18" y1="6" x2="6" y2="18"></line>
+						<line x1="6" y1="6" x2="18" y2="18"></line>
+					</svg>
+				</button>
+			</div>
 			<Visibility />
 
 			<ScreenInfo screenType="sharePanel" />
@@ -44,15 +58,6 @@ export default function PublishPanel({ hidePublishPanel }) {
 					<span>Share on Twitter</span>
 				</a>
 
-				<a href="https://twis.io" target="_blank" rel="noopener noreferrer" className={`${styles.shareButtonTelegram} ${styles.shareButton}`}>
-					<span className={styles.shareIcon}>
-						<svg height="20" viewBox="0 0 512 512" width="20" xmlns="http://www.w3.org/2000/svg">
-							<path d="M484.689,98.231l-69.417,327.37c-5.237,23.105-18.895,28.854-38.304,17.972L271.2,365.631 l-51.034,49.086c-5.646,5.647-10.371,10.372-21.256,10.372l7.598-107.722L402.539,140.23c8.523-7.598-1.848-11.809-13.247-4.21 L146.95,288.614L42.619,255.96c-22.694-7.086-23.104-22.695,4.723-33.579L455.423,65.166 C474.316,58.081,490.85,69.375,484.689,98.231z" fill="#ffffff" />
-						</svg>
-					</span>
-					<span>Send on Telegram</span>
-				</a>
-
 				<a href="https://twis.io" target="_blank" rel="noopener noreferrer" className={`${styles.shareButtonEmail} ${styles.shareButton}`}>
 					<span className={styles.shareIcon}>
 						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -72,6 +77,16 @@ export default function PublishPanel({ hidePublishPanel }) {
 					</span>
 					<span>Copy link</span>
 				</a>
+
+				<input
+					className={styles.campaignURL}
+					type="text"
+					value="https://twis.io/play/4253zhtz5"
+					readOnly
+					onClick={(e) => {
+						e.target.select();
+					}}
+				/>
 			</div>
 		</div>
 	);
