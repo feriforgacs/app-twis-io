@@ -7,6 +7,7 @@ export default function AnswersSettings() {
 	const { confettiPreview, activeScreen, activeScreenItem, setActiveScreenItem, updateScreenItem, updateState } = useContext(GlobalContext);
 
 	const [successEmoji, setSuccessEmoji] = useState(activeScreenItem.settings.successEmoji || "🎉");
+	const [answersRandomOrder, setAnswersRandomOrder] = useState(activeScreenItem.settings.answersRandomOrder || false);
 	const [confettiPreviewActive, setConfettiPreviewActive] = useState(confettiPreview);
 
 	useEffect(() => {
@@ -15,6 +16,25 @@ export default function AnswersSettings() {
 
 	return (
 		<>
+			<div className={`${styles.settingsSection} screen-settings`}>
+				<label className={`${styles.settingsLabel} screen-settings`}>Random order</label>
+				<span className={styles.helpText}>Check the option below if you would like to display the answer options in a random order for your participants.</span>
+
+				<div className={styles.checkboxList}>
+					<label className={answersRandomOrder ? styles.optionSelected : ""}>
+						<input
+							type="checkbox"
+							defaultChecked={answersRandomOrder}
+							onChange={() => {
+								setAnswersRandomOrder(!answersRandomOrder);
+								updateScreenItem(activeScreen.screenId, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, answersRandomOrder: !answersRandomOrder } });
+								setActiveScreenItem({ ...activeScreenItem, settings: { ...activeScreenItem.settings, answersRandomOrder: !answersRandomOrder } });
+							}}
+						/>{" "}
+						Display Options In Random Order
+					</label>
+				</div>
+			</div>
 			<div className={`${styles.settingsSection} screen-settings`}>
 				<label className={`${styles.settingsLabel} screen-settings`}>Success Emoji Confetti</label>
 				<span className={styles.helpText}>The emoji that &quot;explodes&quot; when selecting the correct option. </span>

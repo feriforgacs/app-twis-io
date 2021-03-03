@@ -2,7 +2,7 @@ import styles from "../ScreenSettings.module.scss";
 
 export default function ItemInfo({ itemType }) {
 	const infoText = {
-		answers: "Answer options will be displayed in a random order for the visitors",
+		/* answers: "Answer options will be displayed in a random order for the visitors", */
 	};
 	return (
 		<>
