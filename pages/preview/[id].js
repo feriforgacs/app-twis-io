@@ -3,6 +3,7 @@ import Head from "next/head";
 import NProgress from "nprogress";
 import FontFamilies from "../../utils/FontFamilies";
 import FrontendScreen from "../../components/frontend-components/FrontendScreen";
+import ScreensIndicator from "../../components/frontend-components/ScreensIndicator";
 
 export default function PreviewPage({ campaign, errorMessage, screens }) {
 	const [loading, setLoading] = useState(true);
@@ -31,10 +32,13 @@ export default function PreviewPage({ campaign, errorMessage, screens }) {
 				{campaign.ogDescription && <meta property="og:description" content={campaign.ogDescription} />}
 				{campaign.ogImage && <meta property="og:image" content={campaign.ogImage} />}
 			</Head>
-			<div className="twis-campaign">
-				{screens.map((screen, index) => (
-					<FrontendScreen key={index} data={screen} />
-				))}
+			<div className="campaign-story">
+				<div className="campaign-story__screens">
+					{screens.map((screen, index) => (
+						<FrontendScreen key={index} data={screen} />
+					))}
+					<ScreensIndicator screens={screens.length - 1} />
+				</div>
 			</div>
 		</>
 	);
