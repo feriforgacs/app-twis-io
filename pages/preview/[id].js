@@ -1,19 +1,20 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Head from "next/head";
 import NProgress from "nprogress";
 import FontFamilies from "../../utils/FontFamilies";
 
-export default function PreviewPage({ campaign, errorMessage }) {
+export default function PreviewPage({ campaign, errorMessage, screens }) {
 	const [loading, setLoading] = useState(true);
 
+	// display error message if there is one
+	if (errorMessage) return <p>{errorMessage}</p>;
+
 	/**
-	 * @todo get campaign screens from the db
 	 * @todo display campaign
 	 * @todo display preview alert somewhere
 	 */
 
-	// display error message if there is one
-	if (errorMessage) return <p>{errorMessage}</p>;
+	console.log(screens);
 
 	return (
 		<>
@@ -31,7 +32,7 @@ export default function PreviewPage({ campaign, errorMessage }) {
 				{campaign.ogDescription && <meta property="og:description" content={campaign.ogDescription} />}
 				{campaign.ogImage && <meta property="og:image" content={campaign.ogImage} />}
 			</Head>
-			<div>Preview campaign</div>
+			<div>Preview campaign {campaign.name}</div>
 		</>
 	);
 }
@@ -41,20 +42,22 @@ export async function getServerSideProps(context) {
 
 	let errorMessage = "";
 	let campaign = {};
+	let screens = [];
 
 	// get campaign data from the database
 	try {
-		const campaignsRequest = await fetch(`${process.env.APP_URL}/api/campaigns/view?id=${id}`, {
+		const campaignRequest = await fetch(`${process.env.APP_URL}/api/campaigns/view?id=${id}`, {
 			method: "GET",
 		});
 
-		campaign = await campaignsRequest.json();
+		const campaignResult = await campaignRequest.json();
 
-		if (campaign.success !== true) {
+		if (campaignResult.success !== true) {
 			// error
 			errorMessage = "Can't get campaign data from the database. Please, wait a few minutes and try again";
 		} else {
-			campaign = campaign.data;
+			screens = campaignResult.screens;
+			campaign = campaignResult.campaign;
 		}
 	} catch (error) {
 		errorMessage = "Can't get campaign data from the database. Please, wait a few minutes and try again";
@@ -63,6 +66,7 @@ export async function getServerSideProps(context) {
 	return {
 		props: {
 			campaign,
+			screens,
 			errorMessage,
 		},
 	};

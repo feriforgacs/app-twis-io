@@ -6,6 +6,8 @@ import Cors from "cors";
 import initMiddleware from "../../../lib/InitMiddleware";
 import DatabaseConnect from "../../../lib/DatabaseConnect";
 import Campaign from "../../../models/Campaign";
+import Screen from "../../../models/editor/Screen";
+import ScreenItem from "../../../models/editor/ScreenItem"; // eslint-disable-line
 
 const cors = initMiddleware(
 	Cors({
@@ -19,8 +21,7 @@ export default async function CampaignDataHandler(req, res) {
 	await DatabaseConnect();
 
 	if (!req.query.id) {
-		res.status(400).json({ success: false, error: "missing campaign id" });
-		return;
+		return res.status(400).json({ success: false, error: "missing campaign id" });
 	}
 
 	let campaignId;
@@ -29,8 +30,7 @@ export default async function CampaignDataHandler(req, res) {
 		if (mongoose.Types.ObjectId.isValid(req.query.id)) {
 			campaignId = req.query.id;
 		} else {
-			res.status(400).json({ success: false, error: "invalid campaign id" });
-			return;
+			return res.status(400).json({ success: false, error: "invalid campaign id" });
 		}
 	}
 
@@ -39,8 +39,20 @@ export default async function CampaignDataHandler(req, res) {
 	 */
 	try {
 		const campaign = await Campaign.findOne({ _id: campaignId }).select("-participantCount, -createdBy, -createdAt, -updatedAt, -__v");
-		res.status(200).json({ success: true, data: campaign });
+
+		if (!campaign) {
+			return res.status(400).json({ success: false });
+		}
+
+		const screens = await Screen.find({ campaignId: campaignId }).select("-createdAt, -updatedAt, -__v").sort({ orderIndex: 1 });
+
+		if (!screens) {
+			return res.status(400).json({ success: false });
+		}
+
+		return res.status(200).json({ success: true, campaign: campaign, screens: screens });
 	} catch (error) {
-		res.status(400).json({ success: false });
+		console.log(error);
+		return res.status(400).json({ success: false });
 	}
 }
