@@ -19,12 +19,11 @@
 
 		.screens-list {
 			display: flex;
-			flex-wrap: nowrap;
+			/* flex-wrap: nowrap; */
 			height: 100%;
 			position: absolute;
 
 			.campaign-screen {
-				flex: 1;
 				height: 100%;
 				position: relative;
 				width: 100%;

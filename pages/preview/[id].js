@@ -37,7 +37,7 @@ export default function PreviewPage({ campaign, errorMessage, screens }) {
 	 * @param {obj} e click event object
 	 */
 	const handleClick = (e) => {
-		if (e.screenX >= window.innerWidth * 0.45) {
+		if (e.pageX >= window.innerWidth * 0.45) {
 			gotoNextScreen();
 		} else {
 			gotoPreviousScreen();
@@ -97,9 +97,9 @@ export default function PreviewPage({ campaign, errorMessage, screens }) {
 						}}
 					>
 						{campaignScreens.map((screen, index) => (
-							<CampaignScreen key={index} data={screen} />
+							<CampaignScreen key={index} data={screen} width={screenWidth} height={screenHeight} />
 						))}
-						<CampaignScreen key="endscreen" data={endScreenData} />
+						<CampaignScreen key="endscreen" data={endScreenData} width={screenWidth} height={screenHeight} />
 					</div>
 					<ScreensIndicator screens={screens.length - 1} active={activeScreenIndex} />
 				</div>
