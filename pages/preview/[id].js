@@ -13,15 +13,28 @@ import ScreensIndicator from "../../components/frontend-components/ScreensIndica
 
 export default function PreviewPage({ campaign, errorMessage, screens }) {
 	const [activeScreenIndex, setActiveScreenIndex] = useState(0);
+	const [screen, setScreen] = useState(screens[0]);
+	const lastScreenIndex = screens.length - 2;
+
 	/**
 	 * Go to the next screen
 	 */
-	const gotoNextScreen = () => {};
+	const gotoNextScreen = () => {
+		if (activeScreenIndex < lastScreenIndex) {
+			setActiveScreenIndex(activeScreenIndex + 1);
+			setScreen(screens[activeScreenIndex + 1]);
+		}
+	};
 
 	/**
 	 * Go to the previous screen
 	 */
-	const gotoPreviousScreen = () => {};
+	const gotoPreviousScreen = () => {
+		if (activeScreenIndex > 0) {
+			setActiveScreenIndex(activeScreenIndex - 1);
+			setScreen(screens[activeScreenIndex - 1]);
+		}
+	};
 
 	/**
 	 * Go to next or previous screen based on click location
@@ -73,6 +86,7 @@ export default function PreviewPage({ campaign, errorMessage, screens }) {
 
 			<div className="campaign" onClick={(e) => handleClick(e)}>
 				<div className="story">
+					<CampaignScreen data={screen} />
 					<ScreensIndicator screens={screens.length - 1} active={activeScreenIndex} />
 				</div>
 			</div>

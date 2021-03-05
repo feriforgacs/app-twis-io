@@ -1,0 +1,51 @@
+.campaign {
+	align-items: center;
+	background: #20202a;
+	display: flex;
+	height: 100vh;
+	justify-content: center;
+	width: 100%;
+
+	.story {
+		height: 100%;
+		position: relative;
+		width: 100%;
+
+		.screens-indicator {
+			display: flex;
+			justify-content: space-between;
+			position: absolute;
+			top: 5px;
+			width: 100%;
+
+			.indicator {
+				background: rgba(255, 255, 255, 0.6);
+				border-radius: 3px;
+				flex: 1;
+				height: 3px;
+				margin: 0 5px;
+				position: relative;
+
+				&::after {
+					background: #fff;
+					content: "";
+					display: block;
+					height: 3px;
+					width: 0;
+					transition: width 100ms linear;
+				}
+
+				&--active {
+					&::after {
+						width: 100%;
+					}
+				}
+			}
+		}
+
+		.screen {
+			height: 100%;
+			width: 100%;
+		}
+	}
+}

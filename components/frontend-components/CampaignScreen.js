@@ -1,8 +1,6 @@
-export default function CampaignScreen({ data, width, height }) {
+export default function CampaignScreen({ data }) {
 	const screenStyle = {
 		background: data.background.color,
-		height: `${height}px`,
-		width: `${width}px`,
 	};
 	return (
 		<div className="screen" style={screenStyle}>
