@@ -1,0 +1,31 @@
+export default function Text({ data }) {
+	let textContainerStyle = {
+		background: data.settings.highlightColor.backgroundColor,
+		textAlign: data.settings.align,
+		width: `${data.settings.width}px`,
+		height: `${data.settings.height}px`,
+		transform: `translateX(${data.settings.translateX}px) translateY(${data.settings.translateY}px) rotate(${data.settings.rotate}deg)`,
+		top: `${data.settings.top}px`,
+		left: `${data.settings.left}px`,
+		opacity: typeof data.settings.opacity !== undefined ? data.settings.opacity : 1,
+		zIndex: data.orderIndex,
+		position: "absolute",
+	};
+
+	let textStyle = {
+		color: `rgba(${data.settings.color.r}, ${data.settings.color.g}, ${data.settings.color.b}, ${data.settings.color.a})`,
+		fontSize: `${data.settings.fontSize}px`,
+		fontWeight: data.settings.bold ? 700 : 400,
+		fontStyle: data.settings.italic ? `italic` : `normal`,
+		textDecoration: data.settings.underline ? `underline` : `none`,
+		textTransform: data.settings.uppercase ? `uppercase` : `none`,
+	};
+
+	const fontFamilyClass = data.settings.fontFamily !== "" ? `font--${data.settings.fontFamily}` : `font--arial`;
+
+	return (
+		<div className={fontFamilyClass} style={textContainerStyle}>
+			<span style={textStyle}>{data.content}</span>
+		</div>
+	);
+}

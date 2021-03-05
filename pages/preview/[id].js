@@ -1,9 +1,12 @@
 /**
- * @todo display first screen
- * @todo display screens indicator
+ * @todo display screen items
  * @todo go to next screen
  * @todo go to previous screen
  * @todo calculate screen size
+ * @todo handle button clicks
+ * @todo handle answer clicks
+ * @todo handle form submit
+ * @todo display success or failure end screen
  */
 import { useState, useEffect } from "react";
 import Head from "next/head";
@@ -40,7 +43,7 @@ export default function PreviewPage({ campaign, errorMessage, screens }) {
 	 * Go to next or previous screen based on click location
 	 * @param {obj} e click event object
 	 */
-	const handleClick = (e) => {
+	const handleScreenClick = (e) => {
 		if (e.pageX >= window.innerWidth * 0.45) {
 			gotoNextScreen();
 		} else {
@@ -74,9 +77,11 @@ export default function PreviewPage({ campaign, errorMessage, screens }) {
 					PREVIEW - {campaign.name} - {process.env.SITE_NAME}
 				</title>
 
+				{/* Campaign custom fonts */}
 				{campaign.fonts.length > 0 && <link rel="preconnect" href="https://fonts.gstatic.com" />}
 				{campaign.fonts.map((font, index) => font !== "" && FontFamilies[font].url !== "" && <link key={index} href={FontFamilies[font].url} rel="stylesheet" />)}
 
+				{/* Campaign OG data */}
 				<meta property="og:type" content="website" />
 				<meta property="og:url" content="TODO" />
 				{campaign.ogTitle && <meta property="og:title" content={campaign.ogTitle} />}
@@ -84,9 +89,9 @@ export default function PreviewPage({ campaign, errorMessage, screens }) {
 				{campaign.ogImage && <meta property="og:image" content={campaign.ogImage} />}
 			</Head>
 
-			<div className="campaign" onClick={(e) => handleClick(e)}>
+			<div className="campaign">
 				<div className="story">
-					<CampaignScreen data={screen} />
+					<CampaignScreen data={screen} handleScreenClick={handleScreenClick} />
 					<ScreensIndicator screens={screens.length - 1} active={activeScreenIndex} />
 				</div>
 			</div>
