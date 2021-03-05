@@ -1,52 +1,51 @@
-.campaign-story {
+.campaign {
 	align-items: center;
 	background: #20202a;
-	color: #fff;
-	display: flex;
-	flex-direction: column;
 	height: 100vh;
+	display: flex;
 	justify-content: center;
+	overflow: hidden;
 	position: relative;
 	user-select: none;
 	width: 100%;
 
-	&__screens {
-		background: purple;
+	.story {
 		height: 640px;
-		width: 360px;
 		overflow: hidden;
 		position: relative;
+		width: 360px;
 
-		.screens-list {
+		&__screens {
 			display: flex;
-			/* flex-wrap: nowrap; */
+			flex-wrap: nowrap;
 			height: 100%;
+			left: 0;
 			position: absolute;
+			transition: left 300ms ease-in;
+			top: 0;
 
-			.campaign-screen {
-				height: 100%;
-				position: relative;
+			.screen {
 				width: 100%;
 			}
 		}
-	}
 
-	&__screens-indicator {
-		display: flex;
-		position: absolute;
-		top: 5px;
-		width: 100%;
+		.screens-indicator {
+			display: flex;
+			position: absolute;
+			top: 5px;
+			width: 100%;
 
-		.indicator {
-			background: rgba(255, 255, 255, 0.5);
-			border-radius: 3px;
-			box-sizing: border-box;
-			height: 3px;
-			margin: 0 2px;
-			flex: 1;
+			.indicator {
+				background: rgba(255, 255, 255, 0.5);
+				border-radius: 3px;
+				box-sizing: border-box;
+				height: 3px;
+				margin: 0 2px;
+				flex: 1;
 
-			&--active {
-				background: rgba(255, 255, 255, 0.8);
+				&--active {
+					background: rgba(255, 255, 255, 0.8);
+				}
 			}
 		}
 	}

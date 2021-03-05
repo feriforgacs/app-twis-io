@@ -87,13 +87,13 @@ export default function PreviewPage({ campaign, errorMessage, screens }) {
 				{campaign.ogImage && <meta property="og:image" content={campaign.ogImage} />}
 			</Head>
 
-			<div className="campaign-story" onClick={(e) => handleClick(e)}>
-				<div className="campaign-story__screens">
+			<div className="campaign" onClick={(e) => handleClick(e)}>
+				<div className="story">
 					<div
-						className="screens-list"
+						className="story__screens"
 						style={{
 							left: `-${activeScreenIndex * screenWidth}px`,
-							width: `${lastScreenIndex * screenWidth}px`,
+							width: `${screens.length - 1 * screenWidth}px`,
 						}}
 					>
 						{campaignScreens.map((screen, index) => (
