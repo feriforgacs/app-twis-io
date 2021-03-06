@@ -26,8 +26,35 @@ export default function Button({ data }) {
 
 	const fontFamilyClass = data.settings.fontFamily !== "" ? `font--${data.settings.fontFamily}` : `font--arial`;
 
+	const buttonActionType = data.settings.action ? data.settings.action : "";
+
+	const handleClick = () => {
+		switch (buttonActionType) {
+			case "nextscreen":
+				// go to next screen
+				break;
+
+			case "previousscreen":
+				// go to previous screen
+				break;
+
+			case "restart":
+				// go to first screen
+				break;
+
+			case "url":
+				// go to url
+				break;
+
+			default:
+				// go to next screen
+
+				break;
+		}
+	};
+
 	return (
-		<div className={`${fontFamilyClass} ${data.settings.classNames ? data.settings.classNames : ""}`} style={buttonStyle}>
+		<div className={`${fontFamilyClass} ${data.settings.classNames ? data.settings.classNames : ""}`} style={buttonStyle} onClick={() => handleClick()}>
 			<span style={buttonTextStyle}>{data.content}</span>
 		</div>
 	);

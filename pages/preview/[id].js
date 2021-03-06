@@ -13,6 +13,7 @@ import Head from "next/head";
 import FontFamilies from "../../utils/FontFamilies";
 import CampaignScreen from "../../components/frontend-components/CampaignScreen";
 import ScreensIndicator from "../../components/frontend-components/ScreensIndicator";
+import { FrontendProvider } from "../../context/frontend/FrontendState";
 
 export default function PreviewPage({ campaign, errorMessage, screens }) {
 	const [activeScreenIndex, setActiveScreenIndex] = useState(0);
@@ -71,7 +72,7 @@ export default function PreviewPage({ campaign, errorMessage, screens }) {
 	if (errorMessage) return <p>{errorMessage}</p>;
 
 	return (
-		<>
+		<FrontendProvider>
 			<Head>
 				<title>
 					PREVIEW - {campaign.name} - {process.env.SITE_NAME}
@@ -95,7 +96,7 @@ export default function PreviewPage({ campaign, errorMessage, screens }) {
 					<ScreensIndicator screens={screens.length - 1} active={activeScreenIndex} />
 				</div>
 			</div>
-		</>
+		</FrontendProvider>
 	);
 }
 
