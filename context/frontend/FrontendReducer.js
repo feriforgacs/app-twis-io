@@ -1,7 +1,10 @@
 export default function FrontendReducer(state, action) {
 	switch (action.type) {
-		case "":
-			break;
+		case "UPDATE_STATE":
+			return {
+				...state,
+				[action.payload.key]: action.payload.value,
+			};
 
 		default:
 			return state;
