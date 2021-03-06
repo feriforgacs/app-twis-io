@@ -5,9 +5,11 @@ export default function CampaignScreen({ data, handleScreenClick }) {
 	};
 	return (
 		<div className="screen" style={screenStyle} onClick={(e) => handleScreenClick(e)}>
-			{data.screenItems.map((item, index) => (
-				<ScreenItem item={item} key={index} />
-			))}
+			<div className="screen__body">
+				{data.screenItems.map((item) => (
+					<ScreenItem item={item} key={item.itemId} />
+				))}
+			</div>
 		</div>
 	);
 }

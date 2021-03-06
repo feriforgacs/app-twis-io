@@ -5,8 +5,8 @@
  * @todo calculate screen size
  * @todo handle button clicks
  * @todo handle answer clicks
- * @todo handle form submit
  * @todo display success or failure end screen
+ * @todo handle form submit
  */
 import { useState, useEffect } from "react";
 import Head from "next/head";
