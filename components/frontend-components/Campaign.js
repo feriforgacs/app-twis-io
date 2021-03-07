@@ -1,9 +1,6 @@
 /**
  * @todo display screen items
- * @todo go to next screen
- * @todo go to previous screen
  * @todo calculate screen size
- * @todo handle button clicks
  * @todo handle answer clicks
  * @todo display success or failure end screen
  * @todo handle form submit

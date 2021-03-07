@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { FrontendContext } from "../../../context/frontend/FrontendState";
+
 export default function Button({ data, lastScreenIndex }) {
 	const { gotoNextScreen, gotoPreviousScreen, updateState } = useContext(FrontendContext);
 	let buttonStyle = {

@@ -6,6 +6,7 @@ let FrontendState = {
 	error: false,
 	endScreen: "success",
 	activeScreenIndex: 0,
+	noStep: false,
 };
 
 export const FrontendContext = createContext(FrontendState);
@@ -34,7 +35,7 @@ export const FrontendProvider = ({ children }) => {
 	 * @param {int} lastScreenIndex The index of the last campaign screen
 	 */
 	const handleScreenClick = (e, lastScreenIndex) => {
-		if (e.target.classList.contains("no-step")) {
+		if (e.target.classList.contains("no-step") || state.noStep) {
 			return;
 		}
 		if (e.pageX >= window.innerWidth * 0.45) {
