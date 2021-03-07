@@ -9,6 +9,21 @@ export default function Answers({ data, lastScreenIndex }) {
 	const [noStep, setNoStep] = useState(true);
 	const [success, setSuccess] = useState(false);
 
+	/**
+	 * Random order
+	 * @param {array} arr Array to be randomized
+	 */
+	const getShuffledArr = (arr) => {
+		const newArr = arr.slice();
+		for (let i = newArr.length - 1; i > 0; i--) {
+			const rand = Math.floor(Math.random() * (i + 1));
+			[newArr[i], newArr[rand]] = [newArr[rand], newArr[i]];
+		}
+		return newArr;
+	};
+
+	const answerOptions = data.settings.answersRandomOrder ? getShuffledArr(data.settings.answers) : data.settings.answers;
+
 	useEffect(() => {
 		updateState("noStep", noStep);
 	}, [noStep]);
@@ -39,7 +54,7 @@ export default function Answers({ data, lastScreenIndex }) {
 
 	return (
 		<div style={answersStyle}>
-			{data.settings.answers.map((answer, index) => (
+			{answerOptions.map((answer, index) => (
 				<AnswerOption key={index} answer={answer} index={index} correct={index === data.settings.correctAnswer} answerItemStyle={answerItemStyle} itemSettings={data} />
 			))}
 			{success && <SuccessConfetti successEmoji={data.settings.successEmoji || ""} />}
