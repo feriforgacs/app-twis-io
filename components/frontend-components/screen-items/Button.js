@@ -1,7 +1,7 @@
-/**
- * @todo handle different type of click actions
- */
-export default function Button({ data }) {
+import { useContext } from "react";
+import { FrontendContext } from "../../../context/frontend/FrontendState";
+export default function Button({ data, lastScreenIndex }) {
+	const { gotoNextScreen, gotoPreviousScreen, updateState } = useContext(FrontendContext);
 	let buttonStyle = {
 		background: data.settings.highlightColor.backgroundColor,
 		textAlign: data.settings.align,
@@ -29,33 +29,47 @@ export default function Button({ data }) {
 	const buttonActionType = data.settings.action ? data.settings.action : "";
 
 	const handleClick = () => {
+		let actionURL = data.settings.actionURL ? data.settings.actionURL : "";
+
+		// check http or https prefix at the beginning of the url
+		if (actionURL.indexOf("http://") !== 0 || actionURL.indexOf("https://") !== 0) {
+			actionURL = `https://${actionURL}`;
+		}
 		switch (buttonActionType) {
 			case "nextscreen":
 				// go to next screen
+				gotoNextScreen(lastScreenIndex);
 				break;
 
 			case "previousscreen":
 				// go to previous screen
+				gotoPreviousScreen();
 				break;
 
 			case "restart":
 				// go to first screen
+				updateState("activeScreenIndex", 0);
 				break;
 
 			case "url":
 				// go to url
+				if (actionURL) {
+					Object.assign(document.createElement("a"), { target: "_blank", href: actionURL }).click();
+				}
 				break;
 
 			default:
 				// go to next screen
-
+				gotoNextScreen(lastScreenIndex);
 				break;
 		}
 	};
 
 	return (
-		<div className={`${fontFamilyClass} ${data.settings.classNames ? data.settings.classNames : ""}`} style={buttonStyle} onClick={() => handleClick()}>
-			<span style={buttonTextStyle}>{data.content}</span>
+		<div className={`no-step ${fontFamilyClass} ${data.settings.classNames ? data.settings.classNames : ""}`} style={buttonStyle} onClick={() => handleClick()}>
+			<span className="no-step" style={buttonTextStyle}>
+				{data.content}
+			</span>
 		</div>
 	);
 }

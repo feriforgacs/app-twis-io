@@ -11,7 +11,7 @@ export default function CampaignScreen({ data, lastScreenIndex }) {
 		<div className="screen" style={screenStyle} onClick={(e) => handleScreenClick(e, lastScreenIndex)}>
 			<div className="screen__body">
 				{data.screenItems.map((item) => (
-					<ScreenItem item={item} key={item.itemId} />
+					<ScreenItem item={item} key={item.itemId} lastScreenIndex={lastScreenIndex} />
 				))}
 			</div>
 		</div>

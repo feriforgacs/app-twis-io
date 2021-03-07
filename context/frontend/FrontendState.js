@@ -34,6 +34,9 @@ export const FrontendProvider = ({ children }) => {
 	 * @param {int} lastScreenIndex The index of the last campaign screen
 	 */
 	const handleScreenClick = (e, lastScreenIndex) => {
+		if (e.target.classList.contains("no-step")) {
+			return;
+		}
 		if (e.pageX >= window.innerWidth * 0.45) {
 			if (state.activeScreenIndex < lastScreenIndex) {
 				// go to next screen
@@ -47,6 +50,27 @@ export const FrontendProvider = ({ children }) => {
 		}
 	};
 
+	/**
+	 * Go to next screen
+	 * @param {int} lastScreenIndex Index of last screen in the campaign
+	 */
+	const gotoNextScreen = (lastScreenIndex) => {
+		if (state.activeScreenIndex < lastScreenIndex) {
+			// go to next screen
+			updateState("activeScreenIndex", state.activeScreenIndex + 1);
+		}
+	};
+
+	/**
+	 * Go to previous screen
+	 */
+	const gotoPreviousScreen = () => {
+		if (state.activeScreenIndex > 0) {
+			// go to previous screen
+			updateState("activeScreenIndex", state.activeScreenIndex - 1);
+		}
+	};
+
 	return (
 		<FrontendContext.Provider
 			value={{
@@ -57,6 +81,8 @@ export const FrontendProvider = ({ children }) => {
 
 				updateState,
 				handleScreenClick,
+				gotoNextScreen,
+				gotoPreviousScreen,
 			}}
 		>
 			{children}
