@@ -14,11 +14,8 @@ export default function FrontendReducer(state, action) {
 		 * Add selected answer to state
 		 */
 		case "ADD_ANSWER":
-			console.log(action.payload.answerId, action.payload.selectedAnswer);
 			selectedAnswers = { ...state.answers };
 			selectedAnswers[`${action.payload.answerId}`] = action.payload.selectedAnswer;
-
-			console.log(selectedAnswers);
 
 			return {
 				...state,

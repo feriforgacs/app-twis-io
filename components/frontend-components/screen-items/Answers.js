@@ -8,7 +8,7 @@ export default function Answers({ data, lastScreenIndex }) {
 	const [showResult, setShowResult] = useState(false);
 	const [noStep, setNoStep] = useState(true);
 	const [success, setSuccess] = useState(false);
-	const [answer, setAnswer] = useState(answers[data.itemId] || false);
+	const [answerIndex, setAnswerIndex] = useState(answers[data.itemId] || false);
 	const correctAnswer = data.settings.correctAnswer;
 
 	/**
@@ -66,9 +66,11 @@ export default function Answers({ data, lastScreenIndex }) {
 					answerItemStyle={answerItemStyle}
 					itemSettings={data}
 					onClick={() => {
-						console.log({ index, correctAnswer });
-						addAnswer(data.itemId, index);
-						setAnswer(index);
+						console.log(answer);
+						if (answerIndex === false) {
+							addAnswer(data.itemId, index);
+							setAnswerIndex(index);
+						}
 					}}
 				/>
 			))}
