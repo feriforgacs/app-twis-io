@@ -1,3 +1,8 @@
+/**
+ * @todo check correct answer on click
+ * @todo display success confeti or error
+ * @todo add answer to global state
+ */
 import { useContext, useEffect, useState } from "react";
 import { FrontendContext } from "../../../context/frontend/FrontendState";
 import AnswerOption from "./answer-items/AnswerOption";
@@ -8,14 +13,12 @@ export default function Answers({ data, lastScreenIndex }) {
 	const [showResult, setShowResult] = useState(false);
 	const [noStep, setNoStep] = useState(true);
 	const [success, setSuccess] = useState(false);
-	const [answerIndex, setAnswerIndex] = useState(answers[data.itemId] || false);
-	const correctAnswer = data.settings.correctAnswer;
 
 	/**
 	 * Random order
 	 * @param {array} arr Array to be randomized
 	 */
-	/* const getShuffledArr = (arr) => {
+	const getShuffledArr = (arr) => {
 		const newArr = arr.slice();
 		for (let i = newArr.length - 1; i > 0; i--) {
 			const rand = Math.floor(Math.random() * (i + 1));
@@ -24,8 +27,7 @@ export default function Answers({ data, lastScreenIndex }) {
 		return newArr;
 	};
 
-	const answerOptions = data.settings.answersRandomOrder ? getShuffledArr(data.settings.answers) : data.settings.answers; */
-	const answerOptions = data.settings.answers;
+	const answerOptions = data.settings.answersRandomOrder ? getShuffledArr(data.settings.answers) : data.settings.answers;
 
 	useEffect(() => {
 		updateState("noStep", noStep);
@@ -65,10 +67,7 @@ export default function Answers({ data, lastScreenIndex }) {
 					answerItemStyle={answerItemStyle}
 					itemSettings={data}
 					onClick={() => {
-						if (answerIndex === false) {
-							addAnswer(data.itemId, index);
-							setAnswerIndex(index);
-						}
+						alert("clicked");
 					}}
 				/>
 			))}

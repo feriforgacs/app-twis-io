@@ -5,7 +5,8 @@ export default function AnswerOption({ index, answer, answerItemStyle, onClick }
 	return (
 		<div className={styles.answerOption} style={answerItemStyle} onClick={onClick}>
 			<div className={styles.choice}>{answerChoices[index]}</div>
-			<div className={styles.optionText}>{answer}</div>
+			<div className={styles.optionText}>{answer.option}</div>
+			{answer.correct ? "correct" : "wrong"}
 		</div>
 	);
 }
