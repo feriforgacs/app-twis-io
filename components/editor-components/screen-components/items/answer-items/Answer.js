@@ -1,9 +1,9 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { GlobalContext } from "../../../../../context/GlobalState";
 import AnswerText from "./AnswerText";
 import styles from "./Answer.module.scss";
 
-export default function Answer({ answer, index, correct, setCorrectAnswer, answerItemStyle, screenItemActive, screenId, itemSettings }) {
+export default function Answer({ answer, index, correct, answerItemStyle, screenItemActive, screenId, itemSettings }) {
 	const { activeScreenItem, setActiveScreenItem, updateScreenItem } = useContext(GlobalContext);
 
 	const answerChoices = ["A", "B", "C", "D"];
@@ -24,13 +24,33 @@ export default function Answer({ answer, index, correct, setCorrectAnswer, answe
 				<div
 					className={`screen-item ${styles.choice} ${correct && screenItemActive ? styles.choiceCorrect : ""}`}
 					onClick={() => {
-						setCorrectAnswer(index);
+						let answers;
 						if (!activeScreenItem) {
-							updateScreenItem(screenId, itemSettings.itemId, { settings: { ...itemSettings.settings, correctAnswer: index } });
-							setActiveScreenItem({ ...itemSettings, settings: { ...itemSettings.settings, correctAnswer: index } });
+							answers = [...itemSettings.settings.answers];
+							answers.map((answerOption, answerOptionIndex) => {
+								if (answerOptionIndex === index) {
+									answerOption.correct = true;
+								} else {
+									answerOption.correct = false;
+								}
+								return answerOption;
+							});
+
+							updateScreenItem(screenId, itemSettings.itemId, { settings: { ...itemSettings.settings, answers } });
+							setActiveScreenItem({ ...itemSettings, settings: { ...itemSettings.settings, answers } });
 						} else {
-							updateScreenItem(screenId, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, correctAnswer: index } });
-							setActiveScreenItem({ ...activeScreenItem, settings: { ...activeScreenItem.settings, correctAnswer: index } });
+							answers = [...activeScreenItem.settings.answers];
+							answers.map((answerOption, answerOptionIndex) => {
+								if (answerOptionIndex === index) {
+									answerOption.correct = true;
+								} else {
+									answerOption.correct = false;
+								}
+								return answerOption;
+							});
+
+							updateScreenItem(screenId, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, answers } });
+							setActiveScreenItem({ ...activeScreenItem, settings: { ...activeScreenItem.settings, answers } });
 						}
 					}}
 				>
@@ -43,7 +63,7 @@ export default function Answer({ answer, index, correct, setCorrectAnswer, answe
 					)}
 				</div>
 				<div className={`screen-item ${styles.optionText}`}>
-					<AnswerText answer={answer} index={index} style={currentItemstyle} />
+					<AnswerText answer={answer.option} index={index} style={currentItemstyle} />
 				</div>
 			</div>
 		</>

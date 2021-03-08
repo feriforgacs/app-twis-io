@@ -26,7 +26,7 @@ export default function AnswerText({ answer, index }) {
 		setEditableDisabled(true);
 
 		const answers = [...activeScreenItem.settings.answers];
-		answers[index] = text.current;
+		answers[index].option = text.current;
 
 		if (text.current !== answer) {
 			// update screen item in state and db

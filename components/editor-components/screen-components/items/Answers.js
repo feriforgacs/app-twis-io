@@ -1,6 +1,3 @@
-/**
- * @todo store answer options as objects
- */
 import { useContext, useState } from "react";
 import { GlobalContext } from "../../../../context/GlobalState";
 import styles from "./Answers.module.scss";
@@ -10,8 +7,6 @@ import EmojiConfetti from "./answer-items/EmojiConfetti";
 export default function Answers({ data, screenId }) {
 	const { activeScreenItem, setActiveScreenItem, confettiPreview } = useContext(GlobalContext);
 	const screenItemActive = activeScreenItem.itemId === data.itemId;
-
-	const [correctAnswer, setCorrectAnswer] = useState(data.settings.correctAnswer || 0);
 
 	let answersStyle = {
 		height: `${data.settings.height || 0}px`,
@@ -44,7 +39,7 @@ export default function Answers({ data, screenId }) {
 	return (
 		<div onClick={() => setActiveScreenItem(data)} id={`${data.type}-${data.itemId}`} className={`screen-item ${styles.answers} ${fontFamilyClass}`} style={answersStyle}>
 			{data.settings.answers.map((answer, index) => (
-				<Answer key={index} answer={answer} index={index} screenItemActive={screenItemActive} correct={index === correctAnswer} setCorrectAnswer={setCorrectAnswer} answerItemStyle={answerItemStyle} screenId={screenId} itemSettings={data} />
+				<Answer key={index} answer={answer} index={index} screenItemActive={screenItemActive} correct={answer.correct} answerItemStyle={answerItemStyle} screenId={screenId} itemSettings={data} />
 			))}
 			{confettiPreview && <EmojiConfetti successEmoji={data.settings.successEmoji || ""} />}
 		</div>
