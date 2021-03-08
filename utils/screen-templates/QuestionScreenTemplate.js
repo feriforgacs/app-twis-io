@@ -59,8 +59,24 @@ export const QuestionScreenTemplateItems = [
 			translateY: 143.1439598150116,
 			rotate: 0,
 			removeable: false,
-			answers: ["double click to edit answer option", "this is the correct answer", "👈 click to set as correct answer", "fourth option&nbsp;😊"],
-			correctAnswer: 1,
+			answers: [
+				{
+					option: "double click to edit answer option",
+					correct: false,
+				},
+				{
+					option: "this is the correct answer",
+					correct: true,
+				},
+				{
+					option: "👈 click to set as correct answer",
+					correct: false,
+				},
+				{
+					option: "fourth option 😊",
+					correct: false,
+				},
+			],
 			successEmoji: "🎉",
 		},
 	},

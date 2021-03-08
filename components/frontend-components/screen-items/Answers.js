@@ -62,11 +62,9 @@ export default function Answers({ data, lastScreenIndex }) {
 					key={index}
 					answer={answer}
 					index={index}
-					correct={answer === correctAnswer}
 					answerItemStyle={answerItemStyle}
 					itemSettings={data}
 					onClick={() => {
-						console.log(answer);
 						if (answerIndex === false) {
 							addAnswer(data.itemId, index);
 							setAnswerIndex(index);

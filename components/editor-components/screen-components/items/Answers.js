@@ -1,3 +1,6 @@
+/**
+ * @todo store answer options as objects
+ */
 import { useContext, useState } from "react";
 import { GlobalContext } from "../../../../context/GlobalState";
 import styles from "./Answers.module.scss";
