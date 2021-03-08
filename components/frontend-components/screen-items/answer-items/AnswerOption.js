@@ -1,11 +1,12 @@
 import styles from "./AnswerOption.module.scss";
 
-export default function AnswerOption({ index, answer, answerItemStyle }) {
+export default function AnswerOption({ index, answer, answerItemStyle, onClick, correct }) {
 	const answerChoices = ["A", "B", "C", "D"];
 	return (
-		<div className={styles.answerOption} style={answerItemStyle}>
+		<div className={styles.answerOption} style={answerItemStyle} onClick={onClick}>
 			<div className={styles.choice}>{answerChoices[index]}</div>
 			<div className={styles.optionText}>{answer}</div>
+			{correct ? "correct" : "wrong"}
 		</div>
 	);
 }

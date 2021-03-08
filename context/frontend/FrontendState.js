@@ -7,6 +7,7 @@ let FrontendState = {
 	endScreen: "success",
 	activeScreenIndex: 0,
 	noStep: false,
+	answers: [],
 };
 
 export const FrontendContext = createContext(FrontendState);
@@ -79,6 +80,7 @@ export const FrontendProvider = ({ children }) => {
 				error: state.error,
 				endScreen: state.endScreen,
 				activeScreenIndex: state.activeScreenIndex,
+				answers: state.answers,
 
 				updateState,
 				handleScreenClick,

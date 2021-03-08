@@ -4,16 +4,18 @@ import AnswerOption from "./answer-items/AnswerOption";
 import SuccessConfetti from "./answer-items/SuccessConfetti";
 
 export default function Answers({ data, lastScreenIndex }) {
-	const { gotoNextScreen, gotoPreviousScreen, updateState } = useContext(FrontendContext);
+	const { gotoNextScreen, gotoPreviousScreen, updateState, answers } = useContext(FrontendContext);
 	const [showResult, setShowResult] = useState(false);
 	const [noStep, setNoStep] = useState(true);
 	const [success, setSuccess] = useState(false);
+	const [answer, setAnswer] = useState(answers[data.itemId] || false);
+	const correctAnswer = data.settings.correctAnswer;
 
 	/**
 	 * Random order
 	 * @param {array} arr Array to be randomized
 	 */
-	const getShuffledArr = (arr) => {
+	/* const getShuffledArr = (arr) => {
 		const newArr = arr.slice();
 		for (let i = newArr.length - 1; i > 0; i--) {
 			const rand = Math.floor(Math.random() * (i + 1));
@@ -22,7 +24,8 @@ export default function Answers({ data, lastScreenIndex }) {
 		return newArr;
 	};
 
-	const answerOptions = data.settings.answersRandomOrder ? getShuffledArr(data.settings.answers) : data.settings.answers;
+	const answerOptions = data.settings.answersRandomOrder ? getShuffledArr(data.settings.answers) : data.settings.answers; */
+	const answerOptions = data.settings.answers;
 
 	useEffect(() => {
 		updateState("noStep", noStep);
@@ -55,7 +58,18 @@ export default function Answers({ data, lastScreenIndex }) {
 	return (
 		<div style={answersStyle}>
 			{answerOptions.map((answer, index) => (
-				<AnswerOption key={index} answer={answer} index={index} correct={index === data.settings.correctAnswer} answerItemStyle={answerItemStyle} itemSettings={data} />
+				<AnswerOption
+					key={index}
+					answer={answer}
+					index={index}
+					correct={answer === correctAnswer}
+					answerItemStyle={answerItemStyle}
+					itemSettings={data}
+					onClick={() => {
+						console.log({ index, correctAnswer });
+						setAnswer(index);
+					}}
+				/>
 			))}
 			{success && <SuccessConfetti successEmoji={data.settings.successEmoji || ""} />}
 		</div>
