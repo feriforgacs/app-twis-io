@@ -7,7 +7,7 @@ let FrontendState = {
 	endScreen: "success",
 	activeScreenIndex: 0,
 	noStep: false,
-	answers: [],
+	answers: {},
 };
 
 export const FrontendContext = createContext(FrontendState);
@@ -73,6 +73,21 @@ export const FrontendProvider = ({ children }) => {
 		}
 	};
 
+	/**
+	 * Set the selected answer
+	 * @param {string} answerId Answer's id
+	 * @param {int} selectedAnswer Selected answer option's index
+	 */
+	const addAnswer = (answerId, selectedAnswer) => {
+		dispatch({
+			type: "ADD_ANSWER",
+			payload: {
+				answerId,
+				selectedAnswer,
+			},
+		});
+	};
+
 	return (
 		<FrontendContext.Provider
 			value={{
@@ -86,6 +101,7 @@ export const FrontendProvider = ({ children }) => {
 				handleScreenClick,
 				gotoNextScreen,
 				gotoPreviousScreen,
+				addAnswer,
 			}}
 		>
 			{children}

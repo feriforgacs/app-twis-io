@@ -4,7 +4,7 @@ import AnswerOption from "./answer-items/AnswerOption";
 import SuccessConfetti from "./answer-items/SuccessConfetti";
 
 export default function Answers({ data, lastScreenIndex }) {
-	const { gotoNextScreen, gotoPreviousScreen, updateState, answers } = useContext(FrontendContext);
+	const { gotoNextScreen, gotoPreviousScreen, updateState, answers, addAnswer } = useContext(FrontendContext);
 	const [showResult, setShowResult] = useState(false);
 	const [noStep, setNoStep] = useState(true);
 	const [success, setSuccess] = useState(false);
@@ -67,6 +67,7 @@ export default function Answers({ data, lastScreenIndex }) {
 					itemSettings={data}
 					onClick={() => {
 						console.log({ index, correctAnswer });
+						addAnswer(data.itemId, index);
 						setAnswer(index);
 					}}
 				/>
