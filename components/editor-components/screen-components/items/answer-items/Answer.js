@@ -25,7 +25,7 @@ export default function Answer({ answer, index, correct, answerItemStyle, screen
 					className={`screen-item ${styles.choice} ${correct && screenItemActive ? styles.choiceCorrect : ""}`}
 					onClick={() => {
 						let answers;
-						if (!activeScreenItem) {
+						if (!screenItemActive) {
 							answers = [...itemSettings.settings.answers];
 							answers.map((answerOption, answerOptionIndex) => {
 								if (answerOptionIndex === index) {

@@ -1,7 +1,5 @@
 /**
- * @todo check correct answer on click
  * @todo display success confetti or error
- * @todo add answer to global state
  */
 import { useContext, useEffect, useState } from "react";
 import { FrontendContext } from "../../../context/frontend/FrontendState";
