@@ -8,7 +8,7 @@ import SuccessConfetti from "./answer-items/SuccessConfetti";
 
 export default function Answers({ data, lastScreenIndex }) {
 	const { gotoNextScreen, updateState, userAnswers, addUserAnswer, answerScreenItems, setAnswerScreenItem } = useContext(FrontendContext);
-	const [success, setSuccess] = useState(userAnswers[data.itemId] ? userAnswers[data.itemId].correct : false);
+	const [selectedAnswer, setSelectedAnswer] = useState(userAnswers[data.itemId] ? userAnswers[data.itemId] : false);
 	const [answered, setAnswered] = useState(userAnswers[data.itemId] || false);
 	const [answerOptions, setAnswerOptions] = useState(answerScreenItems[data.itemId] || data.settings.answers);
 	const [showConfetti, setShowConfetti] = useState(false);
@@ -69,7 +69,7 @@ export default function Answers({ data, lastScreenIndex }) {
 		<div style={answersStyle} className={fontFamilyClass}>
 			{answerOptions.map((answer, index) => (
 				<AnswerOption
-					success={success}
+					selectedAnswer={selectedAnswer}
 					answered={answered}
 					key={index}
 					answer={answer}
@@ -86,8 +86,8 @@ export default function Answers({ data, lastScreenIndex }) {
 						// add selected answer to state
 						addUserAnswer(data.itemId, answer);
 
-						// set success to true or false
-						setSuccess(answer.correct);
+						// set answer as selected
+						setSelectedAnswer(answer);
 
 						// set answered to true
 						setAnswered(true);
