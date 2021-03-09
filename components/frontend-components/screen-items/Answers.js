@@ -1,6 +1,6 @@
 /**
  * @todo check correct answer on click
- * @todo display success confeti or error
+ * @todo display success confetti or error
  * @todo add answer to global state
  */
 import { useContext, useEffect, useState } from "react";
@@ -9,10 +9,10 @@ import AnswerOption from "./answer-items/AnswerOption";
 import SuccessConfetti from "./answer-items/SuccessConfetti";
 
 export default function Answers({ data, lastScreenIndex }) {
-	const { gotoNextScreen, gotoPreviousScreen, updateState, answers, addAnswer } = useContext(FrontendContext);
-	const [showResult, setShowResult] = useState(false);
-	const [noStep, setNoStep] = useState(true);
-	const [success, setSuccess] = useState(false);
+	const { gotoNextScreen, updateState, answers, addAnswer } = useContext(FrontendContext);
+	const [noStep, setNoStep] = useState(answers[data.itemId] ? false : true);
+	const [success, setSuccess] = useState(answers[data.itemId] ? answers[data.itemId].correct : false);
+	const [answered, setAnswered] = useState(answers[data.itemId] || false);
 
 	/**
 	 * Random order
@@ -58,16 +58,34 @@ export default function Answers({ data, lastScreenIndex }) {
 	const fontFamilyClass = data.settings.fontFamily !== "" ? `font--${data.settings.fontFamily}` : `font--arial`;
 
 	return (
-		<div style={answersStyle}>
+		<div style={answersStyle} className={fontFamilyClass}>
 			{answerOptions.map((answer, index) => (
 				<AnswerOption
+					success={success}
+					answered={answered}
 					key={index}
 					answer={answer}
 					index={index}
 					answerItemStyle={answerItemStyle}
 					itemSettings={data}
 					onClick={() => {
-						alert("clicked");
+						// disable the option to submit an answer one more time
+						if (answered) {
+							gotoNextScreen(lastScreenIndex);
+							return;
+						}
+
+						// add selected answer to state
+						addAnswer(data.itemId, answer);
+
+						// set success to true or false
+						setSuccess(answer.correct);
+
+						// set answered to true
+						setAnswered(true);
+
+						// allow to go to next screen on tap
+						setNoStep(false);
 					}}
 				/>
 			))}

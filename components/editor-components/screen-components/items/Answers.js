@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { GlobalContext } from "../../../../context/GlobalState";
 import styles from "./Answers.module.scss";
 import Answer from "./answer-items/Answer";

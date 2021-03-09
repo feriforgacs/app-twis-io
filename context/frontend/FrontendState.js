@@ -76,7 +76,7 @@ export const FrontendProvider = ({ children }) => {
 	/**
 	 * Set the selected answer
 	 * @param {string} answerId Answer's id
-	 * @param {int} selectedAnswer Selected answer option's index
+	 * @param {obj} selectedAnswer Selected answer object
 	 */
 	const addAnswer = (answerId, selectedAnswer) => {
 		dispatch({
