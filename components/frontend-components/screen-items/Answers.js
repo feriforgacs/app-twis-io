@@ -1,5 +1,6 @@
 /**
  * @todo display success confetti or error
+ * @todo store random order in state
  */
 import { useContext, useEffect, useState } from "react";
 import { FrontendContext } from "../../../context/frontend/FrontendState";
@@ -7,10 +8,9 @@ import AnswerOption from "./answer-items/AnswerOption";
 import SuccessConfetti from "./answer-items/SuccessConfetti";
 
 export default function Answers({ data, lastScreenIndex }) {
-	const { gotoNextScreen, updateState, answers, addAnswer } = useContext(FrontendContext);
-	const [noStep, setNoStep] = useState(answers[data.itemId] ? false : true);
-	const [success, setSuccess] = useState(answers[data.itemId] ? answers[data.itemId].correct : false);
-	const [answered, setAnswered] = useState(answers[data.itemId] || false);
+	const { gotoNextScreen, updateState, userAnswers, addUserAnswer } = useContext(FrontendContext);
+	const [success, setSuccess] = useState(userAnswers[data.itemId] ? userAnswers[data.itemId].correct : false);
+	const [answered, setAnswered] = useState(userAnswers[data.itemId] || false);
 
 	/**
 	 * Random order
@@ -25,11 +25,11 @@ export default function Answers({ data, lastScreenIndex }) {
 		return newArr;
 	};
 
-	const answerOptions = data.settings.answersRandomOrder ? getShuffledArr(data.settings.answers) : data.settings.answers;
+	const answerOptions = data.settings.answersRandomOrder && !answered ? getShuffledArr(data.settings.answers) : data.settings.answers;
 
 	useEffect(() => {
-		updateState("noStep", noStep);
-	}, [noStep]);
+		updateState("noStep", !answered);
+	}, [answered]);
 
 	let answersStyle = {
 		height: `${data.settings.height || 0}px`,
@@ -74,16 +74,13 @@ export default function Answers({ data, lastScreenIndex }) {
 						}
 
 						// add selected answer to state
-						addAnswer(data.itemId, answer);
+						addUserAnswer(data.itemId, answer);
 
 						// set success to true or false
 						setSuccess(answer.correct);
 
 						// set answered to true
 						setAnswered(true);
-
-						// allow to go to next screen on tap
-						setNoStep(false);
 					}}
 				/>
 			))}

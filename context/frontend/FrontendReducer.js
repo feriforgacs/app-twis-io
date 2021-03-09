@@ -13,13 +13,13 @@ export default function FrontendReducer(state, action) {
 		/**
 		 * Add selected answer to state
 		 */
-		case "ADD_ANSWER":
-			selectedAnswers = { ...state.answers };
+		case "ADD_USER_ANSWER":
+			selectedAnswers = { ...state.userAnswers };
 			selectedAnswers[`${action.payload.answerId}`] = action.payload.selectedAnswer;
 
 			return {
 				...state,
-				answers: selectedAnswers,
+				userAnswers: selectedAnswers,
 			};
 
 		default:

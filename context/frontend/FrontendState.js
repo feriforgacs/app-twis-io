@@ -7,7 +7,7 @@ let FrontendState = {
 	endScreen: "success",
 	activeScreenIndex: 0,
 	noStep: false,
-	answers: {},
+	userAnswers: {},
 };
 
 export const FrontendContext = createContext(FrontendState);
@@ -78,9 +78,9 @@ export const FrontendProvider = ({ children }) => {
 	 * @param {string} answerId Answer's id
 	 * @param {obj} selectedAnswer Selected answer object
 	 */
-	const addAnswer = (answerId, selectedAnswer) => {
+	const addUserAnswer = (answerId, selectedAnswer) => {
 		dispatch({
-			type: "ADD_ANSWER",
+			type: "ADD_USER_ANSWER",
 			payload: {
 				answerId,
 				selectedAnswer,
@@ -95,13 +95,13 @@ export const FrontendProvider = ({ children }) => {
 				error: state.error,
 				endScreen: state.endScreen,
 				activeScreenIndex: state.activeScreenIndex,
-				answers: state.answers,
+				userAnswers: state.userAnswers,
 
 				updateState,
 				handleScreenClick,
 				gotoNextScreen,
 				gotoPreviousScreen,
-				addAnswer,
+				addUserAnswer,
 			}}
 		>
 			{children}
