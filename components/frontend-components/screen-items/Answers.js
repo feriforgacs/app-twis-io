@@ -11,7 +11,7 @@ export default function Answers({ data, lastScreenIndex }) {
 	const [success, setSuccess] = useState(userAnswers[data.itemId] ? userAnswers[data.itemId].correct : false);
 	const [answered, setAnswered] = useState(userAnswers[data.itemId] || false);
 	const [answerOptions, setAnswerOptions] = useState(answerScreenItems[data.itemId] || data.settings.answers);
-	const [firstTimeAnswer, setFirstTimeAnswer] = useState(false);
+	const [showConfetti, setShowConfetti] = useState(false);
 
 	/**
 	 * Random order
@@ -92,12 +92,12 @@ export default function Answers({ data, lastScreenIndex }) {
 						// set answered to true
 						setAnswered(true);
 
-						// to display confetti
-						setFirstTimeAnswer(true);
+						// display confetti if selected option was correct
+						setShowConfetti(answer.correct);
 					}}
 				/>
 			))}
-			{success && firstTimeAnswer && <SuccessConfetti successEmoji={data.settings.successEmoji || ""} />}
+			{showConfetti && <SuccessConfetti successEmoji={data.settings.successEmoji || ""} />}
 		</div>
 	);
 }
