@@ -8,6 +8,7 @@ let FrontendState = {
 	activeScreenIndex: 0,
 	noStep: false,
 	userAnswers: {},
+	answerScreenItems: {}, // it is necessary to store randomized answer options
 };
 
 export const FrontendContext = createContext(FrontendState);
@@ -88,6 +89,16 @@ export const FrontendProvider = ({ children }) => {
 		});
 	};
 
+	const setAnswerScreenItem = (itemId, answerScreenItem) => {
+		dispatch({
+			type: "SET_ANSWER_SCREEN_ITEM",
+			payload: {
+				itemId,
+				answerScreenItem,
+			},
+		});
+	};
+
 	return (
 		<FrontendContext.Provider
 			value={{
@@ -96,12 +107,14 @@ export const FrontendProvider = ({ children }) => {
 				endScreen: state.endScreen,
 				activeScreenIndex: state.activeScreenIndex,
 				userAnswers: state.userAnswers,
+				answerScreenItems: state.answerScreenItems,
 
 				updateState,
 				handleScreenClick,
 				gotoNextScreen,
 				gotoPreviousScreen,
 				addUserAnswer,
+				setAnswerScreenItem,
 			}}
 		>
 			{children}

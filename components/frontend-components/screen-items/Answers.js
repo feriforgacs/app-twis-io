@@ -1,6 +1,5 @@
 /**
  * @todo display success confetti or error
- * @todo store random order in state
  */
 import { useContext, useEffect, useState } from "react";
 import { FrontendContext } from "../../../context/frontend/FrontendState";
@@ -8,9 +7,10 @@ import AnswerOption from "./answer-items/AnswerOption";
 import SuccessConfetti from "./answer-items/SuccessConfetti";
 
 export default function Answers({ data, lastScreenIndex }) {
-	const { gotoNextScreen, updateState, userAnswers, addUserAnswer } = useContext(FrontendContext);
+	const { gotoNextScreen, updateState, userAnswers, addUserAnswer, answerScreenItems, setAnswerScreenItem } = useContext(FrontendContext);
 	const [success, setSuccess] = useState(userAnswers[data.itemId] ? userAnswers[data.itemId].correct : false);
 	const [answered, setAnswered] = useState(userAnswers[data.itemId] || false);
+	const [answerOptions, setAnswerOptions] = useState(answerScreenItems[data.itemId] || data.settings.answers);
 
 	/**
 	 * Random order
@@ -25,9 +25,18 @@ export default function Answers({ data, lastScreenIndex }) {
 		return newArr;
 	};
 
-	const answerOptions = data.settings.answersRandomOrder && !answered ? getShuffledArr(data.settings.answers) : data.settings.answers;
+	const setRandomAnswerOptions = () => {
+		if (data.settings.answersRandomOrder) {
+			const shuffeledAnswerOptions = getShuffledArr(data.settings.answers);
+			setAnswerOptions(shuffeledAnswerOptions);
+			setAnswerScreenItem(data.itemId, shuffeledAnswerOptions);
+		}
+	};
 
 	useEffect(() => {
+		if (!answered) {
+			setRandomAnswerOptions();
+		}
 		updateState("noStep", !answered);
 	}, [answered]);
 
