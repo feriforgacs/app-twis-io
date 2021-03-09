@@ -40,7 +40,7 @@ export const FrontendProvider = ({ children }) => {
 		if (e.target.classList.contains("no-step") || state.noStep) {
 			return;
 		}
-		if (e.pageX >= window.innerWidth * 0.45) {
+		if (e.pageX >= window.innerWidth * 0.35) {
 			if (state.activeScreenIndex < lastScreenIndex) {
 				// go to next screen
 				updateState("activeScreenIndex", state.activeScreenIndex + 1);
