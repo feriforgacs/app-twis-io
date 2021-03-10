@@ -1,7 +1,6 @@
 /**
  * @todo display screen items
  * @todo calculate screen size
- * @todo display success or failure end screen
  * @todo handle form submit
  */
 import { useState, useEffect, useContext } from "react";
@@ -46,7 +45,7 @@ export default function Campaign({ campaign, screens }) {
 		} else {
 			setScreen(screens[activeScreenIndex]);
 		}
-	}, [activeScreenIndex, screens]);
+	}, [activeScreenIndex, screens, campaign.successLimit, lastScreenIndex, correctAnswers]);
 
 	return (
 		<>
