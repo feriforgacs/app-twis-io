@@ -8,7 +8,7 @@ let FrontendState = {
 	activeScreenIndex: 0,
 	noStep: false,
 	userAnswers: {},
-	answerScreenItems: {}, // it is necessary to store randomized answer options
+	answerScreenItems: {}, // this is necessary to store randomized answer options
 	correctAnswers: 0,
 };
 

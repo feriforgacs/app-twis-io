@@ -1,6 +1,7 @@
 export default function FrontendReducer(state, action) {
 	let userAnswers;
 	let answerScreenItems;
+	let correctAnswers;
 
 	switch (action.type) {
 		/**
@@ -18,10 +19,16 @@ export default function FrontendReducer(state, action) {
 		case "ADD_USER_ANSWER":
 			userAnswers = { ...state.userAnswers };
 			userAnswers[action.payload.answerId] = action.payload.selectedAnswer;
+			correctAnswers = state.correctAnswers;
+
+			if (action.payload.selectedAnswer.correct) {
+				correctAnswers += 1;
+			}
 
 			return {
 				...state,
 				userAnswers,
+				correctAnswers,
 			};
 
 		/**
