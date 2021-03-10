@@ -161,6 +161,7 @@ export const EndScreenFailureTemplateItems = [
 			translateX: 0,
 			translateY: 0,
 			rotate: 0,
+			action: "restart",
 		},
 	},
 ];

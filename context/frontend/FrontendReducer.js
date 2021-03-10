@@ -15,6 +15,7 @@ export default function FrontendReducer(state, action) {
 
 		/**
 		 * Add selected answer to state
+		 * Count correct answers
 		 */
 		case "ADD_USER_ANSWER":
 			userAnswers = { ...state.userAnswers };

@@ -1,7 +1,6 @@
 /**
  * @todo display screen items
  * @todo calculate screen size
- * @todo handle answer clicks
  * @todo display success or failure end screen
  * @todo handle form submit
  */
@@ -13,9 +12,9 @@ import CampaignScreen from "./CampaignScreen";
 import ScreensIndicator from "./ScreensIndicator";
 
 export default function Campaign({ campaign, screens }) {
-	const { activeScreenIndex } = useContext(FrontendContext);
+	const { activeScreenIndex, correctAnswers } = useContext(FrontendContext);
 	const [screen, setScreen] = useState(screens[0]);
-	const lastScreenIndex = screens.length - 2;
+	const lastScreenIndex = screens.length - 2; // -2 because the last two screens are the two final screens - success or failure
 
 	/**
 	 * Set screen size based on window size
@@ -41,7 +40,12 @@ export default function Campaign({ campaign, screens }) {
 	 * Update screen on screen index change
 	 */
 	useEffect(() => {
-		setScreen(screens[activeScreenIndex]);
+		if (activeScreenIndex === lastScreenIndex && correctAnswers < campaign.successLimit) {
+			// on the last screen and wasn't able to collect the right amount of correct answers
+			setScreen(screens[lastScreenIndex + 1]);
+		} else {
+			setScreen(screens[activeScreenIndex]);
+		}
 	}, [activeScreenIndex, screens]);
 
 	return (
