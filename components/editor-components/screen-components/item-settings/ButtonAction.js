@@ -9,7 +9,7 @@ export default function ButtonAction() {
 	const actionOptions = [
 		{ action: "nextscreen", label: "Go to next screen" },
 		{ action: "previousscreen", label: "Go to previous screen" },
-		{ action: "restart", label: "Go to first screen (restart)" },
+		{ action: "restart", label: "Restart quiz (go to first screen)" },
 		{ action: "url", label: "Go to URL" },
 	];
 

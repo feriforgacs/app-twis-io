@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { FrontendContext } from "../../../context/frontend/FrontendState";
 
 export default function Button({ data, lastScreenIndex }) {
-	const { gotoNextScreen, gotoPreviousScreen, updateState } = useContext(FrontendContext);
+	const { gotoNextScreen, gotoPreviousScreen, restartQuiz } = useContext(FrontendContext);
 	let buttonStyle = {
 		background: data.settings.highlightColor.backgroundColor,
 		textAlign: data.settings.align,
@@ -48,8 +48,8 @@ export default function Button({ data, lastScreenIndex }) {
 				break;
 
 			case "restart":
-				// go to first screen
-				updateState("activeScreenIndex", 0);
+				// go to first screen and reset answers
+				restartQuiz();
 				break;
 
 			case "url":

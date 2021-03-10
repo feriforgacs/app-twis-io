@@ -9,6 +9,7 @@ let FrontendState = {
 	noStep: false,
 	userAnswers: {},
 	answerScreenItems: {}, // it is necessary to store randomized answer options
+	correctAnswers: 0,
 };
 
 export const FrontendContext = createContext(FrontendState);
@@ -89,6 +90,12 @@ export const FrontendProvider = ({ children }) => {
 		});
 	};
 
+	/**
+	 * Add answer item options to state
+	 * This is used to store random answer order
+	 * @param {string} itemId Answer item id (generated uuid)
+	 * @param {object} answerScreenItem Answer item answer options
+	 */
 	const setAnswerScreenItem = (itemId, answerScreenItem) => {
 		dispatch({
 			type: "SET_ANSWER_SCREEN_ITEM",
@@ -96,6 +103,16 @@ export const FrontendProvider = ({ children }) => {
 				itemId,
 				answerScreenItem,
 			},
+		});
+	};
+
+	/**
+	 * Restart quiz from first scree
+	 */
+	const restartQuiz = () => {
+		dispatch({
+			type: "RESTART_QUIZ",
+			payload: "restart",
 		});
 	};
 
@@ -108,6 +125,7 @@ export const FrontendProvider = ({ children }) => {
 				activeScreenIndex: state.activeScreenIndex,
 				userAnswers: state.userAnswers,
 				answerScreenItems: state.answerScreenItems,
+				correctAnswers: state.correctAnswers,
 
 				updateState,
 				handleScreenClick,
@@ -115,6 +133,7 @@ export const FrontendProvider = ({ children }) => {
 				gotoPreviousScreen,
 				addUserAnswer,
 				setAnswerScreenItem,
+				restartQuiz,
 			}}
 		>
 			{children}

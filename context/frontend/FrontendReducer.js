@@ -36,6 +36,18 @@ export default function FrontendReducer(state, action) {
 				answerScreenItems,
 			};
 
+		/**
+		 * Restart the quiz
+		 */
+		case "RESTART_QUIZ":
+			return {
+				...state,
+				activeScreenIndex: 0,
+				userAnswers: {},
+				answerScreenItems: {},
+				correctAnswers: 0,
+			};
+
 		default:
 			return state;
 	}
