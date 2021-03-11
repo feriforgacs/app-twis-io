@@ -1,4 +1,5 @@
 import { useState } from "react";
+import FormResult from "./FormResult";
 
 import styles from "./Form.module.scss";
 
@@ -12,10 +13,11 @@ export default function Form({ data }) {
 	const [legalAccepted, setLegalAccepted] = useState(false);
 	const [legalError, setLegalError] = useState(false);
 
-	const [result, setResult] = useState("");
+	const [status, setStatus] = useState("");
 
 	const processForm = () => {
 		let error = false;
+
 		if (data.settings.collectName && !name) {
 			setNameError(true);
 			error = true;
@@ -36,7 +38,7 @@ export default function Form({ data }) {
 		}
 
 		// display success screen in preview mode
-		setResult("success");
+		setStatus("success");
 	};
 
 	let formStyle = {
@@ -135,7 +137,7 @@ export default function Form({ data }) {
 					</div>
 				</div>
 			</div>
-			{result && result === "success" && <p>success</p>}
+			<FormResult status={status} successContent={"@todo success"} errorContent={"@todo error"} />
 		</>
 	);
 }

@@ -78,5 +78,27 @@
 .formGroupError {
 	input {
 		box-shadow: rgb(237 33 58 / 100%) 0px 0px 0px 1px inset;
+		animation: shake 600ms ease forwards;
+	}
+}
+
+@keyframes shake {
+	0% {
+		transform: translateX(0px);
+	}
+	10% {
+		transform: translateX(-3px);
+	}
+	20% {
+		transform: translateX(3px);
+	}
+	30% {
+		transform: translateX(-3px);
+	}
+	40% {
+		transform: translateX(3px);
+	}
+	50% {
+		transform: translateX(-3px);
 	}
 }
