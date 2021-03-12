@@ -1,9 +1,16 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { FrontendContext } from "../../../context/frontend/FrontendState";
 import FormResult from "./FormResult";
 
 import styles from "./Form.module.scss";
 
 export default function Form({ data }) {
+	const { updateState } = useContext(FrontendContext);
+
+	useEffect(() => {
+		updateState("noStep", true);
+	}, []);
+
 	const [name, setName] = useState("");
 	const [nameError, setNameError] = useState(false);
 
@@ -73,8 +80,11 @@ export default function Form({ data }) {
 				<div className={`no-step ${styles.formBody}`}>
 					{data.settings.collectName && (
 						<div className={`no-step ${styles.formGroup} ${nameError ? styles.formGroupError : ""}`}>
-							<label className={`no-step ${styles.formLabel}`}>{data.settings.labelName || "Name"}</label>
+							<label htmlFor="name" className={`no-step ${styles.formLabel}`}>
+								{data.settings.labelName || "Name"}
+							</label>
 							<input
+								id="name"
 								type="text"
 								value={name}
 								onChange={(e) => {
@@ -92,8 +102,11 @@ export default function Form({ data }) {
 
 					{data.settings.collectEmail && (
 						<div className={`no-step ${styles.formGroup} ${emailError ? styles.formGroupError : ""}`}>
-							<label className={`no-step ${styles.formLabel}`}>{data.settings.labelEmail || "Email address"}</label>
+							<label htmlFor="email" className={`no-step ${styles.formLabel}`}>
+								{data.settings.labelEmail || "Email address"}
+							</label>
 							<input
+								id="email"
 								type="email"
 								value={email}
 								onChange={(e) => {

@@ -1,6 +1,3 @@
-/**
- * @todo display success confetti or error
- */
 import { useContext, useEffect, useState } from "react";
 import { FrontendContext } from "../../../context/frontend/FrontendState";
 import AnswerOption from "./answer-items/AnswerOption";

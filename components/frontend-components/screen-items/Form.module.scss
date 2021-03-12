@@ -76,6 +76,8 @@
 }
 
 .formGroupError {
+	position: relative;
+
 	input {
 		box-shadow: rgb(237 33 58 / 100%) 0px 0px 0px 1px inset;
 		animation: shake 600ms ease forwards;
