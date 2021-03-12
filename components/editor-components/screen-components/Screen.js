@@ -29,6 +29,7 @@ export default function Screen({ screen }) {
 			isOver: !!monitor.isOver(),
 		}),
 		drop: (item, monitor) => {
+			const itemType = monitor.getItemType();
 			const offset = monitor.getSourceClientOffset();
 			const dropTargetXy = screenRef.current.getBoundingClientRect();
 			const droppedItemX = Math.floor(offset.x - dropTargetXy.left) < 0 ? 0 : Math.floor(offset.x - dropTargetXy.left);
@@ -40,7 +41,7 @@ export default function Screen({ screen }) {
 			const newScreenItem = {
 				itemId: uuidv4(),
 				screenId: screen.screenId,
-				type: item.type,
+				type: itemType,
 				content: item.content || "",
 				src: item.src || "",
 				orderIndex: screen.screenItems ? screen.screenItems.length : 0,
