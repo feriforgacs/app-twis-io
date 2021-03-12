@@ -11,7 +11,7 @@ export default function Home() {
 
 	useEffect(() => {
 		if (router.query.error) {
-			setLoginError(true);
+			setLoginError(router.query.error);
 		}
 		if (router.query.logout) {
 			setLoggedOut(true);

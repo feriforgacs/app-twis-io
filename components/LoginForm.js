@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import LoginError from "./LoginError";
 
 export default function LoginForm({ loginError = false, loggedOut = false, signInPage = false, accessDenied = false }) {
 	const router = useRouter();
@@ -62,15 +63,7 @@ export default function LoginForm({ loginError = false, loggedOut = false, signI
 						<Image src="/images/logo.svg" alt={`${process.env.APP_NAME} logo`} className="logo" width={80} height={28} />
 					</div>
 					<h1>{signInPage ? `Sign in` : `Sign up or log in`}</h1>
-					{loginError && (
-						<p id="login-form__error" className="alert alert--error">
-							Something didn&apos;t work properly. Please, try again in a few minutes or use a different login option. If you keep seeing this message, please,{" "}
-							<Link href="/contact-us">
-								<a>contact us</a>
-							</Link>
-							.
-						</p>
-					)}
+					{loginError && <LoginError error={loginError} />}
 
 					{loggedOut && (
 						<p id="login-form__success" className="alert alert--success">
