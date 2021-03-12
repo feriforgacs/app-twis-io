@@ -87,7 +87,7 @@ export const GlobalProvider = ({ children }) => {
 		let source = axios.CancelToken.source();
 
 		try {
-			const result = await axios(`${process.env.APP_URL}/api/editor/campaign/data?id=${campaignId}`, { cancelToken: source.token });
+			const result = await axios(`/api/editor/campaign/data?id=${campaignId}`, { cancelToken: source.token });
 
 			if (result.data.success !== true) {
 				console.log(result);
@@ -143,7 +143,7 @@ export const GlobalProvider = ({ children }) => {
 
 		try {
 			const result = await axios.put(
-				`${process.env.APP_URL}/api/editor/campaign/update`,
+				`/api/editor/campaign/update`,
 				{
 					campaignId: state.campaign._id,
 					key,
@@ -285,7 +285,7 @@ export const GlobalProvider = ({ children }) => {
 		let source = axios.CancelToken.source();
 		try {
 			const result = await axios.post(
-				`${process.env.APP_URL}/api/editor/screen/add`,
+				`/api/editor/screen/add`,
 				{
 					campaignId: state.campaign._id,
 					screen: newScreen,
@@ -400,7 +400,7 @@ export const GlobalProvider = ({ children }) => {
 		let source = axios.CancelToken.source();
 		try {
 			const result = await axios.delete(
-				`${process.env.APP_URL}/api/editor/screen/delete`,
+				`/api/editor/screen/delete`,
 				{
 					data: {
 						campaignId: state.campaign._id,
@@ -474,7 +474,7 @@ export const GlobalProvider = ({ children }) => {
 		let source = axios.CancelToken.source();
 		try {
 			const result = await axios.post(
-				`${process.env.APP_URL}/api/editor/screen/duplicate`,
+				`/api/editor/screen/duplicate`,
 				{
 					campaignId: state.campaign._id,
 					screen: newScreenData,
@@ -578,7 +578,7 @@ export const GlobalProvider = ({ children }) => {
 		let source = axios.CancelToken.source();
 		try {
 			const result = await axios.post(
-				`${process.env.APP_URL}/api/editor/screen/update`,
+				`/api/editor/screen/update`,
 				{
 					campaignId: state.campaign._id,
 					screenId: screenId,
@@ -669,7 +669,7 @@ export const GlobalProvider = ({ children }) => {
 		let source = axios.CancelToken.source();
 		try {
 			const result = await axios.post(
-				`${process.env.APP_URL}/api/editor/screen/order`,
+				`/api/editor/screen/order`,
 				{
 					campaignId: state.campaign._id,
 					screenId,
@@ -749,7 +749,7 @@ export const GlobalProvider = ({ children }) => {
 		let source = axios.CancelToken.source();
 		try {
 			const result = await axios.post(
-				`${process.env.APP_URL}/api/editor/screen-item/add`,
+				`/api/editor/screen-item/add`,
 				{
 					campaignId: state.campaign._id,
 					screenId: screenDbId,
@@ -868,7 +868,7 @@ export const GlobalProvider = ({ children }) => {
 		let source = axios.CancelToken.source();
 		try {
 			const result = await axios.post(
-				`${process.env.APP_URL}/api/editor/screen-item/update`,
+				`/api/editor/screen-item/update`,
 				{
 					campaignId: state.campaign._id,
 					itemId: itemId, // this is not the DB id, it is the generated uuid
@@ -961,7 +961,7 @@ export const GlobalProvider = ({ children }) => {
 		let source = axios.CancelToken.source();
 		try {
 			const result = await axios.post(
-				`${process.env.APP_URL}/api/editor/screen-item/position`,
+				`/api/editor/screen-item/position`,
 				{
 					campaignId: state.campaign._id,
 					itemId: itemId, // this is not the DB id, it is the generated uuid
@@ -1033,7 +1033,7 @@ export const GlobalProvider = ({ children }) => {
 		let source = axios.CancelToken.source();
 		try {
 			const result = await axios.delete(
-				`${process.env.APP_URL}/api/editor/screen-item/delete`,
+				`/api/editor/screen-item/delete`,
 				{
 					data: {
 						campaignId: state.campaign._id,

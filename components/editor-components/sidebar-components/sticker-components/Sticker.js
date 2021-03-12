@@ -4,8 +4,8 @@ import styles from "../image-components/Image.module.scss";
 
 const Sticker = ({ thumb, src, caption, width, height }) => {
 	const [{ isDragging }, drag] = useDrag({
+		type: ItemTypes.STICKER,
 		item: {
-			type: ItemTypes.STICKER,
 			src,
 			settings: {
 				width: 137, // @todo change this to dynamic value, at the moment this is the width of the image in the sidebar

@@ -4,8 +4,8 @@ import styles from "../ElementOptions.module.scss";
 
 export default function Button({ button }) {
 	const [{ isDragging }, drag] = useDrag({
+		type: ItemTypes.BUTTON,
 		item: {
-			type: ItemTypes.BUTTON,
 			content: button.content,
 			settings: button.settings,
 		},

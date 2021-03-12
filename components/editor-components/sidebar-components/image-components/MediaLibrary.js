@@ -34,7 +34,7 @@ export default function MediaLibrary({ active = false }) {
 		const getImages = async () => {
 			setLoading(true);
 			try {
-				const result = await axios(`${process.env.APP_URL}/api/editor/media`, { cancelToken: source.token });
+				const result = await axios(`/api/editor/media`, { cancelToken: source.token });
 
 				if (result.data.success !== true) {
 					console.log(result);
@@ -138,7 +138,7 @@ export default function MediaLibrary({ active = false }) {
 
 		try {
 			const uploadResult = await axios.put(
-				`${process.env.APP_URL}/api/editor/media/upload`,
+				`/api/editor/media/upload`,
 				{
 					image,
 				},
@@ -199,7 +199,7 @@ export default function MediaLibrary({ active = false }) {
 		setRequestCancelToken(source);
 
 		try {
-			const result = await axios(`${process.env.APP_URL}/api/editor/media?page=${page}`, { cancelToken: source.token });
+			const result = await axios(`/api/editor/media?page=${page}`, { cancelToken: source.token });
 
 			if (result.data.success !== true) {
 				console.log(result);

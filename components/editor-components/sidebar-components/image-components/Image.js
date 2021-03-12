@@ -4,8 +4,8 @@ import { ItemTypes } from "../../../../utils/Items";
 
 const Image = ({ thumb, src, caption, width, height, unsplashImage = false, unsplashId = 0, unsplashUserName = "", unsplashUserProfile = "" }) => {
 	const [{ isDragging }, drag] = useDrag({
+		type: ItemTypes.IMAGE,
 		item: {
-			type: ItemTypes.IMAGE,
 			src,
 			settings: {
 				width: 137, // @todo change this to dynamic value, at the moment this is the width of the image in the sidebar

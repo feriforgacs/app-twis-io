@@ -34,7 +34,7 @@ export default function Gifs({ active = false }) {
 		const getImages = async () => {
 			setLoading(true);
 			try {
-				const result = await axios(`${process.env.APP_URL}/api/editor/gif`, { cancelToken: source.token });
+				const result = await axios(`/api/editor/gif`, { cancelToken: source.token });
 
 				if (result.data.success !== true) {
 					console.log(result);
@@ -101,7 +101,7 @@ export default function Gifs({ active = false }) {
 			setRequestCancelToken(source);
 
 			try {
-				const result = await axios(`${process.env.APP_URL}/api/editor/gif?keyword=${keyword}`, { cancelToken: source.token });
+				const result = await axios(`/api/editor/gif?keyword=${keyword}`, { cancelToken: source.token });
 
 				if (result.data.success !== true) {
 					console.log(result);
@@ -145,7 +145,7 @@ export default function Gifs({ active = false }) {
 		setRequestCancelToken(source);
 
 		try {
-			const result = await axios(`${process.env.APP_URL}/api/editor/gif?keyword=${query}&page=${page + 1}`, { cancelToken: source.token });
+			const result = await axios(`/api/editor/gif?keyword=${query}&page=${page + 1}`, { cancelToken: source.token });
 			if (result.data.success !== true) {
 				console.log(result);
 				setLoading(false);

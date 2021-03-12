@@ -33,7 +33,7 @@ export default function StockImages({ active = false }) {
 		const getImages = async () => {
 			setLoading(true);
 			try {
-				const result = await axios(`${process.env.APP_URL}/api/editor/stock-photo`, { cancelToken: source.token });
+				const result = await axios(`/api/editor/stock-photo`, { cancelToken: source.token });
 
 				if (result.data.success !== true) {
 					console.log(result);
@@ -101,7 +101,7 @@ export default function StockImages({ active = false }) {
 			setRequestCancelToken(source);
 
 			try {
-				const result = await axios(`${process.env.APP_URL}/api/editor/stock-photo?keyword=${keyword}`, { cancelToken: source.token });
+				const result = await axios(`/api/editor/stock-photo?keyword=${keyword}`, { cancelToken: source.token });
 
 				if (result.data.success !== true) {
 					console.log(result);
@@ -146,7 +146,7 @@ export default function StockImages({ active = false }) {
 		setRequestCancelToken(source);
 
 		try {
-			const result = await axios(`${process.env.APP_URL}/api/editor/stock-photo?keyword=${query}&page=${page + 1}`, { cancelToken: source.token });
+			const result = await axios(`/api/editor/stock-photo?keyword=${query}&page=${page + 1}`, { cancelToken: source.token });
 			if (result.data.success !== true) {
 				console.log(result);
 				setLoading(false);

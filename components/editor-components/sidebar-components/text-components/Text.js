@@ -4,8 +4,8 @@ import styles from "../ElementOptions.module.scss";
 
 export default function Text({ text }) {
 	const [{ isDragging }, drag] = useDrag({
+		type: ItemTypes.TEXT,
 		item: {
-			type: ItemTypes.TEXT,
 			content: text.content,
 			settings: text.settings,
 		},

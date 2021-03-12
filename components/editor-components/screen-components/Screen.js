@@ -72,7 +72,7 @@ export default function Screen({ screen }) {
 			 * Trigger unsplash download if necessary
 			 */
 			if (item.unsplashImage && item.unsplashId) {
-				axios(`${process.env.APP_URL}/api/editor/stock-photo/download?id=${item.unsplashId}`);
+				axios(`/api/editor/stock-photo/download?id=${item.unsplashId}`);
 			}
 		},
 	});

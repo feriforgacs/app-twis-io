@@ -56,7 +56,7 @@ export default function OpenGraph() {
 
 		try {
 			const uploadResult = await axios.put(
-				`${process.env.APP_URL}/api/editor/campaign/share-image/upload`,
+				`/api/editor/campaign/share-image/upload`,
 				{
 					campaignId: campaign._id,
 					image,
@@ -115,7 +115,7 @@ export default function OpenGraph() {
 
 			try {
 				const deleteResult = await axios.delete(
-					`${process.env.APP_URL}/api/editor/campaign/share-image/delete`,
+					`/api/editor/campaign/share-image/delete`,
 					{
 						data: {
 							campaignId: campaign._id,

@@ -33,7 +33,7 @@ export default function StickerList({ active = false }) {
 		const getImages = async () => {
 			setLoading(true);
 			try {
-				const result = await axios(`${process.env.APP_URL}/api/editor/sticker`, { cancelToken: source.token });
+				const result = await axios(`/api/editor/sticker`, { cancelToken: source.token });
 
 				if (result.data.success !== true) {
 					console.log(result);
@@ -100,7 +100,7 @@ export default function StickerList({ active = false }) {
 			setRequestCancelToken(source);
 
 			try {
-				const result = await axios(`${process.env.APP_URL}/api/editor/sticker?keyword=${keyword}`, { cancelToken: source.token });
+				const result = await axios(`/api/editor/sticker?keyword=${keyword}`, { cancelToken: source.token });
 
 				if (result && result.data.success !== true) {
 					console.log(result);
@@ -144,7 +144,7 @@ export default function StickerList({ active = false }) {
 		setRequestCancelToken(source);
 
 		try {
-			const result = await axios(`${process.env.APP_URL}/api/editor/sticker?keyword=${query}&page=${page + 1}`, { cancelToken: source.token });
+			const result = await axios(`/api/editor/sticker?keyword=${query}&page=${page + 1}`, { cancelToken: source.token });
 			if (result.data.success !== true) {
 				console.log(result);
 				setLoading(false);
