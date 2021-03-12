@@ -4,11 +4,11 @@ import styles from "../ScreenSettings.module.scss";
 import { GlobalContext } from "../../../../context/GlobalState";
 
 export default function FormActionSettings() {
-	const { activeScreen, campaign, updateCampaignData, setFormResultPreview, formResultPreview } = useContext(GlobalContext);
+	const { activeScreen, activeScreenItem, setActiveScreenItem, updateScreenItem, setFormResultPreview, formResultPreview } = useContext(GlobalContext);
 
-	const [dataCollectionSuccessAction, setDataCollectionSuccessAction] = useState(campaign.dataCollectionSuccessAction || "popup");
-	const [dataCollectionSuccessPopupContent, setDataCollectionSuccessPopupContent] = useState(campaign.dataCollectionSuccessPopupContent || "Thank your for filling the form. We’ll get in touch with you if you are one of our lucky winners. Meanwhile, don’t forget to follow us on Instagram and feel free to visit our website as well.");
-	const [dataCollectionErrorMessage, setDataCollectionErrorMessage] = useState(campaign.dataCollectionErrorMessage || "There was an error during the process. Please, wait a few seconds and try again.");
+	const [dataCollectionSuccessAction, setDataCollectionSuccessAction] = useState(activeScreenItem.settings.dataCollectionSuccessAction || "popup");
+	const [dataCollectionSuccessPopupContent, setDataCollectionSuccessPopupContent] = useState(activeScreenItem.settings.dataCollectionSuccessPopupContent || "Thank your for filling the form. We’ll get in touch with you if you are one of our lucky winners. Meanwhile, don’t forget to follow us on Instagram and feel free to visit our website as well.");
+	const [dataCollectionErrorMessage, setDataCollectionErrorMessage] = useState(activeScreenItem.settings.dataCollectionErrorMessage || "There was an error during the process. Please, wait a few seconds and try again.");
 
 	const [previewActive, setPreviewActive] = useState(formResultPreview || "");
 
@@ -27,7 +27,7 @@ export default function FormActionSettings() {
 		},
 	];
 
-	const [successRedirectURL, setSuccessRedirectURL] = useState(campaign.dataCollectionSuccessRedirectURL || "");
+	const [successRedirectURL, setSuccessRedirectURL] = useState(activeScreenItem.settings.dataCollectionSuccessRedirectURL || "");
 
 	return (
 		<>
@@ -45,7 +45,8 @@ export default function FormActionSettings() {
 								onChange={(e) => {
 									const action = e.target.value;
 									setDataCollectionSuccessAction(action);
-									updateCampaignData("dataCollectionSuccessAction", action);
+									updateScreenItem(activeScreen.screenId, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, dataCollectionSuccessAction: action } });
+									setActiveScreenItem({ ...activeScreenItem, settings: { ...activeScreenItem.settings, dataCollectionSuccessAction: action } });
 								}}
 							/>
 							{actionOption.label}
@@ -73,7 +74,8 @@ export default function FormActionSettings() {
 						onChange={(e) => {
 							const content = e.target.value;
 							setDataCollectionSuccessPopupContent(content);
-							updateCampaignData("dataCollectionSuccessPopupContent", content);
+							updateScreenItem(activeScreen.screenId, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, dataCollectionSuccessPopupContent: content } });
+							setActiveScreenItem({ ...activeScreenItem, settings: { ...activeScreenItem.settings, dataCollectionSuccessPopupContent: content } });
 						}}
 					/>
 					<button
@@ -125,7 +127,8 @@ export default function FormActionSettings() {
 						onChange={(e) => {
 							const redirectURL = e.target.value;
 							setSuccessRedirectURL(redirectURL);
-							updateCampaignData("dataCollectionSuccessRedirectURL", redirectURL);
+							updateScreenItem(activeScreen.screenId, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, dataCollectionSuccessRedirectURL: redirectURL } });
+							setActiveScreenItem({ ...activeScreenItem, settings: { ...activeScreenItem.settings, dataCollectionSuccessRedirectURL: redirectURL } });
 						}}
 					/>
 				</div>
@@ -144,7 +147,8 @@ export default function FormActionSettings() {
 					onChange={(e) => {
 						const content = e.target.value;
 						setDataCollectionErrorMessage(content);
-						updateCampaignData("dataCollectionErrorMessage", content);
+						updateScreenItem(activeScreen.screenId, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, dataCollectionErrorMessage: content } });
+						setActiveScreenItem({ ...activeScreenItem, settings: { ...activeScreenItem.settings, dataCollectionErrorMessage: content } });
 					}}
 				/>
 				<button

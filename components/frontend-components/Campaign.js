@@ -1,5 +1,4 @@
 /**
- * @todo display screen items
  * @todo calculate screen size
  * @todo handle form submit
  */
@@ -13,7 +12,7 @@ import ScreensIndicator from "./ScreensIndicator";
 export default function Campaign({ campaign, screens }) {
 	const { activeScreenIndex, correctAnswers } = useContext(FrontendContext);
 	const [screen, setScreen] = useState(screens[0]);
-	const lastScreenIndex = screens.length - 2; // -2 because the last two screens are the two final screens - success or failure
+	const lastScreenIndex = screens.length - 2; // -2 because the last two screens are the two final screens - success and failure
 
 	/**
 	 * Set screen size based on window size

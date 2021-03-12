@@ -51,7 +51,7 @@ const campaignSchema = new mongoose.Schema({
 		type: Number,
 		default: 0,
 	},
-	dataCollectionType: {
+	/* dataCollectionType: {
 		type: String,
 		default: "form",
 	},
@@ -71,7 +71,7 @@ const campaignSchema = new mongoose.Schema({
 	dataCollectionErrorMessage: {
 		type: String,
 		default: "There was an error during the process. Please, wait a few seconds and try again.",
-	},
+	}, */
 	fonts: {
 		type: Array,
 	},
