@@ -62,7 +62,7 @@ const options = {
 			/**
 			 * Add user to sendgrid contacts list to start welcome automation
 			 */
-			const res = await fetch(`${process.env.APP_URL}/api/sendgrid/add`, {
+			const res = await fetch(`/api/sendgrid/add`, {
 				method: "PUT",
 				headers: {
 					"Content-Type": "application/json",

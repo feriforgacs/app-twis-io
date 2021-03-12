@@ -31,7 +31,7 @@ export default function ParticipantRow({ id, name = "", email = "", campaignId, 
 	const deleteParticipant = async () => {
 		setDeleteLoading(true);
 
-		const participantDeleteRequest = await fetch(`${process.env.APP_URL}/api/participants/delete`, {
+		const participantDeleteRequest = await fetch(`/api/participants/delete`, {
 			method: "DELETE",
 			headers: {
 				"Content-Type": "application/json",

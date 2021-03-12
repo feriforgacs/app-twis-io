@@ -16,7 +16,7 @@ export default function ParticipantSearch({ participantCampaignId = 0, loading =
 	 * Get campaigns from the database
 	 */
 	const getCampaigns = async () => {
-		const campaignsRequest = await fetch(`${process.env.APP_URL}/api/campaigns?limit=99999&search=`, {
+		const campaignsRequest = await fetch(`/api/campaigns?limit=99999&search=`, {
 			method: "GET",
 		});
 

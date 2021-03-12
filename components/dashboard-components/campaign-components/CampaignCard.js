@@ -31,7 +31,7 @@ export default function CampaignCard({ id, name, type, status, participants, vis
 	const deleteCampaign = async () => {
 		setDeleteLoading(true);
 
-		const campaignDeleteRequest = await fetch(`${process.env.APP_URL}/api/campaigns/delete`, {
+		const campaignDeleteRequest = await fetch(`/api/campaigns/delete`, {
 			method: "DELETE",
 			headers: {
 				"Content-Type": "application/json",

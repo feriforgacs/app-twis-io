@@ -39,7 +39,7 @@ export default function CampaignCreate() {
 	const createCampaign = async () => {
 		setLoading(true);
 
-		const campaignCreateRequest = await fetch(`${process.env.APP_URL}/api/campaigns/create`, {
+		const campaignCreateRequest = await fetch(`/api/campaigns/create`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",

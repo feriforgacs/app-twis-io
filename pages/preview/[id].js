@@ -22,7 +22,7 @@ export async function getServerSideProps(context) {
 
 	// get campaign data from the database
 	try {
-		const campaignRequest = await fetch(`${process.env.APP_URL}/api/campaigns/view?id=${id}`, {
+		const campaignRequest = await fetch(`/api/campaigns/view?id=${id}`, {
 			method: "GET",
 		});
 

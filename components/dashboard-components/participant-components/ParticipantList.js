@@ -39,7 +39,7 @@ export default function ParticipantList({ limit = 200, dashboard = false, campai
 		 * Get participants from the database
 		 */
 		const getParticipants = async () => {
-			const participantsRequest = await fetch(`${process.env.APP_URL}/api/participants?limit=${participantLimit}&search=${participantSearch}&campaign=${participantCampaignId}&page=${page}`, {
+			const participantsRequest = await fetch(`/api/participants?limit=${participantLimit}&search=${participantSearch}&campaign=${participantCampaignId}&page=${page}`, {
 				method: "GET",
 			});
 
@@ -73,7 +73,7 @@ export default function ParticipantList({ limit = 200, dashboard = false, campai
 		 * Count all participants, or participants by campaign
 		 */
 		const countParticipants = async () => {
-			const participantsCountRequest = await fetch(`${process.env.APP_URL}/api/participants/count?campaign=${participantCampaignId}&search=${participantSearch}`, {
+			const participantsCountRequest = await fetch(`/api/participants/count?campaign=${participantCampaignId}&search=${participantSearch}`, {
 				method: "GET",
 			});
 

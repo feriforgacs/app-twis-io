@@ -31,7 +31,7 @@ export default function CampaignList({ limit = 50, dashboard = false }) {
 		 */
 		const getCampaigns = async () => {
 			NProgress.start();
-			const campaignsRequest = await fetch(`${process.env.APP_URL}/api/campaigns?limit=${campaignLimit}&search=${campaignSearch}`, {
+			const campaignsRequest = await fetch(`/api/campaigns?limit=${campaignLimit}&search=${campaignSearch}`, {
 				method: "GET",
 			});
 

@@ -27,7 +27,7 @@ export default function CampaignParticipants() {
 		 * Get campaign data from the database
 		 */
 		const getCampaignData = async () => {
-			const campaignRequest = await fetch(`${process.env.APP_URL}/api/campaigns/data?id=${campaignId}`, {
+			const campaignRequest = await fetch(`/api/campaigns/data?id=${campaignId}`, {
 				method: "GET",
 			});
 

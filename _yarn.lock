@@ -1841,6 +1841,11 @@ graceful-fs@^4.1.2, graceful-fs@^4.2.0, graceful-fs@^4.2.2:
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.6.tgz#ff040b2b0853b23c3d31027523706f1885d76bee"
   integrity sha512-nTnJ528pbqxYanhpDYsi4Rd8MAeaBA67+RZ10CM1m3bTAVFEDcd5AuA4a6W5YkGZ1iNXHzZz8T6TBKLeBuNriQ==
 
+gradient-parser@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/gradient-parser/-/gradient-parser-1.0.1.tgz#b583e09773b9d076330a37c39adad59e067bb7e7"
+  integrity sha512-hEvh69Wg3iWKAX4fJlozSTtZrE1HRjfxK3rNbuEqJNRf3csdlF2aUrp2rA/Z0QtGxkdvMFCIYS1tgMiGqXpepQ==
+
 has-ansi@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/has-ansi/-/has-ansi-2.0.0.tgz#34f5049ce1ecdf2b0649af3ef24e45ed35416d91"
