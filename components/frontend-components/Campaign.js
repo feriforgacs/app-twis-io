@@ -4,9 +4,10 @@ import { FrontendContext } from "../../context/frontend/FrontendState";
 import FontFamilies from "../../utils/FontFamilies";
 import CampaignScreen from "./CampaignScreen";
 import ScreensIndicator from "./ScreensIndicator";
+import FormResult from "./screen-items/FormResult";
 
 export default function Campaign({ campaign, screens }) {
-	const { activeScreenIndex, correctAnswers } = useContext(FrontendContext);
+	const { activeScreenIndex, correctAnswers, formResult } = useContext(FrontendContext);
 	const [screen, setScreen] = useState(screens[0]);
 	const lastScreenIndex = screens.length - 2; // -2 because the last two screens are the two final screens - success and failure
 	const [scale, setScale] = useState(1);
@@ -79,6 +80,7 @@ export default function Campaign({ campaign, screens }) {
 					<ScreensIndicator screens={screens.length - 1} active={activeScreenIndex} />
 				</div>
 			</div>
+			{formResult.status && <FormResult status={formResult.status} successContent={formResult.dataCollectionSuccessPopupContent} errorContent={formResult.dataCollectionErrorMessage} />}
 		</>
 	);
 }

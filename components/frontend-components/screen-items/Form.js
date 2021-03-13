@@ -1,7 +1,5 @@
 import { useContext, useEffect, useState } from "react";
 import { FrontendContext } from "../../../context/frontend/FrontendState";
-import FormResult from "./FormResult";
-
 import styles from "./Form.module.scss";
 
 export default function Form({ data }) {
@@ -19,8 +17,6 @@ export default function Form({ data }) {
 
 	const [legalAccepted, setLegalAccepted] = useState(false);
 	const [legalError, setLegalError] = useState(false);
-
-	const [status, setStatus] = useState("");
 
 	const processForm = () => {
 		let error = false;
@@ -51,10 +47,10 @@ export default function Form({ data }) {
 			if (redirectURL.indexOf("http://") === -1 && redirectURL.indexOf("https://") === -1) {
 				redirectURL = `https://${redirectURL}`;
 			}
-			Object.assign(document.createElement("a"), { target: "_blank", href: redirectURL }).click();
+			window.top.location = redirectURL;
 		} else {
 			// display success popup
-			setStatus("success");
+			updateState("formResult", { status: "success", dataCollectionSuccessPopupContent: data.settings.dataCollectionSuccessPopupContent, dataCollectionErrorMessage: data.settings.dataCollectionErrorMessage });
 		}
 	};
 
@@ -160,7 +156,6 @@ export default function Form({ data }) {
 					</div>
 				</div>
 			</div>
-			<FormResult status={status} successContent={data.settings.dataCollectionSuccessPopupContent} errorContent={data.settings.dataCollectionErrorMessage} />
 		</>
 	);
 }

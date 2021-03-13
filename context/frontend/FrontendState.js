@@ -10,6 +10,11 @@ let FrontendState = {
 	userAnswers: {},
 	answerScreenItems: {}, // this is necessary to store randomized answer options
 	correctAnswers: 0,
+	formResult: {
+		status: "",
+		dataCollectionSuccessPopupContent: "",
+		dataCollectionErrorMessage: "",
+	},
 };
 
 export const FrontendContext = createContext(FrontendState);
@@ -126,6 +131,7 @@ export const FrontendProvider = ({ children }) => {
 				userAnswers: state.userAnswers,
 				answerScreenItems: state.answerScreenItems,
 				correctAnswers: state.correctAnswers,
+				formResult: state.formResult,
 
 				updateState,
 				handleScreenClick,
