@@ -10,12 +10,23 @@ export default function Campaign({ campaign, screens }) {
 	const [screen, setScreen] = useState(screens[0]);
 	const lastScreenIndex = screens.length - 2; // -2 because the last two screens are the two final screens - success and failure
 	const [scale, setScale] = useState(1);
+	const [marginLeft, setMarginLeft] = useState(0);
 
 	/**
 	 * Set screen size based on window size
 	 */
 	const handleResize = () => {
-		setScale(window.innerWidth / 360);
+		const screenBodyWidth = 360;
+		const windowWidth = window.innerWidth;
+
+		if (windowWidth > 767) {
+			return;
+		}
+
+		if (windowWidth < screenBodyWidth) {
+			setMarginLeft(((screenBodyWidth - windowWidth) / 2) * (windowWidth / screenBodyWidth) * -1);
+		}
+		setScale(windowWidth / screenBodyWidth);
 	};
 
 	/**
@@ -24,7 +35,7 @@ export default function Campaign({ campaign, screens }) {
 	 */
 	useEffect(() => {
 		// count screen scale ratio
-		setScale(window.innerWidth / 360);
+		handleResize();
 		window.addEventListener("resize", handleResize);
 		return () => {
 			window.removeEventListener("resize", handleResize);
@@ -64,7 +75,7 @@ export default function Campaign({ campaign, screens }) {
 
 			<div className="campaign">
 				<div className="story">
-					<CampaignScreen data={screen} lastScreenIndex={lastScreenIndex} scale={scale} />
+					<CampaignScreen data={screen} lastScreenIndex={lastScreenIndex} scale={scale} marginLeft={marginLeft} />
 					<ScreensIndicator screens={screens.length - 1} active={activeScreenIndex} />
 				</div>
 			</div>
