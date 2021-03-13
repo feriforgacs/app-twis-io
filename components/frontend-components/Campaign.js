@@ -1,7 +1,3 @@
-/**
- * @todo calculate screen size
- * @todo handle form submit
- */
 import { useState, useEffect, useContext } from "react";
 import Head from "next/head";
 import { FrontendContext } from "../../context/frontend/FrontendState";
@@ -13,14 +9,13 @@ export default function Campaign({ campaign, screens }) {
 	const { activeScreenIndex, correctAnswers } = useContext(FrontendContext);
 	const [screen, setScreen] = useState(screens[0]);
 	const lastScreenIndex = screens.length - 2; // -2 because the last two screens are the two final screens - success and failure
+	const [scale, setScale] = useState(1);
 
 	/**
 	 * Set screen size based on window size
 	 */
 	const handleResize = () => {
-		/**
-		 * @todo calculate screen width and height based on window size
-		 */
+		setScale(window.innerWidth / 360);
 	};
 
 	/**
@@ -28,6 +23,8 @@ export default function Campaign({ campaign, screens }) {
 	 * Set last screen index in global state
 	 */
 	useEffect(() => {
+		// count screen scale ratio
+		setScale(window.innerWidth / 360);
 		window.addEventListener("resize", handleResize);
 		return () => {
 			window.removeEventListener("resize", handleResize);
@@ -67,7 +64,7 @@ export default function Campaign({ campaign, screens }) {
 
 			<div className="campaign">
 				<div className="story">
-					<CampaignScreen data={screen} lastScreenIndex={lastScreenIndex} />
+					<CampaignScreen data={screen} lastScreenIndex={lastScreenIndex} scale={scale} />
 					<ScreensIndicator screens={screens.length - 1} active={activeScreenIndex} />
 				</div>
 			</div>
