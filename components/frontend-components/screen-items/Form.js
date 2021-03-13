@@ -44,8 +44,18 @@ export default function Form({ data }) {
 			return;
 		}
 
-		// display success screen in preview mode
-		setStatus("success");
+		if (data.settings.dataCollectionSuccessAction === "redirect" && data.settings.dataCollectionSuccessRedirectURL) {
+			// redirect to defined URL
+			let redirectURL = data.settings.dataCollectionSuccessRedirectURL;
+			// check http or https prefix at the beginning of the url
+			if (redirectURL.indexOf("http://") === -1 && redirectURL.indexOf("https://") === -1) {
+				redirectURL = `https://${redirectURL}`;
+			}
+			Object.assign(document.createElement("a"), { target: "_blank", href: redirectURL }).click();
+		} else {
+			// display success popup
+			setStatus("success");
+		}
 	};
 
 	let formStyle = {
@@ -150,7 +160,7 @@ export default function Form({ data }) {
 					</div>
 				</div>
 			</div>
-			<FormResult status={status} successContent={"@todo success"} errorContent={"@todo error"} />
+			<FormResult status={status} successContent={data.settings.dataCollectionSuccessPopupContent} errorContent={data.settings.dataCollectionErrorMessage} />
 		</>
 	);
 }

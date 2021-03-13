@@ -33,7 +33,7 @@ export default function Button({ data, lastScreenIndex }) {
 		let actionURL = data.settings.actionURL ? data.settings.actionURL : "";
 
 		// check http or https prefix at the beginning of the url
-		if (actionURL.indexOf("http://") !== 0 || actionURL.indexOf("https://") !== 0) {
+		if (actionURL.indexOf("http://") === -1 && actionURL.indexOf("https://") === -1) {
 			actionURL = `https://${actionURL}`;
 		}
 		switch (buttonActionType) {
