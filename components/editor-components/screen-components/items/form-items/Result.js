@@ -2,8 +2,17 @@ import ReactMarkdown from "react-markdown";
 import styles from "./Result.module.scss";
 
 export default function Result({ status, successContent, errorContent }) {
+	const itemStyle = {
+		display: status ? "block" : "none",
+		height: "100%",
+		left: 0,
+		position: "absolute",
+		top: 0,
+		width: "100%",
+		zIndex: 99999,
+	};
 	return (
-		<div className="screen-item">
+		<div className="screen-item" style={itemStyle}>
 			{status === "success" && (
 				<div className={`screen-item ${styles.result} ${styles.resultSuccess}`}>
 					<span className={`screen-item ${styles.resultIcon}`}>

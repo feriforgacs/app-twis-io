@@ -154,7 +154,7 @@ export const EndScreenSuccessTemplateItems = [
 			collectName: true,
 			collectEmail: true,
 			legalURL: "https://twis.io",
-			dataCollectionSuccessPopupContent: "Thank your for filling the form. We’ll get in touch with you if you are one of our lucky winners. Meanwhile, don’t forget to follow us on Instagram and feel free to visit our website as well.",
+			dataCollectionSuccessPopupContent: "Thank your for filling the form. We’ll get in touch with you if you are one of our lucky winners. Meanwhile, don’t forget to follow us on Instagram and feel free to visit our website as well [link](https://twis.io)",
 			dataCollectionSuccessAction: "popup",
 			dataCollectionSuccessRedirectURL: "",
 			dataCollectionErrorMessage: "There was an error during the process. Please, wait a few seconds and try again.",
