@@ -150,7 +150,7 @@ export default function Form({ data }) {
 					</div>
 
 					<div className={`no-step ${styles.formGroup}`}>
-						<button className={`no-step ${styles.submitButton}`} style={buttonStyle} onClick={() => processForm()}>
+						<button className={`screen-item--button no-step ${styles.submitButton}`} style={buttonStyle} onClick={() => processForm()}>
 							{data.settings.labelSubmit || "Submit"}
 						</button>
 					</div>

@@ -67,7 +67,7 @@ export default function Button({ data, lastScreenIndex }) {
 	};
 
 	return (
-		<div className={`no-step ${fontFamilyClass} ${data.settings.classNames ? data.settings.classNames : ""}`} style={buttonStyle} onClick={() => handleClick()}>
+		<div className={`screen-item--button no-step ${fontFamilyClass} ${data.settings.classNames ? data.settings.classNames : ""}`} style={buttonStyle} onClick={() => handleClick()}>
 			<span className="no-step" style={buttonTextStyle}>
 				{data.content}
 			</span>
