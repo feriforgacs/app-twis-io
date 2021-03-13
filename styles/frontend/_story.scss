@@ -134,3 +134,34 @@
 		transform: rotate(-45deg);
 	}
 }
+
+#screen-height-alert {
+	align-items: center;
+	background: #20202a;
+	color: #fff;
+	display: none;
+	flex-direction: column;
+	font-weight: bold;
+	height: 100%;
+	justify-content: center;
+	left: 0;
+	position: absolute;
+	text-align: center;
+	top: 0;
+	width: 100%;
+	z-index: 99999;
+
+	@media only screen and(max-height: 560px) {
+		display: flex;
+	}
+
+	p {
+		padding: 1em;
+	}
+
+	svg {
+		background: #fff;
+		border-radius: 2em;
+		padding: 1.5em;
+	}
+}
