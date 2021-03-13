@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from "react";
+import QRCode from "qrcode.react";
 import Head from "next/head";
 import { FrontendContext } from "../../context/frontend/FrontendState";
 import FontFamilies from "../../utils/FontFamilies";
@@ -6,8 +7,9 @@ import CampaignScreen from "./CampaignScreen";
 import ScreensIndicator from "./ScreensIndicator";
 import FormResult from "./screen-items/FormResult";
 
-export default function Campaign({ campaign, screens }) {
+export default function Campaign({ campaign, screens, previewURL }) {
 	const { activeScreenIndex, correctAnswers, formResult } = useContext(FrontendContext);
+
 	const [screen, setScreen] = useState(screens[0]);
 	const lastScreenIndex = screens.length - 2; // -2 because the last two screens are the two final screens - success and failure
 	const [scale, setScale] = useState(1);
@@ -21,6 +23,7 @@ export default function Campaign({ campaign, screens }) {
 		const windowWidth = window.innerWidth;
 
 		if (windowWidth > 767) {
+			setScale(1);
 			return;
 		}
 
@@ -78,6 +81,22 @@ export default function Campaign({ campaign, screens }) {
 				<div className="story">
 					<CampaignScreen data={screen} lastScreenIndex={lastScreenIndex} scale={scale} marginLeft={marginLeft} />
 					<ScreensIndicator screens={screens.length - 1} active={activeScreenIndex} />
+				</div>
+
+				<div className="campaign__preview-qr">
+					<p>
+						Scan the code below to preview on your phone <br />
+						<span aria-label="down pointing finger" role="img">
+							👇
+						</span>
+						<span aria-label="down pointing finger" role="img">
+							👇
+						</span>
+						<span aria-label="down pointing finger" role="img">
+							👇
+						</span>
+					</p>
+					<QRCode value={previewURL} fgColor={`#20202a`} bgColor={`#ffffff`} size={120} renderAs="svg" includeMargin={true} />
 				</div>
 			</div>
 			{formResult.status && <FormResult status={formResult.status} successContent={formResult.dataCollectionSuccessPopupContent} errorContent={formResult.dataCollectionErrorMessage} />}

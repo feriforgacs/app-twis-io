@@ -77,6 +77,30 @@
 			}
 		}
 	}
+
+	&__preview-qr {
+		color: #fff;
+		display: none;
+		font-size: 14px;
+		left: 1em;
+		line-height: 1.5em;
+		position: absolute;
+		top: 1em;
+		width: 200px;
+
+		@media only screen and (min-width: 768px) {
+			display: block;
+		}
+
+		p {
+			margin: 0;
+			padding: 0;
+		}
+
+		svg {
+			margin-top: 1em;
+		}
+	}
 }
 
 #screen-orientation-alert {

@@ -1,13 +1,13 @@
 import { FrontendProvider } from "../../context/frontend/FrontendState";
 import Campaign from "../../components/frontend-components/Campaign";
 
-export default function PreviewPage({ campaign, errorMessage, screens }) {
+export default function PreviewPage({ campaign, errorMessage, screens, previewURL }) {
 	// display error message if there is one
 	if (errorMessage) return <p>{errorMessage}</p>;
 
 	return (
 		<FrontendProvider>
-			<Campaign campaign={campaign} screens={screens} />
+			<Campaign campaign={campaign} screens={screens} previewURL={previewURL} />
 		</FrontendProvider>
 	);
 }
@@ -36,6 +36,7 @@ export async function getServerSideProps(context) {
 			campaign = campaignResult.campaign;
 		}
 	} catch (error) {
+		console.log(error);
 		errorMessage = "Can't get campaign data from the database. Please, wait a few minutes and try again";
 	}
 
@@ -44,6 +45,7 @@ export async function getServerSideProps(context) {
 			campaign,
 			screens,
 			errorMessage,
+			previewURL: `${process.env.APP_URL}/preview/${id}`,
 		},
 	};
 }
