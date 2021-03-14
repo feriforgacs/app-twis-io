@@ -87,7 +87,7 @@ export default async function CampaignDuplicateHandler(req, res) {
 	try {
 		newCampaign = await Campaign.create({ ...newCampaignData });
 		if (!newCampaign._id) {
-			return res.status(400).json({ success: false, error: "can't save new campaign data to the db" });
+			return res.status(400).json({ success: false, error: "can't create campaign in the db" });
 		}
 	} catch (error) {
 		console.log(error);
@@ -95,6 +95,7 @@ export default async function CampaignDuplicateHandler(req, res) {
 	}
 
 	let newCampaignScreensData = [];
+	let newCampaignScreenItems = [];
 	campaignScreens.map((campaignScreen, index) => {
 		newCampaignScreensData[index] = {
 			screenId: uuidv4(),
@@ -103,6 +104,8 @@ export default async function CampaignDuplicateHandler(req, res) {
 			background: campaignScreen.background,
 			campaignId: newCampaign._id,
 		};
+
+		newCampaignScreenItems[campaignScreen.orderIndex] = campaignScreen.screenItems;
 	});
 
 	// save new campaign screens to the db
@@ -110,20 +113,39 @@ export default async function CampaignDuplicateHandler(req, res) {
 	try {
 		newCampaignScreens = await Screen.insertMany(newCampaignScreensData);
 		if (!newCampaignScreens) {
-			return res.status(400).json({ success: false, error: "can't save new campaign screens data to the db" });
+			return res.status(400).json({ success: false, error: "can't create screens in the db" });
 		}
 	} catch (error) {
 		console.log(error);
 		return res.status(400).json({ success: false, error });
 	}
 
+	let newScreenItemsData = [];
+	newCampaignScreens.forEach((newScreen) => {
+		let newScreenItems = newCampaignScreenItems[newScreen.orderIndex];
+		newScreenItems.map((screenItem) => {
+			let updatedScreenItem = {
+				itemId: uuidv4(),
+				type: screenItem.type,
+				content: screenItem.content,
+				src: screenItem.src,
+				orderIndex: screenItem.orderIndex,
+				settings: screenItem.settings,
+				screenId: newScreen._id,
+			};
+
+			newScreenItemsData.push(updatedScreenItem);
+		});
+	});
+
 	try {
-		/**
-		 * @todo create new items
-		 * @todo send back new campaign data
-		 */
-		return res.status(400).json({ success: false });
+		const newScreenItems = await ScreenItem.insertMany(newScreenItemsData);
+		if (!newScreenItems) {
+			return res.status(400).json({ success: false, error: "can't create screen items in the db" });
+		}
+		return res.status(200).json({ success: true });
 	} catch (error) {
+		console.log(error);
 		return res.status(400).json({ success: false });
 	}
 }
