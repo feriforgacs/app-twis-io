@@ -113,6 +113,7 @@ export default function CampaignCard({ id, name, type, status, participants, vis
 			const duplicatedCampaign = await campaignDuplicateRequest.json();
 
 			setDuplicateLoading(false);
+			toggleNavigationVisible(false);
 			NProgress.done();
 
 			if (duplicatedCampaign.success !== true) {
@@ -128,6 +129,7 @@ export default function CampaignCard({ id, name, type, status, participants, vis
 		} catch (error) {
 			console.log(error);
 			setDuplicateLoading(false);
+			toggleNavigationVisible(false);
 			NProgress.done();
 			setToastMessage("Can't duplicate campaign. Please, try again.");
 			setToastType("error");
@@ -163,15 +165,21 @@ export default function CampaignCard({ id, name, type, status, participants, vis
 						<div className="campaign-card__navigation campaign-card__navigation--dropdown" ref={componentRef}>
 							<a href="/" target="_blank" rel="noopener noreferrer" className="button button--dropdown">
 								View campaign
-								<span className="ml-10 op-5">
+								<span className="op-5 button__icon">
 									<Image src="/images/icons/icon-link.svg" width={20} height={20} />
 								</span>
 							</a>
 							<button className="button button--dropdown" disabled={duplicateLoading} onClick={() => duplicateCampaign(id)}>
 								{duplicateLoading ? "Duplicating" : "Duplicate Campaign"}
+								<span className="op-5 button__icon">
+									<Image src="/images/icons/icon-duplicate.svg" width={20} height={20} />
+								</span>
 							</button>
 							<button className="button button--dropdown color--error" onClick={() => displayConfirmDelete(id)}>
 								Delete Campaign
+								<span className="op-5 button__icon">
+									<Image src="/images/icons/icon-delete.svg" width={20} height={20} />
+								</span>
 							</button>
 						</div>
 					)}
