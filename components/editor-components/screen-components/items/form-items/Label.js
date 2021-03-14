@@ -1,6 +1,7 @@
 import { useContext, useState, useRef } from "react";
 import { GlobalContext } from "../../../../../context/GlobalState";
 import ContentEditable from "react-contenteditable";
+import CleanString from "../../../../../helpers/CleanString";
 
 export default function Label({ labelKey, value }) {
 	const { activeScreen, activeScreenItem, setActiveScreenItem, updateScreenItem, setMoveableDisabled } = useContext(GlobalContext);
@@ -10,7 +11,7 @@ export default function Label({ labelKey, value }) {
 	const editableContent = useRef();
 
 	const handleChange = (event) => {
-		text.current = event.target.value;
+		text.current = CleanString(event.target.value);
 	};
 
 	/**
