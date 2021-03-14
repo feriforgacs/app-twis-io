@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { format } from "date-fns";
 import Link from "next/link";
+import NProgress from "nprogress";
 import Image from "next/image";
 import Modal from "../Modal";
 
@@ -9,6 +10,7 @@ export default function CampaignCard({ id, name, type, status, participants, vis
 	const [selectedCampaignId, setSelectedCampaignId] = useState();
 	const [modalVisible, setModalVisible] = useState(false);
 	const [deleteLoading, setDeleteLoading] = useState(false);
+	const [duplicateLoading, setDuplicateLoading] = useState(false);
 
 	const componentRef = useRef(null);
 
@@ -28,46 +30,110 @@ export default function CampaignCard({ id, name, type, status, participants, vis
 		};
 	}, [componentRef, navigationVisible]);
 
+	/**
+	 * Delete campaign
+	 */
 	const deleteCampaign = async () => {
+		NProgress.start();
 		setDeleteLoading(true);
 
-		const campaignDeleteRequest = await fetch(`/api/campaigns/delete`, {
-			method: "DELETE",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				id: selectedCampaignId,
-			}),
-		});
+		try {
+			const campaignDeleteRequest = await fetch(`/api/campaigns/delete`, {
+				method: "DELETE",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					id: selectedCampaignId,
+				}),
+			});
 
-		const campaign = await campaignDeleteRequest.json();
+			const campaign = await campaignDeleteRequest.json();
 
-		setDeleteLoading(false);
+			setDeleteLoading(false);
+			NProgress.done();
 
-		if (campaign.success !== true) {
-			// error
+			if (campaign.success !== true) {
+				// error
+				setModalVisible(false);
+				setToastMessage("Can't delete campaign. Please, try again.");
+				setToastType("error");
+				setToastDuration(6000);
+				setToastVisible(true);
+				return;
+			} else {
+				setModalVisible(false);
+				setToastMessage("Campaign has been deleted");
+				setToastType("default");
+				setToastDuration(3000);
+				setToastVisible(true);
+				reloadCampaigns(true);
+				return;
+			}
+		} catch (error) {
+			setDeleteLoading(false);
+			NProgress.done();
 			setModalVisible(false);
 			setToastMessage("Can't delete campaign. Please, try again.");
 			setToastType("error");
 			setToastDuration(6000);
 			setToastVisible(true);
-			return;
-		} else {
-			setModalVisible(false);
-			setToastMessage("Campaign has been deleted");
-			setToastType("default");
-			setToastDuration(3000);
-			setToastVisible(true);
-			reloadCampaigns(true);
-			return;
 		}
 	};
 
+	/**
+	 * Display confirm modal before deleting a campaign
+	 * @param {string} campaignId Selected campaign id
+	 */
 	const displayConfirmDelete = (campaignId) => {
 		toggleNavigationVisible(false);
 		setSelectedCampaignId(campaignId);
 		setModalVisible(true);
+	};
+
+	/**
+	 * Duplicate selected campaign
+	 * @param {string} id Selected campaign id
+	 */
+	const duplicateCampaign = async (id) => {
+		NProgress.start();
+		setDuplicateLoading(true);
+
+		try {
+			const campaignDuplicateRequest = await fetch(`/api/campaigns/duplicate`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					id,
+				}),
+			});
+
+			const duplicatedCampaign = await campaignDuplicateRequest.json();
+
+			setDuplicateLoading(false);
+			NProgress.done();
+
+			if (duplicatedCampaign.success !== true) {
+				// error
+				setToastMessage("Can't duplicate campaign. Please, try again.");
+				setToastType("error");
+				setToastDuration(6000);
+				setToastVisible(true);
+				return;
+			}
+
+			reloadCampaigns(true);
+		} catch (error) {
+			console.log(error);
+			setDuplicateLoading(false);
+			NProgress.done();
+			setToastMessage("Can't duplicate campaign. Please, try again.");
+			setToastType("error");
+			setToastDuration(6000);
+			setToastVisible(true);
+		}
 	};
 
 	return (
@@ -101,7 +167,9 @@ export default function CampaignCard({ id, name, type, status, participants, vis
 									<Image src="/images/icons/icon-link.svg" width={20} height={20} />
 								</span>
 							</a>
-							<button className="button button--dropdown">Duplicate Campaign</button>
+							<button className="button button--dropdown" disabled={duplicateLoading} onClick={() => duplicateCampaign(id)}>
+								{duplicateLoading ? "Duplicating" : "Duplicate Campaign"}
+							</button>
 							<button className="button button--dropdown color--error" onClick={() => displayConfirmDelete(id)}>
 								Delete Campaign
 							</button>

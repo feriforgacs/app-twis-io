@@ -31,29 +31,42 @@ export default function CampaignList({ limit = 50, dashboard = false }) {
 		 */
 		const getCampaigns = async () => {
 			NProgress.start();
-			const campaignsRequest = await fetch(`/api/campaigns?limit=${campaignLimit}&search=${campaignSearch}`, {
-				method: "GET",
-			});
+			try {
+				const campaignsRequest = await fetch(`/api/campaigns?limit=${campaignLimit}&search=${campaignSearch}`, {
+					method: "GET",
+				});
 
-			const campaigns = await campaignsRequest.json();
+				const campaigns = await campaignsRequest.json();
 
-			setLoading(false);
-			setSearching(false);
-			setReload(false);
-			NProgress.done();
+				setLoading(false);
+				setSearching(false);
+				setReload(false);
+				NProgress.done();
 
-			if (campaigns.success !== true) {
-				// error
+				if (campaigns.success !== true) {
+					// error
+					setToastMessage("Can't get campaigns. Please, try again.");
+					setToastType("error");
+					setToastDuration(6000);
+					setToastVisible(true);
+					return;
+				}
+
+				if (campaigns.data) {
+					setCampaigns(campaigns.data);
+				}
+			} catch (error) {
+				console.log(error);
+				setLoading(false);
+				setSearching(false);
+				setReload(false);
+				NProgress.done();
 				setToastMessage("Can't get campaigns. Please, try again.");
 				setToastType("error");
 				setToastDuration(6000);
 				setToastVisible(true);
-				return;
 			}
 
-			if (campaigns.data) {
-				setCampaigns(campaigns.data);
-			}
 			return;
 		};
 

@@ -16,25 +16,34 @@ export default function ParticipantSearch({ participantCampaignId = 0, loading =
 	 * Get campaigns from the database
 	 */
 	const getCampaigns = async () => {
-		const campaignsRequest = await fetch(`/api/campaigns?limit=99999&search=`, {
-			method: "GET",
-		});
+		try {
+			const campaignsRequest = await fetch(`/api/campaigns?limit=99999&search=`, {
+				method: "GET",
+			});
 
-		const campaigns = await campaignsRequest.json();
+			const campaigns = await campaignsRequest.json();
 
-		setCampaignsLoading(false);
+			setCampaignsLoading(false);
 
-		if (campaigns.success !== true) {
-			// error
+			if (campaigns.success !== true) {
+				// error
+				setToastMessage("Can't get campaigns. Please, try again.");
+				setToastType("error");
+				setToastDuration(6000);
+				setToastVisible(true);
+				return;
+			}
+
+			if (campaigns.data) {
+				setCampaigns(campaigns.data);
+			}
+		} catch (error) {
+			console.log(error);
+			setCampaignsLoading(false);
 			setToastMessage("Can't get campaigns. Please, try again.");
 			setToastType("error");
 			setToastDuration(6000);
 			setToastVisible(true);
-			return;
-		}
-
-		if (campaigns.data) {
-			setCampaigns(campaigns.data);
 		}
 		return;
 	};

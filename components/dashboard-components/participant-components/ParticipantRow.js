@@ -31,37 +31,47 @@ export default function ParticipantRow({ id, name = "", email = "", campaignId, 
 	const deleteParticipant = async () => {
 		setDeleteLoading(true);
 
-		const participantDeleteRequest = await fetch(`/api/participants/delete`, {
-			method: "DELETE",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				id: selectedParticipantId,
-				campaignId: selectedParticipantCampaignId,
-			}),
-		});
+		try {
+			const participantDeleteRequest = await fetch(`/api/participants/delete`, {
+				method: "DELETE",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					id: selectedParticipantId,
+					campaignId: selectedParticipantCampaignId,
+				}),
+			});
 
-		const participant = await participantDeleteRequest.json();
+			const participant = await participantDeleteRequest.json();
 
-		setDeleteLoading(false);
+			setDeleteLoading(false);
 
-		if (participant.success !== true) {
-			// error
+			if (participant.success !== true) {
+				// error
+				setModalVisible(false);
+				setToastMessage("Can't delete participant. Please, try again.");
+				setToastType("error");
+				setToastDuration(6000);
+				setToastVisible(true);
+				return;
+			} else {
+				setModalVisible(false);
+				setToastMessage("Participant has been deleted");
+				setToastType("default");
+				setToastDuration(3000);
+				setToastVisible(true);
+				removeParticipant(index);
+				return;
+			}
+		} catch (error) {
+			console.log(error);
+			setDeleteLoading(false);
 			setModalVisible(false);
 			setToastMessage("Can't delete participant. Please, try again.");
 			setToastType("error");
 			setToastDuration(6000);
 			setToastVisible(true);
-			return;
-		} else {
-			setModalVisible(false);
-			setToastMessage("Participant has been deleted");
-			setToastType("default");
-			setToastDuration(3000);
-			setToastVisible(true);
-			removeParticipant(index);
-			return;
 		}
 	};
 

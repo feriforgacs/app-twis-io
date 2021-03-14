@@ -2,7 +2,7 @@ import { useState } from "react";
 import Button from "../Button";
 
 export default function CampaignSearch({ loading = false, filterCampaigns, filterReset }) {
-	const [keyword, setKeyword] = useState();
+	const [keyword, setKeyword] = useState("");
 	return (
 		<div id="campaign-search">
 			<div id="campaign-search__form" className="form form--search form--inline">

@@ -39,32 +39,42 @@ export default function CampaignCreate() {
 	const createCampaign = async () => {
 		setLoading(true);
 
-		const campaignCreateRequest = await fetch(`/api/campaigns/create`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				name,
-				type,
-			}),
-		});
+		try {
+			const campaignCreateRequest = await fetch(`/api/campaigns/create`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					name,
+					type,
+				}),
+			});
 
-		const campaign = await campaignCreateRequest.json();
+			const campaign = await campaignCreateRequest.json();
 
-		if (campaign.success !== true) {
+			if (campaign.success !== true) {
+				setLoading(false);
+				// error
+				setToastMessage("Can't create campaign. Please, try again.");
+				setToastType("error");
+				setToastDuration(6000);
+				setToastVisible(true);
+				return;
+			}
+
+			if (campaign.data) {
+				// redirect to campaign editor
+				router.push(`/editor/${campaign.data._id}`);
+			}
+		} catch (error) {
+			console.log(error);
 			setLoading(false);
 			// error
 			setToastMessage("Can't create campaign. Please, try again.");
 			setToastType("error");
 			setToastDuration(6000);
 			setToastVisible(true);
-			return;
-		}
-
-		if (campaign.data) {
-			// redirect to campaign editor
-			router.push(`/editor/${campaign.data._id}`);
 		}
 		return;
 	};

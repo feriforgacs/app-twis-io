@@ -39,33 +39,45 @@ export default function ParticipantList({ limit = 200, dashboard = false, campai
 		 * Get participants from the database
 		 */
 		const getParticipants = async () => {
-			const participantsRequest = await fetch(`/api/participants?limit=${participantLimit}&search=${participantSearch}&campaign=${participantCampaignId}&page=${page}`, {
-				method: "GET",
-			});
+			try {
+				const participantsRequest = await fetch(`/api/participants?limit=${participantLimit}&search=${participantSearch}&campaign=${participantCampaignId}&page=${page}`, {
+					method: "GET",
+				});
 
-			const participants = await participantsRequest.json();
+				const participants = await participantsRequest.json();
 
-			setLoading(false);
-			setSearching(false);
-			NProgress.done();
+				setLoading(false);
+				setSearching(false);
+				NProgress.done();
 
-			if (participants.success !== true) {
-				// error
+				if (participants.success !== true) {
+					// error
+					setToastMessage("Can't get participants. Please, try again.");
+					setToastType("error");
+					setToastDuration(6000);
+					setToastVisible(true);
+					return;
+				}
+
+				if (participants.data) {
+					setParticipants(participants.data);
+					setPage(page);
+					if (recountParticipants) {
+						setParticipantCount("...");
+						countParticipants();
+					}
+				}
+			} catch (error) {
+				console.log(error);
+				setLoading(false);
+				setSearching(false);
+				NProgress.done();
 				setToastMessage("Can't get participants. Please, try again.");
 				setToastType("error");
 				setToastDuration(6000);
 				setToastVisible(true);
-				return;
 			}
 
-			if (participants.data) {
-				setParticipants(participants.data);
-				setPage(page);
-				if (recountParticipants) {
-					setParticipantCount("...");
-					countParticipants();
-				}
-			}
 			return;
 		};
 
@@ -73,30 +85,37 @@ export default function ParticipantList({ limit = 200, dashboard = false, campai
 		 * Count all participants, or participants by campaign
 		 */
 		const countParticipants = async () => {
-			const participantsCountRequest = await fetch(`/api/participants/count?campaign=${participantCampaignId}&search=${participantSearch}`, {
-				method: "GET",
-			});
+			try {
+				const participantsCountRequest = await fetch(`/api/participants/count?campaign=${participantCampaignId}&search=${participantSearch}`, {
+					method: "GET",
+				});
 
-			const participantsCount = await participantsCountRequest.json();
+				const participantsCount = await participantsCountRequest.json();
 
-			if (participantsCount.success !== true) {
-				// error
+				if (participantsCount.success !== true) {
+					// error
+					setToastMessage("Can't count participants. Please, try again.");
+					setToastType("error");
+					setToastDuration(6000);
+					setToastVisible(true);
+					return;
+				}
+
+				setRecountParticipants(false);
+				setParticipantCount(parseInt(participantsCount.data));
+				if (participantsCount.data > participantLimit) {
+					// count pages if participant count is higher than the limit
+					setPageCount(Math.ceil(participantsCount.data / participantLimit));
+				} else {
+					setPageCount(1);
+				}
+			} catch (error) {
+				console.log(error);
 				setToastMessage("Can't count participants. Please, try again.");
 				setToastType("error");
 				setToastDuration(6000);
 				setToastVisible(true);
-				return;
 			}
-
-			setRecountParticipants(false);
-			setParticipantCount(parseInt(participantsCount.data));
-			if (participantsCount.data > participantLimit) {
-				// count pages if participant count is higher than the limit
-				setPageCount(Math.ceil(participantsCount.data / participantLimit));
-			} else {
-				setPageCount(1);
-			}
-
 			return;
 		};
 
