@@ -163,23 +163,23 @@ export default function CampaignCard({ id, name, type, status, participants, vis
 
 					{navigationVisible && (
 						<div className="campaign-card__navigation campaign-card__navigation--dropdown" ref={componentRef}>
-							<a href="/" target="_blank" rel="noopener noreferrer" className="button button--dropdown">
-								View campaign
-								<span className="op-5 button__icon">
+							<a href="/" target="_blank" rel="noopener noreferrer" className="button button--dropdown color--action">
+								<span className="button__icon">
 									<Image src="/images/icons/icon-link.svg" width={20} height={20} />
 								</span>
+								View campaign
 							</a>
-							<button className="button button--dropdown" disabled={duplicateLoading} onClick={() => duplicateCampaign(id)}>
-								{duplicateLoading ? "Duplicating" : "Duplicate Campaign"}
-								<span className="op-5 button__icon">
+							<button className="button button--dropdown color--action" disabled={duplicateLoading} onClick={() => duplicateCampaign(id)}>
+								<span className="button__icon">
 									<Image src="/images/icons/icon-duplicate.svg" width={20} height={20} />
 								</span>
+								{duplicateLoading ? "Duplicating" : "Duplicate Campaign"}
 							</button>
-							<button className="button button--dropdown color--error" onClick={() => displayConfirmDelete(id)}>
-								Delete Campaign
+							<button className="button button--dropdown color--tertiary" onClick={() => displayConfirmDelete(id)}>
 								<span className="op-5 button__icon">
 									<Image src="/images/icons/icon-delete.svg" width={20} height={20} />
 								</span>
+								Delete Campaign
 							</button>
 						</div>
 					)}

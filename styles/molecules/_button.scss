@@ -226,7 +226,7 @@
 		border-radius: 0;
 		display: flex;
 		font-size: 0.8rem;
-		justify-content: space-between;
+		justify-content: flex-start;
 		max-width: 100%;
 		min-width: 100%;
 		padding: 0 1rem;
@@ -238,6 +238,7 @@
 		align-items: center;
 		display: flex;
 		justify-content: flex-end;
+		margin-right: 1rem;
 	}
 
 	&--autowidth {

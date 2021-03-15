@@ -2,6 +2,22 @@
 	&--error {
 		color: $errorColor;
 	}
+
+	&--primary {
+		color: $fontColor;
+	}
+
+	&--secondary {
+		color: $fontColorSecondary;
+	}
+
+	&--tertiary {
+		color: $fontColorTertiary;
+	}
+
+	&--action {
+		color: $primaryColor;
+	}
 }
 
 .block {
