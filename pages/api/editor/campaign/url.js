@@ -12,7 +12,7 @@ const cors = initMiddleware(
 	})
 );
 
-export default async function CampaignUpdateHandler(req, res) {
+export default async function CampaignURLUpdateHandler(req, res) {
 	await cors(req, res);
 
 	const authStatus = await AuthCheck(req, res);
@@ -38,12 +38,29 @@ export default async function CampaignUpdateHandler(req, res) {
 		return res.status(400).json({ success: false, error: "invalid campaign id" });
 	}
 
+	let url = req.body.url;
+	if (!url) {
+		return res.status(400).json({ success: false, error: "missing url" });
+	}
+
 	await DatabaseConnect();
+
+	// check url in the db
+	try {
+		const campaign = await Campaign.countDocuments({ _id: { $ne: campaignId }, url });
+
+		if (campaign) {
+			return res.status(200).json({ success: false, errorMessage: "The URL is already in use. Please, try a different one." });
+		}
+	} catch (error) {
+		console.log(error);
+		return res.status(400).json({ success: false });
+	}
 
 	const session = await getSession({ req });
 
 	try {
-		const result = await Campaign.findOneAndUpdate({ _id: campaignId, createdBy: session.user.id }, { [req.body.key]: req.body.value });
+		const result = await Campaign.findOneAndUpdate({ _id: campaignId, createdBy: session.user.id }, { url: url });
 		if (!result) {
 			return res.status(400).json({ success: false });
 		}

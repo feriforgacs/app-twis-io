@@ -6,7 +6,7 @@ import { GlobalContext } from "../../../context/GlobalState";
 import styles from "../CampaignSettings.module.scss";
 
 export default function CampaignURL() {
-	const { campaign, updateCampaignDataInState } = useContext(GlobalContext);
+	const { campaign, updateCampaignDataInState, updateState } = useContext(GlobalContext);
 	const [requestCancelToken, setRequestCancelToken] = useState();
 	const [url, setURL] = useState(campaign.url);
 	const [updateError, setUpdateError] = useState("");
@@ -17,6 +17,7 @@ export default function CampaignURL() {
 	 * @param {string} url New campaign URL
 	 */
 	const updateCampaignURL = async (url) => {
+		updateState("saving", true);
 		if (requestCancelToken) {
 			requestCancelToken.cancel();
 		}
@@ -28,7 +29,7 @@ export default function CampaignURL() {
 		setRequestCancelToken(source);
 
 		try {
-			const updateResult = await axios.post(
+			const updateResult = await axios.put(
 				`/api/editor/campaign/url`,
 				{
 					campaignId: campaign._id,
@@ -42,14 +43,16 @@ export default function CampaignURL() {
 				{ cancelToken: source.token }
 			);
 
+			updateState("saving", false);
+
 			if (updateResult.data.success !== true) {
-				console.log(updateResult);
 				setUpdateError(updateResult.data.errorMessage);
 			} else {
 				// add url to state
 				updateCampaignDataInState("url", url);
 			}
 		} catch (error) {
+			updateState("saving", false);
 			if (axios.isCancel(error)) {
 				return;
 			}
@@ -66,7 +69,7 @@ export default function CampaignURL() {
 				<DebounceInput
 					className={`${styles.settingsPanelInput} ${updateError || lengthError ? styles.invalidValue : ""}`}
 					maxLength="250"
-					debounceTimeout="1000"
+					debounceTimeout="500"
 					value={url}
 					onChange={(e) => {
 						setUpdateError("");
