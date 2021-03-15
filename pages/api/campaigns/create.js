@@ -1,5 +1,6 @@
 import Cors from "cors";
 import { v4 as uuidv4 } from "uuid";
+import slug from "slug";
 import { getSession } from "next-auth/client";
 import initMiddleware from "../../../lib/InitMiddleware";
 import AuthCheck from "../../../lib/AuthCheck";
@@ -31,6 +32,7 @@ export default async function CampaignCreateHandler(req, res) {
 	await DatabaseConnect();
 
 	const { name, type } = req.body;
+	const url = `${slug(name).substr(0, 10)}-${Date.now()}`;
 
 	const session = await getSession({ req });
 
@@ -38,7 +40,7 @@ export default async function CampaignCreateHandler(req, res) {
 	 * Save campaign data to the database
 	 */
 	try {
-		const campaign = await Campaign.create({ name, type, createdBy: session.user.id });
+		const campaign = await Campaign.create({ name, url, type, createdBy: session.user.id });
 		if (!campaign._id) {
 			return res.status(400).json({ success: false });
 		}
