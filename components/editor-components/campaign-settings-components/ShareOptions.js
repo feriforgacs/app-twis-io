@@ -1,15 +1,17 @@
-/**
- * @todo use real campaign URL form share options
- */
+import { useContext } from "react";
+import { GlobalContext } from "../../../context/GlobalState";
 import ScreenInfo from "../screen-components/screen-settings/ScreenInfo";
 import styles from "../CampaignSettings.module.scss";
 
 export default function ShareOptions() {
+	const { campaign } = useContext(GlobalContext);
+	const campaignURL = `${process.env.CAMPAIGN_URL_PREFIX}${campaign.url}`;
+
 	return (
 		<>
 			<ScreenInfo screenType="sharePanel" />
 			<div className={styles.settingsPanelSection}>
-				<a href="https://twis.io" target="_blank" rel="noopener noreferrer" className={`${styles.shareButtonFacebook} ${styles.shareButton}`}>
+				<a href={`https://facebook.com/sharer.php?u=${campaignURL}`} target="_blank" rel="noopener noreferrer" className={`${styles.shareButtonFacebook} ${styles.shareButton}`}>
 					<span className={styles.shareIcon}>
 						<svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 512 512" width="20" fill="#ffffff">
 							<path d="M512,257.555c0,-141.385 -114.615,-256 -256,-256c-141.385,0 -256,114.615 -256,256c0,127.777 93.616,233.685 216,252.89l0,-178.89l-65,0l0,-74l65,0l0,-56.4c0,-64.16 38.219,-99.6 96.695,-99.6c28.009,0 57.305,5 57.305,5l0,63l-32.281,0c-31.801,0 -41.719,19.733 -41.719,39.978l0,48.022l71,0l-11.35,74l-59.65,0l0,178.89c122.385,-19.205 216,-125.113 216,-252.89Z" />
@@ -18,7 +20,7 @@ export default function ShareOptions() {
 					<span>Share on Facebook</span>
 				</a>
 
-				<a href="https://twis.io" target="_blank" rel="noopener noreferrer" className={`${styles.shareButtonTwitter} ${styles.shareButton}`}>
+				<a href={`https://twitter.com/intent/tweet?url=${campaignURL}`} target="_blank" rel="noopener noreferrer" className={`${styles.shareButtonTwitter} ${styles.shareButton}`}>
 					<span className={styles.shareIcon}>
 						<svg height="20" width="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 							<path d="M0 0h24v24H0z" opacity="0"></path>
@@ -28,7 +30,7 @@ export default function ShareOptions() {
 					<span>Share on Twitter</span>
 				</a>
 
-				<a href="https://twis.io" target="_blank" rel="noopener noreferrer" className={`${styles.shareButtonEmail} ${styles.shareButton}`}>
+				<a href={`mailto:?body=${campaignURL}`} target="_blank" rel="noopener noreferrer" className={`${styles.shareButtonEmail} ${styles.shareButton}`}>
 					<span className={styles.shareIcon}>
 						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
 							<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
@@ -51,7 +53,7 @@ export default function ShareOptions() {
 				<input
 					className={styles.campaignURL}
 					type="text"
-					value="https://twis.io/play/4253zhtz5"
+					value={campaignURL}
 					readOnly
 					onClick={(e) => {
 						e.target.select();
