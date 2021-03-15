@@ -120,7 +120,7 @@ export default function CampaignList({ limit = 50, dashboard = false }) {
 				{campaigns.length && !searching ? (
 					<>
 						{campaigns.map((campaignItem, key) => (
-							<CampaignCard key={key} id={campaignItem._id} name={campaignItem.name} type={campaignItem.type} status={campaignItem.status} participants={campaignItem.participantCount} visibleFrom={campaignItem.visibleFrom} visibleTo={campaignItem.visibleTo} reloadCampaigns={setReload} setToastMessage={setToastMessage} setToastVisible={setToastVisible} setToastType={setToastType} setToastDuration={setToastDuration} />
+							<CampaignCard key={key} {...campaignItem} reloadCampaigns={setReload} setToastMessage={setToastMessage} setToastVisible={setToastVisible} setToastType={setToastType} setToastDuration={setToastDuration} />
 						))}
 					</>
 				) : (

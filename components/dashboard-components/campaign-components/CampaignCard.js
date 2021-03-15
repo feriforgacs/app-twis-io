@@ -5,7 +5,7 @@ import NProgress from "nprogress";
 import Image from "next/image";
 import Modal from "../Modal";
 
-export default function CampaignCard({ id, name, type, status, participants, visibleFrom, visibleTo, reloadCampaigns, setToastMessage, setToastVisible, setToastType, setToastDuration }) {
+export default function CampaignCard({ _id, name, url, type, status, participantCount, visibleFrom, visibleTo, reloadCampaigns, setToastMessage, setToastVisible, setToastType, setToastDuration }) {
 	const [navigationVisible, toggleNavigationVisible] = useState(false);
 	const [selectedCampaignId, setSelectedCampaignId] = useState();
 	const [modalVisible, setModalVisible] = useState(false);
@@ -143,7 +143,7 @@ export default function CampaignCard({ id, name, type, status, participants, vis
 			<div className="campaign-card">
 				<div className="campaign-card__header campaign-card__section">
 					<h4 className="campaign-card__title">
-						<Link href={`/editor/${id}`} title={`Edit ${name}`}>
+						<Link href={`/editor/${_id}`} title={`Edit ${name}`}>
 							<a>
 								{name.substring(0, 22)}
 								{name.length > 22 && "..."}
@@ -163,19 +163,19 @@ export default function CampaignCard({ id, name, type, status, participants, vis
 
 					{navigationVisible && (
 						<div className="campaign-card__navigation campaign-card__navigation--dropdown" ref={componentRef}>
-							<a href="/" target="_blank" rel="noopener noreferrer" className="button button--dropdown color--action">
+							<a href={`${process.env.CAMPAIGN_URL_PREFIX}${url}`} target="_blank" rel="noopener noreferrer" className="button button--dropdown color--action">
 								<span className="button__icon">
 									<Image src="/images/icons/icon-link.svg" width={20} height={20} />
 								</span>
 								View campaign
 							</a>
-							<button className="button button--dropdown color--action" disabled={duplicateLoading} onClick={() => duplicateCampaign(id)}>
+							<button className="button button--dropdown color--action" disabled={duplicateLoading} onClick={() => duplicateCampaign(_id)}>
 								<span className="button__icon">
 									<Image src="/images/icons/icon-duplicate.svg" width={20} height={20} />
 								</span>
 								{duplicateLoading ? "Duplicating" : "Duplicate Campaign"}
 							</button>
-							<button className="button button--dropdown color--tertiary" onClick={() => displayConfirmDelete(id)}>
+							<button className="button button--dropdown color--tertiary" onClick={() => displayConfirmDelete(_id)}>
 								<span className="op-5 button__icon">
 									<Image src="/images/icons/icon-delete.svg" width={20} height={20} />
 								</span>
@@ -188,17 +188,20 @@ export default function CampaignCard({ id, name, type, status, participants, vis
 					<div className="campaign-card__meta">
 						<span className="badge badge--info badge--campaign-type">{type}</span>
 						<span className={`campaign-status badge ${status === "active" ? "badge--active badge--success" : "badge--inactive"}`}>{status === "active" ? "active" : "inactive"}</span>
-						<Link href={`/campaigns/participants/${id}`}>
+						<Link href={`/campaigns/participants/${_id}`}>
 							<a className="campaign-participant-count">
 								<span>
 									<Image src="/images/icons/icon-participants.svg" width={15} height={15} alt={`${name} - Participants`} />
 								</span>
-								Participants: <strong>{participants}</strong>
+								Participants: <strong>{participantCount}</strong>
 							</a>
 						</Link>
 					</div>
 
 					<div className="campaign-card__info">
+						<div className="campaign-info campaign-url">
+							<input type="text" value={`${process.env.CAMPAIGN_URL_PREFIX}${url}`} readOnly={true} onFocus={(e) => e.target.select()} />
+						</div>
 						<div className="campaign-visible-from campaign-info">
 							<span className="mr-5">
 								<Image src="/images/icons/icon-calendar.svg" width={15} height={15} alt="Camapign visible from" />
@@ -214,7 +217,7 @@ export default function CampaignCard({ id, name, type, status, participants, vis
 					</div>
 				</div>
 				<div className="campaign-card__footer campaign-card__section">
-					<Link href={`/editor/${id}`} title={`Edit ${name}`}>
+					<Link href={`/editor/${_id}`} title={`Edit ${name}`}>
 						<a className="button button--outline-primary">Edit Campaign</a>
 					</Link>
 				</div>
