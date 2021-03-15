@@ -209,3 +209,35 @@
 	padding: 0 1rem 0 2.5rem;
 	width: 100%;
 }
+
+.campaignURLContainer {
+	align-items: center;
+	display: flex;
+
+	span {
+		color: #888;
+		display: block;
+		font-size: 0.8rem;
+		margin: 0 5px 0.5rem 0;
+	}
+}
+
+.valueError {
+	color: #bf0711;
+	fill: #bf0711;
+	font-size: 0.8rem;
+	line-height: 1.2rem;
+	margin: 0 0 0.5rem;
+
+	svg {
+		height: 0.8rem;
+		margin-right: 0px;
+		margin-top: 0px;
+		width: 0.8rem;
+	}
+}
+
+.invalidValue {
+	background: #fbeae5;
+	border: 1px solid #bf0711;
+}
