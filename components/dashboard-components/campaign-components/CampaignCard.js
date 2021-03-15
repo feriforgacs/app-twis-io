@@ -12,6 +12,14 @@ export default function CampaignCard({ _id, name, url, type, status, participant
 	const [deleteLoading, setDeleteLoading] = useState(false);
 	const [duplicateLoading, setDuplicateLoading] = useState(false);
 
+	let expired = false;
+	const visibleToDate = format(new Date(visibleTo), "yyyy.MM.dd.");
+	const today = format(new Date(Date.now()), "yyyy.MM.dd.");
+
+	if (visibleToDate < today) {
+		expired = true;
+	}
+
 	const componentRef = useRef(null);
 
 	useEffect(() => {
@@ -187,7 +195,10 @@ export default function CampaignCard({ _id, name, url, type, status, participant
 				<div className="campaign-card__body campaign-card__section">
 					<div className="campaign-card__meta">
 						<span className="badge badge--info badge--campaign-type">{type}</span>
-						<span className={`campaign-status badge ${status === "active" ? "badge--active badge--success" : "badge--inactive"}`}>{status === "active" ? "active" : "inactive"}</span>
+						<span className={`campaign-status badge ${status === "active" && !expired ? "badge--active badge--success" : "badge--inactive"}`}>
+							{status === "active" ? "active" : "inactive"}
+							{expired ? " - expired" : ""}
+						</span>
 						<Link href={`/campaigns/participants/${_id}`}>
 							<a className="campaign-participant-count">
 								<span>
