@@ -129,7 +129,7 @@ export const StartScreenTemplateItems = [
 		orderIndex: 3,
 		itemId: "GENERATE",
 		screenId: "ADD",
-		content: "👈 Drag &amp; Drop text, buttons, images or sticker form the sidebar on the left",
+		content: "👈 Drag & Drop text, buttons, images and stickers form the sidebar on the left",
 		src: "",
 		settings: {
 			fontFamily: "",

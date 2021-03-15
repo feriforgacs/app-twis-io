@@ -53,21 +53,21 @@ export default async function CampaignCreateHandler(req, res) {
 
 		const startScreenPromise = Screen.create(startScreen);
 
-		// create question screen
-		const questionScreen = QuestionScreenTemplate;
-		questionScreen.screenId = uuidv4();
-		questionScreen.campaignId = campaign._id;
-		questionScreen.orderIndex = 1;
-
-		const questionScreenPromise = Screen.create(questionScreen);
-
 		// create info screen
 		const infoScreen = InfoScreenTemplate;
 		infoScreen.screenId = uuidv4();
 		infoScreen.campaignId = campaign._id;
-		infoScreen.orderIndex = 2;
+		infoScreen.orderIndex = 1;
 
 		const infoscreenPromise = Screen.create(infoScreen);
+
+		// create question screen
+		const questionScreen = QuestionScreenTemplate;
+		questionScreen.screenId = uuidv4();
+		questionScreen.campaignId = campaign._id;
+		questionScreen.orderIndex = 2;
+
+		const questionScreenPromise = Screen.create(questionScreen);
 
 		// create end screen success
 		const endScreenSuccess = EndScreenSuccessTemplate;
@@ -102,18 +102,18 @@ export default async function CampaignCreateHandler(req, res) {
 			startScreenItems[index].screenId = newStartScreen._id;
 		});
 
-		// question screen items
-		const questionScreenItems = QuestionScreenTemplateItems;
-		questionScreenItems.forEach((item, index) => {
-			questionScreenItems[index].itemId = uuidv4();
-			questionScreenItems[index].screenId = newQuestionScreen._id;
-		});
-
 		// info screen items
 		const infoScreenItems = InfoScreenTemplateItems;
 		infoScreenItems.forEach((item, index) => {
 			infoScreenItems[index].itemId = uuidv4();
 			infoScreenItems[index].screenId = newInfoScreen._id;
+		});
+
+		// question screen items
+		const questionScreenItems = QuestionScreenTemplateItems;
+		questionScreenItems.forEach((item, index) => {
+			questionScreenItems[index].itemId = uuidv4();
+			questionScreenItems[index].screenId = newQuestionScreen._id;
 		});
 
 		// end screen success items
