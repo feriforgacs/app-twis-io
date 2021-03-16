@@ -195,7 +195,7 @@ export default function CampaignCard({ _id, name, url, type, status, participant
 				<div className="campaign-card__body campaign-card__section">
 					<div className="campaign-card__meta">
 						<span className="badge badge--info badge--campaign-type">{type}</span>
-						<span className={`campaign-status badge ${status === "active" && !expired ? "badge--active badge--success" : "badge--inactive"}`}>
+						<span className={`campaign-status badge ${status === "active" ? "badge--active badge--success" : "badge--inactive"} ${expired ? "badge--expired" : ""}`}>
 							{status === "active" ? "active" : "inactive"}
 							{expired ? " - expired" : ""}
 						</span>

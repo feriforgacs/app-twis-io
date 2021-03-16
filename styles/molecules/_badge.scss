@@ -55,4 +55,21 @@
 			width: 10px;
 		}
 	}
+
+	&--expired {
+		background: #ffeb3b;
+		padding-left: calc(0.8rem + 10px);
+		&:before {
+			background: #ffc107;
+			border: none;
+			border-radius: 10px;
+			content: "";
+			display: block;
+			height: 10px;
+			left: 7px;
+			position: absolute;
+			top: 6px;
+			width: 10px;
+		}
+	}
 }
