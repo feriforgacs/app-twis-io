@@ -71,8 +71,7 @@ export default function Campaign({ campaign, screens, previewURL }) {
 
 				{/* Campaign OG data */}
 				<meta property="og:type" content="website" />
-				<meta property="og:url" content="TODO" />
-				{campaign.ogTitle && <meta property="og:title" content={campaign.ogTitle} />}
+				{campaign.ogTitle && <meta property="og:title" content={`PREVIEW - ${campaign.ogTitle}`} />}
 				{campaign.ogDescription && <meta property="og:description" content={campaign.ogDescription} />}
 				{campaign.ogImage && <meta property="og:image" content={campaign.ogImage} />}
 			</Head>
