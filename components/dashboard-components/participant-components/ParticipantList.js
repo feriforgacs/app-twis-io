@@ -207,7 +207,7 @@ export default function ParticipantList({ limit = 200, dashboard = false, campai
 							</thead>
 							<tbody>
 								{participants.map((participantItem, key) => (
-									<ParticipantRow key={key} index={key} id={participantItem._id} name={participantItem.name} email={participantItem.email} campaignId={participantItem.campaignId} campaignName={participantItem.campaign.name} createdAt={participantItem.createdAt} setToastMessage={setToastMessage} setToastVisible={setToastVisible} setToastType={setToastType} setToastDuration={setToastDuration} removeParticipant={removeParticipant} />
+									<ParticipantRow key={key} index={key} {...participantItem} setToastMessage={setToastMessage} setToastVisible={setToastVisible} setToastType={setToastType} setToastDuration={setToastDuration} removeParticipant={removeParticipant} />
 								))}
 							</tbody>
 							<tfoot>

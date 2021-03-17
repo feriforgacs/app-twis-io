@@ -3,7 +3,7 @@ import { format } from "date-fns";
 import Link from "next/link";
 import Modal from "../Modal";
 
-export default function ParticipantRow({ id, name = "", email = "", campaignId, campaignName, createdAt, index, setToastMessage, setToastType, setToastDuration, setToastVisible, removeParticipant }) {
+export default function ParticipantRow({ id, name = "", email = "", campaign, createdAt, index, setToastMessage, setToastType, setToastDuration, setToastVisible, removeParticipant }) {
 	const [navigationVisible, toggleNavigationVisible] = useState(false);
 	const [selectedParticipantId, setSelectedParticipantId] = useState();
 	const [selectedParticipantCampaignId, setSelectedParticipantCampaignId] = useState();
@@ -103,7 +103,7 @@ export default function ParticipantRow({ id, name = "", email = "", campaignId, 
 					<span className="not-provided">Not provided</span>
 				)}
 			</td>
-			<td className="item__campaign">{campaignName}</td>
+			<td className="item__campaign">{campaign.name}</td>
 			<td>
 				<button className="button button--card-navigation" onClick={() => toggleNavigationVisible(!navigationVisible)}>
 					{!navigationVisible && <span>&hellip;</span>}
@@ -120,7 +120,7 @@ export default function ParticipantRow({ id, name = "", email = "", campaignId, 
 						<Link href={`/participants/${id}`}>
 							<a className="button button--dropdown">View Details</a>
 						</Link>
-						<button className="button button--dropdown color--error" onClick={() => displayConfirmDelete(id, campaignId)}>
+						<button className="button button--dropdown color--error" onClick={() => displayConfirmDelete(id, campaign._id)}>
 							Delete Participant
 						</button>
 					</div>

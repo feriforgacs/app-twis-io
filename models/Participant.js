@@ -2,11 +2,6 @@ import mongoose from "mongoose";
 
 const participantSchema = new mongoose.Schema(
 	{
-		generatedId: {
-			type: String,
-			trim: true,
-			required: [true, "Participant generated ID is required"],
-		},
 		name: {
 			type: String,
 			trim: true,
