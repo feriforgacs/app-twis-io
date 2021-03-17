@@ -40,6 +40,10 @@ const campaignSchema = new mongoose.Schema({
 		type: Number,
 		default: 0,
 	},
+	answerCount: {
+		type: Number,
+		default: 0,
+	},
 	ogTitle: {
 		type: String,
 		trim: true,
