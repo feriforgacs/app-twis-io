@@ -38,13 +38,13 @@ export default async function CampaignDataHandler(req, res) {
 	 * Get campaign data from the database
 	 */
 	try {
-		const campaign = await Campaign.findOne({ _id: campaignId }).select("-participantCount, -createdBy, -createdAt, -updatedAt, -__v");
+		const campaign = await Campaign.findOne({ _id: campaignId }).select(["-participantCount", "-createdBy", "-createdAt", "-updatedAt", "-__v"]);
 
 		if (!campaign) {
 			return res.status(400).json({ success: false });
 		}
 
-		const screens = await Screen.find({ campaignId: campaignId }).select("-createdAt, -updatedAt, -__v").sort({ orderIndex: 1 });
+		const screens = await Screen.find({ campaignId: campaignId }).select(["-createdAt", "-updatedAt", "-__v"]).sort({ orderIndex: 1 });
 
 		if (!screens) {
 			return res.status(400).json({ success: false });
