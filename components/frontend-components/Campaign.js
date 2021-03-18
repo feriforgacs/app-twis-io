@@ -24,6 +24,7 @@ export default function Campaign({ campaign, screens, previewURL }) {
 
 		if (windowWidth > 767) {
 			setScale(1);
+			setMarginLeft(0);
 			return;
 		}
 
@@ -80,6 +81,8 @@ export default function Campaign({ campaign, screens, previewURL }) {
 				<div className="story">
 					<CampaignScreen data={screen} lastScreenIndex={lastScreenIndex} scale={scale} marginLeft={marginLeft} />
 					<ScreensIndicator screens={screens.length - 1} active={activeScreenIndex} />
+
+					{formResult.status && <FormResult status={formResult.status} successContent={formResult.dataCollectionSuccessPopupContent} errorContent={formResult.dataCollectionErrorMessage} />}
 				</div>
 
 				<div className="campaign__preview-qr">
@@ -119,8 +122,6 @@ export default function Campaign({ campaign, screens, previewURL }) {
 
 				<p>Please, expand the height of your window to view this experience</p>
 			</div>
-
-			{formResult.status && <FormResult status={formResult.status} successContent={formResult.dataCollectionSuccessPopupContent} errorContent={formResult.dataCollectionErrorMessage} />}
 		</>
 	);
 }
