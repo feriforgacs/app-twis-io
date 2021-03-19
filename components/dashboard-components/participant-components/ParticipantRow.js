@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { format } from "date-fns";
 import Link from "next/link";
+import Image from "next/image";
 import Modal from "../Modal";
 
 export default function ParticipantRow({ id, name = "", email = "", campaign, createdAt, index, setToastMessage, setToastType, setToastDuration, setToastVisible, removeParticipant }) {
@@ -118,9 +119,17 @@ export default function ParticipantRow({ id, name = "", email = "", campaign, cr
 				{navigationVisible && (
 					<div className="campaign-card__navigation campaign-card__navigation--dropdown" ref={componentRef}>
 						<Link href={`/participants/${id}`}>
-							<a className="button button--dropdown">View Details</a>
+							<a className="button button--dropdown">
+								<span className="op-5 button__icon">
+									<Image src="/images/icons/icon-list.svg" width={20} height={20} />
+								</span>
+								View Details
+							</a>
 						</Link>
 						<button className="button button--dropdown color--error" onClick={() => displayConfirmDelete(id, campaign._id)}>
+							<span className="op-5 button__icon">
+								<Image src="/images/icons/icon-delete.svg" width={20} height={20} />
+							</span>
 							Delete Participant
 						</button>
 					</div>
