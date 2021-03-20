@@ -1,7 +1,60 @@
+import { useState } from "react";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import { format } from "date-fns";
+import Modal from "../Modal";
 
-export default function ParticipantDetails({ participantData, participantAnswers }) {
+export default function ParticipantDetails({ participantData, participantAnswers, setToastMessage, setToastType, setToastDuration, setToastVisible }) {
+	const [modalVisible, setModalVisible] = useState(false);
+	const [deleteLoading, setDeleteLoading] = useState(false);
+	const router = useRouter();
+
+	const deleteParticipant = async () => {
+		setDeleteLoading(true);
+
+		try {
+			const participantDeleteRequest = await fetch(`/api/participants/delete`, {
+				method: "DELETE",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					id: participantData.participant._id,
+					campaignId: participantData.participant.campaign._id,
+				}),
+			});
+
+			const participant = await participantDeleteRequest.json();
+
+			setDeleteLoading(false);
+
+			if (participant.success !== true) {
+				// error
+				setModalVisible(false);
+				setToastMessage("Can't delete participant. Please, try again.");
+				setToastType("error");
+				setToastDuration(6000);
+				setToastVisible(true);
+				return;
+			} else {
+				router.push("/participants");
+				return;
+			}
+		} catch (error) {
+			console.log(error);
+			setDeleteLoading(false);
+			setModalVisible(false);
+			setToastMessage("Can't delete participant. Please, try again.");
+			setToastType("error");
+			setToastDuration(6000);
+			setToastVisible(true);
+		}
+	};
+
+	const displayConfirmDelete = () => {
+		setModalVisible(true);
+	};
+
 	return (
 		<>
 			<div className="participant">
@@ -67,8 +120,12 @@ export default function ParticipantDetails({ participantData, participantAnswers
 			</div>
 
 			<div className="participant__actions">
-				<button className="button button--outline button--link">Delete participant</button>
+				<button className="button button--outline button--link" onClick={() => displayConfirmDelete()} disabled={deleteLoading}>
+					Delete participant
+				</button>
 			</div>
+
+			{modalVisible && <Modal title="Are you sure you want to delete the participant?" body={`⚠️ When you remove a participant, their answers will be deleted as well and there is no option to restore the collected information. ⚠️`} primaryAction={deleteParticipant} primaryActionLabel="Yes, delete participant" secondaryAction={() => setModalVisible(false)} secondaryActionLabel="Cancel" onClose={() => setModalVisible(false)} loading={deleteLoading} />}
 		</>
 	);
 }

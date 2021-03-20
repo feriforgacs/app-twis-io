@@ -86,7 +86,7 @@ export default function ParticipantPage() {
 			<div id="page__content">
 				<PageHeader title="Participant" />
 				{dataLoading && <p>loading...</p>}
-				{participantData && <ParticipantDetails participantData={participantData} participantAnswers={participantAnswers} />}
+				{participantData && <ParticipantDetails participantData={participantData} participantAnswers={participantAnswers} setToastMessage={setToastMessage} setToastType={setToastType} setToastDuration={setToastDuration} setToastVisible={setToastVisible} />}
 			</div>
 
 			{toastVisible && <Toast onClose={() => setToastVisible(false)} duration={toastDuration} type={toastType} content={toastMessage} />}

@@ -1,6 +1,3 @@
-/**
- * @todo display correct - incorrect answer if already answered
- */
 import styles from "./AnswerOption.module.scss";
 
 export default function AnswerOption({ index, answer, answerItemStyle, onClick, selectedAnswer, answered }) {
