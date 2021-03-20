@@ -13,7 +13,7 @@ const answerSchema = new mongoose.Schema(
 			required: [true, "Campaign ID is required for answer"],
 		},
 		answers: {
-			type: Array,
+			type: Object,
 		},
 		createdAt: {
 			type: Date,

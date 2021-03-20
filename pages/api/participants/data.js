@@ -51,7 +51,7 @@ export default async function DataRequestHandler(req, res) {
 			return res.status(400).json({ success: false, error: "answers doesn't exists" });
 		}
 
-		return res.status(200).json({ success: true, participant, answers: answers.answers });
+		return res.status(200).json({ success: true, data: { participant, answers: answers.answers } });
 	} catch (error) {
 		console.log(error);
 		return res.status(400).json({ success: false, error: error });
