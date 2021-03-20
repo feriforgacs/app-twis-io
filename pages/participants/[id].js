@@ -27,7 +27,7 @@ export default function ParticipantPage() {
 		const getParticipantData = async () => {
 			NProgress.start();
 			try {
-				const participantRequest = await fetch(`/api/participants/data?id${participantId}`, {
+				const participantRequest = await fetch(`/api/participants/data?id=${participantId}`, {
 					method: "GET",
 				});
 

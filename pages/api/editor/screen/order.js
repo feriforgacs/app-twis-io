@@ -59,7 +59,7 @@ export default async function ScreenOrderHandler(req, res) {
 	try {
 		const campaign = await Campaign.countDocuments({ _id: campaignId, createdBy: session.user.id });
 		if (!campaign) {
-			return res.status(400).json({ success: false, error: "not authorized" });
+			return res.status(401).json({ success: false, error: "not authorized" });
 		}
 	} catch (error) {
 		return res.status(400).json({ success: false, error });

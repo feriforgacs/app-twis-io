@@ -36,7 +36,7 @@ participantSchema.virtual("campaign", {
 	foreignField: "_id",
 	justOne: true,
 	options: {
-		select: "_id name",
+		select: "_id name createdBy",
 	},
 });
 

@@ -19,24 +19,21 @@ export default async function ParticipantDeleteHandler(req, res) {
 
 	const authStatus = await AuthCheck(req, res);
 	if (!authStatus) {
-		res.end();
-		return;
+		return res.end();
 	}
 
 	await DatabaseConnect();
 
 	// check campaign id and participant id
 	if (!req.body.id || !req.body.campaignId) {
-		res.status(400).json({ success: false, error: "missing participant or campaign id" });
-		return;
+		return res.status(400).json({ success: false, error: "missing participant or campaign id" });
 	}
 
 	// check campaign id and participant id format
 	const campaignId = req.body.campaignId;
 	const participantId = req.body.id;
 	if (!mongoose.Types.ObjectId.isValid(campaignId) || !mongoose.Types.ObjectId.isValid(participantId)) {
-		res.status(400).json({ success: false, error: "invalid campaign or participant id" });
-		return;
+		return res.status(400).json({ success: false, error: "invalid campaign or participant id" });
 	}
 
 	const session = await getSession({ req });
@@ -45,20 +42,18 @@ export default async function ParticipantDeleteHandler(req, res) {
 	try {
 		const campaign = await Campaign.countDocuments({ _id: campaignId, createdBy: session.user.id });
 		if (!campaign) {
-			res.status(400).json({ success: false, error: "not authorized" });
-			return;
+			return res.status(401).json({ success: false, error: "not authorized" });
 		}
 	} catch (error) {
-		res.status(400).json({ success: false, error });
-		return;
+		return res.status(400).json({ success: false, error });
 	}
 
 	// delete participant from the database
 	try {
 		await Participant.findOneAndDelete({ _id: participantId, campaignId });
 		await EventLog(`participant delete - participant id: ${participantId} - campaign id: ${campaignId}`, session.user.id);
-		res.status(200).json({ success: true });
+		return res.status(200).json({ success: true });
 	} catch (error) {
-		res.status(400).json({ success: false });
+		return res.status(400).json({ success: false, error: error });
 	}
 }

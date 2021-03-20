@@ -19,8 +19,7 @@ export default async function ParticipantCountHandler(req, res) {
 
 	const authStatus = await AuthCheck(req, res);
 	if (!authStatus) {
-		res.end();
-		return;
+		return res.end();
 	}
 
 	await DatabaseConnect();
@@ -48,19 +47,21 @@ export default async function ParticipantCountHandler(req, res) {
 		try {
 			const campaign = await Campaign.countDocuments({ _id: campaignId, createdBy: session.user.id });
 			if (!campaign) {
-				return res.status(400).json({ success: false, error: "not authorized" });
+				return res.status(401).json({ success: false, error: "not authorized" });
 			} else {
 				campaigns = [campaignId];
 			}
 		} catch (error) {
-			return res.status(400).json({ success: false, error });
+			console.log(error);
+			return res.status(400).json({ success: false, error: error });
 		}
 	} else {
 		// get the ids of all campaigns created by the user
 		try {
 			campaigns = await Campaign.find({ createdBy: session.user.id }).distinct("_id");
 		} catch (error) {
-			return res.status(400).json({ success: false, error });
+			console.log(error);
+			return res.status(400).json({ success: false, error: error });
 		}
 	}
 
@@ -88,6 +89,7 @@ export default async function ParticipantCountHandler(req, res) {
 		}
 		return res.status(200).json({ success: true, data: participants });
 	} catch (error) {
-		return res.status(400).json({ success: false, error });
+		console.log(error);
+		return res.status(400).json({ success: false, error: error });
 	}
 }

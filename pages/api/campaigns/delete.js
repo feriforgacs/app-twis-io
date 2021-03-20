@@ -21,8 +21,7 @@ export default async function CampaignDeleteHandler(req, res) {
 
 	const authStatus = await AuthCheck(req, res);
 	if (!authStatus) {
-		res.end();
-		return;
+		return res.end();
 	}
 
 	await DatabaseConnect();
@@ -30,35 +29,32 @@ export default async function CampaignDeleteHandler(req, res) {
 
 	// check campaign id
 	if (!req.body.id) {
-		res.status(400).json({ success: false, error: "missing campaign id" });
-		return;
+		return res.status(400).json({ success: false, error: "missing campaign id" });
 	}
 
 	// check campaign id format
 	const campaignId = req.body.id;
 	if (!mongoose.Types.ObjectId.isValid(campaignId)) {
-		res.status(400).json({ success: false, error: "invalid campaign id" });
-		return;
+		return res.status(400).json({ success: false, error: "invalid campaign id" });
 	}
 
 	// check user and campaign connection
 	try {
 		const campaign = await Campaign.countDocuments({ _id: campaignId, createdBy: session.user.id });
 		if (!campaign) {
-			res.status(400).json({ success: false, error: "not authorized" });
-			return;
+			return res.status(401).json({ success: false, error: "not authorized" });
 		}
 	} catch (error) {
-		res.status(400).json({ success: false, error });
-		return;
+		console.log(error);
+		return res.status(400).json({ success: false, error });
 	}
 
 	// remove campaign participants from the database
 	try {
 		await Participant.deleteMany({ campaignId: campaignId });
 	} catch (error) {
-		res.status(400).json({ success: false, error });
-		return;
+		console.log(error);
+		return res.status(400).json({ success: false, error });
 	}
 
 	/**
@@ -82,17 +78,17 @@ export default async function CampaignDeleteHandler(req, res) {
 			}
 		}
 	} catch (error) {
-		res.status(400).json({ success: false, error });
-		return;
+		console.log(error);
+		return res.status(400).json({ success: false, error });
 	}
 
 	// remove campaign from the database
 	try {
 		await Campaign.findOneAndDelete({ _id: campaignId, createdBy: session.user.id });
 		await EventLog(`campaign delete - campaign id: ${campaignId}`, session.user.id);
-		res.status(200).json({ success: true });
+		return res.status(200).json({ success: true });
 	} catch (error) {
-		res.status(400).json({ success: false });
+		console.log(error);
+		return res.status(400).json({ success: false, error: error });
 	}
-	return;
 }

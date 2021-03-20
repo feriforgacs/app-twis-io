@@ -29,15 +29,13 @@ export default async function CampaignDuplicateHandler(req, res) {
 
 	// check campaign id
 	if (!req.body.id) {
-		res.status(400).json({ success: false, error: "missing campaign id" });
-		return;
+		return res.status(400).json({ success: false, error: "missing campaign id" });
 	}
 
 	// check campaign id format
 	const campaignId = req.body.id;
 	if (!mongoose.Types.ObjectId.isValid(campaignId)) {
-		res.status(400).json({ success: false, error: "invalid campaign id" });
-		return;
+		return res.status(400).json({ success: false, error: "invalid campaign id" });
 	}
 
 	// check user and campaign connection
@@ -45,26 +43,22 @@ export default async function CampaignDuplicateHandler(req, res) {
 	try {
 		campaign = await Campaign.findOne({ _id: campaignId, createdBy: session.user.id });
 		if (!campaign) {
-			res.status(400).json({ success: false, error: "not authorized" });
-			return;
+			return res.status(401).json({ success: false, error: "not authorized" });
 		}
 	} catch (error) {
 		console.log(error);
-		res.status(400).json({ success: false, error });
-		return;
+		return res.status(400).json({ success: false, error });
 	}
 
 	let campaignScreens;
 	try {
 		campaignScreens = await Screen.find({ campaignId });
 		if (!campaignScreens) {
-			res.status(400).json({ success: false, error: "can't get campaign screens" });
-			return;
+			return res.status(400).json({ success: false, error: "can't get campaign screens" });
 		}
 	} catch (error) {
 		console.log(error);
-		res.status(400).json({ success: false, error });
-		return;
+		return res.status(400).json({ success: false, error });
 	}
 
 	let newCampaignData = {
