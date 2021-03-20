@@ -32,8 +32,7 @@ export default async function ParticipantCountHandler(req, res) {
 		if (mongoose.Types.ObjectId.isValid(req.query.campaign)) {
 			campaignId = req.query.campaign;
 		} else {
-			res.status(400).json({ success: false, error: "invalid campaign id" });
-			return;
+			return res.status(400).json({ success: false, error: "invalid campaign id" });
 		}
 	}
 
@@ -49,21 +48,19 @@ export default async function ParticipantCountHandler(req, res) {
 		try {
 			const campaign = await Campaign.countDocuments({ _id: campaignId, createdBy: session.user.id });
 			if (!campaign) {
-				res.status(400).json({ success: false, error: "not authorized" });
-				return;
+				return res.status(400).json({ success: false, error: "not authorized" });
 			} else {
 				campaigns = [campaignId];
 			}
 		} catch (error) {
-			res.status(400).json({ success: false, error });
-			return;
+			return res.status(400).json({ success: false, error });
 		}
 	} else {
 		// get the ids of all campaigns created by the user
 		try {
 			campaigns = await Campaign.find({ createdBy: session.user.id }).distinct("_id");
 		} catch (error) {
-			res.status(400).json({ success: false, error });
+			return res.status(400).json({ success: false, error });
 		}
 	}
 
@@ -89,9 +86,8 @@ export default async function ParticipantCountHandler(req, res) {
 		} else {
 			participants = await Participant.countDocuments({ campaignId: { $in: campaigns } });
 		}
-		res.status(200).json({ success: true, data: participants });
+		return res.status(200).json({ success: true, data: participants });
 	} catch (error) {
-		res.status(400).json({ success: false, error });
+		return res.status(400).json({ success: false, error });
 	}
-	return;
 }
