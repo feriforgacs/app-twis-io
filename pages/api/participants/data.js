@@ -5,6 +5,7 @@ import AuthCheck from "../../../lib/AuthCheck";
 import DatabaseConnect from "../../../lib/DatabaseConnect";
 import Participant from "../../../models/Participant";
 import Campaign from "../../../models/Campaign"; // eslint-disable-line
+import Answer from "../../../models/Answer";
 import mongoose from "mongoose";
 
 const cors = initMiddleware(
@@ -41,11 +42,16 @@ export default async function DataRequestHandler(req, res) {
 			return res.status(400).json({ success: false, error: "participant doesn't exists" });
 		}
 
-		if (participant.campaign.createdBy !== session.user.id) {
+		if (!participant.campaign.createdBy.equals(session.user.id)) {
 			return res.status(401).json({ success: false, error: "not authorized" });
 		}
 
-		console.log(participant);
+		const answers = await Answer.findOne({ participantId }).select("answers");
+		if (!answers) {
+			return res.status(400).json({ success: false, error: "answers doesn't exists" });
+		}
+
+		return res.status(200).json({ success: true, participant, answers: answers.answers });
 	} catch (error) {
 		console.log(error);
 		return res.status(400).json({ success: false, error: error });
