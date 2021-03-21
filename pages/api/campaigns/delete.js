@@ -9,6 +9,7 @@ import Campaign from "../../../models/Campaign";
 import Participant from "../../../models/Participant";
 import Screen from "../../../models/editor/Screen";
 import ScreenItem from "../../../models/editor/ScreenItem";
+import Answer from "../../../models/Answer";
 
 const cors = initMiddleware(
 	Cors({
@@ -58,8 +59,14 @@ export default async function CampaignDeleteHandler(req, res) {
 	}
 
 	/**
-	 * @todo - remove participants' answers from the database
+	 * Remove participants' answers from the database
 	 */
+	try {
+		await Answer.deleteMany({ campaignId: campaignId });
+	} catch (error) {
+		console.log(error);
+		return res.status(400).json({ success: false, error });
+	}
 
 	// remove screens and screen items from the database
 	try {
