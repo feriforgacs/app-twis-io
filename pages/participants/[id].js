@@ -88,7 +88,7 @@ export default function ParticipantPage() {
 			</Head>
 			<Sidebar />
 			<div id="page__content">
-				<PageHeader title="Participant" />
+				<PageHeader title="Participant" secondaryActionLabel="Back to all participants" secondaryActionURL="/participants" />
 				{dataLoading && <SkeletonParticipantDetails />}
 				{participantData && <ParticipantDetails participantData={participantData} participantAnswers={participantAnswers} setToastMessage={setToastMessage} setToastType={setToastType} setToastDuration={setToastDuration} setToastVisible={setToastVisible} />}
 			</div>

@@ -44,7 +44,6 @@ export default function SkeletonParticipantDetails() {
 				</div>
 				<div className="participant__row">
 					<p className="skeleton skeleton--text block mr-10"></p>
-					<p className="skeleton skeleton--text block"></p>
 				</div>
 			</div>
 			<div className="participant__actions">

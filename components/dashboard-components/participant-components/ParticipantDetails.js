@@ -9,6 +9,17 @@ export default function ParticipantDetails({ participantData, participantAnswers
 	const [deleteLoading, setDeleteLoading] = useState(false);
 	const router = useRouter();
 
+	let correctAnswers = 0;
+	let incorrectAnswers = 0;
+
+	participantAnswers.map((answer) => {
+		if (answer.correct) {
+			correctAnswers++;
+		} else {
+			incorrectAnswers++;
+		}
+	});
+
 	const deleteParticipant = async () => {
 		setDeleteLoading(true);
 
@@ -86,7 +97,14 @@ export default function ParticipantDetails({ participantData, participantAnswers
 				</div>
 
 				<div className="participant__row">
-					<div className="participant__cell">Answers:</div>
+					<div className="participant__cell">
+						Answers:
+						<p className="answer-stat">
+							Correct: <span>{correctAnswers}</span>
+							<br />
+							Wrong: <span>{incorrectAnswers}</span>
+						</p>
+					</div>
 					<div className="participant__cell">
 						{participantAnswers.map((answer, index) => (
 							<p className="answers" key={index}>
@@ -111,10 +129,6 @@ export default function ParticipantDetails({ participantData, participantAnswers
 				<div className="participant__row actions">
 					<Link href={`/campaigns/participants/${participantData.participant.campaign._id}`}>
 						<a>View all participants in this campaign</a>
-					</Link>
-
-					<Link href="/participants">
-						<a>Back to all participants</a>
 					</Link>
 				</div>
 			</div>
