@@ -86,11 +86,6 @@ export default async function ParticipantExportHandler(req, res) {
 			participants = await Participant.find({ campaignId: { $in: campaigns } }).sort({ _id: -1 });
 		}
 
-		/**
-		 * TODO
-		 * Log export event because of GDPR
-		 */
-
 		const workbook = new ExcelJS.Workbook();
 		workbook.creator = "twis.io";
 
