@@ -1,3 +1,6 @@
+/**
+ * @todo loading skeleton
+ */
 import { useEffect, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -8,6 +11,7 @@ import Sidebar from "../../components/dashboard-components/Sidebar";
 import PageHeader from "../../components/dashboard-components/PageHeader";
 import Toast from "../../components/dashboard-components/Toast";
 import ParticipantDetails from "../../components/dashboard-components/participant-components/ParticipantDetails";
+import SkeletonParticipantDetails from "../../components/dashboard-components/skeletons/SkeletonParticipantDetails";
 
 export default function ParticipantPage() {
 	const [session, loading] = useSession();
@@ -85,7 +89,7 @@ export default function ParticipantPage() {
 			<Sidebar />
 			<div id="page__content">
 				<PageHeader title="Participant" />
-				{dataLoading && <p>loading...</p>}
+				{dataLoading && <SkeletonParticipantDetails />}
 				{participantData && <ParticipantDetails participantData={participantData} participantAnswers={participantAnswers} setToastMessage={setToastMessage} setToastType={setToastType} setToastDuration={setToastDuration} setToastVisible={setToastVisible} />}
 			</div>
 
