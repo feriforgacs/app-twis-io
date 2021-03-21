@@ -107,7 +107,7 @@ export default async function ParticipantExportHandler(req, res) {
 		res.setHeader("Content-Disposition", `attachment; filename=twis_participant_export_${format(new Date(), "yyyyMMdd")}.xlsx`);
 		const exportResult = await workbook.xlsx.write(res);
 		if (exportResult) {
-			await EventLog(`participant export - search: ${search} - campaigns: ${campaigns.join()}`, session.user.id);
+			await EventLog(`participant export - search: ${search} - campaigns: ${campaigns.join()}`, session.user.id, session.user.email);
 			res.status(200).end();
 			return;
 		}

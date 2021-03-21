@@ -92,7 +92,7 @@ export default async function CampaignDeleteHandler(req, res) {
 	// remove campaign from the database
 	try {
 		await Campaign.findOneAndDelete({ _id: campaignId, createdBy: session.user.id });
-		await EventLog(`campaign delete - campaign id: ${campaignId}`, session.user.id);
+		await EventLog(`campaign delete - campaign id: ${campaignId}`, session.user.id, session.user.email);
 		return res.status(200).json({ success: true });
 	} catch (error) {
 		console.log(error);

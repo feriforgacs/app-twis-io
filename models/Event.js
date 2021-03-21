@@ -10,6 +10,9 @@ const eventSchema = new mongoose.Schema({
 		type: mongoose.Schema.ObjectId,
 		ref: "user",
 	},
+	userEmail: {
+		type: String,
+	},
 	createdAt: {
 		type: Date,
 		default: Date.now,
