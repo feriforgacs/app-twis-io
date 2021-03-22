@@ -36,6 +36,19 @@ export default function Answers({ data, lastScreenIndex }) {
 			setRandomAnswerOptions();
 		}
 		updateState("noStep", !answered);
+
+		let autoStepInterval;
+		if (answered === true) {
+			autoStepInterval = setInterval(() => {
+				gotoNextScreen(lastScreenIndex);
+			}, 2000);
+		}
+
+		return () => {
+			if (autoStepInterval) {
+				clearInterval(autoStepInterval);
+			}
+		};
 	}, [answered]);
 
 	let answersStyle = {
