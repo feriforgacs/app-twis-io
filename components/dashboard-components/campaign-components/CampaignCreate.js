@@ -109,9 +109,7 @@ export default function CampaignCreate() {
 						<div className="campaign-type-options">
 							<CreateCampaignOption name="Quiz" description="Select this option to create a simple quiz campaign where players should choose the right answers from different options to claim their prize." selected={type == "quiz"} onClick={() => setType("quiz")} />
 
-							<CreateCampaignOption name="Swipe Quiz" description="Select this option to create a swipe quiz campaign where participants should decide whether something is true or false to claim their reward." selected={type == "swipequiz"} onClick={() => setType("swipequiz")} />
-
-							<CreateCampaignOption name="Memory" description="Select this option to create a campaign where participants should complete a short memory game to claim their reward." selected={type == "memory"} onClick={() => setType("memory")} />
+							<CreateCampaignOption name="Swipe Quiz" description="Select this option to create a swipe quiz campaign where participants should decide whether something is true or false to claim their reward." selected={type == "swipequiz"} comingsoon={true} disabled={true} />
 						</div>
 					</div>
 

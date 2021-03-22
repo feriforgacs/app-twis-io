@@ -24,10 +24,30 @@
 		display: flex;
 		margin: 1.5rem auto;
 
+		&--disabled {
+			cursor: default;
+
+			.campaign-type-option__icon {
+				background: #eee;
+			}
+		}
+
 		h4 {
 			font-weight: 400;
 			margin: 0 0 0.5rem;
 			padding: 0;
+		}
+
+		&__coming-soon {
+			background: #ccc;
+			border-radius: 3px;
+			color: #fff;
+			display: inline-block;
+			font-size: 0.7rem;
+			font-weight: bold;
+			margin: 0 0 0 0.3rem;
+			padding: 0.2rem;
+			text-transform: uppercase;
 		}
 
 		&__icon {
