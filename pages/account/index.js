@@ -2,10 +2,9 @@ import Head from "next/head";
 import { useSession, getSession } from "next-auth/client";
 import LoginForm from "../../components/LoginForm";
 import Sidebar from "../../components/dashboard-components/Sidebar";
-import CampaignList from "../../components/dashboard-components/campaign-components/CampaignList";
 import PageHeader from "../../components/dashboard-components/PageHeader";
 
-export default function CampaignsPage() {
+export default function AccountPage() {
 	const [session, loading] = useSession();
 
 	if (typeof window !== "undefined" && loading) return null;
@@ -15,14 +14,13 @@ export default function CampaignsPage() {
 	}
 
 	return (
-		<div id="campaigns" className="page">
+		<div id="account" className="page">
 			<Head>
-				<title>Campaigns - {process.env.APP_NAME}</title>
+				<title>Account - {process.env.APP_NAME}</title>
 			</Head>
 			<Sidebar />
 			<div id="page__content">
-				<PageHeader title="Campaigns" />
-				<CampaignList />
+				<PageHeader title="Account" />
 			</div>
 		</div>
 	);
