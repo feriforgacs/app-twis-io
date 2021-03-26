@@ -11,6 +11,10 @@
 		margin: 0 0.5rem;
 		padding: 1rem;
 
+		&--current {
+			border: 2px solid $primaryColor;
+		}
+
 		h4 {
 			margin: 0;
 			padding: 0;
@@ -21,7 +25,32 @@
 		}
 
 		.button--downgrade {
+			font-size: 0.8rem;
 			margin-top: 1rem;
+		}
+
+		.current-plan {
+			align-items: center;
+			background: none;
+			border: none;
+			box-sizing: border-box;
+			color: $primaryColor;
+			cursor: default;
+			display: flex;
+			font-size: 1rem;
+			font-weight: bold;
+			height: 3rem;
+			justify-content: center;
+			line-height: 3rem;
+			margin: 0 auto;
+			max-width: 420px;
+			min-width: 250px;
+			padding: 0 2rem;
+			text-decoration: none;
+
+			svg {
+				margin-right: 0.5rem;
+			}
 		}
 	}
 }
