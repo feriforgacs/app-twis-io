@@ -24,28 +24,30 @@ export default function AccountPage() {
 
 				<div>
 					<h3>Subscription</h3>
-					<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis, autem.</p>
+					<p>
+						Your current plan: <strong>Basic</strong>
+					</p>
 
 					<div className="subscription__options">
 						<div className="subscription-option">
-							<h3>Basic</h3>
+							<h4>Basic</h4>
 							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum, dicta.</p>
-							<button>Upgrade to this plan</button>
-							<button>Downgrade to this plan</button>
+							<button className="button button--primary">Upgrade to this plan</button>
+							<button className="button button--slim button--outline button--downgrade">Downgrade to this plan</button>
 						</div>
 
 						<div className="subscription-option">
-							<h3>Pro</h3>
+							<h4>Pro</h4>
 							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum, dicta.</p>
-							<button>Upgrade to this plan</button>
-							<button>Downgrade to this plan</button>
+							<button className="button button--primary">Upgrade to this plan</button>
+							<button className="button button--slim button--outline button--downgrade">Downgrade to this plan</button>
 						</div>
 
 						<div className="subscription-option">
-							<h3>Premium</h3>
+							<h4>Premium</h4>
 							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum, dicta.</p>
-							<button>Upgrade to this plan</button>
-							<button>Downgrade to this plan</button>
+							<button className="button button--primary">Upgrade to this plan</button>
+							<button className="button button--slim button--outline button--downgrade">Downgrade to this plan</button>
 						</div>
 					</div>
 

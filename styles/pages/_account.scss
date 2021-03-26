@@ -1,0 +1,27 @@
+.subscription__options {
+	display: flex;
+	margin: 0 -0.5rem;
+
+	.subscription-option {
+		background: #fff;
+		border: 1px solid #eee;
+		border-radius: 3px;
+		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+		box-sizing: border-box;
+		margin: 0 0.5rem;
+		padding: 1rem;
+
+		h4 {
+			margin: 0;
+			padding: 0;
+		}
+
+		.button {
+			width: 100%;
+		}
+
+		.button--downgrade {
+			margin-top: 1rem;
+		}
+	}
+}
