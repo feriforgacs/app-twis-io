@@ -15,6 +15,8 @@ export default function AccountPage() {
 	const [session, loading] = useSession();
 	const [cancelModalVisible, setCancelModalVisible] = useState(false);
 	const [cancelLoading, setCancelLoading] = useState(false);
+	const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+	const [deleteLoading, setDeleteLoading] = useState(false);
 	const [currentPlan, setCurrentPlan] = useState("");
 	const planNames = {
 		basic: "Basic",
@@ -56,6 +58,16 @@ export default function AccountPage() {
 		 * @todo update current plan in state
 		 */
 		setCancelLoading(true);
+	};
+
+	const deleteAccount = async () => {
+		/**
+		 * @todo send request to backend
+		 * @todo display loading state
+		 * @todo log out user
+		 * @todo redirect to login page
+		 */
+		setDeleteLoading(true);
 	};
 
 	return (
@@ -233,7 +245,11 @@ export default function AccountPage() {
 					<p>
 						<strong>When you delete your account all the campaigns your created and all the participant information you collected will be permanently removed as well.</strong>
 					</p>
-					<button className="button button--slim button--outline">Delete my account</button>
+					<button className="button button--slim button--outline" onClick={() => setDeleteModalVisible(true)}>
+						Delete my account
+					</button>
+
+					{deleteModalVisible && <Modal title="Are you sure you want to delete your account?" body="🛑 When you delete your account all the campaigns you created and all the collected participant information will be removed as well. You can't undo that." primaryAction={deleteAccount} primaryActionLabel="Yes, delete my account" secondaryAction={() => setDeleteModalVisible(false)} secondaryActionLabel="Keep my account" onClose={() => setDeleteModalVisible(false)} loading={deleteLoading} />}
 				</div>
 			</div>
 		</div>
