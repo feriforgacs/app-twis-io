@@ -111,3 +111,34 @@
 		}
 	}
 }
+
+.subscription__cancel {
+	margin-top: 4rem;
+	line-height: 150%;
+
+	p {
+		font-size: 0.9rem;
+	}
+
+	button {
+		margin-left: 0;
+	}
+}
+
+.subscription__refund {
+	margin-top: 4rem;
+	line-height: 150%;
+
+	p {
+		font-size: 0.9rem;
+	}
+
+	a {
+		color: $primaryColor;
+		font-weight: bold;
+		text-decoration: none;
+	}
+}
+
+.account__delete {
+}

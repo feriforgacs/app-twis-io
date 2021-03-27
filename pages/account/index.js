@@ -187,11 +187,26 @@ export default function AccountPage() {
 						</div>
 					</div>
 
-					<div>
-						<h4>Cancel subscription</h4>
-						<p>You can cancel your subscription any time by clicking the button below. The collected participant information and the campaigns you created won&apos;t be affected.</p>
-						<p>If your current subscription is not the best option for you, you can also dowgrade your account to a smaller plan.</p>
-						<button>Cancel subscription</button>
+					{currentPlan ? (
+						<div className="subscription__cancel">
+							<h4>Cancel subscription</h4>
+							<p>You can cancel your subscription any time by clicking the button below. The collected participant information and the campaigns you created won&apos;t be affected.</p>
+							{currentPlan && currentPlan !== "basic" && <p>If your current subscription is not the best option for you, you can also dowgrade your account to a smaller plan.</p>}
+							<button className="button button--outline button--slim">Cancel subscription</button>
+						</div>
+					) : (
+						""
+					)}
+
+					<div className="subscription__refund">
+						<h4>Refund</h4>
+						<p>
+							If you&apos;d like to initiate a refund, please send us a message to{" "}
+							<a href="mailto:refund@twis.io" target="_blank" rel="noopener noreferrer">
+								refund@twis.io
+							</a>{" "}
+							from the email address you used to create your account.
+						</p>
 					</div>
 				</div>
 			</div>
