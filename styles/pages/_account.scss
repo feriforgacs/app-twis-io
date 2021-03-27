@@ -113,8 +113,19 @@
 }
 
 .subscription__cancel {
-	margin-top: 4rem;
+	background: #fff;
+	border: 1px solid #eee;
+	border-radius: 3px;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+	box-sizing: border-box;
 	line-height: 150%;
+	margin: 4rem 0 0;
+	padding: 1rem;
+
+	h4 {
+		margin: 0;
+		padding: 0;
+	}
 
 	p {
 		font-size: 0.9rem;
@@ -126,8 +137,19 @@
 }
 
 .subscription__refund {
-	margin-top: 4rem;
+	background: #fff;
+	border: 1px solid #eee;
+	border-radius: 3px;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+	box-sizing: border-box;
 	line-height: 150%;
+	margin: 4rem 0 0;
+	padding: 1rem;
+
+	h4 {
+		margin: 0;
+		padding: 0;
+	}
 
 	p {
 		font-size: 0.9rem;
@@ -141,4 +163,14 @@
 }
 
 .account__delete {
+	margin-top: 4rem;
+	line-height: 150%;
+
+	p {
+		font-size: 0.9rem;
+	}
+
+	button {
+		margin-left: 0;
+	}
 }

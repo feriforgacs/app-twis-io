@@ -1,5 +1,5 @@
 /**
- * @todo display prices
+ * @todo add annual plans
  * @todo loading state
  * @todo get users current plan from the backend
  */
@@ -13,7 +13,7 @@ import Modal from "../../components/dashboard-components/Modal";
 
 export default function AccountPage() {
 	const [session, loading] = useSession();
-	const [modalVisible, setModalVisible] = useState(false);
+	const [cancelModalVisible, setCancelModalVisible] = useState(false);
 	const [cancelLoading, setCancelLoading] = useState(false);
 	const [currentPlan, setCurrentPlan] = useState("");
 	const planNames = {
@@ -205,11 +205,11 @@ export default function AccountPage() {
 							<h4>Cancel subscription</h4>
 							<p>You can cancel your subscription any time by clicking the button below. The collected participant information and the campaigns you created won&apos;t be affected.</p>
 							{currentPlan && currentPlan !== "basic" && <p>If your current subscription is not the best option for you, you can also dowgrade your account to a smaller plan.</p>}
-							<button className="button button--outline button--slim" onClick={() => setModalVisible(true)}>
+							<button className="button button--outline button--slim" onClick={() => setCancelModalVisible(true)}>
 								Cancel subscription
 							</button>
 
-							{modalVisible && <Modal title="Are you sure you want to cancel your subscription?" body="This won't affect the campaigns your created and the collected participant information" primaryAction={cancelSubscription} primaryActionLabel="Yes, cancel subscription" secondaryAction={() => setModalVisible(false)} secondaryActionLabel="Keep subscription" onClose={() => setModalVisible(false)} loading={cancelLoading} />}
+							{cancelModalVisible && <Modal title="Are you sure you want to cancel your subscription?" body="This won't affect the campaigns your created and the collected participant information" primaryAction={cancelSubscription} primaryActionLabel="Yes, cancel subscription" secondaryAction={() => setCancelModalVisible(false)} secondaryActionLabel="Keep subscription" onClose={() => setCancelModalVisible(false)} loading={cancelLoading} />}
 						</div>
 					) : (
 						""
@@ -225,6 +225,15 @@ export default function AccountPage() {
 							from the email address you used to create your account.
 						</p>
 					</div>
+				</div>
+
+				<div className="account__delete">
+					<h3 className="section-title">Delete account</h3>
+					<p>You can delete your account by clicking the button below.</p>
+					<p>
+						<strong>When you delete your account all the campaigns your created and all the participant information you collected will be permanently removed as well.</strong>
+					</p>
+					<button className="button button--slim button--outline">Delete my account</button>
 				</div>
 			</div>
 		</div>
