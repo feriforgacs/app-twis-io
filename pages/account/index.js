@@ -1,3 +1,8 @@
+/**
+ * @todo display prices
+ * @todo loading state
+ * @todo get users current plan from the backend
+ */
 import { useState } from "react";
 import Head from "next/head";
 import { useSession, getSession } from "next-auth/client";
@@ -20,6 +25,26 @@ export default function AccountPage() {
 		return <LoginForm signInPage={true} accessDenied={true} />;
 	}
 
+	const upgradeSubscription = async (plan) => {
+		/**
+		 * @todo send request to backend
+		 * @todo display loading state
+		 * @todo display result
+		 * @todo update current plan in state
+		 */
+		setCurrentPlan(plan);
+	};
+
+	const downgradeSubscription = async (plan) => {
+		/**
+		 * @todo send request to backend
+		 * @todo display loading state
+		 * @todo display result
+		 * @todo update current plan in state
+		 */
+		setCurrentPlan(plan);
+	};
+
 	return (
 		<div id="account" className="page">
 			<Head>
@@ -37,57 +62,127 @@ export default function AccountPage() {
 
 					<div className="subscription__options">
 						<div className={`subscription-option ${currentPlan && currentPlan === "basic" ? "subscription-option--current" : ""}`}>
-							<h4>Basic</h4>
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum, dicta.</p>
+							<h4>
+								<span role="img" aria-label="thumbs up">
+									👍
+								</span>
+								Basic
+							</h4>
+							<p className="subscription-option__price">
+								<span>$29</span>
+								<small> / month</small>
+							</p>
+							<ul>
+								<li>All features included</li>
+								<li>Unlimited campaigns</li>
+								<li>
+									<strong>100 unique participants / month</strong>
+								</li>
+							</ul>
 							{currentPlan && currentPlan === "basic" && (
 								<p className="current-plan">
-									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5a38fd" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-										<polyline points="9 11 12 14 22 4"></polyline>
-										<path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
-									</svg>
+									<span className="icon">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+											<polyline points="20 6 9 17 4 12"></polyline>
+										</svg>
+									</span>
 
-									<span>Current plan</span>
+									<span>Your current plan</span>
 								</p>
 							)}
 
-							{!currentPlan && <button className="button button--primary">Upgrade to this plan</button>}
+							{!currentPlan && (
+								<button className="button button--primary" onClick={() => upgradeSubscription("basic")}>
+									Upgrade to this plan
+								</button>
+							)}
 
-							{currentPlan && currentPlan !== "basic" ? <button className="button button--outline button--downgrade">Downgrade to this plan</button> : ""}
+							{currentPlan && currentPlan !== "basic" ? (
+								<button className="button button--outline button--downgrade" onClick={() => downgradeSubscription("basic")}>
+									Downgrade to this plan
+								</button>
+							) : (
+								""
+							)}
 						</div>
 
 						<div className={`subscription-option ${currentPlan && currentPlan === "pro" ? "subscription-option--current" : ""}`}>
-							<h4>Pro</h4>
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum, dicta.</p>
+							<h4>
+								<span role="img" aria-label="thumbs up">
+									⭐
+								</span>
+								Pro
+							</h4>
+							<p className="subscription-option__price">
+								<span>$49</span>
+								<small> / month</small>
+							</p>
+							<ul>
+								<li>All features included</li>
+								<li>Unlimited campaigns</li>
+								<li>
+									<strong>1.000 unique participants / month</strong>
+								</li>
+							</ul>
 							{currentPlan && currentPlan === "pro" && (
 								<p className="current-plan">
-									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5a38fd" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-										<polyline points="9 11 12 14 22 4"></polyline>
-										<path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
-									</svg>
+									<span className="icon">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+											<polyline points="20 6 9 17 4 12"></polyline>
+										</svg>
+									</span>
 
-									<span>Current plan</span>
+									<span>Your current plan</span>
 								</p>
 							)}
 
-							{(!currentPlan || (currentPlan && currentPlan === "basic")) && <button className="button button--primary">Upgrade to this plan</button>}
+							{(!currentPlan || (currentPlan && currentPlan === "basic")) && (
+								<button className="button button--primary" onClick={() => upgradeSubscription("pro")}>
+									Upgrade to this plan
+								</button>
+							)}
 
-							{currentPlan && currentPlan === "premium" ? <button className="button button--outline button--downgrade">Downgrade to this plan</button> : ""}
+							{currentPlan && currentPlan === "premium" ? (
+								<button className="button button--outline button--downgrade" onClick={() => downgradeSubscription("pro")}>
+									Downgrade to this plan
+								</button>
+							) : (
+								""
+							)}
 						</div>
 
 						<div className={`subscription-option ${currentPlan && currentPlan === "premium" ? "subscription-option--current" : ""}`}>
-							<h4>Premium</h4>
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum, dicta.</p>
+							<h4>
+								<span role="img" aria-label="thumbs up">
+									🚀
+								</span>
+								Premium
+							</h4>
+							<p className="subscription-option__price">
+								<span>$69</span>
+								<small> / month</small>
+							</p>
+							<ul>
+								<li>All features included</li>
+								<li>Unlimited campaigns</li>
+								<li>
+									<strong>10.000 unique participants / month</strong>
+								</li>
+							</ul>
 							{currentPlan && currentPlan === "premium" ? (
 								<p className="current-plan">
-									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5a38fd" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-										<polyline points="9 11 12 14 22 4"></polyline>
-										<path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
-									</svg>
+									<span className="icon">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+											<polyline points="20 6 9 17 4 12"></polyline>
+										</svg>
+									</span>
 
-									<span>Current plan</span>
+									<span>Your current plan</span>
 								</p>
 							) : (
-								<button className="button button--primary">Upgrade to this plan</button>
+								<button className="button button--primary" onClick={() => upgradeSubscription("premium")}>
+									Upgrade to this plan
+								</button>
 							)}
 						</div>
 					</div>

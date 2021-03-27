@@ -1,6 +1,14 @@
+#account {
+	h3 {
+		border-bottom: 1px solid #eee;
+		font-size: 1.3rem;
+		padding: 0 0 1rem;
+	}
+}
+
 .subscription__options {
 	display: flex;
-	margin: 0 -0.5rem;
+	margin: 2rem -0.5rem;
 
 	.subscription-option {
 		background: #fff;
@@ -12,12 +20,47 @@
 		padding: 1rem;
 
 		&--current {
-			border: 2px solid $primaryColor;
+			border: 1px solid $primaryColor;
+		}
+
+		&__price {
+			margin: 1rem 0;
+			padding: 0;
+			span {
+				color: $primaryColor;
+				font-size: 1.5rem;
+				font-weight: bold;
+			}
+			small {
+				font-size: 0.8rem;
+			}
 		}
 
 		h4 {
+			border-bottom: 1px solid #eee;
 			margin: 0;
+			padding: 0 0 1rem;
+
+			span {
+				padding-right: 0.5rem;
+			}
+		}
+
+		ul {
+			list-style-type: none;
+			margin: 1rem 0;
 			padding: 0;
+
+			li {
+				background-image: url(../../public/images/icons/icon-check.svg);
+				background-position: 4px 7px;
+				background-repeat: no-repeat;
+				background-size: 15px;
+				font-size: 0.9rem;
+				line-height: 150%;
+				margin: 0 0 0.5rem;
+				padding: 0 0 0 1.5rem;
+			}
 		}
 
 		.button {
@@ -34,7 +77,7 @@
 			background: none;
 			border: none;
 			box-sizing: border-box;
-			color: $primaryColor;
+			color: #159c5b;
 			cursor: default;
 			display: flex;
 			font-size: 1rem;
@@ -45,11 +88,25 @@
 			margin: 0 auto;
 			max-width: 420px;
 			min-width: 250px;
-			padding: 0 2rem;
+			padding: 0;
 			text-decoration: none;
 
-			svg {
+			.icon {
+				background: #159c5b;
+				border-radius: 50%;
+				height: 24px;
+				line-height: 24px;
 				margin-right: 0.5rem;
+				width: 24px;
+
+				svg {
+					background: #159c5b;
+					border-radius: 50%;
+					height: 15px;
+					margin: 5px 0 0 4px;
+					stroke: #fff;
+					width: 15px;
+				}
 			}
 		}
 	}
