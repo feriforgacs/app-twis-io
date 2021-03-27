@@ -9,9 +9,12 @@ import { useSession, getSession } from "next-auth/client";
 import LoginForm from "../../components/LoginForm";
 import Sidebar from "../../components/dashboard-components/Sidebar";
 import PageHeader from "../../components/dashboard-components/PageHeader";
+import Modal from "../../components/dashboard-components/Modal";
 
 export default function AccountPage() {
 	const [session, loading] = useSession();
+	const [modalVisible, setModalVisible] = useState(false);
+	const [cancelLoading, setCancelLoading] = useState(false);
 	const [currentPlan, setCurrentPlan] = useState("");
 	const planNames = {
 		basic: "Basic",
@@ -45,6 +48,16 @@ export default function AccountPage() {
 		setCurrentPlan(plan);
 	};
 
+	const cancelSubscription = () => {
+		/**
+		 * @todo send cancel request to backend
+		 * @todo display loading state
+		 * @todo display result
+		 * @todo update current plan in state
+		 */
+		setCancelLoading(true);
+	};
+
 	return (
 		<div id="account" className="page">
 			<Head>
@@ -55,7 +68,7 @@ export default function AccountPage() {
 				<PageHeader title="Account" />
 
 				<div>
-					<h3>Subscription</h3>
+					<h3 className="section-title">Subscription</h3>
 					<p>
 						Your current plan: <strong>{currentPlan ? planNames[currentPlan] : "You are not subscribed to any of the plans at the moment"}</strong>
 					</p>
@@ -192,7 +205,11 @@ export default function AccountPage() {
 							<h4>Cancel subscription</h4>
 							<p>You can cancel your subscription any time by clicking the button below. The collected participant information and the campaigns you created won&apos;t be affected.</p>
 							{currentPlan && currentPlan !== "basic" && <p>If your current subscription is not the best option for you, you can also dowgrade your account to a smaller plan.</p>}
-							<button className="button button--outline button--slim">Cancel subscription</button>
+							<button className="button button--outline button--slim" onClick={() => setModalVisible(true)}>
+								Cancel subscription
+							</button>
+
+							{modalVisible && <Modal title="Are you sure you want to cancel your subscription?" body="This won't affect the campaigns your created and the collected participant information" primaryAction={cancelSubscription} primaryActionLabel="Yes, cancel subscription" secondaryAction={() => setModalVisible(false)} secondaryActionLabel="Keep subscription" onClose={() => setModalVisible(false)} loading={cancelLoading} />}
 						</div>
 					) : (
 						""
