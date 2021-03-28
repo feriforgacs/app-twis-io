@@ -5,7 +5,8 @@ export default function Subscription() {
 	const [cancelModalVisible, setCancelModalVisible] = useState(false);
 	const [cancelLoading, setCancelLoading] = useState(false);
 	const [currentPlan, setCurrentPlan] = useState("");
-	const [planTerm, setPlanTerm] = useState("yearly");
+	const [currentPlanTerm, setCurrentPlanTerm] = useState("monthly"); // @todo set based on user current plan term
+	const [planTerm, setPlanTerm] = useState("yearly"); // @todo set based on user current plan term
 	const plans = {
 		basic: {
 			name: "Basic",
@@ -24,7 +25,7 @@ export default function Subscription() {
 		},
 	};
 
-	const upgradeSubscription = async (plan) => {
+	const setSubscription = async (plan) => {
 		/**
 		 * @todo send request to backend
 		 * @todo display loading state
@@ -32,16 +33,7 @@ export default function Subscription() {
 		 * @todo update current plan in state
 		 */
 		setCurrentPlan(plan);
-	};
-
-	const downgradeSubscription = async (plan) => {
-		/**
-		 * @todo send request to backend
-		 * @todo display loading state
-		 * @todo display result
-		 * @todo update current plan in state
-		 */
-		setCurrentPlan(plan);
+		setCurrentPlanTerm(planTerm);
 	};
 
 	const cancelSubscription = () => {
@@ -58,7 +50,7 @@ export default function Subscription() {
 		<div>
 			<h3 className="section-title">Subscription</h3>
 			<p>
-				Your current plan: <strong>{currentPlan ? plans[currentPlan].name : "You are not subscribed to any of the plans at the moment"}</strong>
+				Your current plan: <strong>{currentPlan ? `${plans[currentPlan].name} - ${currentPlanTerm}` : "You are not subscribed to any of the plans at the moment"}</strong>
 			</p>
 
 			<div className="subscription__terms">
@@ -92,7 +84,7 @@ export default function Subscription() {
 							<strong>100 unique participants / month</strong>
 						</li>
 					</ul>
-					{currentPlan && currentPlan === "basic" && (
+					{currentPlan && currentPlan === "basic" && planTerm === currentPlanTerm && (
 						<p className="current-plan">
 							<span className="icon">
 								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -104,18 +96,10 @@ export default function Subscription() {
 						</p>
 					)}
 
-					{!currentPlan && (
-						<button className="button button--primary" onClick={() => upgradeSubscription("basic")}>
-							Upgrade to this plan
+					{(!currentPlan || currentPlan !== "basic" || planTerm !== currentPlanTerm) && (
+						<button className="button button--primary" onClick={() => setSubscription("basic")}>
+							Choose to this plan
 						</button>
-					)}
-
-					{currentPlan && currentPlan !== "basic" ? (
-						<button className="button button--outline button--downgrade" onClick={() => downgradeSubscription("basic")}>
-							Downgrade to this plan
-						</button>
-					) : (
-						""
 					)}
 				</div>
 
@@ -138,7 +122,7 @@ export default function Subscription() {
 							<strong>1.000 unique participants / month</strong>
 						</li>
 					</ul>
-					{currentPlan && currentPlan === "pro" && (
+					{currentPlan && currentPlan === "pro" && planTerm === currentPlanTerm && (
 						<p className="current-plan">
 							<span className="icon">
 								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -150,18 +134,10 @@ export default function Subscription() {
 						</p>
 					)}
 
-					{(!currentPlan || (currentPlan && currentPlan === "basic")) && (
-						<button className="button button--primary" onClick={() => upgradeSubscription("pro")}>
-							Upgrade to this plan
+					{(!currentPlan || currentPlan !== "pro" || planTerm !== currentPlanTerm) && (
+						<button className="button button--primary" onClick={() => setSubscription("pro")}>
+							Choose to this plan
 						</button>
-					)}
-
-					{currentPlan && currentPlan === "premium" ? (
-						<button className="button button--outline button--downgrade" onClick={() => downgradeSubscription("pro")}>
-							Downgrade to this plan
-						</button>
-					) : (
-						""
 					)}
 				</div>
 
@@ -184,7 +160,7 @@ export default function Subscription() {
 							<strong>10.000 unique participants / month</strong>
 						</li>
 					</ul>
-					{currentPlan && currentPlan === "premium" ? (
+					{currentPlan && currentPlan === "premium" && planTerm === currentPlanTerm && (
 						<p className="current-plan">
 							<span className="icon">
 								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -194,9 +170,11 @@ export default function Subscription() {
 
 							<span>Your current plan</span>
 						</p>
-					) : (
-						<button className="button button--primary" onClick={() => upgradeSubscription("premium")}>
-							Upgrade to this plan
+					)}
+
+					{(!currentPlan || currentPlan !== "premium" || planTerm !== currentPlanTerm) && (
+						<button className="button button--primary" onClick={() => setSubscription("premium")}>
+							Choose to this plan
 						</button>
 					)}
 				</div>
