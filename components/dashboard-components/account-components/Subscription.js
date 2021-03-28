@@ -11,17 +11,17 @@ export default function Subscription() {
 		basic: {
 			name: "Basic",
 			priceBilledMonthly: 29,
-			priceBilledYearly: 24,
+			priceBilledYearly: 23,
 		},
 		pro: {
 			name: "Pro",
 			priceBilledMonthly: 49,
-			priceBilledYearly: 40,
+			priceBilledYearly: 39,
 		},
 		premium: {
 			name: "Premium",
 			priceBilledMonthly: 69,
-			priceBilledYearly: 57,
+			priceBilledYearly: 55,
 		},
 	};
 
@@ -56,8 +56,7 @@ export default function Subscription() {
 			<div className="subscription__terms">
 				<span className={`term ${planTerm === "yearly" ? "term--active" : ""}`} onClick={() => setPlanTerm("yearly")}>
 					Bill yearly
-					<br />
-					<small>2 months free</small>
+					<small> -20%</small>
 				</span>
 				<span className={`term ${planTerm === "monthly" ? "term--active" : ""}`} onClick={() => setPlanTerm("monthly")}>
 					Bill monthly
