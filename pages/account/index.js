@@ -1,5 +1,6 @@
 /**
  * @todo add annual plans
+ * @todo personal settings
  * @todo loading state
  * @todo get users current plan from the backend
  */

@@ -5,10 +5,23 @@ export default function Subscription() {
 	const [cancelModalVisible, setCancelModalVisible] = useState(false);
 	const [cancelLoading, setCancelLoading] = useState(false);
 	const [currentPlan, setCurrentPlan] = useState("");
-	const planNames = {
-		basic: "Basic",
-		pro: "Pro",
-		premium: "Premium",
+	const [planTerm, setPlanTerm] = useState("annually");
+	const plans = {
+		basic: {
+			name: "Basic",
+			priceBilledMonthly: 29,
+			priceBilledAnnually: 24,
+		},
+		pro: {
+			name: "Pro",
+			priceBilledMonthly: 49,
+			priceBilledAnnually: 39,
+		},
+		premium: {
+			name: "Premium",
+			priceBilledMonthly: 69,
+			priceBilledAnnually: 55,
+		},
 	};
 
 	const upgradeSubscription = async (plan) => {
@@ -45,7 +58,7 @@ export default function Subscription() {
 		<div>
 			<h3 className="section-title">Subscription</h3>
 			<p>
-				Your current plan: <strong>{currentPlan ? planNames[currentPlan] : "You are not subscribed to any of the plans at the moment"}</strong>
+				Your current plan: <strong>{currentPlan ? plans[currentPlan].name : "You are not subscribed to any of the plans at the moment"}</strong>
 			</p>
 
 			<div className="subscription__options">
@@ -57,9 +70,10 @@ export default function Subscription() {
 						Basic
 					</h4>
 					<p className="subscription-option__price">
-						<span>$29</span>
+						<span>${planTerm === "monthly" ? plans.basic.priceBilledMonthly : plans.basic.priceBilledAnnually}</span>
 						<small> / month</small>
 					</p>
+					<p className="plan-term-info">{planTerm === "monthly" ? "Billed monthly" : "Billed yearly"}, VAT not included</p>
 					<ul>
 						<li>All features included</li>
 						<li>Unlimited campaigns</li>
@@ -102,9 +116,10 @@ export default function Subscription() {
 						Pro
 					</h4>
 					<p className="subscription-option__price">
-						<span>$49</span>
+						<span>${planTerm === "monthly" ? plans.pro.priceBilledMonthly : plans.pro.priceBilledAnnually}</span>
 						<small> / month</small>
 					</p>
+					<p className="plan-term-info">{planTerm === "monthly" ? "Billed monthly" : "Billed yearly"}, VAT not included</p>
 					<ul>
 						<li>All features included</li>
 						<li>Unlimited campaigns</li>
@@ -147,9 +162,10 @@ export default function Subscription() {
 						Premium
 					</h4>
 					<p className="subscription-option__price">
-						<span>$69</span>
+						<span>${planTerm === "monthly" ? plans.premium.priceBilledMonthly : plans.premium.priceBilledAnnually}</span>
 						<small> / month</small>
 					</p>
+					<p className="plan-term-info">{planTerm === "monthly" ? "Billed monthly" : "Billed yearly"}, VAT not included</p>
 					<ul>
 						<li>All features included</li>
 						<li>Unlimited campaigns</li>
