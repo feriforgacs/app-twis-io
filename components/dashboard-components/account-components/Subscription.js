@@ -10,18 +10,18 @@ export default function Subscription() {
 	const plans = {
 		basic: {
 			name: "Basic",
-			priceBilledMonthly: 29,
-			priceBilledYearly: 23,
+			priceBilledMonthly: process.env.NEXT_PUBLIC_PRICE_BASIC_MONTHLY,
+			priceBilledYearly: process.env.NEXT_PUBLIC_PRICE_BASIC_YEARLY,
 		},
 		pro: {
 			name: "Pro",
-			priceBilledMonthly: 49,
-			priceBilledYearly: 39,
+			priceBilledMonthly: process.env.NEXT_PUBLIC_PRICE_PRO_MONTHLY,
+			priceBilledYearly: process.env.NEXT_PUBLIC_PRICE_PRO_YEARLY,
 		},
 		premium: {
 			name: "Premium",
-			priceBilledMonthly: 69,
-			priceBilledYearly: 55,
+			priceBilledMonthly: process.env.NEXT_PUBLIC_PRICE_PREMIUM_MONTHLY,
+			priceBilledYearly: process.env.NEXT_PUBLIC_PRICE_PREMIUM_YEARLY,
 		},
 	};
 
@@ -52,7 +52,6 @@ export default function Subscription() {
 			<p>
 				Your current plan: <strong>{currentPlan ? `${plans[currentPlan].name} - ${currentPlanTerm}` : "You are not subscribed to any of the plans at the moment"}</strong>
 			</p>
-
 			<div className="subscription__terms">
 				<span className={`term ${planTerm === "yearly" ? "term--active" : ""}`} onClick={() => setPlanTerm("yearly")}>
 					Bill yearly
@@ -62,7 +61,6 @@ export default function Subscription() {
 					Bill monthly
 				</span>
 			</div>
-
 			<div className="subscription__options">
 				<div className={`subscription-option ${currentPlan && currentPlan === "basic" ? "subscription-option--current" : ""}`}>
 					<h4>
@@ -178,7 +176,6 @@ export default function Subscription() {
 					)}
 				</div>
 			</div>
-
 			{currentPlan ? (
 				<div className="subscription__cancel">
 					<h4>Cancel subscription</h4>
@@ -193,7 +190,6 @@ export default function Subscription() {
 			) : (
 				""
 			)}
-
 			<div className="subscription__refund">
 				<h4>Refund</h4>
 				<p>
