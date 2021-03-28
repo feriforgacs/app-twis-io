@@ -40,6 +40,10 @@ export default function PersonalSettings() {
 			}
 
 			// display success message
+			setToastMessage("Settings have been saved");
+			setToastType("default");
+			setToastDuration(3000);
+			setToastVisible(true);
 		} catch (error) {
 			console.log(error);
 			setLoading(false);
@@ -55,7 +59,7 @@ export default function PersonalSettings() {
 	return (
 		<div className="personal-settings">
 			<h3 className="section-title">Personal settings</h3>
-			<div className="personal-settings__form form">
+			<div id="personal-settings__form" className="form">
 				<div className="form__section">
 					<div className="form__group">
 						<label className="form__label" htmlFor="name">
@@ -69,7 +73,13 @@ export default function PersonalSettings() {
 							Email
 						</label>
 						<input type="email" className="form__input form__input--text" readOnly={true} disabled={true} value={session.user.email} />
-						<p className="form__info-text">You can&apos;t change your email address.</p>
+						<p className="form__info-text">
+							If you&apos;d like to update your email address, please send us a message to{" "}
+							<a href="mailto:support@twis.io" target="_blank" rel="noopener noreferrer">
+								support@twis.io
+							</a>{" "}
+							from the email address you used to create your account.
+						</p>
 					</div>
 
 					<div className="form__group">
