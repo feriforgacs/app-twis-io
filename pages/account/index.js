@@ -1,5 +1,4 @@
 /**
- * @todo add annual plans
  * @todo personal settings
  * @todo loading state
  * @todo get users current plan from the backend
@@ -9,6 +8,7 @@ import { useSession, getSession } from "next-auth/client";
 import LoginForm from "../../components/LoginForm";
 import Sidebar from "../../components/dashboard-components/Sidebar";
 import PageHeader from "../../components/dashboard-components/PageHeader";
+import PersonalSettings from "../../components/dashboard-components/account-components/PersonalSettings";
 import Subscription from "../../components/dashboard-components/account-components/Subscription";
 import AccountDelete from "../../components/dashboard-components/account-components/AccountDelete";
 
@@ -29,6 +29,7 @@ export default function AccountPage() {
 			<Sidebar />
 			<div id="page__content">
 				<PageHeader title="Account" />
+				<PersonalSettings />
 				<Subscription />
 				<AccountDelete />
 			</div>
