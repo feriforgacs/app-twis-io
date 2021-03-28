@@ -112,6 +112,36 @@
 	}
 }
 
+.subscription__terms {
+	align-items: stretch;
+	background: #eee;
+	border-radius: 5px;
+	font-size: 0.9rem;
+	display: flex;
+	max-width: 300px;
+	padding: 5px;
+
+	.term {
+		cursor: pointer;
+		display: block;
+		flex: 1;
+		padding: 0.5rem;
+
+		small {
+			font-weight: normal;
+		}
+
+		&--active {
+			background: #fff;
+			border: 1px solid $primaryColor;
+			border-radius: 5px;
+			box-sizing: border-box;
+			cursor: default;
+			font-weight: bold;
+		}
+	}
+}
+
 .subscription__cancel {
 	background: #fff;
 	border: 1px solid #eee;
