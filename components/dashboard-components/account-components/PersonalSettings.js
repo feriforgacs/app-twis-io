@@ -39,10 +39,8 @@ export default function PersonalSettings() {
 				return;
 			}
 
-			// update user data in session
-			//session.user.name = name;
-
 			// display success message
+			session.user.name = name;
 			setLoading(false);
 			setToastMessage("Settings have been saved");
 			setToastType("default");
