@@ -16,6 +16,15 @@
 		margin: 0.5rem 0 1rem 0.5rem;
 	}
 
+	.sidebar__account-name {
+		border-bottom: 1px solid #eee;
+		border-top: 1px solid #eee;
+		margin: 0 -0.5rem;
+		font-size: 0.8rem;
+		font-weight: bold;
+		padding: 0.75rem 1rem;
+	}
+
 	.nav-item {
 		margin: 0.2rem 0;
 		a {
