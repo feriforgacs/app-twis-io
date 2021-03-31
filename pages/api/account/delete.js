@@ -9,6 +9,9 @@ import Participant from "../../../models/Participant";
 import Screen from "../../../models/editor/Screen";
 import ScreenItem from "../../../models/editor/ScreenItem";
 import Answer from "../../../models/Answer";
+import User from "../../../models/User";
+import Account from "../../../models/Account";
+import Session from "../../../models/Session";
 
 const cors = initMiddleware(
 	Cors({
@@ -55,8 +58,6 @@ export default async function DeleteRequestHandler(req, res) {
 		return res.status(400).json({ success: false, error });
 	}
 
-	console.log(campaigns);
-
 	// get campaign screens
 	let screens = [];
 	if (campaigns.length > 0) {
@@ -68,16 +69,86 @@ export default async function DeleteRequestHandler(req, res) {
 		}
 	}
 
-	// get screen items
-	let screenItemsDelete;
-	if (screens.length > 0) {
-		try {
-			screenItemsDelete = ScreenItem.deleteMany({ screenId: { $in: screens } });
-		} catch (error) {
-			console.log(error);
-			return res.status(400).json({ success: false, error });
-		}
+	// delete screen items
+	let screenItemsDeletePromise;
+	try {
+		screenItemsDeletePromise = ScreenItem.deleteMany({ screenId: { $in: screens } });
+	} catch (error) {
+		console.log(error);
+		return res.status(400).json({ success: false, error });
 	}
 
-	return res.status(400).json({ success: false });
+	// delete participants
+	let participantsDeletePromise;
+	try {
+		participantsDeletePromise = Participant.deleteMany({ campaignId: { $in: campaigns } });
+	} catch (error) {
+		console.log(error);
+		return res.status(400).json({ success: false, error });
+	}
+
+	// delete answers
+	let answersDeletePromise;
+	try {
+		answersDeletePromise = Answer.deleteMany({ campaignId: { $in: campaigns } });
+	} catch (error) {
+		console.log(error);
+		return res.status(400).json({ success: false, error });
+	}
+
+	// delete screens
+	let screensDeletePromise;
+	try {
+		screensDeletePromise = Screen.deleteMany({ campaignId: { $in: campaigns } });
+	} catch (error) {
+		console.log(error);
+		return res.status(400).json({ success: false, error });
+	}
+
+	// delete campaigns
+	let campaignsDeletePromise;
+	try {
+		campaignsDeletePromise = Campaign.deleteMany({ createdBy: session.user.id });
+	} catch (error) {
+		console.log(error);
+		return res.status(400).json({ success: false, error });
+	}
+
+	// delete user
+	let userDeletePromise;
+	try {
+		userDeletePromise = User.findOneAndDelete({ _id: session.user.id });
+	} catch (error) {
+		console.log(error);
+		return res.status(400).json({ success: false, error });
+	}
+
+	// delete account
+	let accountDeletePromise;
+	try {
+		accountDeletePromise = Account.findOneAndDelete({ userId: session.user.id });
+	} catch (error) {
+		console.log(error);
+		return res.status(400).json({ success: false, error });
+	}
+
+	// delete session
+	let sessionDeletePromise;
+	try {
+		sessionDeletePromise = Session.findOneAndDelete({ userId: session.user.id });
+	} catch (error) {
+		console.log(error);
+		return res.status(400).json({ success: false, error });
+	}
+
+	await Promise.all([screenItemsDeletePromise, participantsDeletePromise, answersDeletePromise, screensDeletePromise, campaignsDeletePromise, userDeletePromise, accountDeletePromise, sessionDeletePromise]);
+
+	// log event
+	await EventLog(`account delete`, session.user.id, session.user.email);
+
+	/**
+	 * @todo cancel subscription
+	 */
+
+	return res.status(200).json({ success: true });
 }
