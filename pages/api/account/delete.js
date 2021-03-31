@@ -62,7 +62,7 @@ export default async function DeleteRequestHandler(req, res) {
 	let screens = [];
 	if (campaigns.length > 0) {
 		try {
-			screens = await Screen.find({ campaignId: { $in: campaigns } });
+			screens = await Screen.find({ campaignId: { $in: campaigns } }).distinct("_id");
 		} catch (error) {
 			console.log(error);
 			return res.status(400).json({ success: false, error });
