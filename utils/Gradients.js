@@ -1,4 +1,10 @@
 const Gradients = [
+	"linear-gradient(161.74deg, #A425B6 9.18%, #E64CA8 50%, #F55F7E 92.56%)",
+	"linear-gradient(161.74deg, #EF5E57 9.18%, #F58959 50%, #FAB45B 92.56%)",
+	"linear-gradient(161.74deg, #50C345 9.18%, #41C387 50%, #2FC4D2 92.56%)",
+	"linear-gradient(161.74deg, #B542E6 9.18%, #886EF0 50%, #5C9AFA 92.56%)",
+	"linear-gradient(161.74deg, #D343C8 9.18%, #E35D8B 50%, #F47D4F 92.56%)",
+	"linear-gradient(161.74deg, #C44045 9.18%, #FDCA5B 30.46%, #7EC151 50%, #3897EF 69.54%, #800D9B 92.56%)",
 	"linear-gradient(0deg, rgba(255,0,0,1) 0%, rgba(164,0,0,1) 100%)",
 	"linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%)",
 	"linear-gradient(to right, #12c2e9, #c471ed, #f64f59)",
