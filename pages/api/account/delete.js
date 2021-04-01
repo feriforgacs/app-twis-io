@@ -39,16 +39,6 @@ export default async function DeleteRequestHandler(req, res) {
 		return res.status(400).json({ success: false, error: "invalid user id" });
 	}
 
-	/**
-	 * @todo delete campaigns
-	 * @todo delete screens
-	 * @todo delete screen items
-	 * @todo delete participants
-	 * @todo delete answers
-	 * @todo cancel subscription
-	 * @todo delete user
-	 */
-
 	// get user's campaigns
 	let campaigns = [];
 	try {
