@@ -25,6 +25,31 @@
 		padding: 0.75rem 1rem;
 	}
 
+	.sidebar__usage-status {
+		display: flex;
+		font-size: 0.75rem;
+		flex-direction: column;
+		margin: 1rem 0.5rem;
+
+		.usage-status__progress-bar {
+			background: #fff;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			height: 10px;
+			margin-bottom: 0.5rem;
+			width: 100%;
+		}
+
+		.usage-status__progress-value {
+			background: $primaryColor;
+			border: 1px solid $primaryColor;
+			border-radius: 5px;
+			margin: -1px 0 0 -1px;
+			height: 10px;
+			width: 10px;
+		}
+	}
+
 	.nav-item {
 		margin: 0.2rem 0;
 		a {
