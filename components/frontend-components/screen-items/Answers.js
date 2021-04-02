@@ -9,6 +9,7 @@ export default function Answers({ data, lastScreenIndex }) {
 	const [answered, setAnswered] = useState(userAnswers[data.itemId] || false);
 	const [answerOptions, setAnswerOptions] = useState(answerScreenItems[data.itemId] || data.settings.answers);
 	const [showConfetti, setShowConfetti] = useState(false);
+	const [answerAnimation, setAnswerAnimation] = useState();
 
 	/**
 	 * Random order
@@ -77,36 +78,41 @@ export default function Answers({ data, lastScreenIndex }) {
 
 	return (
 		<div style={answersStyle} className={fontFamilyClass}>
-			{answerOptions.map((answer, index) => (
-				<AnswerOption
-					selectedAnswer={selectedAnswer}
-					answered={answered}
-					key={index}
-					answer={answer}
-					index={index}
-					answerItemStyle={answerItemStyle}
-					itemSettings={data}
-					onClick={() => {
-						// disable the option to submit an answer one more time
-						if (answered) {
-							gotoNextScreen(lastScreenIndex);
-							return;
-						}
+			<div className={answerAnimation}>
+				{answerOptions.map((answer, index) => (
+					<AnswerOption
+						selectedAnswer={selectedAnswer}
+						answered={answered}
+						key={index}
+						answer={answer}
+						index={index}
+						answerItemStyle={answerItemStyle}
+						itemSettings={data}
+						onClick={() => {
+							// disable the option to submit an answer one more time
+							if (answered) {
+								gotoNextScreen(lastScreenIndex);
+								return;
+							}
 
-						// add selected answer to state
-						addUserAnswer(data.itemId, answer);
+							// add selected answer to state
+							addUserAnswer(data.itemId, answer);
 
-						// set answer as selected
-						setSelectedAnswer(answer);
+							// set answer as selected
+							setSelectedAnswer(answer);
 
-						// set answered to true
-						setAnswered(true);
+							// set answered to true
+							setAnswered(true);
 
-						// display confetti if selected option was correct
-						setShowConfetti(answer.correct);
-					}}
-				/>
-			))}
+							// display confetti if selected option was correct
+							setShowConfetti(answer.correct);
+
+							// show correct - incorrect animation
+							setAnswerAnimation(answer.correct ? "animation--pop" : "animation--shake");
+						}}
+					/>
+				))}
+			</div>
 			{showConfetti && <SuccessConfetti successEmoji={data.settings.successEmoji || ""} />}
 		</div>
 	);

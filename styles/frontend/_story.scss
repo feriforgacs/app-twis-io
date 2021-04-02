@@ -166,3 +166,62 @@
 		padding: 1.5em;
 	}
 }
+
+.animation--shake {
+	animation: shake 500ms ease;
+}
+
+.animation--pop {
+	animation: pop 800ms ease;
+}
+
+@keyframes shake {
+	0% {
+		transform: rotate(0deg);
+	}
+	15% {
+		transform: rotate(5deg);
+	}
+	30% {
+		transform: rotate(-5deg);
+	}
+	45% {
+		transform: rotate(5deg);
+	}
+	60% {
+		transform: rotate(-5deg);
+	}
+	75% {
+		transform: rotate(5deg);
+	}
+	90% {
+		transform: rotate(-5deg);
+	}
+	100% {
+		transform: rotate(0deg);
+	}
+}
+
+@keyframes pop {
+	0% {
+		transform: scale(1);
+	}
+	30% {
+		transform: scale(1.2);
+	}
+	45% {
+		transform: scale(0.8);
+	}
+	60% {
+		transform: scale(1.1);
+	}
+	75% {
+		transform: scale(0.9);
+	}
+	90% {
+		transform: scale(1);
+	}
+	100% {
+		transform: scale(1);
+	}
+}
