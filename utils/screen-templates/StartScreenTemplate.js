@@ -7,7 +7,7 @@ export const StartScreenTemplate = {
 	orderIndex: 0,
 	background: {
 		type: "gradient",
-		color: "linear-gradient(to bottom, #7f00ff, #e100ff)",
+		color: "linear-gradient(161.74deg, #A425B6 9.18%, #E64CA8 50%, #F55F7E 92.56%)",
 	},
 	screenId: "GENERATE",
 	campaignId: "ADD",

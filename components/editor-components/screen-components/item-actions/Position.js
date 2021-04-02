@@ -6,9 +6,6 @@ import styles from "../ItemAdditionalActions.module.scss";
 
 export default function Position() {
 	const { activeScreenItem, activeScreen, updateScreenItemOrder } = useContext(GlobalContext);
-	/**
-	 * @todo - set active screen item on activescreenitem change
-	 */
 	return (
 		<>
 			<button

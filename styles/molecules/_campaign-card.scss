@@ -80,12 +80,6 @@
 			margin-top: 0.5rem;
 			width: 100%;
 
-			@media only screen and (min-width: 1300px) {
-				margin-left: auto;
-				margin-top: 0;
-				width: auto;
-			}
-
 			&:hover {
 				color: $primaryColorHover;
 				text-decoration: none;
