@@ -1,3 +1,7 @@
+/**
+ * @todo get usage from the db
+ * @todo display usage numbers and dates in tooltip
+ */
 export default function Usage() {
 	return (
 		<div className="sidebar__usage-status">
