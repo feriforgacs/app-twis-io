@@ -12,7 +12,7 @@ export default function Usage() {
 			</div>
 			<span>50% left of your monthly usage</span>
 
-			<ReactTooltip id="usagetooltip" place="top" type="dark" effect="solid" multiline={true} getContent={(dataTip) => dataTip} />
+			<ReactTooltip id="usagetooltip" place="top" type="dark" effect="solid" getContent={(dataTip) => dataTip} />
 		</div>
 	);
 }
