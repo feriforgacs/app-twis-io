@@ -4,11 +4,13 @@
  */
 import { useState, useEffect } from "react";
 import ReactTooltip from "react-tooltip";
+import { format } from "date-fns";
 
 export default function Usage() {
 	const [loading, setLoading] = useState(true);
-	const [currentUsage, setCurrentUsage] = useState();
+	const [currentUsage, setCurrentUsage] = useState({ limit: 0, value: 0, renewDate: Date.now() });
 	const [error, setError] = useState();
+	const [usageLeft, setUsageLeft] = useState(0);
 
 	useEffect(() => {
 		const getUsage = async () => {
@@ -29,6 +31,13 @@ export default function Usage() {
 
 				if (usageData.data) {
 					setCurrentUsage(usageData.data);
+					let currentUsageLeft = 0;
+					if (usageData.data.value === 0) {
+						currentUsageLeft = 100;
+					} else if (usageData.data.value < usageData.data.limit) {
+						currentUsageLeft = 100 - Math.floor((usageData.data.value / usageData.data.limit) * 100);
+					}
+					setUsageLeft(currentUsageLeft);
 				}
 			} catch (error) {
 				console.log(error);
@@ -43,16 +52,27 @@ export default function Usage() {
 	}, []);
 
 	return (
-		<div className="sidebar__usage-status" data-for="usagetooltip" data-tip="With your current plan, you can collect 34 more unique participants until 2021.04.05.">
-			<div className="usage-status__progress-bar">
-				<div className="usage-status__progress-value"></div>
-			</div>
-			<span>
-				{loading && "loading..."}
-				{error ? error : "50% left of your monthly usage"}
-			</span>
+		<>
+			{loading ? (
+				<p className="sidebar__usage-loading">loading...</p>
+			) : (
+				<div className="sidebar__usage-status" data-for="usagetooltip" data-tip={`With your current plan, you can collect ${currentUsage.limit - currentUsage.value > 0 ? currentUsage.limit - currentUsage.value : 0} more unique participants until ${format(new Date(currentUsage.renewDate), "yyyy.MM.dd.")}`}>
+					<div className="usage-status__progress-bar">
+						<div
+							className="usage-status__progress-value"
+							style={{
+								width: `${100 - usageLeft}%`,
+							}}
+						></div>
+					</div>
+					<span>
+						{loading && "loading..."}
+						{error ? error : `${usageLeft}% left of your monthly usage`}
+					</span>
 
-			<ReactTooltip id="usagetooltip" place="top" type="dark" effect="solid" getContent={(dataTip) => dataTip} />
-		</div>
+					<ReactTooltip id="usagetooltip" place="top" type="dark" effect="solid" getContent={(dataTip) => dataTip} />
+				</div>
+			)}
+		</>
 	);
 }
