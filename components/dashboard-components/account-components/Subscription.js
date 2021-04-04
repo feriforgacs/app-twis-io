@@ -31,6 +31,7 @@ export default function Subscription() {
 		 * @todo display loading state
 		 * @todo display result
 		 * @todo update current plan in state
+		 * @todo update usage limits and dates
 		 */
 		setCurrentPlan(plan);
 		setCurrentPlanTerm(planTerm);
