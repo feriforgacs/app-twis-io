@@ -1,6 +1,6 @@
 /**
  * @todo get usage from the db
- * @todo display usage numbers and dates in tooltip
+ * @todo display real usage numbers and dates in tooltip
  */
 import ReactTooltip from "react-tooltip";
 
