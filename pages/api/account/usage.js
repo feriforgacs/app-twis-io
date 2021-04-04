@@ -27,7 +27,7 @@ export default async function UsageRequestHandler(req, res) {
 		if (!usage) {
 			return res.status(400).json({ success: false, error: "can't get usage data" });
 		}
-		return res.status(200).json({ success: true, usage });
+		return res.status(200).json({ success: true, data: usage });
 	} catch (error) {
 		console.log(error);
 		return res.status(400).json({ success: false, error: error });
