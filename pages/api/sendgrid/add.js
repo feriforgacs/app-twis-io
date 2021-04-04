@@ -2,11 +2,8 @@ import Cors from "cors";
 import { Client } from "@sendgrid/client";
 import initMiddleware from "../../../lib/InitMiddleware";
 
-// Initialize the cors middleware
 const cors = initMiddleware(
-	// You can read more about the available options here: https://github.com/expressjs/cors#configuration-options
 	Cors({
-		// Only allow requests with PUT
 		methods: ["PUT"],
 	})
 );

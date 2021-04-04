@@ -2,6 +2,9 @@ import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
 import mail from "@sendgrid/mail";
 import SendAdminNotification from "../../../lib/AdminNotification";
+import DatabaseConnect from "../../../lib/DatabaseConnect";
+import Usage from "../../../models/Usage";
+import { addDays } from "date-fns";
 
 const options = {
 	site: process.env.NEXTAUTH_URL,
@@ -59,6 +62,13 @@ const options = {
 	},
 	events: {
 		createUser: async (message) => {
+			/**
+			 * Create usage record in the db
+			 */
+			await DatabaseConnect();
+			const renewDate = addDays(new Date(Date.now()), 30);
+			await Usage.create({ userId: message.id, limit: process.env.FREE_USAGE_LIMIT, renewDate });
+
 			/**
 			 * Add user to sendgrid contacts list to start welcome automation
 			 */

@@ -12,6 +12,7 @@ import Answer from "../../../models/Answer";
 import User from "../../../models/User";
 import Account from "../../../models/Account";
 import Session from "../../../models/Session";
+import Usage from "../../../models/Usage";
 
 const cors = initMiddleware(
 	Cors({
@@ -131,7 +132,16 @@ export default async function DeleteRequestHandler(req, res) {
 		return res.status(400).json({ success: false, error });
 	}
 
-	await Promise.all([screenItemsDeletePromise, participantsDeletePromise, answersDeletePromise, screensDeletePromise, campaignsDeletePromise, userDeletePromise, accountDeletePromise, sessionDeletePromise]);
+	// delete usage
+	let usageDeletePromise;
+	try {
+		usageDeletePromise = Usage.findOneAndDelete({ userId: session.user.id });
+	} catch (error) {
+		console.log(error);
+		return res.status(400).json({ success: false, error });
+	}
+
+	await Promise.all([screenItemsDeletePromise, participantsDeletePromise, answersDeletePromise, screensDeletePromise, campaignsDeletePromise, userDeletePromise, accountDeletePromise, sessionDeletePromise, usageDeletePromise]);
 
 	// log event
 	await EventLog(`account delete`, session.user.id, session.user.email);
