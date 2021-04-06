@@ -8,7 +8,6 @@ import DatabaseConnect from "../../../lib/DatabaseConnect";
 import Campaign from "../../../models/Campaign";
 import Participant from "../../../models/Participant";
 import Usage from "../../../models/Usage";
-import { subDays, addDays } from "date-fns";
 
 const cors = initMiddleware(
 	Cors({
@@ -85,20 +84,9 @@ export default async function ParticipantListHandler(req, res) {
 		return res.status(400).json({ success: false, error: error });
 	}
 
-	// get last participant ID the user is allowed to see based on their usage limit
-	let lastParticipantDate = addDays(new Date(Date.now()), 30);
-	if (usageLimit.value > usageLimit.limit) {
-		try {
-			const usageDateStart = subDays(new Date(usageLimit.renewDate), 30);
-			const lastValidParticipantDate = await Participant.findOne({ createdAt: { $gte: usageDateStart } })
-				.skip(usageLimit.limit - 1)
-				.sort({ _id: 1 });
-
-			lastParticipantDate = lastValidParticipantDate.createdAt;
-		} catch (error) {
-			console.log(error);
-			return res.status(400).json({ success: false, error: error });
-		}
+	let lastParticipantDate = new Date(Date.now());
+	if (usageLimit.trialAccount === true && usageLimit.limitReached) {
+		lastParticipantDate = usageLimit.limitReached;
 	}
 
 	// get the participants connected to those campaigns
@@ -116,13 +104,13 @@ export default async function ParticipantListHandler(req, res) {
 				],
 			})
 				.and({ campaignId: { $in: campaigns } })
-				.and({ createdAt: { $lte: lastParticipantDate } })
+				.and({ createdAt: { $lt: lastParticipantDate } })
 				.limit(limit)
 				.skip(limit * page)
 				.sort({ _id: -1 });
 		} else {
 			participants = await Participant.find({ campaignId: { $in: campaigns } })
-				.and({ createdAt: { $lte: lastParticipantDate } })
+				.and({ createdAt: { $lt: lastParticipantDate } })
 				.limit(limit)
 				.skip(limit * page)
 				.sort({ _id: -1 });
