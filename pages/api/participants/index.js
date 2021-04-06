@@ -90,8 +90,8 @@ export default async function ParticipantListHandler(req, res) {
 	if (usageLimit.value > usageLimit.limit) {
 		try {
 			const usageDateStart = subDays(new Date(usageLimit.renewDate), 30);
-			const lastValidParticipantDate = await Participant.findOne({ createdAt: { $gt: usageDateStart } })
-				.skip(usageLimit.limit)
+			const lastValidParticipantDate = await Participant.findOne({ createdAt: { $gte: usageDateStart } })
+				.skip(usageLimit.limit - 1)
 				.sort({ _id: 1 });
 
 			lastParticipantDate = lastValidParticipantDate.createdAt;

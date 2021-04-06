@@ -12,16 +12,19 @@ export default function Subscription() {
 			name: "Basic",
 			priceBilledMonthly: process.env.NEXT_PUBLIC_PRICE_BASIC_MONTHLY,
 			priceBilledYearly: process.env.NEXT_PUBLIC_PRICE_BASIC_YEARLY,
+			overagesCost: process.env.NEXT_PUBLIC_PRICE_BASIC_OVERAGES,
 		},
 		pro: {
 			name: "Pro",
 			priceBilledMonthly: process.env.NEXT_PUBLIC_PRICE_PRO_MONTHLY,
 			priceBilledYearly: process.env.NEXT_PUBLIC_PRICE_PRO_YEARLY,
+			overagesCost: process.env.NEXT_PUBLIC_PRICE_PRO_OVERAGES,
 		},
 		premium: {
 			name: "Premium",
 			priceBilledMonthly: process.env.NEXT_PUBLIC_PRICE_PREMIUM_MONTHLY,
 			priceBilledYearly: process.env.NEXT_PUBLIC_PRICE_PREMIUM_YEARLY,
+			overagesCost: process.env.NEXT_PUBLIC_PRICE_PREMIUM_OVERAGES,
 		},
 	};
 
@@ -80,6 +83,8 @@ export default function Subscription() {
 						<li>Unlimited campaigns</li>
 						<li>
 							<strong>100 unique participants / month</strong>
+							<br />
+							<small>${plans.basic.overagesCost} per additional participant</small>
 						</li>
 					</ul>
 					{currentPlan && currentPlan === "basic" && planTerm === currentPlanTerm && (
@@ -118,6 +123,8 @@ export default function Subscription() {
 						<li>Unlimited campaigns</li>
 						<li>
 							<strong>1.000 unique participants / month</strong>
+							<br />
+							<small>${plans.pro.overagesCost} per additional participant</small>
 						</li>
 					</ul>
 					{currentPlan && currentPlan === "pro" && planTerm === currentPlanTerm && (
@@ -156,6 +163,8 @@ export default function Subscription() {
 						<li>Unlimited campaigns</li>
 						<li>
 							<strong>10.000 unique participants / month</strong>
+							<br />
+							<small>${plans.premium.overagesCost} per additional participant</small>
 						</li>
 					</ul>
 					{currentPlan && currentPlan === "premium" && planTerm === currentPlanTerm && (
