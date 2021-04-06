@@ -10,6 +10,7 @@ import EventLog from "../../../lib/EventLog";
 import DatabaseConnect from "../../../lib/DatabaseConnect";
 import Campaign from "../../../models/Campaign";
 import Participant from "../../../models/Participant";
+import Usage from "../../../models/Usage";
 
 const cors = initMiddleware(
 	Cors({
@@ -66,6 +67,23 @@ export default async function ParticipantExportHandler(req, res) {
 		search = escapeStringRegexp(req.query.search);
 	}
 
+	// get usage limit for the user
+	let usageLimit;
+	try {
+		usageLimit = await Usage.findOne({ userId: session.user.id });
+		if (!usageLimit) {
+			return res.status(400).json({ success: false, error: "can't get usage limit from the db" });
+		}
+	} catch (error) {
+		console.log(error);
+		return res.status(400).json({ success: false, error: error });
+	}
+
+	let lastParticipantDate = new Date(Date.now());
+	if (usageLimit.trialAccount === true && usageLimit.limitReached) {
+		lastParticipantDate = usageLimit.limitReached;
+	}
+
 	// get the participants connected to those campaigns
 	let participants;
 	try {
@@ -81,9 +99,12 @@ export default async function ParticipantExportHandler(req, res) {
 				],
 			})
 				.and({ campaignId: { $in: campaigns } })
+				.and({ createdAt: { $lt: lastParticipantDate } })
 				.sort({ _id: -1 });
 		} else {
-			participants = await Participant.find({ campaignId: { $in: campaigns } }).sort({ _id: -1 });
+			participants = await Participant.find({ campaignId: { $in: campaigns } })
+				.and({ createdAt: { $lt: lastParticipantDate } })
+				.sort({ _id: -1 });
 		}
 
 		const workbook = new ExcelJS.Workbook();
