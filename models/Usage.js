@@ -14,6 +14,13 @@ const usageSchema = new mongoose.Schema({
 		type: Number,
 		default: 10,
 	},
+	limitReached: {
+		type: Date,
+	},
+	trialAccount: {
+		type: Boolean,
+		default: true,
+	},
 	renewDate: {
 		type: Date,
 	},
