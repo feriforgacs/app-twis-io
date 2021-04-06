@@ -49,6 +49,16 @@
 			width: 10px;
 
 			transition: width 300ms ease-in;
+
+			&--alert {
+				background: #fe8b40;
+				border: 1px solid #fe8b40;
+			}
+
+			&--danger {
+				background: $dangerColor;
+				border: 1px solid $dangerColor;
+			}
 		}
 	}
 
