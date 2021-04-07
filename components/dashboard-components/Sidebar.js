@@ -50,7 +50,17 @@ export default function Sidebar() {
 			</nav>
 
 			<nav className="page__sidebar--bottom">
-				<p className="sidebar__account-name">{session.user.name || session.user.email}</p>
+				<p className="sidebar__account-name">
+					{session.user.name ? session.user.name : ""}
+					{session.user.name && session.user.email ? (
+						<small>
+							<br />
+							{session.user.email}
+						</small>
+					) : (
+						<>{session.user.email}</>
+					)}
+				</p>
 
 				<Usage />
 
