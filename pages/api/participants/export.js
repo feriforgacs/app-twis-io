@@ -80,6 +80,7 @@ export default async function ParticipantExportHandler(req, res) {
 	}
 
 	let lastParticipantDate = new Date(Date.now());
+	// usage limit only affects trial accounts
 	if (usageLimit.trialAccount === true && usageLimit.limitReached) {
 		lastParticipantDate = usageLimit.limitReached;
 	}

@@ -1,30 +1,46 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { format } from "date-fns";
 import Modal from "../Modal";
+import Toast from "../Toast";
+import Refund from "./Refund";
+import SubscriptionPlans from "./SubscriptionPlans";
 
 export default function Subscription() {
+	const [loading, setLoading] = useState(false);
 	const [cancelModalVisible, setCancelModalVisible] = useState(false);
 	const [cancelLoading, setCancelLoading] = useState(false);
-	const [currentPlan, setCurrentPlan] = useState("");
+	const [currentUsage, setCurrentUsage] = useState({ limit: 0, value: 0, renewDate: Date.now() });
+
+	const [toastMessage, setToastMessage] = useState(false);
+	const [toastVisible, setToastVisible] = useState(false);
+	const [toastType, setToastType] = useState("default");
+	const [toastDuration, setToastDuration] = useState(3000);
+
+	const [currentPlan, setCurrentPlan] = useState(""); // @todo set based on user current plan
 	const [currentPlanTerm, setCurrentPlanTerm] = useState("monthly"); // @todo set based on user current plan term
 	const [planTerm, setPlanTerm] = useState("yearly"); // @todo set based on user current plan term
+
 	const plans = {
 		basic: {
 			name: "Basic",
 			priceBilledMonthly: process.env.NEXT_PUBLIC_PRICE_BASIC_MONTHLY,
 			priceBilledYearly: process.env.NEXT_PUBLIC_PRICE_BASIC_YEARLY,
 			overagesCost: process.env.NEXT_PUBLIC_PRICE_BASIC_OVERAGES,
+			limit: process.env.NEXT_PUBLIC_BASIC_LIMIT,
 		},
 		pro: {
 			name: "Pro",
 			priceBilledMonthly: process.env.NEXT_PUBLIC_PRICE_PRO_MONTHLY,
 			priceBilledYearly: process.env.NEXT_PUBLIC_PRICE_PRO_YEARLY,
 			overagesCost: process.env.NEXT_PUBLIC_PRICE_PRO_OVERAGES,
+			limit: process.env.NEXT_PUBLIC_PRO_LIMIT,
 		},
 		premium: {
 			name: "Premium",
 			priceBilledMonthly: process.env.NEXT_PUBLIC_PRICE_PREMIUM_MONTHLY,
 			priceBilledYearly: process.env.NEXT_PUBLIC_PRICE_PREMIUM_YEARLY,
 			overagesCost: process.env.NEXT_PUBLIC_PRICE_PREMIUM_OVERAGES,
+			limit: process.env.NEXT_PUBLIC_PREMIUM_LIMIT,
 		},
 	};
 
@@ -50,142 +66,80 @@ export default function Subscription() {
 		setCancelLoading(true);
 	};
 
+	useEffect(() => {
+		const getUsage = async () => {
+			try {
+				const usageDataRequest = await fetch(`/api/account/usage`, {
+					method: "GET",
+				});
+
+				const usageData = await usageDataRequest.json();
+
+				setLoading(false);
+
+				if (usageData.success !== true) {
+					// error
+					setLoading(false);
+					// error
+					setToastMessage("Can't get usage information.");
+					setToastType("error");
+					setToastDuration(6000);
+					setToastVisible(true);
+					return;
+				}
+
+				if (usageData.data) {
+					setCurrentUsage(usageData.data);
+				}
+			} catch (error) {
+				console.log(error);
+				setLoading(false);
+				// error
+				setToastMessage("Can't get usage information.");
+				setToastType("error");
+				setToastDuration(6000);
+				setToastVisible(true);
+			}
+
+			return;
+		};
+
+		getUsage();
+	}, []);
+
 	return (
 		<div>
 			<h3 className="section-title">Subscription</h3>
-			<p>
-				Your current plan: <strong>{currentPlan ? `${plans[currentPlan].name} - ${currentPlanTerm}` : "You are not subscribed to any of the plans at the moment"}</strong>
-			</p>
-			<div className="subscription__terms">
-				<span className={`term ${planTerm === "yearly" ? "term--active" : ""}`} onClick={() => setPlanTerm("yearly")}>
-					Billed annually
-					<small> -20%</small>
-				</span>
-				<span className={`term ${planTerm === "monthly" ? "term--active" : ""}`} onClick={() => setPlanTerm("monthly")}>
-					Billed monthly
-				</span>
-			</div>
-			<div className="subscription__options">
-				<div className={`subscription-option ${currentPlan && currentPlan === "basic" ? "subscription-option--current" : ""}`}>
-					<h4>
-						<span role="img" aria-label="thumbs up">
-							👍
-						</span>
-						Basic
-					</h4>
-					<p className="subscription-option__price">
-						<span>${planTerm === "monthly" ? plans.basic.priceBilledMonthly : plans.basic.priceBilledYearly}</span>
-						<small> / month</small>
-					</p>
-					<p className="plan-term-info">{planTerm === "monthly" ? "Billed monthly" : "Billed yearly"}, VAT not included</p>
-					<ul>
-						<li>All features included</li>
-						<li>Unlimited campaigns</li>
-						<li>
-							<strong>100 unique participants / month</strong>
-							<br />
-							<small>${plans.basic.overagesCost} per additional participant</small>
-						</li>
-					</ul>
-					{currentPlan && currentPlan === "basic" && planTerm === currentPlanTerm && (
-						<p className="current-plan">
-							<span className="icon">
-								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-									<polyline points="20 6 9 17 4 12"></polyline>
-								</svg>
-							</span>
 
-							<span>Your current plan</span>
+			{loading ? (
+				"loading..."
+			) : (
+				<div className="user-subscription">
+					<div className="user-subscription__plan">
+						<p>
+							Your current plan: <strong>{currentPlan ? `${plans[currentPlan].name} - ${currentPlanTerm}` : "You are not subscribed to any of the plans at the moment"}</strong>
 						</p>
-					)}
-
-					{(!currentPlan || currentPlan !== "basic" || planTerm !== currentPlanTerm) && (
-						<button className="button button--primary" onClick={() => setSubscription("basic")}>
-							Choose to this plan
-						</button>
-					)}
-				</div>
-
-				<div className={`subscription-option ${currentPlan && currentPlan === "pro" ? "subscription-option--current" : ""}`}>
-					<h4>
-						<span role="img" aria-label="thumbs up">
-							⭐
-						</span>
-						Pro
-					</h4>
-					<p className="subscription-option__price">
-						<span>${planTerm === "monthly" ? plans.pro.priceBilledMonthly : plans.pro.priceBilledYearly}</span>
-						<small> / month</small>
-					</p>
-					<p className="plan-term-info">{planTerm === "monthly" ? "Billed monthly" : "Billed yearly"}, VAT not included</p>
-					<ul>
-						<li>All features included</li>
-						<li>Unlimited campaigns</li>
-						<li>
-							<strong>1.000 unique participants / month</strong>
-							<br />
-							<small>${plans.pro.overagesCost} per additional participant</small>
-						</li>
-					</ul>
-					{currentPlan && currentPlan === "pro" && planTerm === currentPlanTerm && (
-						<p className="current-plan">
-							<span className="icon">
-								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-									<polyline points="20 6 9 17 4 12"></polyline>
-								</svg>
-							</span>
-
-							<span>Your current plan</span>
+					</div>
+					<div className="user-subscription__usage">
+						<p>
+							Usage limit: <strong>{currentPlan ? `` : `You can collect 10 unique participants until ${format(new Date(currentUsage.renewDate), "yyy.MM.dd.")}`}</strong>
 						</p>
-					)}
-
-					{(!currentPlan || currentPlan !== "pro" || planTerm !== currentPlanTerm) && (
-						<button className="button button--primary" onClick={() => setSubscription("pro")}>
-							Choose to this plan
-						</button>
-					)}
-				</div>
-
-				<div className={`subscription-option ${currentPlan && currentPlan === "premium" ? "subscription-option--current" : ""}`}>
-					<h4>
-						<span role="img" aria-label="thumbs up">
-							🚀
-						</span>
-						Premium
-					</h4>
-					<p className="subscription-option__price">
-						<span>${planTerm === "monthly" ? plans.premium.priceBilledMonthly : plans.premium.priceBilledYearly}</span>
-						<small> / month</small>
-					</p>
-					<p className="plan-term-info">{planTerm === "monthly" ? "Billed monthly" : "Billed yearly"}, VAT not included</p>
-					<ul>
-						<li>All features included</li>
-						<li>Unlimited campaigns</li>
-						<li>
-							<strong>10.000 unique participants / month</strong>
-							<br />
-							<small>${plans.premium.overagesCost} per additional participant</small>
-						</li>
-					</ul>
-					{currentPlan && currentPlan === "premium" && planTerm === currentPlanTerm && (
-						<p className="current-plan">
-							<span className="icon">
-								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-									<polyline points="20 6 9 17 4 12"></polyline>
-								</svg>
-							</span>
-
-							<span>Your current plan</span>
+						<p>
+							Usage status: <strong>{currentPlan ? `` : `${currentUsage.value} / 10`}</strong>
 						</p>
-					)}
-
-					{(!currentPlan || currentPlan !== "premium" || planTerm !== currentPlanTerm) && (
-						<button className="button button--primary" onClick={() => setSubscription("premium")}>
-							Choose to this plan
-						</button>
-					)}
+						{currentPlan && (
+							<p>
+								Plan renew date: <strong>{format(new Date(currentUsage.renewDate), "yyy.MM.dd.")}</strong>
+							</p>
+						)}
+						{currentPlan && currentUsage.value > currentUsage.limit && <p>Overages cost: TODO</p>}
+					</div>
+					<div className="user-subscription__renew-date"></div>
 				</div>
-			</div>
+			)}
+
+			<SubscriptionPlans planTerm={planTerm} setPlanTerm={setPlanTerm} currentPlan={currentPlan} plans={plans} currentPlanTerm={currentPlanTerm} setSubscription={setSubscription} />
+
 			{currentPlan ? (
 				<div className="subscription__cancel">
 					<h4>Cancel subscription</h4>
@@ -200,16 +154,10 @@ export default function Subscription() {
 			) : (
 				""
 			)}
-			<div className="subscription__refund">
-				<h4>Refund</h4>
-				<p>
-					If you&apos;d like to initiate a refund, please send us a message to{" "}
-					<a href="mailto:refund@twis.io" target="_blank" rel="noopener noreferrer">
-						refund@twis.io
-					</a>{" "}
-					from the email address you used to create your account.
-				</p>
-			</div>
+
+			<Refund />
+
+			{toastVisible && <Toast onClose={() => setToastVisible(false)} duration={toastDuration} type={toastType} content={toastMessage} />}
 		</div>
 	);
 }
