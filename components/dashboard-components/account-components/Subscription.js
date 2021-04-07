@@ -1,14 +1,12 @@
 import { useState, useEffect } from "react";
 import { format } from "date-fns";
-import Modal from "../Modal";
 import Toast from "../Toast";
 import Refund from "./Refund";
 import SubscriptionPlans from "./SubscriptionPlans";
+import SubscriptionCancel from "./SubscriptionCancel";
 
 export default function Subscription() {
 	const [loading, setLoading] = useState(false);
-	const [cancelModalVisible, setCancelModalVisible] = useState(false);
-	const [cancelLoading, setCancelLoading] = useState(false);
 	const [currentUsage, setCurrentUsage] = useState({ limit: 0, value: 0, renewDate: Date.now() });
 
 	const [toastMessage, setToastMessage] = useState(false);
@@ -54,16 +52,6 @@ export default function Subscription() {
 		 */
 		setCurrentPlan(plan);
 		setCurrentPlanTerm(planTerm);
-	};
-
-	const cancelSubscription = () => {
-		/**
-		 * @todo send cancel request to backend
-		 * @todo display loading state
-		 * @todo display result
-		 * @todo update current plan in state
-		 */
-		setCancelLoading(true);
 	};
 
 	useEffect(() => {
@@ -140,20 +128,7 @@ export default function Subscription() {
 
 			<SubscriptionPlans planTerm={planTerm} setPlanTerm={setPlanTerm} currentPlan={currentPlan} plans={plans} currentPlanTerm={currentPlanTerm} setSubscription={setSubscription} />
 
-			{currentPlan ? (
-				<div className="subscription__cancel">
-					<h4>Cancel subscription</h4>
-					<p>You can cancel your subscription any time by clicking the button below. The collected participant information and the campaigns you created won&apos;t be affected.</p>
-					{currentPlan && currentPlan !== "basic" && <p>If your current subscription is not the best option for you, you can also dowgrade your account to a smaller plan.</p>}
-					<button className="button button--outline button--slim" onClick={() => setCancelModalVisible(true)}>
-						Cancel subscription
-					</button>
-
-					{cancelModalVisible && <Modal title="Are you sure you want to cancel your subscription?" body="This won't affect the campaigns your created and the collected participant information" primaryAction={cancelSubscription} primaryActionLabel="Yes, cancel subscription" secondaryAction={() => setCancelModalVisible(false)} secondaryActionLabel="Keep subscription" onClose={() => setCancelModalVisible(false)} loading={cancelLoading} />}
-				</div>
-			) : (
-				""
-			)}
+			{currentPlan && <SubscriptionCancel currentPlan={currentPlan} />}
 
 			<Refund />
 
