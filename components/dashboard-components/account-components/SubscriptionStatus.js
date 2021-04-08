@@ -56,32 +56,40 @@ export default function SubscriptionStatus({ currentPlan, currentPlanTerm, plans
 				"loading..."
 			) : (
 				<div className="user-subscription">
-					<div className="user-subscription__plan">
-						<p>
-							Your current plan: <strong>{currentPlan ? `${plans[currentPlan].name} - ${currentPlanTerm}` : "You are not subscribed to any of the plans at the moment"}</strong>
-						</p>
-					</div>
-					<div className="user-subscription__usage">
-						<p>
-							Usage limit:{" "}
-							<strong>
+					<table>
+						<tr>
+							<td>Your current plan:</td>
+							<td>{currentPlan ? `${plans[currentPlan].name} - ${currentPlanTerm}` : "You are not subscribed to any of the plans at the moment"}</td>
+						</tr>
+
+						<tr>
+							<td>Usage limit:</td>
+							<td>
 								You can collect {currentUsage.limit} unique participants until {format(new Date(currentUsage.renewDate), "yyy.MM.dd.")}
-							</strong>
-						</p>
-						<p>
-							Usage status:{" "}
-							<strong>
-								{currentUsage.value} / {currentUsage.limit} unique participants
-							</strong>
-						</p>
+							</td>
+						</tr>
+
+						<tr>
+							<td>Usage status:</td>
+							<td>
+								{currentUsage.value} / {currentUsage.limit} unique participants collected
+							</td>
+						</tr>
+
 						{currentPlan && (
-							<p>
-								Plan renew date: <strong>{format(new Date(currentUsage.renewDate), "yyy.MM.dd.")}</strong>
-							</p>
+							<tr>
+								<td>Plan renew date:</td>
+								<td>{format(new Date(currentUsage.renewDate), "yyy.MM.dd.")}</td>
+							</tr>
 						)}
-						{currentPlan && currentUsage.value > currentUsage.limit && <p>Overages cost: ${Math.round((currentUsage.value - currentUsage.limit) * plans[currentPlan].overagesCost * 100) / 100}</p>}
-					</div>
-					<div className="user-subscription__renew-date"></div>
+
+						{currentPlan && currentUsage.value > currentUsage.limit && (
+							<tr>
+								<td>Overages cost:</td>
+								<td>${Math.round((currentUsage.value - currentUsage.limit) * plans[currentPlan].overagesCost * 100) / 100}</td>
+							</tr>
+						)}
+					</table>
 				</div>
 			)}
 
