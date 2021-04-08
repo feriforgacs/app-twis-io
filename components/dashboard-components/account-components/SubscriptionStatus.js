@@ -59,8 +59,15 @@ export default function SubscriptionStatus({ currentPlan, currentPlanTerm, plans
 					<table>
 						<tr>
 							<td>Your current plan:</td>
-							<td>{currentPlan ? `${plans[currentPlan].name} - ${currentPlanTerm}` : "You are not subscribed to any of the plans at the moment"}</td>
+							<td>{currentPlan ? `${plans[currentPlan].name} - ${currentPlanTerm} (TODO / month)` : "You are not subscribed to any of the plans at the moment"}</td>
 						</tr>
+
+						{currentPlan && (
+							<tr>
+								<td>Subscription renew date:</td>
+								<td>TODO</td>
+							</tr>
+						)}
 
 						<tr>
 							<td>Usage limit:</td>
@@ -78,7 +85,7 @@ export default function SubscriptionStatus({ currentPlan, currentPlanTerm, plans
 
 						{currentPlan && (
 							<tr>
-								<td>Plan renew date:</td>
+								<td>Usage reset date:</td>
 								<td>{format(new Date(currentUsage.renewDate), "yyy.MM.dd.")}</td>
 							</tr>
 						)}
