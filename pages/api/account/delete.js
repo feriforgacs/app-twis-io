@@ -148,6 +148,7 @@ export default async function DeleteRequestHandler(req, res) {
 
 	/**
 	 * @todo cancel subscription
+	 * @todo delete subscription from the db
 	 */
 
 	return res.status(200).json({ success: true });
