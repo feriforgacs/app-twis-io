@@ -6,21 +6,26 @@ const subscriptionSchema = new mongoose.Schema({
 		ref: "User",
 		required: [true, "User id is required for subscription"],
 	},
-	plan: {
+	customerId: {
 		type: String,
-		required: [true, "Plan is required for subscription"],
 	},
 	paymentDate: {
 		type: Date,
 	},
 	subscriptionId: {
-		type: Number,
-	},
-	state: {
 		type: String,
 	},
 	planId: {
-		type: Number,
+		type: String,
+	},
+	cancelUrl: {
+		type: String,
+	},
+	updateUrl: {
+		type: String,
+	},
+	state: {
+		type: String,
 	},
 	createdAt: {
 		type: Date,
