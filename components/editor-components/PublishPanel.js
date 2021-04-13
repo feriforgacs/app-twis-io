@@ -1,15 +1,12 @@
 import { useRef, useEffect } from "react";
-import axios from "axios";
 import CampaignURL from "./campaign-settings-components/CampaignURL";
 import Visibility from "./campaign-settings-components/Visibility";
 import ShareOptions from "./campaign-settings-components/ShareOptions";
+import Usage from "./campaign-settings-components/Usage";
 import styles from "./CampaignSettings.module.scss";
 
 export default function PublishPanel({ hidePublishPanel }) {
 	const publishPanelRef = useRef();
-	const [requestCancelToken, setRequestCancelToken] = useState();
-	const [usageLoading, setUsageLoading] = useState(true);
-	const [currentUsage, setCurrentUsage] = useState({ limit: 0, value: 0, renewDate: Date.now() });
 
 	const handleClickOutside = (e) => {
 		if (publishPanelRef.current && !publishPanelRef.current.contains(e.target)) {
@@ -18,11 +15,6 @@ export default function PublishPanel({ hidePublishPanel }) {
 	};
 
 	useEffect(() => {
-		/**
-		 * Get usage info for current user
-		 */
-		const getUsage = async () => {};
-
 		document.addEventListener("click", handleClickOutside);
 		return () => {
 			document.removeEventListener("click", handleClickOutside);
@@ -45,6 +37,7 @@ export default function PublishPanel({ hidePublishPanel }) {
 					</svg>
 				</button>
 			</div>
+			<Usage />
 			<Visibility />
 			<CampaignURL />
 			<ShareOptions />
