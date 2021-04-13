@@ -3,11 +3,14 @@ import Refund from "./Refund";
 import SubscriptionStatus from "./SubscriptionStatus";
 import SubscriptionPlans from "./SubscriptionPlans";
 import SubscriptionCancel from "./SubscriptionCancel";
+import axios from "axios";
 
 export default function Subscription() {
 	const [currentPlan, setCurrentPlan] = useState(""); // @todo set based on user current plan
 	const [currentPlanTerm, setCurrentPlanTerm] = useState("monthly"); // @todo set based on user current plan term
 	const [planTerm, setPlanTerm] = useState("yearly"); // @todo set based on user current plan term
+
+	const [requestCancelToken, setRequestCancelToken] = useState();
 
 	const plans = {
 		basic: {
@@ -41,8 +44,45 @@ export default function Subscription() {
 		 * @todo update current plan in state
 		 * @todo update usage limits and dates
 		 */
+
+		if (requestCancelToken) {
+			requestCancelToken.cancel();
+		}
+
+		let source = axios.CancelToken.source();
+		setRequestCancelToken(source);
+
 		setCurrentPlan(plan);
 		setCurrentPlanTerm(planTerm);
+
+		/* try {
+			const updateResult = await axios.put(
+				`/api/subscription/create`,
+				{
+					campaignId: campaign._id,
+					url,
+				},
+				{
+					headers: {
+						"Content-Type": "application/json",
+					},
+				},
+				{ cancelToken: source.token }
+			);
+
+			if (updateResult.data.success !== true) {
+				setUpdateError(updateResult.data.errorMessage);
+			} else {
+				// add url to state
+				updateCampaignDataInState("url", url);
+			}
+		} catch (error) {
+			if (axios.isCancel(error)) {
+				return;
+			}
+			console.log(error);
+			setUpdateError("An error occurred. Please, try again.");
+		} */
 	};
 
 	return (
