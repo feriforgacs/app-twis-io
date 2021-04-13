@@ -7,6 +7,7 @@ import dateFnsParse from "date-fns/parse";
 import { GlobalContext } from "../../../context/GlobalState";
 import "react-day-picker/lib/style.css";
 import styles from "../CampaignSettings.module.scss";
+import Usage from "./Usage";
 
 export default function Visibility() {
 	const { campaign, updateCampaignData } = useContext(GlobalContext);
@@ -54,6 +55,7 @@ export default function Visibility() {
 			{/* Campaign Visiblity Dates */}
 			{active && (
 				<>
+					<Usage />
 					<div className={styles.settingsPanelSection}>
 						<label className={styles.settingsPanelLabel}>Campaign Visible From</label>
 						<DayPickerInput

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { format } from "date-fns";
-import styles from "../CampaignSettings.module.scss";
+import styles from "../screen-components/ScreenSettings.module.scss";
 
 export default function Usage() {
 	const [usageLoading, setUsageLoading] = useState(true);
@@ -67,25 +67,39 @@ export default function Usage() {
 	}, []);
 
 	return (
-		<div className={styles.settingsPanelSection}>
+		<>
 			{usageLoading ? (
-				"loading..."
+				""
 			) : (
-				<div>
-					{usageLeft && !currentUsageError ? (
-						<>
-							With your current plan, you can collect {usageLeft} more unique participants until {format(new Date(currentUsage.renewDate), "yyyy.MM.dd.")} without additional costs.
-						</>
-					) : (
-						<>You&apos;ve reached your monthly usage limit. It&apos;ll reset on {format(new Date(currentUsage.renewDate), "yyyy.MM.dd.")}</>
-					)}
-					Check detailed usage info under{" "}
-					<a href="/account" target="_blank" rel="noopener noreferrer">
-						your account
-					</a>
-					.
+				<div className={`${styles.settingsSection} item-settings`}>
+					<p className={styles.itemInfo}>
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5a38fc" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+							<circle cx="12" cy="12" r="10"></circle>
+							<line x1="12" y1="16" x2="12" y2="12"></line>
+							<line x1="12" y1="8" x2="12.01" y2="8"></line>
+						</svg>
+						<span>
+							{usageLeft && !currentUsageError ? (
+								<>
+									With your current plan, you can collect{" "}
+									<strong>
+										{usageLeft} more unique participants until {format(new Date(currentUsage.renewDate), "yyyy.MM.dd.")}
+									</strong>{" "}
+									without additional costs.
+								</>
+							) : (
+								<>
+									<strong>You&apos;ve reached your monthly usage limit.</strong> It&apos;ll reset on {format(new Date(currentUsage.renewDate), "yyyy.MM.dd.")}. Your campaigns will keep collecting participant information but you&apos;ll have some additional costs.
+								</>
+							)}
+							<br />
+							<a href="/account" target="_blank" rel="noopener noreferrer">
+								View detailed usage information.
+							</a>
+						</span>
+					</p>
 				</div>
 			)}
-		</div>
+		</>
 	);
 }

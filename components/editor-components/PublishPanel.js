@@ -2,7 +2,6 @@ import { useRef, useEffect } from "react";
 import CampaignURL from "./campaign-settings-components/CampaignURL";
 import Visibility from "./campaign-settings-components/Visibility";
 import ShareOptions from "./campaign-settings-components/ShareOptions";
-import Usage from "./campaign-settings-components/Usage";
 import styles from "./CampaignSettings.module.scss";
 
 export default function PublishPanel({ hidePublishPanel }) {
@@ -37,7 +36,6 @@ export default function PublishPanel({ hidePublishPanel }) {
 					</svg>
 				</button>
 			</div>
-			<Usage />
 			<Visibility />
 			<CampaignURL />
 			<ShareOptions />
