@@ -9,7 +9,7 @@ import PageActionsHeader from "../PageActionsHeader";
 
 export default function CampaignCreate() {
 	const router = useRouter();
-	const [name, setName] = useState(`My Campaign - ${format(new Date(), "yyyy.MM.dd. HH:mm")}`);
+	const [name, setName] = useState(`My Campaign - ${format(new Date(), "do MMM yyyy HH:mm")}`);
 	const [type, setType] = useState("quiz");
 	const [loading, setLoading] = useState(false);
 	const [toastMessage, setToastMessage] = useState(false);

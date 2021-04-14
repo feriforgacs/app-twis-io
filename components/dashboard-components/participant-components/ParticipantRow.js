@@ -87,7 +87,7 @@ export default function ParticipantRow({ id, name = "", email = "", campaign, cr
 		<tr className={`participant-list__item ${modalVisible || navigationVisible ? "participant-list__item--active" : ""}`}>
 			<td className="item__created">
 				<Link href={`/participants/${id}`}>
-					<a title="View participant info">{format(new Date(createdAt), "yyyy.MM.dd. HH:mm:ss")}</a>
+					<a title="View participant info">{format(new Date(createdAt), "do MMM yyyy HH:mm:ss")}</a>
 				</Link>
 			</td>
 			<td className={`item__name`}>

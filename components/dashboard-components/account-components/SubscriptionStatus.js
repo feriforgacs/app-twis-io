@@ -72,7 +72,7 @@ export default function SubscriptionStatus({ currentPlan, currentPlanTerm, plans
 						<tr>
 							<td>Usage limit:</td>
 							<td>
-								You can collect {currentUsage.limit} unique participants until {format(new Date(currentUsage.renewDate), "yyy.MM.dd.")}
+								You can collect {currentUsage.limit} unique participants until {format(new Date(currentUsage.renewDate), "do MMM yyyy")}
 							</td>
 						</tr>
 
@@ -85,8 +85,8 @@ export default function SubscriptionStatus({ currentPlan, currentPlanTerm, plans
 
 						{currentPlan && (
 							<tr>
-								<td>Usage reset date:</td>
-								<td>{format(new Date(currentUsage.renewDate), "yyy.MM.dd.")}</td>
+								<td>Usage resets on:</td>
+								<td>{format(new Date(currentUsage.renewDate), "do MMM yyyy")}</td>
 							</tr>
 						)}
 

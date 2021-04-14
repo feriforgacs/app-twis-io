@@ -79,7 +79,7 @@ export default function ParticipantDetails({ participantData, participantAnswers
 				</div>
 				<div className="participant__row">
 					<div className="participant__cell">Created at:</div>
-					<div className="participant__cell">{format(new Date(participantData.participant.createdAt), "yyyy.MM.dd. HH:mm:ss")}</div>
+					<div className="participant__cell">{format(new Date(participantData.participant.createdAt), "do MMM yyyy HH:mm:ss")}</div>
 				</div>
 
 				<div className="participant__row">

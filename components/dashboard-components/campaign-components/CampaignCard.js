@@ -14,8 +14,8 @@ export default function CampaignCard({ _id, name, url, type, status, participant
 	const [duplicateLoading, setDuplicateLoading] = useState(false);
 
 	let expired = false;
-	const visibleToDate = format(new Date(visibleTo), "yyyy.MM.dd.");
-	const today = format(new Date(Date.now()), "yyyy.MM.dd.");
+	const visibleToDate = format(new Date(visibleTo), "do MMM yyyy");
+	const today = format(new Date(Date.now()), "do MMM yyyy");
 
 	if (visibleToDate < today) {
 		expired = true;
@@ -220,13 +220,13 @@ export default function CampaignCard({ _id, name, url, type, status, participant
 							<span className="mr-5">
 								<Image src="/images/icons/icon-calendar.svg" width={15} height={15} alt="Camapign visible from" />
 							</span>
-							Visible from: <strong>{format(new Date(visibleFrom), "yyyy.MM.dd.")}</strong>
+							Visible from: <strong>{format(new Date(visibleFrom), "do MMM yyyy")}</strong>
 						</div>
 						<div className="campaign-visible-to campaign-info">
 							<span className="mr-5">
 								<Image src="/images/icons/icon-calendar.svg" width={15} height={15} alt="Camapign visible to" />
 							</span>
-							Visible to: <strong>{format(new Date(visibleTo), "yyyy.MM.dd.")}</strong>
+							Visible to: <strong>{format(new Date(visibleTo), "do MMM yyyy")}</strong>
 						</div>
 					</div>
 				</div>

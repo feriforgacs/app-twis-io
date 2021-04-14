@@ -16,7 +16,7 @@ export default function Visibility() {
 	const [visibleFrom, setVisibleFrom] = useState(new Date(campaign.visibleFrom) || new Date());
 	const [visibleTo, setVisibleTo] = useState(new Date(campaign.visibleTo) || new Date());
 
-	const dateFormat = "yyyy.MM.dd.";
+	const dateFormat = "do MMM yyyy";
 
 	const parseDate = (str, format, locale) => {
 		const parsed = dateFnsParse(str, format, new Date(), { locale });

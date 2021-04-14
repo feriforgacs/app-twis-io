@@ -83,13 +83,13 @@ export default function Usage() {
 								<>
 									With your current plan, you can collect{" "}
 									<strong>
-										{usageLeft} more unique participants until {format(new Date(currentUsage.renewDate), "yyyy.MM.dd.")}
+										{usageLeft} more unique participants until {format(new Date(currentUsage.renewDate), "do MMM yyyy")}
 									</strong>{" "}
 									without additional costs.
 								</>
 							) : (
 								<>
-									<strong>You&apos;ve reached your monthly usage limit.</strong> It&apos;ll reset on {format(new Date(currentUsage.renewDate), "yyyy.MM.dd.")}. Your campaigns will keep collecting participant information but you&apos;ll have some additional costs.
+									<strong>You&apos;ve reached your monthly usage limit.</strong> It&apos;ll reset on {format(new Date(currentUsage.renewDate), "do MMM yyyy")}. Your campaigns will keep collecting participant information but you&apos;ll have some additional costs.
 								</>
 							)}
 							<br />
