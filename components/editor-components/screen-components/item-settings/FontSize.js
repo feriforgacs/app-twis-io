@@ -23,7 +23,7 @@ export default function FontSize() {
 	 * @param {obj} e Click event object
 	 */
 	const handleClickOutside = (e) => {
-		if (!fontSizeSelectorRef.current.contains(e.target)) {
+		if (fontSizeSelectorRef.current && !fontSizeSelectorRef.current.contains(e.target)) {
 			setFontSizeSelectorVisible(false);
 		}
 	};

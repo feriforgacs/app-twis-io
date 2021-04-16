@@ -22,7 +22,7 @@ export default function FontFamily() {
 	 * @param {obj} e Click event object
 	 */
 	const handleClickOutside = (e) => {
-		if (!fontFamilySelectorRef.current.contains(e.target)) {
+		if (fontFamilySelectorRef.current && !fontFamilySelectorRef.current.contains(e.target)) {
 			setFontSelectorVisible(false);
 		}
 	};
