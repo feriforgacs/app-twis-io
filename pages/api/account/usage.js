@@ -12,7 +12,7 @@ const cors = initMiddleware(
 );
 
 export default async function UsageRequestHandler(req, res) {
-	//await cors(req, res);
+	await cors(req, res);
 
 	const authStatus = await AuthCheck(req, res);
 	if (!authStatus) {
