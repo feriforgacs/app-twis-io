@@ -101,6 +101,12 @@ export default function Screen({ screen }) {
 					{screen.type === "question" || screen.type === "info" ? <ScreenAdditionalActions screen={screen} /> : ""}
 				</div>
 				<div ref={drop} className={styles.screenBodyContainer}>
+					<div className={styles.screenBodySafeArea}>
+						<span>Safe area</span>
+						<div>
+							<p>Keep important content in this area to make sure it&apos;ll be visible on most mobile devices</p>
+						</div>
+					</div>
 					<div
 						ref={screenRef}
 						onMouseDown={(e) => {

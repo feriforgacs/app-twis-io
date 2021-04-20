@@ -102,3 +102,56 @@
 .screenBodyContainer {
 	position: relative;
 }
+
+.screenBodySafeArea {
+	border: 2px dashed #ddd;
+	height: 500px;
+	left: -20px;
+	position: absolute;
+	top: 70px;
+	width: 400px;
+
+	span {
+		color: #ccc;
+		cursor: default;
+		display: block;
+		font-size: 13px;
+		font-weight: bold;
+		height: 20px;
+		line-height: 20px;
+		margin-left: -240px;
+		margin-top: 240px;
+		text-align: center;
+		text-transform: uppercase;
+		transform: rotate(-90deg);
+		width: 500px;
+
+		&:hover {
+			& + div {
+				display: flex;
+			}
+		}
+	}
+
+	div {
+		background: rgba(0, 0, 0, 0.5);
+		backdrop-filter: blur(5px);
+		align-items: center;
+		display: none;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		width: 100%;
+		z-index: 9999;
+
+		p {
+			color: #fff;
+			font-size: 0.8rem;
+			font-weight: bold;
+			line-height: 150%;
+			margin: 0;
+			padding: 4rem;
+			text-align: center;
+		}
+	}
+}
