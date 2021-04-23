@@ -1,4 +1,4 @@
-export default function SubscriptionPlans({ planTerm, setPlanTerm, currentPlan, plans, currentPlanTerm, setSubscription }) {
+export default function SubscriptionPlans({ planTerm, setPlanTerm, currentPlan, plans, currentPlanTerm, initiateCheckout }) {
 	return (
 		<>
 			<div className="subscription__terms">
@@ -45,7 +45,16 @@ export default function SubscriptionPlans({ planTerm, setPlanTerm, currentPlan, 
 					)}
 
 					{(!currentPlan || currentPlan !== "basic" || planTerm !== currentPlanTerm) && (
-						<button className="button button--primary" onClick={() => setSubscription("basic")}>
+						<button
+							className="button button--primary"
+							onClick={() => {
+								if (planTerm === "monthly") {
+									initiateCheckout(plans.basic.productIdMonthly);
+								} else {
+									initiateCheckout(plans.basic.productIdYearly);
+								}
+							}}
+						>
 							Choose to this plan
 						</button>
 					)}
@@ -85,7 +94,16 @@ export default function SubscriptionPlans({ planTerm, setPlanTerm, currentPlan, 
 					)}
 
 					{(!currentPlan || currentPlan !== "pro" || planTerm !== currentPlanTerm) && (
-						<button className="button button--primary" onClick={() => setSubscription("pro")}>
+						<button
+							className="button button--primary"
+							onClick={() => {
+								if (planTerm === "monthly") {
+									initiateCheckout(plans.pro.productIdMonthly);
+								} else {
+									initiateCheckout(plans.pro.productIdYearly);
+								}
+							}}
+						>
 							Choose to this plan
 						</button>
 					)}
@@ -125,7 +143,16 @@ export default function SubscriptionPlans({ planTerm, setPlanTerm, currentPlan, 
 					)}
 
 					{(!currentPlan || currentPlan !== "premium" || planTerm !== currentPlanTerm) && (
-						<button className="button button--primary" onClick={() => setSubscription("premium")}>
+						<button
+							className="button button--primary"
+							onClick={() => {
+								if (planTerm === "monthly") {
+									initiateCheckout(plans.premium.productIdMonthly);
+								} else {
+									initiateCheckout(plans.premium.productIdYearly);
+								}
+							}}
+						>
 							Choose to this plan
 						</button>
 					)}
