@@ -22,10 +22,11 @@ export default function Subscription() {
 			}
 			window.Paddle.Setup({
 				vendor: parseInt(process.env.NEXT_PUBLIC_PADDLE_VENDOR_ID),
+				completeDetails: true,
 				eventCallback: (data) => {
 					switch (data.event) {
 						case "Checkout.Complete":
-							console.log(data.eventData);
+							checkoutComplete(data.eventData);
 							break;
 						default:
 							break;
@@ -66,14 +67,56 @@ export default function Subscription() {
 		},
 	};
 
-	const checkoutComplete = (data) => {
+	const checkoutComplete = async (data) => {
 		console.log(data);
+
+		if (requestCancelToken) {
+			requestCancelToken.cancel();
+		}
+
+		let source = axios.CancelToken.source();
+		setRequestCancelToken(source);
+
+		const { plan, planTerm } = JSON.parse(data.checkout.passthrough);
+
+		try {
+			const result = await axios.post(
+				`/api/subscription/create`,
+				{
+					checkoutId: data.checkout.id,
+					customerId: data.user.id,
+					productId: data.product.id,
+					plan: plan,
+					planTerm: planTerm,
+				},
+				{
+					headers: {
+						"Content-Type": "application/json",
+					},
+				},
+				{ cancelToken: source.token }
+			);
+
+			if (result.data.success !== true) {
+				alert("An error occured, please refresh the page and try again");
+			} else {
+				setCurrentPlan(plan);
+				setCurrentPlanTerm(planTerm);
+			}
+		} catch (error) {
+			if (axios.isCancel(error)) {
+				return;
+			}
+			console.log(error);
+			alert("An error occurred. Please, try again.");
+		}
 	};
 
-	const initiateCheckout = (productId) => {
+	const initiateCheckout = (productId, plan, planTerm) => {
 		paddle.Checkout.open({
 			product: productId,
 			email: session.user.email || "",
+			passthrough: JSON.stringify({ plan, planTerm }),
 		});
 	};
 

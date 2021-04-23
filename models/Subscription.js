@@ -12,10 +12,10 @@ const subscriptionSchema = new mongoose.Schema({
 	paymentDate: {
 		type: Date,
 	},
-	subscriptionId: {
+	checkoutId: {
 		type: String,
 	},
-	planId: {
+	productId: {
 		type: String,
 	},
 	cancelUrl: {
@@ -26,6 +26,9 @@ const subscriptionSchema = new mongoose.Schema({
 	},
 	state: {
 		type: String,
+	},
+	overagesPrice: {
+		type: Number,
 	},
 	createdAt: {
 		type: Date,

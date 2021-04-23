@@ -48,11 +48,8 @@ export default function SubscriptionPlans({ planTerm, setPlanTerm, currentPlan, 
 						<button
 							className="button button--primary"
 							onClick={() => {
-								if (planTerm === "monthly") {
-									initiateCheckout(plans.basic.productIdMonthly);
-								} else {
-									initiateCheckout(plans.basic.productIdYearly);
-								}
+								const productId = planTerm === "monthly" ? plans.basic.productIdMonthly : plans.basic.productIdYearly;
+								initiateCheckout(productId, "basic", planTerm);
 							}}
 						>
 							Choose to this plan
@@ -97,11 +94,8 @@ export default function SubscriptionPlans({ planTerm, setPlanTerm, currentPlan, 
 						<button
 							className="button button--primary"
 							onClick={() => {
-								if (planTerm === "monthly") {
-									initiateCheckout(plans.pro.productIdMonthly);
-								} else {
-									initiateCheckout(plans.pro.productIdYearly);
-								}
+								const productId = planTerm === "monthly" ? plans.pro.productIdMonthly : plans.pro.productIdYearly;
+								initiateCheckout(productId, "pro", planTerm);
 							}}
 						>
 							Choose to this plan
@@ -146,11 +140,8 @@ export default function SubscriptionPlans({ planTerm, setPlanTerm, currentPlan, 
 						<button
 							className="button button--primary"
 							onClick={() => {
-								if (planTerm === "monthly") {
-									initiateCheckout(plans.premium.productIdMonthly);
-								} else {
-									initiateCheckout(plans.premium.productIdYearly);
-								}
+								const productId = planTerm === "monthly" ? plans.premium.productIdMonthly : plans.premium.productIdYearly;
+								initiateCheckout(productId, "premium", planTerm);
 							}}
 						>
 							Choose to this plan
