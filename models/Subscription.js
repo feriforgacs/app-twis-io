@@ -6,17 +6,28 @@ const subscriptionSchema = new mongoose.Schema({
 		ref: "User",
 		required: [true, "User id is required for subscription"],
 	},
+	plan: {
+		type: String,
+		required: [true, "Subscription plan is required"],
+	},
+	panTerm: {
+		type: String,
+		required: [true, "Subscription term is required"],
+	},
 	customerId: {
 		type: String,
+		required: [true, "Customer ID is required"],
 	},
 	paymentDate: {
 		type: Date,
 	},
 	checkoutId: {
 		type: String,
+		required: [true, "Checkout ID is required"],
 	},
 	productId: {
 		type: String,
+		required: [true, "Product ID is required"],
 	},
 	cancelUrl: {
 		type: String,

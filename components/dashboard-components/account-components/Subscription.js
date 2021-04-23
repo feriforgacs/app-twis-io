@@ -8,9 +8,9 @@ import axios from "axios";
 
 export default function Subscription() {
 	const [session] = useSession();
-	const [currentPlan, setCurrentPlan] = useState(""); // @todo set based on user current plan
-	const [currentPlanTerm, setCurrentPlanTerm] = useState("monthly"); // @todo set based on user current plan term
-	const [planTerm, setPlanTerm] = useState("yearly"); // @todo set based on user current plan term
+	const [currentPlan, setCurrentPlan] = useState("");
+	const [currentPlanTerm, setCurrentPlanTerm] = useState("monthly");
+	const [planTerm, setPlanTerm] = useState("yearly");
 	const [paddle, setPaddle] = useState();
 
 	const [requestCancelToken, setRequestCancelToken] = useState();
