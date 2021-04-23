@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Refund from "./Refund";
 import SubscriptionStatus from "./SubscriptionStatus";
 import SubscriptionPlans from "./SubscriptionPlans";
@@ -9,8 +9,17 @@ export default function Subscription() {
 	const [currentPlan, setCurrentPlan] = useState(""); // @todo set based on user current plan
 	const [currentPlanTerm, setCurrentPlanTerm] = useState("monthly"); // @todo set based on user current plan term
 	const [planTerm, setPlanTerm] = useState("yearly"); // @todo set based on user current plan term
+	const [paddle, setPaddle] = useState();
 
 	const [requestCancelToken, setRequestCancelToken] = useState();
+
+	useEffect(() => {
+		if (window.Paddle) {
+			window.Paddle.Environment.set("sandbox");
+			window.Paddle.Setup({ vendor: 1866 });
+			setPaddle(window.Paddle);
+		}
+	}, []);
 
 	const plans = {
 		basic: {
@@ -54,6 +63,8 @@ export default function Subscription() {
 
 		setCurrentPlan(plan);
 		setCurrentPlanTerm(planTerm);
+
+		paddle.Checkout.open({ product: 10825 });
 
 		/* try {
 			const updateResult = await axios.put(
