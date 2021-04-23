@@ -16,6 +16,9 @@ export default function Subscription() {
 	const [requestCancelToken, setRequestCancelToken] = useState();
 
 	useEffect(() => {
+		/**
+		 * Initiate Paddle
+		 */
 		if (window.Paddle) {
 			if (process.env.NEXT_PUBLIC_PADDLE_ENVIRONMENT === "sandbox") {
 				window.Paddle.Environment.set("sandbox");
@@ -35,6 +38,10 @@ export default function Subscription() {
 			});
 			setPaddle(window.Paddle);
 		}
+
+		/**
+		 * @todo Get user subscription information from the database
+		 */
 	}, []);
 
 	const plans = {
@@ -68,8 +75,6 @@ export default function Subscription() {
 	};
 
 	const checkoutComplete = async (data) => {
-		console.log(data);
-
 		if (requestCancelToken) {
 			requestCancelToken.cancel();
 		}
@@ -87,7 +92,6 @@ export default function Subscription() {
 					customerId: data.user.id,
 					productId: data.product.id,
 					plan: plan,
-					planTerm: planTerm,
 				},
 				{
 					headers: {
