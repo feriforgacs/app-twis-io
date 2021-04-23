@@ -57,45 +57,43 @@ export default function SubscriptionStatus({ currentPlan, currentPlanTerm, plans
 			) : (
 				<div className="user-subscription">
 					<table>
-						<tr>
-							<td>Your current plan:</td>
-							<td>{currentPlan ? `${plans[currentPlan].name} - ${currentPlanTerm} (TODO / month)` : "You are not subscribed to any of the plans at the moment"}</td>
-						</tr>
-
-						{currentPlan && (
+						<tbody>
 							<tr>
-								<td>Subscription renew date:</td>
-								<td>TODO</td>
+								<td>Your current plan:</td>
+								<td>{currentPlan ? `${plans[currentPlan].name} - ${currentPlanTerm} (TODO / month)` : "You are not subscribed to any of the plans at the moment"}</td>
 							</tr>
-						)}
-
-						<tr>
-							<td>Usage limit:</td>
-							<td>
-								You can collect {currentUsage.limit} unique participants until {format(new Date(currentUsage.renewDate), "do MMM yyyy")}
-							</td>
-						</tr>
-
-						<tr>
-							<td>Usage status:</td>
-							<td>
-								{currentUsage.value} / {currentUsage.limit} unique participants collected
-							</td>
-						</tr>
-
-						{currentPlan && (
+							{currentPlan ? (
+								<tr>
+									<td>Subscription renew date:</td>
+									<td>TODO</td>
+								</tr>
+							) : null}
 							<tr>
-								<td>Usage resets on:</td>
-								<td>{format(new Date(currentUsage.renewDate), "do MMM yyyy")}</td>
+								<td>Usage limit:</td>
+								<td>
+									You can collect {currentUsage.limit} unique participants until {format(new Date(currentUsage.renewDate), "do MMM yyyy")}
+								</td>
 							</tr>
-						)}
 
-						{currentPlan && currentUsage.value > currentUsage.limit && (
 							<tr>
-								<td>Overages cost:</td>
-								<td>${Math.round((currentUsage.value - currentUsage.limit) * plans[currentPlan].overagesCost * 100) / 100}</td>
+								<td>Usage status:</td>
+								<td>
+									{currentUsage.value} / {currentUsage.limit} unique participants collected
+								</td>
 							</tr>
-						)}
+							{currentPlan ? (
+								<tr>
+									<td>Usage resets on:</td>
+									<td>{format(new Date(currentUsage.renewDate), "do MMM yyyy")}</td>
+								</tr>
+							) : null}
+							{currentPlan && currentUsage.value > currentUsage.limit ? (
+								<tr>
+									<td>Overages cost:</td>
+									<td>${Math.round((currentUsage.value - currentUsage.limit) * plans[currentPlan].overagesCost * 100) / 100}</td>
+								</tr>
+							) : null}
+						</tbody>
 					</table>
 				</div>
 			)}
