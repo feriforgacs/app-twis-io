@@ -11,7 +11,7 @@ export default function SubscriptionPlans({ planTerm, setPlanTerm, currentPlan, 
 				</span>
 			</div>
 			<div className="subscription__options">
-				<div className={`subscription-option ${currentPlan && currentPlan === "basic" ? "subscription-option--current" : ""}`}>
+				<div className={`subscription-option ${currentPlan && currentPlan === "basic" && planTerm === currentPlanTerm ? "subscription-option--current" : ""}`}>
 					<h4>
 						<span role="img" aria-label="thumbs up">
 							👍
@@ -57,7 +57,7 @@ export default function SubscriptionPlans({ planTerm, setPlanTerm, currentPlan, 
 					)}
 				</div>
 
-				<div className={`subscription-option ${currentPlan && currentPlan === "pro" ? "subscription-option--current" : ""}`}>
+				<div className={`subscription-option ${currentPlan && currentPlan === "pro" && planTerm === currentPlanTerm ? "subscription-option--current" : ""}`}>
 					<h4>
 						<span role="img" aria-label="thumbs up">
 							⭐
@@ -103,7 +103,7 @@ export default function SubscriptionPlans({ planTerm, setPlanTerm, currentPlan, 
 					)}
 				</div>
 
-				<div className={`subscription-option ${currentPlan && currentPlan === "premium" ? "subscription-option--current" : ""}`}>
+				<div className={`subscription-option ${currentPlan && currentPlan === "premium" && planTerm === currentPlanTerm ? "subscription-option--current" : ""}`}>
 					<h4>
 						<span role="img" aria-label="thumbs up">
 							🚀
