@@ -35,7 +35,7 @@ const subscriptionSchema = new mongoose.Schema({
 	updateUrl: {
 		type: String,
 	},
-	state: {
+	status: {
 		type: String,
 	},
 	overagesPrice: {

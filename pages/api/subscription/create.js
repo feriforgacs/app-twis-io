@@ -1,9 +1,11 @@
 import Cors from "cors";
 import { getSession } from "next-auth/client";
+import { addMonths } from "date-fns";
 import initMiddleware from "../../../lib/InitMiddleware";
 import AuthCheck from "../../../lib/AuthCheck";
 import DatabaseConnect from "../../../lib/DatabaseConnect";
 import Subscription from "../../../models/Subscription";
+import Usage from "../../../models/Usage";
 
 const cors = initMiddleware(
 	Cors({
@@ -62,7 +64,7 @@ export default async function SubscriptionCreateRequest(req, res) {
 				paymentDate: Date.now(),
 				checkoutId,
 				productId,
-				state: "active",
+				status: "active",
 				overagesPrice,
 			},
 			{ upsert: true, new: true, setDefaultsOnInsert: true }
@@ -71,14 +73,61 @@ export default async function SubscriptionCreateRequest(req, res) {
 		if (!subscription) {
 			return res.status(400).json({ success: false, error: "can't create or update subscription" });
 		}
-
-		return res.status(200).json({ success: true });
 	} catch (error) {
 		console.log(error);
 		return res.status(400).json({ success: false, error: error });
 	}
 
 	/**
-	 * @todo Update usage in the db
+	 * Update usage in the db
 	 */
+	try {
+		const usage = await Usage.findOne({ userId: session.user.id });
+
+		if (!usage) {
+			return res.status(400).json({ success: false, error: "can't get usage data from the db" });
+		}
+
+		let usageValue = 0;
+		// decrease usage value by trial usage limit
+		if (usage.trialAccount) {
+			usageValue = usage.value - 10;
+		}
+
+		let usageLimit = 10;
+		if (plan === "basic") {
+			usageLimit = process.env.NEXT_PUBLIC_BASIC_LIMIT;
+		} else if (plan === "pro") {
+			usageLimit = process.env.NEXT_PUBLIC_PRO_LIMIT;
+		} else if (plan === "premium") {
+			usageLimit = process.env.NEXT_PUBLIC_PREMIUM_LIMIT;
+		}
+
+		let limitReached = null;
+		if (usageValue >= usageLimit) {
+			limitReached = Date.now();
+		}
+
+		let renewDate = addMonths(new Date(Date.now()), 1);
+		const updatedUsage = await Usage.findOneAndUpdate(
+			{ _id: usage._id },
+			{
+				value: usageValue,
+				limit: usageLimit,
+				trialAccount: false,
+				renewDate,
+				limitReached,
+				updatedAt: Date.now(),
+			}
+		);
+
+		if (!updatedUsage) {
+			return res.status(400).json({ success: false, error: "can't update usage data in the db" });
+		}
+
+		return res.status(200).json({ success: true });
+	} catch (error) {
+		console.log(error);
+		return res.status(400).json({ success: false, error: error });
+	}
 }
