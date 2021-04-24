@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSession } from "next-auth/client";
 import Refund from "./Refund";
 import SubscriptionStatus from "./SubscriptionStatus";
@@ -11,38 +11,36 @@ export default function Subscription() {
 	const [currentPlan, setCurrentPlan] = useState("");
 	const [currentPlanTerm, setCurrentPlanTerm] = useState("monthly");
 	const [planTerm, setPlanTerm] = useState("yearly");
-	const [paddle, setPaddle] = useState();
+	/* const [paddle, setPaddle] = useState(); */
 
 	const [requestCancelToken, setRequestCancelToken] = useState();
 
-	useEffect(() => {
+	let Paddle = null;
+	if (typeof window !== "undefined" && window.Paddle) {
 		/**
-		 * Initiate Paddle
+		 * Initiate paddle
 		 */
-		if (window.Paddle) {
-			if (process.env.NEXT_PUBLIC_PADDLE_ENVIRONMENT === "sandbox") {
-				window.Paddle.Environment.set("sandbox");
-			}
-			window.Paddle.Setup({
-				vendor: parseInt(process.env.NEXT_PUBLIC_PADDLE_VENDOR_ID),
-				completeDetails: true,
-				eventCallback: (data) => {
-					switch (data.event) {
-						case "Checkout.Complete":
-							checkoutComplete(data.eventData);
-							break;
-						default:
-							break;
-					}
-				},
-			});
-			setPaddle(window.Paddle);
+		Paddle = window.Paddle;
+
+		// set environment
+		if (process.env.NEXT_PUBLIC_PADDLE_ENVIRONMENT === "sandbox") {
+			Paddle.Environment.set("sandbox");
 		}
 
-		/**
-		 * @todo Get user subscription information from the database
-		 */
-	}, []);
+		Paddle.Setup({
+			vendor: parseInt(process.env.NEXT_PUBLIC_PADDLE_VENDOR_ID),
+			completeDetails: true,
+			eventCallback: (data) => {
+				switch (data.event) {
+					case "Checkout.Complete":
+						checkoutComplete(data.eventData);
+						break;
+					default:
+						break;
+				}
+			},
+		});
+	}
 
 	const plans = {
 		basic: {
@@ -117,7 +115,7 @@ export default function Subscription() {
 	};
 
 	const initiateCheckout = (productId, plan, planTerm) => {
-		paddle.Checkout.open({
+		Paddle.Checkout.open({
 			product: productId,
 			email: session.user.email || "",
 			passthrough: JSON.stringify({ plan, planTerm }),
