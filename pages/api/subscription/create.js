@@ -89,9 +89,13 @@ export default async function SubscriptionCreateRequest(req, res) {
 		}
 
 		let usageValue = 0;
-		// decrease usage value by trial usage limit
 		if (usage.trialAccount) {
+			// decrease usage value by trial usage limit
 			usageValue = usage.value - 10;
+		} else if (usage.value > usage.limit) {
+			// user upgrades account, but already reached the usage limit, keep overages
+			// eg, limit was 100, but collected 130 participants » keep 30 participants
+			usageValue = usage.value - usage.limit;
 		}
 
 		let usageLimit = 10;
@@ -105,6 +109,8 @@ export default async function SubscriptionCreateRequest(req, res) {
 
 		let limitReached = null;
 		if (usageValue >= usageLimit) {
+			// user creates subscription or upgrades account, but already had overages
+			// eg limit was 100, but collected 1100 participants » upgrades to 1000 participants / month » already reached the limit
 			limitReached = Date.now();
 		}
 
