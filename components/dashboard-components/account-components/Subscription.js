@@ -11,7 +11,6 @@ export default function Subscription() {
 	const [currentPlan, setCurrentPlan] = useState("");
 	const [currentPlanTerm, setCurrentPlanTerm] = useState("monthly");
 	const [planTerm, setPlanTerm] = useState("yearly");
-	/* const [paddle, setPaddle] = useState(); */
 
 	const [requestCancelToken, setRequestCancelToken] = useState();
 

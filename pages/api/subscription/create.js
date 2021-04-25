@@ -93,7 +93,7 @@ export default async function SubscriptionCreateRequest(req, res) {
 			// decrease usage value by trial usage limit
 			usageValue = usage.value - 10;
 		} else if (usage.value > usage.limit) {
-			// user upgrades account, but already reached the usage limit, keep overages
+			// user upgrades, downgrades account, but already reached the usage limit, keep overages
 			// eg, limit was 100, but collected 130 participants » keep 30 participants
 			usageValue = usage.value - usage.limit;
 		}
