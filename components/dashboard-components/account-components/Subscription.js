@@ -43,12 +43,10 @@ export default function Subscription() {
 	}
 
 	useEffect(() => {
-		let source;
-
+		/**
+		 * Get subscription data from the database
+		 */
 		const getSubscriptionData = async () => {
-			/**
-			 * @todo get subscription data from the db
-			 */
 			let source = axios.CancelToken.source();
 
 			try {
@@ -64,6 +62,12 @@ export default function Subscription() {
 
 				if (subscription.data.success !== true) {
 					alert("An error occured, please refresh the page and try again");
+					return;
+				}
+
+				if (subscription.data.subscription !== null) {
+					setCurrentPlan(subscription.data.subscription.plan);
+					setCurrentPlanTerm(subscription.data.subscription.planTerm);
 				}
 			} catch (error) {
 				if (axios.isCancel(error)) {
@@ -75,16 +79,21 @@ export default function Subscription() {
 		};
 
 		getSubscriptionData();
-
-		return () => {
-			source.cancel();
-		};
 	}, []);
 
+	/**
+	 * Save subscription data to the db
+	 * @param {obj} data Subscription result object
+	 */
 	const checkoutComplete = async (data) => {
 		if (requestCancelToken) {
 			requestCancelToken.cancel();
 		}
+
+		/**
+		 * @todo subscription id and order id are not in the data object
+		 */
+		console.log(data);
 
 		let source = axios.CancelToken.source();
 		setRequestCancelToken(source);
@@ -126,6 +135,12 @@ export default function Subscription() {
 		}
 	};
 
+	/**
+	 * Init Paddle checkout with the selected subscription
+	 * @param {int} productId Selected subscription id
+	 * @param {string} plan Selected plan (basic, pro, premium)
+	 * @param {string} planTerm Selected plan term (monthly, yearly)
+	 */
 	const initiateCheckout = (productId, plan, planTerm) => {
 		Paddle.Checkout.open({
 			product: productId,
