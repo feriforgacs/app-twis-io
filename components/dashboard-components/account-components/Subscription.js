@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSession } from "next-auth/client";
 import Refund from "./Refund";
 import SubscriptionStatus from "./SubscriptionStatus";
 import SubscriptionPlans from "./SubscriptionPlans";
 import SubscriptionCancel from "./SubscriptionCancel";
 import axios from "axios";
+import Plans from "../../../utils/SubscriptionPlans";
 
 export default function Subscription() {
 	const [session] = useSession();
@@ -41,42 +42,49 @@ export default function Subscription() {
 		});
 	}
 
-	const plans = {
-		basic: {
-			name: "Basic",
-			productIdMonthly: process.env.NEXT_PUBLIC_BASIC_MONTLY_PRODUCT_ID,
-			productIdYearly: process.env.NEXT_PUBLIC_BASIC_YEARLY_PRODUCT_ID,
-			priceBilledMonthly: process.env.NEXT_PUBLIC_PRICE_BASIC_MONTHLY,
-			priceBilledYearly: process.env.NEXT_PUBLIC_PRICE_BASIC_YEARLY,
-			overagesCost: process.env.NEXT_PUBLIC_PRICE_BASIC_OVERAGES,
-			limit: process.env.NEXT_PUBLIC_BASIC_LIMIT,
-		},
-		pro: {
-			name: "Pro",
-			productIdMonthly: process.env.NEXT_PUBLIC_PRO_MONTLY_PRODUCT_ID,
-			productIdYearly: process.env.NEXT_PUBLIC_PRO_YEARLY_PRODUCT_ID,
-			priceBilledMonthly: process.env.NEXT_PUBLIC_PRICE_PRO_MONTHLY,
-			priceBilledYearly: process.env.NEXT_PUBLIC_PRICE_PRO_YEARLY,
-			overagesCost: process.env.NEXT_PUBLIC_PRICE_PRO_OVERAGES,
-			limit: process.env.NEXT_PUBLIC_PRO_LIMIT,
-		},
-		premium: {
-			name: "Premium",
-			productIdMonthly: process.env.NEXT_PUBLIC_PREMIUM_MONTLY_PRODUCT_ID,
-			productIdYearly: process.env.NEXT_PUBLIC_PREMIUM_YEARLY_PRODUCT_ID,
-			priceBilledMonthly: process.env.NEXT_PUBLIC_PRICE_PREMIUM_MONTHLY,
-			priceBilledYearly: process.env.NEXT_PUBLIC_PRICE_PREMIUM_YEARLY,
-			overagesCost: process.env.NEXT_PUBLIC_PRICE_PREMIUM_OVERAGES,
-			limit: process.env.NEXT_PUBLIC_PREMIUM_LIMIT,
-		},
-	};
+	useEffect(() => {
+		let source;
+
+		const getSubscriptionData = async () => {
+			/**
+			 * @todo get subscription data from the db
+			 */
+			let source = axios.CancelToken.source();
+
+			try {
+				const subscription = await axios.get(
+					`/api/subscription/data`,
+					{
+						headers: {
+							"Content-Type": "application/json",
+						},
+					},
+					{ cancelToken: source.token }
+				);
+
+				if (subscription.data.success !== true) {
+					alert("An error occured, please refresh the page and try again");
+				}
+			} catch (error) {
+				if (axios.isCancel(error)) {
+					return;
+				}
+				console.log(error);
+				alert("An error occurred. Please, try again.");
+			}
+		};
+
+		getSubscriptionData();
+
+		return () => {
+			source.cancel();
+		};
+	}, []);
 
 	const checkoutComplete = async (data) => {
 		if (requestCancelToken) {
 			requestCancelToken.cancel();
 		}
-
-		console.log(data);
 
 		let source = axios.CancelToken.source();
 		setRequestCancelToken(source);
@@ -92,7 +100,8 @@ export default function Subscription() {
 					productId: data.product.id,
 					subscriptionId: data.order.subscription_id,
 					orderId: data.order.order_id,
-					plan: plan,
+					plan,
+					planTerm,
 				},
 				{
 					headers: {
@@ -129,9 +138,9 @@ export default function Subscription() {
 		<div>
 			<h3 className="section-title">Subscription</h3>
 
-			<SubscriptionStatus currentPlan={currentPlan} currentPlanTerm={currentPlanTerm} plans={plans} />
+			<SubscriptionStatus currentPlan={currentPlan} currentPlanTerm={currentPlanTerm} plans={Plans} />
 
-			<SubscriptionPlans planTerm={planTerm} setPlanTerm={setPlanTerm} currentPlan={currentPlan} plans={plans} currentPlanTerm={currentPlanTerm} initiateCheckout={initiateCheckout} />
+			<SubscriptionPlans planTerm={planTerm} setPlanTerm={setPlanTerm} currentPlan={currentPlan} plans={Plans} currentPlanTerm={currentPlanTerm} initiateCheckout={initiateCheckout} />
 
 			{currentPlan && <SubscriptionCancel currentPlan={currentPlan} />}
 

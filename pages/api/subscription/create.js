@@ -54,13 +54,35 @@ export default async function SubscriptionCreateRequest(req, res) {
 		return res.status(400).json({ success: false, error: "missing plan value" });
 	}
 
+	const planTerm = req.body.planTerm;
+	if (!planTerm) {
+		return res.status(400).json({ success: false, error: "missing planTerm value" });
+	}
+
 	let overagesPrice = 0;
+	let monthlyFee = 0;
+
 	if (plan === "basic") {
 		overagesPrice = process.env.NEXT_PUBLIC_PRICE_BASIC_OVERAGES;
+		if (planTerm === "monthly") {
+			monthlyFee = process.env.NEXT_PUBLIC_PRICE_BASIC_MONTHLY;
+		} else {
+			monthlyFee = process.env.NEXT_PUBLIC_PRICE_BASIC_YEARLY;
+		}
 	} else if (plan === "pro") {
 		overagesPrice = process.env.NEXT_PUBLIC_PRICE_PRO_OVERAGES;
+		if (planTerm === "monthly") {
+			monthlyFee = process.env.NEXT_PUBLIC_PRICE_PRO_MONTHLY;
+		} else {
+			monthlyFee = process.env.NEXT_PUBLIC_PRICE_PRO_YEARLY;
+		}
 	} else if (plan === "premium") {
 		overagesPrice = process.env.NEXT_PUBLIC_PRICE_PREMIUM_OVERAGES;
+		if (planTerm === "monthly") {
+			monthlyFee = process.env.NEXT_PUBLIC_PRICE_PREMIUM_MONTHLY;
+		} else {
+			monthlyFee = process.env.NEXT_PUBLIC_PRICE_PREMIUM_YEARLY;
+		}
 	}
 
 	/**
@@ -77,6 +99,9 @@ export default async function SubscriptionCreateRequest(req, res) {
 				subscriptionId,
 				orderId,
 				status: "active",
+				plan,
+				planTerm,
+				monthlyFee,
 				overagesPrice,
 			},
 			{ upsert: true, new: true, setDefaultsOnInsert: true }

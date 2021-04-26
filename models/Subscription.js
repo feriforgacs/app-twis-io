@@ -46,6 +46,9 @@ const subscriptionSchema = new mongoose.Schema({
 	status: {
 		type: String,
 	},
+	monthlyFee: {
+		type: Number,
+	},
 	overagesPrice: {
 		type: Number,
 	},
