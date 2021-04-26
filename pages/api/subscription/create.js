@@ -39,6 +39,16 @@ export default async function SubscriptionCreateRequest(req, res) {
 		return res.status(400).json({ success: false, error: "missing productId value" });
 	}
 
+	const subscriptionId = req.body.subscriptionId;
+	if (!subscriptionId) {
+		return res.status(400).json({ success: false, error: "missing subscriptionId value" });
+	}
+
+	const orderId = req.body.orderId;
+	if (!orderId) {
+		return res.status(400).json({ success: false, error: "missing orderId value" });
+	}
+
 	const plan = req.body.plan;
 	if (!plan) {
 		return res.status(400).json({ success: false, error: "missing plan value" });
@@ -64,6 +74,8 @@ export default async function SubscriptionCreateRequest(req, res) {
 				paymentDate: Date.now(),
 				checkoutId,
 				productId,
+				subscriptionId,
+				orderId,
 				status: "active",
 				overagesPrice,
 			},

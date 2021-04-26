@@ -76,6 +76,8 @@ export default function Subscription() {
 			requestCancelToken.cancel();
 		}
 
+		console.log(data);
+
 		let source = axios.CancelToken.source();
 		setRequestCancelToken(source);
 
@@ -88,6 +90,8 @@ export default function Subscription() {
 					checkoutId: data.checkout.id,
 					customerId: data.user.id,
 					productId: data.product.id,
+					subscriptionId: data.order.subscription_id,
+					orderId: data.order.order_id,
 					plan: plan,
 				},
 				{

@@ -25,6 +25,14 @@ const subscriptionSchema = new mongoose.Schema({
 		type: String,
 		required: [true, "Checkout ID is required"],
 	},
+	subscriptionId: {
+		type: Number,
+		required: [true, "Subscription ID is required"],
+	},
+	orderId: {
+		type: Number,
+		required: [true, "Subscription ID is required"],
+	},
 	productId: {
 		type: String,
 		required: [true, "Product ID is required"],
