@@ -23,7 +23,7 @@ export default async function SubscriptionDataRequest(req, res) {
 	const session = await getSession({ req });
 
 	try {
-		const subscription = await Subscription.findOne({ userId: session.user.id });
+		const subscription = await Subscription.findOne({ userId: session.user.id, status: "active" });
 		if (!subscription) {
 			return res.status(200).json({ success: true, subscription: null });
 		}
