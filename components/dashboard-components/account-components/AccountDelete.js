@@ -16,7 +16,7 @@ export default function AccountDelete() {
 		setDeleteLoading(true);
 
 		try {
-			const campaignDeleteRequest = await fetch(`/api/account/delete`, {
+			const accountDeleteRequest = await fetch(`/api/account/delete`, {
 				method: "DELETE",
 				headers: {
 					"Content-Type": "application/json",
@@ -26,11 +26,11 @@ export default function AccountDelete() {
 				}),
 			});
 
-			const campaign = await campaignDeleteRequest.json();
+			const accountDeleteResult = await accountDeleteRequest.json();
 
 			setDeleteLoading(false);
 
-			if (campaign.success !== true) {
+			if (accountDeleteResult.success !== true) {
 				// error
 				setDeleteModalVisible(false);
 				setToastMessage("Can't delete account. Please, try again.");

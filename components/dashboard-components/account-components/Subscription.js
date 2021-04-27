@@ -9,6 +9,7 @@ import Plans from "../../../utils/SubscriptionPlans";
 
 export default function Subscription() {
 	const [session] = useSession();
+	const [activeSubscription, setActiveSubscription] = useState();
 	const [currentPlan, setCurrentPlan] = useState("");
 	const [currentPlanTerm, setCurrentPlanTerm] = useState("monthly");
 	const [planTerm, setPlanTerm] = useState("yearly");
@@ -68,6 +69,7 @@ export default function Subscription() {
 				if (subscription.data.subscription !== null) {
 					setCurrentPlan(subscription.data.subscription.plan);
 					setCurrentPlanTerm(subscription.data.subscription.planTerm);
+					setActiveSubscription(subscription.data.subscription);
 				}
 			} catch (error) {
 				if (axios.isCancel(error)) {
@@ -155,7 +157,7 @@ export default function Subscription() {
 
 			<SubscriptionPlans planTerm={planTerm} setPlanTerm={setPlanTerm} currentPlan={currentPlan} plans={Plans} currentPlanTerm={currentPlanTerm} initiateCheckout={initiateCheckout} />
 
-			{currentPlan && <SubscriptionCancel currentPlan={currentPlan} />}
+			{activeSubscription && <SubscriptionCancel activeSubscription={activeSubscription} setActiveSubscription={setActiveSubscription} setCurrentPlan={setCurrentPlan} setCurrentPlanTerm={setCurrentPlanTerm} />}
 
 			<Refund />
 		</div>
