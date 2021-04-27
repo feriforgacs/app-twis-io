@@ -29,7 +29,7 @@ export default function Subscription() {
 
 		Paddle.Setup({
 			vendor: parseInt(process.env.NEXT_PUBLIC_PADDLE_VENDOR_ID),
-			completeDetails: true,
+			// completeDetails: true,
 			eventCallback: (data) => {
 				switch (data.event) {
 					case "Checkout.Complete":
@@ -85,54 +85,52 @@ export default function Subscription() {
 	 * Save subscription data to the db
 	 * @param {obj} data Subscription result object
 	 */
-	const checkoutComplete = async (data) => {
+	const checkoutComplete = (data) => {
 		if (requestCancelToken) {
 			requestCancelToken.cancel();
 		}
-
-		/**
-		 * @todo subscription id and order id are not in the data object
-		 */
-		console.log(data);
 
 		let source = axios.CancelToken.source();
 		setRequestCancelToken(source);
 
 		const { plan, planTerm } = JSON.parse(data.checkout.passthrough);
 
-		try {
-			const result = await axios.post(
-				`/api/subscription/create`,
-				{
-					checkoutId: data.checkout.id,
-					customerId: data.user.id,
-					productId: data.product.id,
-					subscriptionId: data.order.subscription_id,
-					orderId: data.order.order_id,
-					plan,
-					planTerm,
-				},
-				{
-					headers: {
-						"Content-Type": "application/json",
+		Paddle.Order.details(data.checkout.id, async (orderDetails) => {
+			try {
+				const result = await axios.post(
+					`/api/subscription/create`,
+					{
+						checkoutId: data.checkout.id,
+						customerId: data.user.id,
+						productId: data.product.id,
+						subscriptionId: orderDetails.order.subscription_id,
+						orderId: orderDetails.order.order_id,
+						plan,
+						planTerm,
 					},
-				},
-				{ cancelToken: source.token }
-			);
+					{
+						headers: {
+							"Content-Type": "application/json",
+						},
+					},
+					{ cancelToken: source.token }
+				);
 
-			if (result.data.success !== true) {
-				alert("An error occured, please refresh the page and try again");
-			} else {
-				setCurrentPlan(plan);
-				setCurrentPlanTerm(planTerm);
+				if (result.data.success !== true) {
+					alert("An error occured, please refresh the page and try again");
+				} else {
+					setCurrentPlan(plan);
+					setCurrentPlanTerm(planTerm);
+				}
+			} catch (error) {
+				if (axios.isCancel(error)) {
+					return;
+				}
+				console.log(error);
+				alert("An error occurred. Please, try again.");
 			}
-		} catch (error) {
-			if (axios.isCancel(error)) {
-				return;
-			}
-			console.log(error);
-			alert("An error occurred. Please, try again.");
-		}
+		});
+		return;
 	};
 
 	/**
