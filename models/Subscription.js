@@ -10,7 +10,7 @@ const subscriptionSchema = new mongoose.Schema({
 		type: String,
 		required: [true, "Subscription plan is required"],
 	},
-	panTerm: {
+	planTerm: {
 		type: String,
 		required: [true, "Subscription term is required"],
 	},
