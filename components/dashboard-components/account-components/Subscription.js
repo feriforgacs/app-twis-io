@@ -14,8 +14,8 @@ export default function Subscription() {
 	const [currentPlanTerm, setCurrentPlanTerm] = useState("monthly");
 	const [planTerm, setPlanTerm] = useState("yearly");
 	const [cancelLoading, setCancelLoading] = useState(false);
-
 	const [requestCancelToken, setRequestCancelToken] = useState();
+	const [cancelRequestCancelToken, setCancelRequestCancelToken] = useState();
 
 	let Paddle = null;
 	if (typeof window !== "undefined" && window.Paddle) {
@@ -150,15 +150,18 @@ export default function Subscription() {
 		});
 	};
 
+	/**
+	 * Cancel subscription
+	 */
 	const cancelSubscription = async () => {
 		setCancelLoading(true);
 
-		if (requestCancelToken) {
-			requestCancelToken.cancel();
+		if (cancelRequestCancelToken) {
+			cancelRequestCancelToken.cancel();
 		}
 
 		let source = axios.CancelToken.source();
-		setRequestCancelToken(source);
+		setCancelRequestCancelToken(source);
 
 		try {
 			const subscription = await axios.post(
