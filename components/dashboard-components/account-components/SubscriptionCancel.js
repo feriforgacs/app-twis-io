@@ -1,55 +1,8 @@
 import { useState } from "react";
-import axios from "axios";
 import Modal from "../Modal";
 
-export default function SubscriptionCancel({ activeSubscription, setActiveSubscription, setCurrentPlan, setCurrentPlanTerm }) {
+export default function SubscriptionCancel({ activeSubscription, cancelSubscription, cancelLoading }) {
 	const [cancelModalVisible, setCancelModalVisible] = useState(false);
-	const [cancelLoading, setCancelLoading] = useState(false);
-	const [requestCancelToken, setRequestCancelToken] = useState();
-
-	const cancelSubscription = async () => {
-		setCancelLoading(true);
-
-		if (requestCancelToken) {
-			requestCancelToken.cancel();
-		}
-
-		let source = axios.CancelToken.source();
-		setRequestCancelToken(source);
-
-		try {
-			const subscription = await axios.post(
-				`/api/subscription/cancel`,
-				{
-					subscriptionId: activeSubscription.subscriptionId,
-				},
-				{
-					headers: {
-						"Content-Type": "application/json",
-					},
-				},
-				{ cancelToken: source.token }
-			);
-
-			if (subscription.data.success !== true) {
-				alert("An error occured, please refresh the page and try again");
-				return;
-			}
-
-			setCurrentPlan("");
-			setCurrentPlanTerm("");
-			setActiveSubscription(null);
-			/**
-			 * @todo display success message
-			 */
-		} catch (error) {
-			if (axios.isCancel(error)) {
-				return;
-			}
-			console.log(error);
-			alert("An error occurred. Please, try again.");
-		}
-	};
 
 	return (
 		<div className="subscription__cancel">

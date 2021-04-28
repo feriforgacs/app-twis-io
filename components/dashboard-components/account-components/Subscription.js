@@ -13,6 +13,7 @@ export default function Subscription() {
 	const [currentPlan, setCurrentPlan] = useState("");
 	const [currentPlanTerm, setCurrentPlanTerm] = useState("monthly");
 	const [planTerm, setPlanTerm] = useState("yearly");
+	const [cancelLoading, setCancelLoading] = useState(false);
 
 	const [requestCancelToken, setRequestCancelToken] = useState();
 
@@ -149,6 +150,50 @@ export default function Subscription() {
 		});
 	};
 
+	const cancelSubscription = async () => {
+		setCancelLoading(true);
+
+		if (requestCancelToken) {
+			requestCancelToken.cancel();
+		}
+
+		let source = axios.CancelToken.source();
+		setRequestCancelToken(source);
+
+		try {
+			const subscription = await axios.post(
+				`/api/subscription/cancel`,
+				{
+					subscriptionId: activeSubscription.subscriptionId,
+				},
+				{
+					headers: {
+						"Content-Type": "application/json",
+					},
+				},
+				{ cancelToken: source.token }
+			);
+
+			if (subscription.data.success !== true) {
+				alert("An error occured, please refresh the page and try again");
+				return;
+			}
+
+			setCurrentPlan("");
+			setCurrentPlanTerm("");
+			setActiveSubscription(null);
+			/**
+			 * @todo display success message
+			 */
+		} catch (error) {
+			if (axios.isCancel(error)) {
+				return;
+			}
+			console.log(error);
+			alert("An error occurred. Please, try again.");
+		}
+	};
+
 	return (
 		<div>
 			<h3 className="section-title">Subscription</h3>
@@ -157,7 +202,7 @@ export default function Subscription() {
 
 			<SubscriptionPlans planTerm={planTerm} setPlanTerm={setPlanTerm} currentPlan={currentPlan} plans={Plans} currentPlanTerm={currentPlanTerm} initiateCheckout={initiateCheckout} />
 
-			{activeSubscription && <SubscriptionCancel activeSubscription={activeSubscription} setActiveSubscription={setActiveSubscription} setCurrentPlan={setCurrentPlan} setCurrentPlanTerm={setCurrentPlanTerm} />}
+			{activeSubscription && <SubscriptionCancel activeSubscription={activeSubscription} cancelLoading={cancelLoading} cancelSubscription={cancelSubscription} />}
 
 			<Refund />
 		</div>
