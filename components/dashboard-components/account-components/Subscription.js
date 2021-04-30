@@ -6,6 +6,7 @@ import SubscriptionPlans from "./SubscriptionPlans";
 import SubscriptionCancel from "./SubscriptionCancel";
 import axios from "axios";
 import Plans from "../../../utils/SubscriptionPlans";
+import Modal from "../Modal";
 
 export default function Subscription() {
 	const [session] = useSession();
@@ -16,6 +17,9 @@ export default function Subscription() {
 	const [cancelLoading, setCancelLoading] = useState(false);
 	const [requestCancelToken, setRequestCancelToken] = useState();
 	const [cancelRequestCancelToken, setCancelRequestCancelToken] = useState();
+	const [modalVisible, setModalVisible] = useState(false);
+	const [modalTitle, setModalTitle] = useState();
+	const [modalBody, setModalBody] = useState();
 
 	let Paddle = null;
 	if (typeof window !== "undefined" && window.Paddle) {
@@ -180,23 +184,27 @@ export default function Subscription() {
 			setCancelLoading(false);
 
 			if (subscription.data.success !== true) {
-				alert("An error occured, please refresh the page and try again");
+				setModalTitle("Error");
+				setModalBody("An error occured. Please, wait a few minutes and try again. If the problem persist, please get in touch with us.");
+				setModalVisible(true);
 				return;
 			}
 
 			setCurrentPlan("");
 			setCurrentPlanTerm("");
 			setActiveSubscription(null);
-			/**
-			 * @todo display success message
-			 */
+			setModalTitle("Success");
+			setModalBody("Your subscription has been cancelled.");
+			setModalVisible(true);
 		} catch (error) {
 			if (axios.isCancel(error)) {
 				return;
 			}
 			console.log(error);
 			setCancelLoading(false);
-			alert("An error occurred. Please, try again.");
+			setModalTitle("Error");
+			setModalBody("An error occured. Please, wait a few minutes and try again. If the problem persist, please get in touch with us.");
+			setModalVisible(true);
 		}
 	};
 
@@ -211,6 +219,8 @@ export default function Subscription() {
 			{activeSubscription && <SubscriptionCancel activeSubscription={activeSubscription} cancelLoading={cancelLoading} cancelSubscription={cancelSubscription} />}
 
 			<Refund />
+
+			{modalVisible && <Modal title={modalTitle} body={modalBody} primaryAction={() => setModalVisible(false)} primaryActionLabel="Ok" onClose={() => setModalVisible(false)} />}
 		</div>
 	);
 }
