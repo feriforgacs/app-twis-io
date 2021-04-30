@@ -177,6 +177,8 @@ export default function Subscription() {
 				{ cancelToken: source.token }
 			);
 
+			setCancelLoading(false);
+
 			if (subscription.data.success !== true) {
 				alert("An error occured, please refresh the page and try again");
 				return;
@@ -193,6 +195,7 @@ export default function Subscription() {
 				return;
 			}
 			console.log(error);
+			setCancelLoading(false);
 			alert("An error occurred. Please, try again.");
 		}
 	};

@@ -38,15 +38,13 @@ export default async function CancelSubscriptionHandler(req, res) {
 			},
 			{
 				headers: {
-					"Content-Type": "application/x-www-form-urlencoded",
+					"Content-Type": "application/json",
 				},
 			}
 		);
 
-		const { success, response } = JSON.parse(cancelRequest.data);
-
-		if (!success) {
-			return res.status(400).json({ success: false, error: response });
+		if (!cancelRequest.data.success) {
+			return res.status(400).json({ success: false });
 		}
 	} catch (error) {
 		console.log(error);
