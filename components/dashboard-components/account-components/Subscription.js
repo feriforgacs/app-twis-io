@@ -13,7 +13,7 @@ export default function Subscription() {
 	const [activeSubscription, setActiveSubscription] = useState();
 	const [currentPlan, setCurrentPlan] = useState("");
 	const [currentPlanTerm, setCurrentPlanTerm] = useState("monthly");
-	const [planTerm, setPlanTerm] = useState("yearly");
+	const [planTerm, setPlanTerm] = useState("monthly");
 	const [cancelLoading, setCancelLoading] = useState(false);
 	const [requestCancelToken, setRequestCancelToken] = useState();
 	const [cancelRequestCancelToken, setCancelRequestCancelToken] = useState();
@@ -128,6 +128,7 @@ export default function Subscription() {
 				} else {
 					setCurrentPlan(plan);
 					setCurrentPlanTerm(planTerm);
+					setActiveSubscription(result.data.subscription);
 				}
 			} catch (error) {
 				if (axios.isCancel(error)) {

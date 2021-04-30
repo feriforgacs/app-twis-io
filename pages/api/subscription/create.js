@@ -88,8 +88,9 @@ export default async function SubscriptionCreateRequest(req, res) {
 	/**
 	 * Create subscription document in the db or update existing one
 	 */
+	let subscription;
 	try {
-		const subscription = await Subscription.findOneAndUpdate(
+		subscription = await Subscription.findOneAndUpdate(
 			{ userId: session.user.id },
 			{
 				customerId,
@@ -168,7 +169,7 @@ export default async function SubscriptionCreateRequest(req, res) {
 			return res.status(400).json({ success: false, error: "can't update usage data in the db" });
 		}
 
-		return res.status(200).json({ success: true });
+		return res.status(200).json({ success: true, subscription });
 	} catch (error) {
 		console.log(error);
 		return res.status(400).json({ success: false, error: error });

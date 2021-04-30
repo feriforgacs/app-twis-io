@@ -2,12 +2,12 @@ export default function SubscriptionPlans({ planTerm, setPlanTerm, currentPlan, 
 	return (
 		<>
 			<div className="subscription__terms">
+				<span className={`term ${planTerm === "monthly" ? "term--active" : ""}`} onClick={() => setPlanTerm("monthly")}>
+					Billed monthly
+				</span>
 				<span className={`term ${planTerm === "yearly" ? "term--active" : ""}`} onClick={() => setPlanTerm("yearly")}>
 					Billed annually
 					<small> -20%</small>
-				</span>
-				<span className={`term ${planTerm === "monthly" ? "term--active" : ""}`} onClick={() => setPlanTerm("monthly")}>
-					Billed monthly
 				</span>
 			</div>
 			<div className="subscription__options">
