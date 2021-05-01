@@ -1,0 +1,31 @@
+.page-tab-navigation {
+	border-bottom: 1px solid #eee;
+	display: flex;
+	margin-bottom: 2rem;
+
+	.tab {
+		border-top: 1px solid #eee;
+		border-left: 1px solid #eee;
+
+		&:last-child {
+			border-right: 1px solid #eee;
+		}
+
+		a {
+			color: $primaryColor;
+			display: block;
+			padding: 1rem 1.5rem;
+			text-decoration: none;
+		}
+
+		&--active {
+			background: #fff;
+
+			a {
+				border-top: 2px solid $primaryColor;
+				color: $fontColor;
+				cursor: default;
+			}
+		}
+	}
+}

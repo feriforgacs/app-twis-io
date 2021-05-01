@@ -2,7 +2,9 @@ import Head from "next/head";
 import { useSession, getSession } from "next-auth/client";
 import LoginForm from "../../components/LoginForm";
 import Sidebar from "../../components/dashboard-components/Sidebar";
-import PageHeader from "../../components/dashboard-components/PageHeader";
+import PageTabNavigation from "../../components/dashboard-components/PageTabNavigation";
+import Subscription from "../../components/dashboard-components/account-components/Subscription";
+import { accountPageTabs } from "./index";
 
 export default function SubscriptionPage() {
 	const [session, loading] = useSession();
@@ -21,7 +23,8 @@ export default function SubscriptionPage() {
 			</Head>
 			<Sidebar />
 			<div id="page__content">
-				<PageHeader title="Account - Subscription" />
+				<PageTabNavigation tabs={accountPageTabs} activeTabSlug="/account/subscription" />
+				<Subscription />
 			</div>
 		</div>
 	);
