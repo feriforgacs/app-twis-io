@@ -1,18 +1,10 @@
-/**
- * @todo loading state
- * @todo get users current plan from the backend
- */
 import Head from "next/head";
 import { useSession, getSession } from "next-auth/client";
 import LoginForm from "../../components/LoginForm";
 import Sidebar from "../../components/dashboard-components/Sidebar";
 import PageHeader from "../../components/dashboard-components/PageHeader";
-import PersonalSettings from "../../components/dashboard-components/account-components/PersonalSettings";
-import Subscription from "../../components/dashboard-components/account-components/Subscription";
-import AccountDelete from "../../components/dashboard-components/account-components/AccountDelete";
-import PageTabNavigation from "../../components/dashboard-components/PageTabNavigation";
 
-export default function AccountPage() {
+export default function SubscriptionPage() {
 	const [session, loading] = useSession();
 
 	if (typeof window !== "undefined" && loading) return null;
@@ -20,11 +12,6 @@ export default function AccountPage() {
 	if (!session) {
 		return <LoginForm signInPage={true} accessDenied={true} />;
 	}
-
-	const accountPageTabs = [
-		{ slug: "", label: "Personal settings" },
-		{ slug: "subscription", label: "Subscription" },
-	];
 
 	return (
 		<div id="account" className="page">
@@ -34,11 +21,7 @@ export default function AccountPage() {
 			</Head>
 			<Sidebar />
 			<div id="page__content">
-				<PageTabNavigation tabs={accountPageTabs} />
-				<PageHeader title="Account" />
-				<PersonalSettings />
-				<Subscription />
-				<AccountDelete />
+				<PageHeader title="Account - Subscription" />
 			</div>
 		</div>
 	);
