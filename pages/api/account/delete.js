@@ -1,5 +1,6 @@
 import Cors from "cors";
 import { getSession } from "next-auth/client";
+import axios from "axios";
 import initMiddleware from "../../../lib/InitMiddleware";
 import AuthCheck from "../../../lib/AuthCheck";
 import DatabaseConnect from "../../../lib/DatabaseConnect";
@@ -13,6 +14,7 @@ import User from "../../../models/User";
 import Account from "../../../models/Account";
 import Session from "../../../models/Session";
 import Usage from "../../../models/Usage";
+import Subscription from "../../../models/Subscription";
 
 const cors = initMiddleware(
 	Cors({
@@ -38,6 +40,43 @@ export default async function DeleteRequestHandler(req, res) {
 
 	if (req.body.id !== session.user.id) {
 		return res.status(400).json({ success: false, error: "invalid user id" });
+	}
+
+	// get user's subscription
+	let subscriptionId;
+	try {
+		subscriptionId = await Subscription.findOne({ userId: session.user.id }).distinct("subscriptionId");
+		subscriptionId = subscriptionId[0];
+
+		if (subscriptionId) {
+			// cancel subscription
+			const cancelRequest = await axios.post(
+				`${process.env.PADDLE_API_ENDPOINT}subscription/users_cancel`,
+				{
+					vendor_id: process.env.NEXT_PUBLIC_PADDLE_VENDOR_ID,
+					vendor_auth_code: process.env.PADDLE_AUTH_CODE,
+					subscription_id: subscriptionId,
+				},
+				{
+					headers: {
+						"Content-Type": "application/json",
+					},
+				}
+			);
+
+			if (!cancelRequest.data.success) {
+				return res.status(400).json({ success: false });
+			}
+
+			// delete subscription document from the db
+			await Subscription.findOneAndDelete({ userId: session.user.id });
+
+			// log event
+			await EventLog(`subscription cancelled: ${subscriptionId}`, session.user.id, session.user.email);
+		}
+	} catch (error) {
+		console.log(error);
+		return res.status(400).json({ success: false, error });
 	}
 
 	// get user's campaigns
@@ -145,11 +184,6 @@ export default async function DeleteRequestHandler(req, res) {
 
 	// log event
 	await EventLog(`account delete`, session.user.id, session.user.email);
-
-	/**
-	 * @todo cancel subscription
-	 * @todo delete subscription from the db
-	 */
 
 	return res.status(200).json({ success: true });
 }

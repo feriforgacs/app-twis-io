@@ -18,8 +18,7 @@ export default function SubscriptionPage() {
 	return (
 		<div id="account" className="page">
 			<Head>
-				<title>Account - {process.env.APP_NAME}</title>
-				<script src="https://cdn.paddle.com/paddle/paddle.js"></script>
+				<title>Subscription - Account - {process.env.APP_NAME}</title>
 			</Head>
 			<Sidebar />
 			<div id="page__content">

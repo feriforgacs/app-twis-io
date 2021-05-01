@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useEffect, useState } from "react";
 import Router, { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/client";
@@ -36,6 +37,9 @@ export default function Sidebar() {
 
 	return (
 		<div id="page__sidebar">
+			<Head>
+				<script src="https://cdn.paddle.com/paddle/paddle.js"></script>
+			</Head>
 			<nav className="page__sidebar--top">
 				<div className="logo-container">
 					<Link href="/dashboard">

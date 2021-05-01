@@ -23,8 +23,7 @@ export default function AccountPage() {
 	return (
 		<div id="account" className="page">
 			<Head>
-				<title>Account - {process.env.APP_NAME}</title>
-				<script src="https://cdn.paddle.com/paddle/paddle.js"></script>
+				<title>Personal settings - Account - {process.env.APP_NAME}</title>
 			</Head>
 			<Sidebar />
 			<div id="page__content">
