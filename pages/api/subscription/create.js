@@ -127,7 +127,7 @@ export default async function SubscriptionCreateRequest(req, res) {
 		}
 
 		let usageValue = 0;
-		if (usage.trialAccount) {
+		if (usage.trialAccount && usage.value > 10) {
 			// decrease usage value by trial usage limit
 			usageValue = usage.value - 10;
 		} else if (usage.value > usage.limit) {
