@@ -102,10 +102,11 @@ export default async function SubscriptionUpdateRequest(req, res) {
 	/**
 	 * Update subscription in the db
 	 */
+	let subscription;
 	try {
-		const subscriptionUpdate = await Subscription.findOneAndUpdate({ userId: session.user.id }, { monthlyFee, overagesPrice, plan, planTerm, productId, updatedAt: Date.now() });
+		subscription = await Subscription.findOneAndUpdate({ userId: session.user.id }, { monthlyFee, overagesPrice, plan, planTerm, productId, updatedAt: Date.now() }, { new: true });
 
-		if (!subscriptionUpdate) {
+		if (!subscription) {
 			return res.status(400).json({ success: false, error: "can't update subscription document in the db" });
 		}
 	} catch (error) {
@@ -155,7 +156,7 @@ export default async function SubscriptionUpdateRequest(req, res) {
 			return res.status(400).json({ success: false, error: "can't update usage data in the db" });
 		}
 
-		return res.status(200).json({ success: true });
+		return res.status(200).json({ success: true, subscription: subscription });
 	} catch (error) {
 		console.log(error);
 		return res.status(400).json({ success: false, error: error });

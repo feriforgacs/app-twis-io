@@ -10,6 +10,7 @@ import SubscriptionCancel from "./SubscriptionCancel";
 import axios from "axios";
 import Plans from "../../../utils/SubscriptionPlans";
 import Modal from "../Modal";
+import Toast from "../Toast";
 
 export default function Subscription() {
 	const [session] = useSession();
@@ -20,9 +21,19 @@ export default function Subscription() {
 	const [cancelLoading, setCancelLoading] = useState(false);
 	const [requestCancelToken, setRequestCancelToken] = useState();
 	const [cancelRequestCancelToken, setCancelRequestCancelToken] = useState();
+
 	const [modalVisible, setModalVisible] = useState(false);
 	const [modalTitle, setModalTitle] = useState();
 	const [modalBody, setModalBody] = useState();
+
+	const [updateModalVisible, setUpdateModalVisible] = useState(false);
+	const [updateLoading, setUpdateLoading] = useState(false);
+	const [updateSettings, setUpdateSettings] = useState({ productId: "", plan: "", planTerm: "" });
+
+	const [toastMessage, setToastMessage] = useState(false);
+	const [toastVisible, setToastVisible] = useState(false);
+	const [toastType, setToastType] = useState("default");
+	const [toastDuration, setToastDuration] = useState(3000);
 
 	let Paddle = null;
 	if (typeof window !== "undefined" && window.Paddle) {
@@ -146,16 +157,26 @@ export default function Subscription() {
 
 	/**
 	 * Init Paddle checkout with the selected subscription
+	 * Or upgrade / downgrade subscription
 	 * @param {int} productId Selected subscription id
 	 * @param {string} plan Selected plan (basic, pro, premium)
 	 * @param {string} planTerm Selected plan term (monthly, yearly)
 	 */
 	const initiateCheckout = (productId, plan, planTerm) => {
-		Paddle.Checkout.open({
-			product: productId,
-			email: session.user.email || "",
-			passthrough: JSON.stringify({ plan, planTerm }),
-		});
+		if (activeSubscription) {
+			// An active subscription already exists, upgrade / downgrade subscription
+			setUpdateSettings({ productId, plan, planTerm });
+			setModalTitle("Change subscription");
+			setModalBody("Are you sure you'd like to change your existing subscription?");
+			setUpdateModalVisible(true);
+		} else {
+			// Initiate checkout to create new subscription
+			Paddle.Checkout.open({
+				product: productId,
+				email: session.user.email || "",
+				passthrough: JSON.stringify({ plan, planTerm }),
+			});
+		}
 	};
 
 	/**
@@ -212,6 +233,62 @@ export default function Subscription() {
 		}
 	};
 
+	/**
+	 * Update an existing subscription
+	 */
+	const updateSubscription = async () => {
+		setUpdateLoading(true);
+
+		if (requestCancelToken) {
+			requestCancelToken.cancel();
+		}
+
+		let source = axios.CancelToken.source();
+		setRequestCancelToken(source);
+
+		try {
+			const result = await axios.post(
+				`/api/subscription/update`,
+				{
+					productId: updateSettings.productId,
+					subscriptionId: activeSubscription.subscriptionId,
+					plan: updateSettings.plan,
+					planTerm: updateSettings.planTerm,
+				},
+				{
+					headers: {
+						"Content-Type": "application/json",
+					},
+				},
+				{ cancelToken: source.token }
+			);
+
+			if (result.data.success !== true) {
+				alert("An error occured, please refresh the page and try again");
+			} else {
+				setCurrentPlan(updateSettings.plan);
+				setCurrentPlanTerm(updateSettings.planTerm);
+				setActiveSubscription(result.data.subscription);
+
+				/**
+				 * Display success message
+				 */
+				setUpdateModalVisible(false);
+				setUpdateLoading(false);
+				setToastMessage("Subscription has been changed");
+				setToastType("success");
+				setToastDuration(6000);
+				setToastVisible(true);
+			}
+		} catch (error) {
+			if (axios.isCancel(error)) {
+				return;
+			}
+			console.log(error);
+			alert("An error occurred. Please, try again.");
+		}
+	};
+
 	return (
 		<div>
 			<h3 className="section-title">Subscription</h3>
@@ -225,6 +302,10 @@ export default function Subscription() {
 			<Refund />
 
 			{modalVisible && <Modal title={modalTitle} body={modalBody} primaryAction={() => setModalVisible(false)} primaryActionLabel="Ok" onClose={() => setModalVisible(false)} />}
+
+			{updateModalVisible && <Modal title={modalTitle} body={modalBody} primaryAction={() => updateSubscription()} primaryActionLabel="Change subscription" secondaryActionLabel="Keep current subscription" secondaryAction={() => setUpdateModalVisible(false)} onClose={() => setUpdateModalVisible(false)} loading={updateLoading} />}
+
+			{toastVisible && <Toast onClose={() => setToastVisible(false)} duration={toastDuration} type={toastType} content={toastMessage} />}
 		</div>
 	);
 }
