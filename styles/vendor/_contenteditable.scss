@@ -2,10 +2,6 @@ span.screen-item,
 span {
 	&[contenteditable] {
 		cursor: text;
-
-		&:hover:not(:focus) {
-			outline: 1px solid rgba(10, 231, 245, 0.4);
-		}
 	}
 
 	&[contenteditable="true"] {
