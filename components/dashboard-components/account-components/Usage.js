@@ -57,7 +57,7 @@ export default function Usage() {
 					<span>loading...</span>
 				</div>
 			) : (
-				<div className="sidebar__usage-status" data-for="usagetooltip" data-tip={`With your current plan, you can collect ${currentUsage.limit - currentUsage.value > 0 ? currentUsage.limit - currentUsage.value : 0} more unique participants until ${format(new Date(currentUsage.renewDate), "do MMM yyyy")}`}>
+				<div className="sidebar__usage-status" data-for="usagetooltip" data-tip={`With your current plan, you can collect ${currentUsage.limit - currentUsage.value > 0 ? currentUsage.limit - currentUsage.value : 0} more participants until ${format(new Date(currentUsage.renewDate), "do MMM yyyy")}`}>
 					{!error && (
 						<div className="usage-status__progress-bar">
 							<div

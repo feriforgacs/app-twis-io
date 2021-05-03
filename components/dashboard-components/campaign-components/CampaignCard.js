@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from "react";
-import ReactTooltip from "react-tooltip";
 import { format } from "date-fns";
 import Link from "next/link";
 import NProgress from "nprogress";
@@ -201,15 +200,13 @@ export default function CampaignCard({ _id, name, url, type, status, participant
 							{expired ? " - expired" : ""}
 						</span>
 						<Link href={`/campaigns/participants/${_id}`}>
-							<a className="campaign-participant-count" data-for="participantCountTooltip" data-tip="Unique by email address">
+							<a className="campaign-participant-count">
 								<span>
 									<Image src="/images/icons/icon-participants.svg" width={15} height={15} alt={`${name} - Participants`} />
 								</span>
-								Unique participants:&nbsp; <strong>{participantCount}</strong>
+								Participants:&nbsp; <strong>{participantCount}</strong>
 							</a>
 						</Link>
-
-						<ReactTooltip id="participantCountTooltip" place="bottom" type="dark" effect="solid" getContent={(dataTip) => `${dataTip}`} />
 					</div>
 
 					<div className="campaign-card__info">

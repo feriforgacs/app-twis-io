@@ -71,14 +71,14 @@ export default function SubscriptionStatus({ currentPlan, currentPlanTerm, plans
 							<tr>
 								<td>Usage limit:</td>
 								<td>
-									You can collect {currentUsage.limit} unique participants until {format(new Date(currentUsage.renewDate), "do MMM yyyy")}
+									You can collect {currentUsage.limit} participants until {format(new Date(currentUsage.renewDate), "do MMM yyyy")}
 								</td>
 							</tr>
 
 							<tr>
 								<td>Usage status:</td>
 								<td>
-									{currentUsage.value} / {currentUsage.limit} unique participants collected
+									{currentUsage.value} / {currentUsage.limit} participants collected
 								</td>
 							</tr>
 							{currentPlan ? (

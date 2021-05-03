@@ -22,12 +22,12 @@ export default function SubscriptionPlans({ planTerm, setPlanTerm, currentPlan, 
 						<span>${planTerm === "monthly" ? plans.basic.priceBilledMonthly : plans.basic.priceBilledYearly}</span>
 						<small> / month</small>
 					</p>
-					<p className="plan-term-info">{planTerm === "monthly" ? "Billed monthly" : "Billed yearly"}, VAT not included</p>
+					<p className="plan-term-info">{planTerm === "monthly" ? "Billed monthly" : "Billed annually"}, VAT not included</p>
 					<ul>
 						<li>All features included</li>
 						<li>Unlimited campaigns</li>
 						<li>
-							<strong>{plans.basic.limit} unique participants / month</strong>
+							<strong>{plans.basic.limit} participants / month</strong>
 							<br />
 							<small>${plans.basic.overagesCost} per additional participant</small>
 						</li>
@@ -68,12 +68,12 @@ export default function SubscriptionPlans({ planTerm, setPlanTerm, currentPlan, 
 						<span>${planTerm === "monthly" ? plans.pro.priceBilledMonthly : plans.pro.priceBilledYearly}</span>
 						<small> / month</small>
 					</p>
-					<p className="plan-term-info">{planTerm === "monthly" ? "Billed monthly" : "Billed yearly"}, VAT not included</p>
+					<p className="plan-term-info">{planTerm === "monthly" ? "Billed monthly" : "Billed annually"}, VAT not included</p>
 					<ul>
 						<li>All features included</li>
 						<li>Unlimited campaigns</li>
 						<li>
-							<strong>{plans.pro.limit} unique participants / month</strong>
+							<strong>{plans.pro.limit} participants / month</strong>
 							<br />
 							<small>${plans.pro.overagesCost} per additional participant</small>
 						</li>
@@ -114,12 +114,12 @@ export default function SubscriptionPlans({ planTerm, setPlanTerm, currentPlan, 
 						<span>${planTerm === "monthly" ? plans.premium.priceBilledMonthly : plans.premium.priceBilledYearly}</span>
 						<small> / month</small>
 					</p>
-					<p className="plan-term-info">{planTerm === "monthly" ? "Billed monthly" : "Billed yearly"}, VAT not included</p>
+					<p className="plan-term-info">{planTerm === "monthly" ? "Billed monthly" : "Billed annually"}, VAT not included</p>
 					<ul>
 						<li>All features included</li>
 						<li>Unlimited campaigns</li>
 						<li>
-							<strong>{plans.premium.limit} unique participants / month</strong>
+							<strong>{plans.premium.limit} participants / month</strong>
 							<br />
 							<small>${plans.premium.overagesCost} per additional participant</small>
 						</li>
