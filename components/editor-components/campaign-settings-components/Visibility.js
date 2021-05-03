@@ -11,6 +11,7 @@ import Usage from "./Usage";
 
 export default function Visibility() {
 	const { campaign, updateCampaignData } = useContext(GlobalContext);
+	const campaignURL = `${process.env.CAMPAIGN_URL_PREFIX}${campaign.url}`;
 
 	const [active, setActive] = useState(campaign.status === "active" || false);
 	const [visibleFrom, setVisibleFrom] = useState(new Date(campaign.visibleFrom) || new Date());
@@ -49,6 +50,19 @@ export default function Visibility() {
 				</label>
 				<p className={styles.settingsPanelHelp}>
 					Your campaign is <strong>{campaign.status === "active" ? "active" : "inactive"}</strong>. You can change the status by clicking on the toggle above.
+					{active && (
+						<>
+							<br />
+							<a href={campaignURL} target="_blank" rel="noopener noreferrer" className={styles.settingsPanelLink}>
+								View campaign
+								<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#5a38fd" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+									<g fill="none">
+										<path d="M18 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h5M15 3h6v6M10 14L20.2 3.8" />
+									</g>
+								</svg>
+							</a>
+						</>
+					)}
 				</p>
 			</div>
 

@@ -83,7 +83,7 @@ export default function Usage() {
 								<>
 									With your current plan, you can collect{" "}
 									<strong>
-										{usageLeft} more unique participants until {format(new Date(currentUsage.renewDate), "do MMM yyyy")}
+										{usageLeft} more participants until {format(new Date(currentUsage.renewDate), "do MMM yyyy")}
 									</strong>{" "}
 									without additional costs.
 								</>

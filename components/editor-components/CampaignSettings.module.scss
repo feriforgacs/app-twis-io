@@ -241,3 +241,16 @@
 	background: #fbeae5;
 	border: 1px solid #bf0711;
 }
+
+.settingsPanelLink {
+	color: #5a38fd;
+	text-decoration: none;
+
+	&:hover {
+		text-decoration: underline;
+	}
+
+	svg {
+		margin-left: 5px;
+	}
+}
