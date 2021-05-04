@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import Toast from "../Toast";
+import SkeletonSubscriptionStatus from "../skeletons/SkeletonSubscriptionStatus";
 
 export default function SubscriptionStatus({ currentPlan, currentPlanTerm, plans }) {
 	const [loading, setLoading] = useState(true);
@@ -53,7 +54,7 @@ export default function SubscriptionStatus({ currentPlan, currentPlanTerm, plans
 	return (
 		<>
 			{loading ? (
-				"loading..."
+				<SkeletonSubscriptionStatus />
 			) : (
 				<div className="user-subscription">
 					<table>
