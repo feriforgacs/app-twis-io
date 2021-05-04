@@ -295,7 +295,7 @@ export default function Subscription() {
 
 			<SubscriptionStatus activeSubscription={activeSubscription} plans={Plans} />
 
-			<SubscriptionPlans planTerm={planTerm} setPlanTerm={setPlanTerm} currentPlan={currentPlan} plans={Plans} currentPlanTerm={currentPlanTerm} initiateCheckout={initiateCheckout} />
+			<SubscriptionPlans activeSubscription={activeSubscription} planTerm={planTerm} setPlanTerm={setPlanTerm} currentPlan={currentPlan} plans={Plans} currentPlanTerm={currentPlanTerm} initiateCheckout={initiateCheckout} />
 
 			{activeSubscription && <SubscriptionCancel activeSubscription={activeSubscription} cancelLoading={cancelLoading} cancelSubscription={cancelSubscription} />}
 

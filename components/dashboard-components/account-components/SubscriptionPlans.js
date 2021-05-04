@@ -1,4 +1,4 @@
-export default function SubscriptionPlans({ planTerm, setPlanTerm, currentPlan, plans, currentPlanTerm, initiateCheckout }) {
+export default function SubscriptionPlans({ activeSubscription, planTerm, setPlanTerm, currentPlan, plans, currentPlanTerm, initiateCheckout }) {
 	return (
 		<>
 			<div className="subscription__terms">
@@ -19,8 +19,33 @@ export default function SubscriptionPlans({ planTerm, setPlanTerm, currentPlan, 
 						Basic
 					</h4>
 					<p className="subscription-option__price">
-						<span>${planTerm === "monthly" ? plans.basic.priceBilledMonthly : plans.basic.priceBilledYearly}</span>
-						<small> / month</small>
+						{!activeSubscription && (
+							<>
+								<span>${planTerm === "monthly" ? plans.basic.priceBilledMonthly : plans.basic.priceBilledYearly}</span>
+								<small> / month</small>
+							</>
+						)}
+
+						{activeSubscription && activeSubscription.plan !== "basic" && (
+							<>
+								<span>${planTerm === "monthly" ? plans.basic.priceBilledMonthly : plans.basic.priceBilledYearly}</span>
+								<small> / month</small>
+							</>
+						)}
+
+						{activeSubscription && activeSubscription.plan === "basic" && activeSubscription.planTerm === planTerm && (
+							<>
+								<span>${activeSubscription.monthlyFee}</span>
+								<small> / month</small>
+							</>
+						)}
+
+						{activeSubscription && activeSubscription.plan === "basic" && activeSubscription.planTerm !== planTerm && (
+							<>
+								<span>${planTerm === "monthly" ? plans.basic.priceBilledMonthly : plans.basic.priceBilledYearly}</span>
+								<small> / month</small>
+							</>
+						)}
 					</p>
 					<p className="plan-term-info">{planTerm === "monthly" ? "Billed monthly" : "Billed annually"}, VAT not included</p>
 					<ul>
@@ -65,8 +90,33 @@ export default function SubscriptionPlans({ planTerm, setPlanTerm, currentPlan, 
 						Pro
 					</h4>
 					<p className="subscription-option__price">
-						<span>${planTerm === "monthly" ? plans.pro.priceBilledMonthly : plans.pro.priceBilledYearly}</span>
-						<small> / month</small>
+						{!activeSubscription && (
+							<>
+								<span>${planTerm === "monthly" ? plans.pro.priceBilledMonthly : plans.pro.priceBilledYearly}</span>
+								<small> / month</small>
+							</>
+						)}
+
+						{activeSubscription && activeSubscription.plan !== "pro" && (
+							<>
+								<span>${planTerm === "monthly" ? plans.pro.priceBilledMonthly : plans.pro.priceBilledYearly}</span>
+								<small> / month</small>
+							</>
+						)}
+
+						{activeSubscription && activeSubscription.plan === "pro" && activeSubscription.planTerm === planTerm && (
+							<>
+								<span>${activeSubscription.monthlyFee}</span>
+								<small> / month</small>
+							</>
+						)}
+
+						{activeSubscription && activeSubscription.plan === "pro" && activeSubscription.planTerm !== planTerm && (
+							<>
+								<span>${planTerm === "monthly" ? plans.pro.priceBilledMonthly : plans.pro.priceBilledYearly}</span>
+								<small> / month</small>
+							</>
+						)}
 					</p>
 					<p className="plan-term-info">{planTerm === "monthly" ? "Billed monthly" : "Billed annually"}, VAT not included</p>
 					<ul>
@@ -111,8 +161,33 @@ export default function SubscriptionPlans({ planTerm, setPlanTerm, currentPlan, 
 						Premium
 					</h4>
 					<p className="subscription-option__price">
-						<span>${planTerm === "monthly" ? plans.premium.priceBilledMonthly : plans.premium.priceBilledYearly}</span>
-						<small> / month</small>
+						{!activeSubscription && (
+							<>
+								<span>${planTerm === "monthly" ? plans.premium.priceBilledMonthly : plans.premium.priceBilledYearly}</span>
+								<small> / month</small>
+							</>
+						)}
+
+						{activeSubscription && activeSubscription.plan !== "premium" && (
+							<>
+								<span>${planTerm === "monthly" ? plans.premium.priceBilledMonthly : plans.premium.priceBilledYearly}</span>
+								<small> / month</small>
+							</>
+						)}
+
+						{activeSubscription && activeSubscription.plan === "premium" && activeSubscription.planTerm === planTerm && (
+							<>
+								<span>${activeSubscription.monthlyFee}</span>
+								<small> / month</small>
+							</>
+						)}
+
+						{activeSubscription && activeSubscription.plan === "premium" && activeSubscription.planTerm !== planTerm && (
+							<>
+								<span>${planTerm === "monthly" ? plans.premium.priceBilledMonthly : plans.premium.priceBilledYearly}</span>
+								<small> / month</small>
+							</>
+						)}
 					</p>
 					<p className="plan-term-info">{planTerm === "monthly" ? "Billed monthly" : "Billed annually"}, VAT not included</p>
 					<ul>
