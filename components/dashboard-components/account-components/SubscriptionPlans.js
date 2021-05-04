@@ -29,7 +29,7 @@ export default function SubscriptionPlans({ planTerm, setPlanTerm, currentPlan, 
 						<li>
 							<strong>{plans.basic.limit} participants / month</strong>
 							<br />
-							<small>${plans.basic.overagesCost} per additional participant</small>
+							<small>${plans.basic.overagesPrice} per additional participant</small>
 						</li>
 					</ul>
 					{currentPlan && currentPlan === "basic" && planTerm === currentPlanTerm && (
@@ -75,7 +75,7 @@ export default function SubscriptionPlans({ planTerm, setPlanTerm, currentPlan, 
 						<li>
 							<strong>{plans.pro.limit} participants / month</strong>
 							<br />
-							<small>${plans.pro.overagesCost} per additional participant</small>
+							<small>${plans.pro.overagesPrice} per additional participant</small>
 						</li>
 					</ul>
 					{currentPlan && currentPlan === "pro" && planTerm === currentPlanTerm && (
@@ -121,7 +121,7 @@ export default function SubscriptionPlans({ planTerm, setPlanTerm, currentPlan, 
 						<li>
 							<strong>{plans.premium.limit} participants / month</strong>
 							<br />
-							<small>${plans.premium.overagesCost} per additional participant</small>
+							<small>${plans.premium.overagesPrice} per additional participant</small>
 						</li>
 					</ul>
 					{currentPlan && currentPlan === "premium" && planTerm === currentPlanTerm && (

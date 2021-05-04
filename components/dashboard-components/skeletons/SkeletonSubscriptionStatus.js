@@ -5,27 +5,26 @@ export default function SkeletonSubscriptionStatus() {
 				<tbody>
 					<tr>
 						<td>
-							<span className="skeleton skeleton--text"></span>
+							<p className="skeleton skeleton--p skeleton--p-long"></p>
 						</td>
 						<td>
-							<span className="skeleton skeleton--text"></span>
+							<p className="skeleton skeleton--p"></p>
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<span className="skeleton skeleton--text"></span>
+							<p className="skeleton skeleton--p skeleton--p-long"></p>
 						</td>
 						<td>
-							<span className="skeleton skeleton--text"></span>
+							<p className="skeleton skeleton--p"></p>
 						</td>
 					</tr>
-
 					<tr>
 						<td>
-							<span className="skeleton skeleton--text"></span>
+							<p className="skeleton skeleton--p skeleton--p-long"></p>
 						</td>
 						<td>
-							<span className="skeleton skeleton--text"></span>
+							<p className="skeleton skeleton--p"></p>
 						</td>
 					</tr>
 				</tbody>

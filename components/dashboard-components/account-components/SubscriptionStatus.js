@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { format } from "date-fns";
+import { format, addMonths, addYears } from "date-fns";
 import Toast from "../Toast";
 import SkeletonSubscriptionStatus from "../skeletons/SkeletonSubscriptionStatus";
 
-export default function SubscriptionStatus({ currentPlan, currentPlanTerm, plans }) {
+export default function SubscriptionStatus({ activeSubscription, plans }) {
 	const [loading, setLoading] = useState(true);
 	const [currentUsage, setCurrentUsage] = useState({ limit: 0, value: 0, renewDate: Date.now() });
 
@@ -11,6 +11,13 @@ export default function SubscriptionStatus({ currentPlan, currentPlanTerm, plans
 	const [toastVisible, setToastVisible] = useState(false);
 	const [toastType, setToastType] = useState("default");
 	const [toastDuration, setToastDuration] = useState(3000);
+
+	let planRenewDate;
+	if (activeSubscription && activeSubscription.planTerm === "monthly") {
+		planRenewDate = addMonths(new Date(activeSubscription.paymentDate), 1);
+	} else if (activeSubscription && activeSubscription.planTerm === "yearly") {
+		planRenewDate = addYears(new Date(activeSubscription.paymentDate), 1);
+	}
 
 	useEffect(() => {
 		const getUsage = async () => {
@@ -59,39 +66,54 @@ export default function SubscriptionStatus({ currentPlan, currentPlanTerm, plans
 				<div className="user-subscription">
 					<table>
 						<tbody>
-							<tr>
-								<td>Your current plan:</td>
-								<td>{currentPlan ? `${plans[currentPlan].name} - ${currentPlanTerm} (TODO / month)` : "You are not subscribed to any of the plans at the moment"}</td>
-							</tr>
-							{currentPlan ? (
+							{activeSubscription ? (
+								<>
+									<tr>
+										<td>
+											<strong>Plan</strong>
+										</td>
+										<td>
+											{`${plans[activeSubscription.plan].name} - ${activeSubscription.planTerm} ($${activeSubscription.monthlyFee} / month)`}
+											<br />
+											{currentUsage.limit} participants/month
+											<br />${activeSubscription.overagesPrice} per additional participant
+											<br />
+											Renews on {format(new Date(planRenewDate), "do MMM yyyy")}
+										</td>
+									</tr>
+								</>
+							) : (
 								<tr>
-									<td>Subscription renew date:</td>
-									<td>TODO</td>
+									<td>
+										<strong>Plan</strong>
+									</td>
+									<td>You are not subscribed to any of the plans</td>
 								</tr>
-							) : null}
-							<tr>
-								<td>Usage limit:</td>
-								<td>
-									You can collect {currentUsage.limit} participants until {format(new Date(currentUsage.renewDate), "do MMM yyyy")}
-								</td>
-							</tr>
+							)}
 
 							<tr>
-								<td>Usage status:</td>
+								<td>
+									<strong>Usage stats</strong>
+								</td>
 								<td>
 									{currentUsage.value} / {currentUsage.limit} participants collected
 								</td>
 							</tr>
-							{currentPlan ? (
+
+							{activeSubscription ? (
 								<tr>
-									<td>Usage resets on:</td>
+									<td>
+										<strong>Usage resets on</strong>
+									</td>
 									<td>{format(new Date(currentUsage.renewDate), "do MMM yyyy")}</td>
 								</tr>
 							) : null}
-							{currentPlan && currentUsage.value > currentUsage.limit ? (
+							{activeSubscription && currentUsage.value > currentUsage.limit ? (
 								<tr>
-									<td>Overages cost:</td>
-									<td>${Math.round((currentUsage.value - currentUsage.limit) * plans[currentPlan].overagesCost * 100) / 100}</td>
+									<td>
+										<strong>Overages cost</strong>
+									</td>
+									<td>${Math.round((currentUsage.value - currentUsage.limit) * activeSubscription.overagesPrice * 100) / 100}</td>
 								</tr>
 							) : null}
 						</tbody>

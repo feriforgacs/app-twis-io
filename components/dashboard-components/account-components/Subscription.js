@@ -293,7 +293,7 @@ export default function Subscription() {
 		<div>
 			<h3 className="section-title">Subscription</h3>
 
-			<SubscriptionStatus currentPlan={currentPlan} currentPlanTerm={currentPlanTerm} plans={Plans} />
+			<SubscriptionStatus activeSubscription={activeSubscription} plans={Plans} />
 
 			<SubscriptionPlans planTerm={planTerm} setPlanTerm={setPlanTerm} currentPlan={currentPlan} plans={Plans} currentPlanTerm={currentPlanTerm} initiateCheckout={initiateCheckout} />
 
