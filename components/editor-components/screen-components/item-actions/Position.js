@@ -16,7 +16,7 @@ export default function Position() {
 					updateScreenItemOrder(activeScreen.screenId, activeScreenItem.itemId, "front");
 					ReactTooltip.hide();
 				}}
-				disabled={activeScreenItem.orderIndex === activeScreen.screenItems.length - 1}
+				disabled={activeScreen && activeScreenItem.orderIndex === activeScreen.screenItems.length - 1}
 			>
 				<Image src="/images/editor/icons/icon-to-front.svg" width={18} height={18} alt="To front icon" title="To front" />
 			</button>
@@ -29,7 +29,7 @@ export default function Position() {
 					updateScreenItemOrder(activeScreen.screenId, activeScreenItem.itemId, "forward");
 					ReactTooltip.hide();
 				}}
-				disabled={activeScreenItem.orderIndex === activeScreen.screenItems.length - 1}
+				disabled={activeScreen && activeScreenItem.orderIndex === activeScreen.screenItems.length - 1}
 			>
 				<Image src="/images/editor/icons/icon-forward.svg" width={18} height={18} alt="Forward icon" title="Forward" />
 			</button>
