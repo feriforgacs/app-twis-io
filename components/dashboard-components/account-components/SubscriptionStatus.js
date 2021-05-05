@@ -113,7 +113,9 @@ export default function SubscriptionStatus({ activeSubscription, plans }) {
 									<td>
 										<strong>Overages cost</strong>
 									</td>
-									<td>${Math.round((currentUsage.value - currentUsage.limit) * activeSubscription.overagesPrice * 100) / 100}</td>
+									<td>
+										${Math.round((currentUsage.value - currentUsage.limit) * activeSubscription.overagesPrice * 100) / 100} <small>( VAT not included )</small>
+									</td>
 								</tr>
 							) : null}
 						</tbody>

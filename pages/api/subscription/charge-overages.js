@@ -63,14 +63,14 @@ export default async function ChargeOveragesHandler(req, res) {
 					 */
 				} else {
 					// reset usage
-					await Usage.findOneAndUpdate({ _id: subscription.usage._id }, { value: 0, renewDate });
+					await Usage.findOneAndUpdate({ _id: subscription.usage._id }, { value: 0, renewDate, updatedAt: Date.now() });
 				}
 			} else {
 				// reduce usage only to the amount of overages
 				// if it was 110, reduce it to 10
 				// keep 10 so it can be charged in the next month
 				// @todo log errors
-				await Usage.findOneAndUpdate({ _id: subscription.usage._id }, { value: overagesAmount, renewDate });
+				await Usage.findOneAndUpdate({ _id: subscription.usage._id }, { value: overagesAmount, renewDate, updatedAt: Date.now() });
 			}
 		}
 
