@@ -5,6 +5,7 @@ import initMiddleware from "../../../lib/InitMiddleware";
 import AuthCheck from "../../../lib/AuthCheck";
 import DatabaseConnect from "../../../lib/DatabaseConnect";
 import Subscription from "../../../models/Subscription";
+import Usage from "../../../models/Usage";
 
 const cors = initMiddleware(
 	Cors({
@@ -60,10 +61,24 @@ export default async function CancelSubscriptionHandler(req, res) {
 		if (!subscriptionUpdate) {
 			return res.status(400).json({ success: false, error: "can't update subscription document in the db" });
 		}
-
-		return res.status(200).json({ success: true });
 	} catch (error) {
 		console.log(error);
 		return res.status(400).json({ success: false, error: error });
 	}
+
+	/**
+	 * Update usage to trial
+	 */
+	try {
+		const usageUpdate = await Usage.findOneAndUpdate({ userId: session.user.id }, { trialAccount: true, updatedAt: Date.now() });
+
+		if (!usageUpdate) {
+			return res.status(400).json({ success: false, error: "can't update usage document in the db" });
+		}
+	} catch (error) {
+		console.log(error);
+		return res.status(400).json({ success: false, error: error });
+	}
+
+	return res.status(200).json({ success: true });
 }
