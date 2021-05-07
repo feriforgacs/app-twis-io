@@ -83,4 +83,8 @@ subscriptionSchema.pre("findOne", function () {
 	this.populate("usage");
 });
 
+subscriptionSchema.pre("findOneAndUpdate", function () {
+	this.populate("usage");
+});
+
 export default mongoose.models.Subscription || mongoose.model("Subscription", subscriptionSchema);
