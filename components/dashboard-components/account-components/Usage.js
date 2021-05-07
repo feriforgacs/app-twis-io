@@ -4,7 +4,6 @@ import { format } from "date-fns";
 
 export default function Usage() {
 	const [loading, setLoading] = useState(true);
-	const [currentUsage, setCurrentUsage] = useState({ limit: 0, value: 0, renewDate: Date.now() });
 	const [error, setError] = useState();
 	const [usageLeft, setUsageLeft] = useState(0);
 	const [usageMessage, setUsageMessage] = useState("");
@@ -27,7 +26,6 @@ export default function Usage() {
 				}
 
 				if (usageData.data) {
-					setCurrentUsage(usageData.data);
 					let currentUsageLeft = 0;
 					if (usageData.data.value === 0) {
 						currentUsageLeft = 100;
@@ -39,7 +37,7 @@ export default function Usage() {
 					let currentUsageMessage = "";
 					if (usageData.data.trialAccount) {
 						// message for trial accounts
-						currentUsageMessage = `With your trial plan, you can collect ${usageData.data.limit} participants until ${format(new Date(currentUsage.renewDate), "do MMM yyyy")}. You collected ${usageData.data.value} participants.`;
+						currentUsageMessage = `With your trial plan, you can collect ${usageData.data.limit} participants until ${format(new Date(usageData.data.renewDate), "do MMM yyyy")}. You collected ${usageData.data.value} participants.`;
 					} else if (usageData.data.value > usageData.data.limit) {
 						// not trial account, already reached monthly usage limit
 						currentUsageMessage = `You've reched your monthly usage limit of ${usageData.data.limit} participants. This doesn't affect your campaigns, but overages may apply. Usage will reset on ${format(new Date(usageData.data.renewDate), "do MMM yyyy")}.`;
