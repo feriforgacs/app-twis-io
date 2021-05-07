@@ -25,7 +25,9 @@ export default async function SubscriptionRenewRequest(req, res) {
 	}
 }
 
-const pubKey = process.env.PADDLE_PUBKEY;
+const pubKey = Buffer.from(process.env.PADDLE_PUBKEY, "base64");
+
+console.log(pubKey);
 
 function ksort(obj) {
 	const keys = Object.keys(obj).sort();
