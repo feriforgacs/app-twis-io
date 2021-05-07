@@ -27,11 +27,11 @@ const subscriptionSchema = new mongoose.Schema(
 			required: [true, "Checkout ID is required"],
 		},
 		subscriptionId: {
-			type: Number,
+			type: String,
 			required: [true, "Subscription ID is required"],
 		},
 		orderId: {
-			type: Number,
+			type: String,
 			required: [true, "Subscription ID is required"],
 		},
 		productId: {

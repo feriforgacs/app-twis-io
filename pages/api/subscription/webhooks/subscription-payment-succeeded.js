@@ -6,6 +6,8 @@ import DatabaseConnect from "../../../../lib/DatabaseConnect";
 import Subscription from "../../../../models/Subscription";
 import Usage from "../../../../models/Usage";
 
+const pubKey = Buffer.from(process.env.PADDLE_PUBKEY, "base64");
+
 const cors = initMiddleware(
 	Cors({
 		methods: ["POST"],
@@ -18,6 +20,7 @@ export default async function SubscriptionPaymentSucceeded(req, res) {
 
 	// validate request
 	if (!validateWebhook(req.body)) {
+		console.log("invalid webhook request");
 		return res.status(403).json({ success: false, error: "invalid request" });
 	}
 
@@ -51,18 +54,19 @@ export default async function SubscriptionPaymentSucceeded(req, res) {
 		return res.status(400).json({ success: false, error: error });
 	}
 
-	console.log(subscription);
-
 	// update usage in the db
 	try {
 		// check current usage, keep overages or reset to zero
 		const usageValue = subscription.usage.value < subscription.usage.limit ? 0 : subscription.usage.value - subscription.usage.limit;
+
+		const limitReached = usageValue > subscription.usage.limit ? Date.now() : null;
 
 		const usage = await Usage.findOneAndUpdate(
 			{ userId: subscription.usage.userId },
 			{
 				value: usageValue,
 				renewDate: new Date(next_bill_date),
+				limitReached,
 				updatedAt: Date.now(),
 			}
 		);
@@ -77,8 +81,6 @@ export default async function SubscriptionPaymentSucceeded(req, res) {
 
 	return res.status(200).json({ success: true });
 }
-
-const pubKey = Buffer.from(process.env.PADDLE_PUBKEY, "base64");
 
 function ksort(obj) {
 	const keys = Object.keys(obj).sort();
@@ -97,7 +99,7 @@ function validateWebhook(jsonObj) {
 	// Need to sort array by key in ascending order
 	jsonObj = ksort(jsonObj);
 	for (let property in jsonObj) {
-		if (jsonObj.hasOwnProperty(property) && typeof jsonObj[property] !== "string") {
+		if (Object.prototype.hasOwnProperty.call(jsonObj, property) && typeof jsonObj[property] !== "string") {
 			if (Array.isArray(jsonObj[property])) {
 				// is it an array
 				jsonObj[property] = jsonObj[property].toString();
