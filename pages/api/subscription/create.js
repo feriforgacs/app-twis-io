@@ -1,6 +1,5 @@
 import Cors from "cors";
 import { getSession } from "next-auth/client";
-import { addMonths } from "date-fns";
 import initMiddleware from "../../../lib/InitMiddleware";
 import AuthCheck from "../../../lib/AuthCheck";
 import DatabaseConnect from "../../../lib/DatabaseConnect";
@@ -126,16 +125,6 @@ export default async function SubscriptionCreateRequest(req, res) {
 			return res.status(400).json({ success: false, error: "can't get usage data from the db" });
 		}
 
-		let usageValue = 0;
-		if (usage.trialAccount && usage.value > 10) {
-			// decrease usage value by trial usage limit
-			usageValue = usage.value - 10;
-		} else if (usage.value > usage.limit) {
-			// user upgrades, downgrades account, but already reached the usage limit, keep overages
-			// eg, limit was 100, but collected 130 participants » keep 30 participants
-			usageValue = usage.value - usage.limit;
-		}
-
 		let usageLimit = 10;
 		if (plan === "basic") {
 			usageLimit = process.env.NEXT_PUBLIC_BASIC_LIMIT;
@@ -145,22 +134,10 @@ export default async function SubscriptionCreateRequest(req, res) {
 			usageLimit = process.env.NEXT_PUBLIC_PREMIUM_LIMIT;
 		}
 
-		let limitReached = null;
-		if (usageValue >= usageLimit) {
-			// user creates subscription or upgrades account, but already had overages
-			// eg limit was 100, but collected 1100 participants » upgrades to 1000 participants / month » already reached the limit
-			limitReached = Date.now();
-		}
-
-		let renewDate = addMonths(new Date(Date.now()), 1);
 		const updatedUsage = await Usage.findOneAndUpdate(
 			{ _id: usage._id },
 			{
-				value: usageValue,
 				limit: usageLimit,
-				trialAccount: false,
-				renewDate,
-				limitReached,
 				updatedAt: Date.now(),
 			}
 		);

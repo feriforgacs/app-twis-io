@@ -56,8 +56,15 @@ export default async function SubscriptionPaymentSucceeded(req, res) {
 
 	// update usage in the db
 	try {
-		// check current usage, keep overages or reset to zero
-		const usageValue = subscription.usage.value < subscription.usage.limit ? 0 : subscription.usage.value - subscription.usage.limit;
+		let usageValue = 0;
+		if (subscription.usage.trialAccount && subscription.usage.value > 10) {
+			// decrease usage value by trial usage limit
+			usageValue = subscription.usage.value - 10;
+		} else if (subscription.usage.value > subscription.usage.limit) {
+			// user upgrades, downgrades account, but already reached the usage limit, keep overages
+			// eg, limit was 100, but collected 130 participants » keep 30 participants
+			usageValue = subscription.usage.value - subscription.usage.limit;
+		}
 
 		const limitReached = usageValue > subscription.usage.limit ? Date.now() : null;
 
@@ -65,6 +72,7 @@ export default async function SubscriptionPaymentSucceeded(req, res) {
 			{ userId: subscription.usage.userId },
 			{
 				value: usageValue,
+				trialAccount: false,
 				renewDate: new Date(next_bill_date),
 				limitReached,
 				updatedAt: Date.now(),
