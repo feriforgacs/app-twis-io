@@ -7,6 +7,7 @@ export default function Usage() {
 	const [currentUsage, setCurrentUsage] = useState({ limit: 0, value: 0, renewDate: Date.now() });
 	const [error, setError] = useState();
 	const [usageLeft, setUsageLeft] = useState(0);
+	const [usageMessage, setUsageMessage] = useState("");
 
 	useEffect(() => {
 		const getUsage = async () => {
@@ -34,6 +35,20 @@ export default function Usage() {
 						currentUsageLeft = 100 - Math.floor((usageData.data.value / usageData.data.limit) * 100);
 					}
 					setUsageLeft(currentUsageLeft);
+
+					let currentUsageMessage = "";
+					if (usageData.data.trialAccount) {
+						// message for trial accounts
+						currentUsageMessage = `With your trial plan, you can collect ${usageData.data.limit} participants until ${format(new Date(currentUsage.renewDate), "do MMM yyyy")}. You collected ${usageData.data.value} participants.`;
+					} else if (usageData.data.value > usageData.data.limit) {
+						// not trial account, already reached monthly usage limit
+						currentUsageMessage = `You've reched your monthly usage limit of ${usageData.data.limit} participants. This doesn't affect your campaigns, but overages may apply. Usage will reset on ${format(new Date(usageData.data.renewDate), "do MMM yyyy")}.`;
+					} else {
+						// not trial account, haven't reached monthly usage limit
+						currentUsageMessage = `With your current plan, you can collect ${usageData.data.limit - usageData.data.value} more participants until ${format(new Date(usageData.data.renewDate), "do MMM yyyy")}.`;
+					}
+
+					setUsageMessage(currentUsageMessage);
 				}
 			} catch (error) {
 				console.log(error);
@@ -57,7 +72,7 @@ export default function Usage() {
 					<span>loading...</span>
 				</div>
 			) : (
-				<div className="sidebar__usage-status" data-for="usagetooltip" data-tip={currentUsage.limit - currentUsage.value > 0 ? `With your current plan, you can collect ${currentUsage.limit - currentUsage.value} more participants until ${format(new Date(currentUsage.renewDate), "do MMM yyyy")}` : `You've reached your monthly usage limit of ${currentUsage.limit} participants. This doesn't affect your campaigns, but overages may apply. Usage will reset on ${format(new Date(currentUsage.renewDate), "do MMM yyyy")}.`}>
+				<div className="sidebar__usage-status" data-for="usagetooltip" data-tip={usageMessage}>
 					{!error && (
 						<div className="usage-status__progress-bar">
 							<div
