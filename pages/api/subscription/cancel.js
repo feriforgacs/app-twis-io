@@ -29,6 +29,48 @@ export default async function CancelSubscriptionHandler(req, res) {
 		return res.status(400).json({ success: false, error: "missing subscriptionId value" });
 	}
 
+	// check overages
+	try {
+		const subscriptionPromise = Subscription.findOne({ userId: session.user.id, status: "active" });
+		const usagePromise = Usage.findOne({ userId: session.user.id });
+
+		const [subscription, usage] = await Promise.all([subscriptionPromise, usagePromise]);
+		if (subscription) {
+			// check usage overages
+			if (usage && usage.value > usage.limit) {
+				// overages apply
+				const overagesAmount = subscription.usage.value - subscription.usage.limit;
+				const overagesCost = subscription.overagesPrice * overagesAmount;
+
+				// only charge overages above X dollars
+				if (overagesCost >= process.env.OVERAGES_FAIR_LIMIT) {
+					const overagesChargeResult = await axios.post(
+						`${process.env.PADDLE_API_ENDPOINT}subscription/${subscription.subscriptionId}/charge`,
+						{
+							vendor_id: process.env.NEXT_PUBLIC_PADDLE_VENDOR_ID,
+							vendor_auth_code: process.env.PADDLE_AUTH_CODE,
+							amount: overagesCost,
+							charge_name: `twis.io - ${subscription.plan} plan monthly overages`,
+						},
+						{
+							headers: {
+								"Content-Type": "application/json",
+							},
+						}
+					);
+
+					if (!overagesChargeResult.data.success) {
+						// couldn't charege overages
+						return res.status(400).json({ success: false });
+					}
+				}
+			}
+		}
+	} catch (error) {
+		console.log(error);
+		return res.status(400).json({ success: false, error: error });
+	}
+
 	try {
 		const cancelRequest = await axios.post(
 			`${process.env.PADDLE_API_ENDPOINT}subscription/users_cancel`,

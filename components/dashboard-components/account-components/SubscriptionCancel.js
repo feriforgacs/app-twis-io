@@ -13,7 +13,7 @@ export default function SubscriptionCancel({ activeSubscription, cancelSubscript
 				Cancel subscription
 			</button>
 
-			{cancelModalVisible && <Modal title="Are you sure you want to cancel your subscription?" body="This won't affect the campaigns your created and the collected participant information" primaryAction={cancelSubscription} primaryActionLabel="Yes, cancel subscription" secondaryAction={() => setCancelModalVisible(false)} secondaryActionLabel="Keep subscription" onClose={() => setCancelModalVisible(false)} loading={cancelLoading} />}
+			{cancelModalVisible && <Modal title="Are you sure you want to cancel your subscription?" body="This won't affect the campaigns your created and the collected participant information. If you have overages on your account, that'll be charged during the cancellation process." primaryAction={cancelSubscription} primaryActionLabel="Yes, cancel subscription" secondaryAction={() => setCancelModalVisible(false)} secondaryActionLabel="Keep subscription" onClose={() => setCancelModalVisible(false)} loading={cancelLoading} />}
 		</div>
 	);
 }

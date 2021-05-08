@@ -40,8 +40,8 @@ export default async function ChargeOveragesHandler(req, res) {
 			const overagesCost = subscription.overagesPrice * overagesAmount;
 			const renewDate = addMonths(new Date(Date.now()), 1);
 
-			// only charge overages above 3 dollars
-			if (overagesCost >= 3) {
+			// only charge overages above X dollars
+			if (overagesCost >= process.env.OVERAGES_FAIR_LIMIT) {
 				const overagesChargeResult = await axios.post(
 					`${process.env.PADDLE_API_ENDPOINT}subscription/${subscription.subscriptionId}/charge`,
 					{

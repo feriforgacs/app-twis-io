@@ -57,8 +57,8 @@ export default async function DeleteRequestHandler(req, res) {
 				const overagesAmount = subscription.usage.value - subscription.usage.limit;
 				const overagesCost = subscription.overagesPrice * overagesAmount;
 
-				// only charge overages above 5 dollars
-				if (overagesCost >= 5) {
+				// only charge overages above X dollars
+				if (overagesCost >= process.env.OVERAGES_FAIR_LIMIT) {
 					const overagesChargeResult = await axios.post(
 						`${process.env.PADDLE_API_ENDPOINT}subscription/${subscription.subscriptionId}/charge`,
 						{
