@@ -64,7 +64,7 @@ export default function AccountDelete() {
 				Delete my account
 			</button>
 
-			{deleteModalVisible && <Modal title="Are you sure you want to delete your account?" body="🛑 When you delete your account all the campaigns you created and all the collected participant information will be removed as well. You can't undo that. If you have an active subscription, that'll be cancelled as well. If you have overages on your account, that'll be charged before deleting your account." primaryAction={deleteAccount} primaryActionLabel="Yes, delete my account" secondaryAction={() => setDeleteModalVisible(false)} secondaryActionLabel="Keep my account" onClose={() => setDeleteModalVisible(false)} loading={deleteLoading} />}
+			{deleteModalVisible && <Modal title="Are you sure you want to delete your account?" body="🛑 When you delete your account all the campaigns you created and all the collected participant information will be removed as well. You can't undo that. If you have an active subscription, that'll be cancelled as well. If you have overages on your account, that'll be charged during the termination process." primaryAction={deleteAccount} primaryActionLabel="Yes, delete my account" secondaryAction={() => setDeleteModalVisible(false)} secondaryActionLabel="Keep my account" onClose={() => setDeleteModalVisible(false)} loading={deleteLoading} />}
 
 			{toastVisible && <Toast onClose={() => setToastVisible(false)} duration={toastDuration} type={toastType} content={toastMessage} />}
 		</div>

@@ -1,6 +1,7 @@
 import Cors from "cors";
 import { getSession } from "next-auth/client";
 import axios from "axios";
+import SendAdminNotification from "../../../lib/AdminNotification";
 import initMiddleware from "../../../lib/InitMiddleware";
 import AuthCheck from "../../../lib/AuthCheck";
 import DatabaseConnect from "../../../lib/DatabaseConnect";
@@ -43,19 +44,50 @@ export default async function DeleteRequestHandler(req, res) {
 	}
 
 	// get user's subscription
-	let subscriptionId;
 	try {
-		subscriptionId = await Subscription.findOne({ userId: session.user.id }).distinct("subscriptionId");
-		subscriptionId = subscriptionId[0];
+		const subscriptionPromise = Subscription.findOne({ userId: session.user.id, status: "active" });
+		const usagePromise = Usage.findOne({ userId: session.user.id });
 
-		if (subscriptionId) {
+		const [subscription, usage] = await Promise.all([subscriptionPromise, usagePromise]);
+
+		if (subscription) {
+			// check usage overages
+			if (usage && usage.value > usage.limit) {
+				// overages apply
+				const overagesAmount = subscription.usage.value - subscription.usage.limit;
+				const overagesCost = subscription.overagesPrice * overagesAmount;
+
+				// only charge overages above 5 dollars
+				if (overagesCost >= 5) {
+					const overagesChargeResult = await axios.post(
+						`${process.env.PADDLE_API_ENDPOINT}subscription/${subscription.subscriptionId}/charge`,
+						{
+							vendor_id: process.env.NEXT_PUBLIC_PADDLE_VENDOR_ID,
+							vendor_auth_code: process.env.PADDLE_AUTH_CODE,
+							amount: overagesCost,
+							charge_name: `twis.io - ${subscription.plan} plan monthly overages`,
+						},
+						{
+							headers: {
+								"Content-Type": "application/json",
+							},
+						}
+					);
+
+					if (!overagesChargeResult.data.success) {
+						// couldn't charege overages
+						return res.status(400).json({ success: false });
+					}
+				}
+			}
+
 			// cancel subscription
 			const cancelRequest = await axios.post(
 				`${process.env.PADDLE_API_ENDPOINT}subscription/users_cancel`,
 				{
 					vendor_id: process.env.NEXT_PUBLIC_PADDLE_VENDOR_ID,
 					vendor_auth_code: process.env.PADDLE_AUTH_CODE,
-					subscription_id: subscriptionId,
+					subscription_id: subscription.subscriptionId,
 				},
 				{
 					headers: {
@@ -72,7 +104,7 @@ export default async function DeleteRequestHandler(req, res) {
 			await Subscription.findOneAndDelete({ userId: session.user.id });
 
 			// log event
-			await EventLog(`subscription cancelled: ${subscriptionId}`, session.user.id, session.user.email);
+			await EventLog(`subscription cancelled: ${subscription.subscriptionId}`, session.user.id, session.user.email);
 		}
 	} catch (error) {
 		console.log(error);
@@ -184,6 +216,9 @@ export default async function DeleteRequestHandler(req, res) {
 
 	// log event
 	await EventLog(`account delete`, session.user.id, session.user.email);
+
+	// send notification about new user to the admin
+	SendAdminNotification(`😢 Twis account deleted`, `User ID: ${session.user.id} User Email: ${session.user.email}`);
 
 	return res.status(200).json({ success: true });
 }
