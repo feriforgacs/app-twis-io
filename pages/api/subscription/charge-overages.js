@@ -40,8 +40,8 @@ export default async function ChargeOveragesHandler(req, res) {
 			const overagesCost = subscription.overagesPrice * overagesAmount;
 			const renewDate = addMonths(new Date(Date.now()), 1);
 
-			// only charge overages above 5 dollars
-			if (overagesCost >= 5) {
+			// only charge overages above 3 dollars
+			if (overagesCost >= 3) {
 				const overagesChargeResult = await axios.post(
 					`${process.env.PADDLE_API_ENDPOINT}subscription/${subscription.subscriptionId}/charge`,
 					{
@@ -66,11 +66,8 @@ export default async function ChargeOveragesHandler(req, res) {
 					await Usage.findOneAndUpdate({ _id: subscription.usage._id }, { value: 0, renewDate, updatedAt: Date.now() });
 				}
 			} else {
-				// reduce usage only to the amount of overages
-				// if it was 110, reduce it to 10
-				// keep 10 so it can be charged in the next month
-				// @todo log errors
-				await Usage.findOneAndUpdate({ _id: subscription.usage._id }, { value: overagesAmount, renewDate, updatedAt: Date.now() });
+				// fair usage - if the overages wasn't that high, we just reset the usage to zero
+				await Usage.findOneAndUpdate({ _id: subscription.usage._id }, { value: 0, renewDate, updatedAt: Date.now() });
 			}
 		}
 
