@@ -13,10 +13,7 @@ export default function CampaignCard({ _id, name, url, type, status, participant
 	const [duplicateLoading, setDuplicateLoading] = useState(false);
 
 	let expired = false;
-	const visibleToDate = format(new Date(visibleTo), "do MMM yyyy");
-	const today = format(new Date(Date.now()), "do MMM yyyy");
-
-	if (visibleToDate < today) {
+	if (new Date(visibleTo) < new Date(Date.now())) {
 		expired = true;
 	}
 
