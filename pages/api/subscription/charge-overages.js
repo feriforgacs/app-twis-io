@@ -16,13 +16,18 @@ export default async function ChargeOveragesHandler(req, res) {
 	await cors(req, res);
 	await DatabaseConnect();
 
-	// get extra usage from the database
+	/**
+	 * Get usage where overages exists
+	 */
 	try {
 		let overages = await Usage.find({ $expr: { $gt: ["value", "limit"] } })
 			.and({ renewDate: { $lte: new Date(Date.now()) } })
 			.and({ trialAccount: false })
 			.distinct("userId");
 
+		/**
+		 * There are no subscriptions with overages that should be charged today
+		 */
 		if (overages.length <= 0) {
 			return res.status(200).send("no overages to charge today");
 		}
@@ -49,6 +54,7 @@ export default async function ChargeOveragesHandler(req, res) {
 						vendor_auth_code: process.env.PADDLE_AUTH_CODE,
 						amount: overagesCost,
 						charge_name: `twis.io - ${subscription.plan} plan monthly overages`,
+						passthrough: "overagescharge",
 					},
 					{
 						headers: {

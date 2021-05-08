@@ -1,6 +1,7 @@
 import crypto from "crypto";
 import { serialize } from "php-serialize";
 import Cors from "cors";
+import { addMonths } from "date-fns";
 import initMiddleware from "../../../../lib/InitMiddleware";
 import DatabaseConnect from "../../../../lib/DatabaseConnect";
 import Subscription from "../../../../models/Subscription";
@@ -25,11 +26,16 @@ export default async function SubscriptionPaymentSucceeded(req, res) {
 	}
 
 	// get data from request
-	const { alert_name, checkout_id, next_bill_date, order_id, subscription_id, user_id } = req.body;
+	const { alert_name, checkout_id, next_bill_date, order_id, passthrough, subscription_id, user_id } = req.body;
 
 	// check webhook
 	if (!alert_name || alert_name !== "subscription_payment_succeeded") {
 		return res.status(403).json({ success: false, error: "alert name missing or invalid" });
+	}
+
+	// overages charge, don't process it
+	if (passthrough === "overagescharge") {
+		return res.status(200).json({ success: true });
 	}
 
 	// update subscription in the db
@@ -66,14 +72,23 @@ export default async function SubscriptionPaymentSucceeded(req, res) {
 			usageValue = subscription.usage.value - subscription.usage.limit;
 		}
 
+		/**
+		 * If usage value is already higher than usage limit, set limit reached date to current date
+		 */
 		const limitReached = usageValue > subscription.usage.limit ? Date.now() : null;
+
+		/**
+		 * For monthly subscriptions use the next bill date as the renew date
+		 * For yearly subscriptions generate renew date based on current date
+		 */
+		const renewDate = subscription.planTerm === "monthly" ? new Date(next_bill_date) : addMonths(new Date(Date.now()), 1);
 
 		const usage = await Usage.findOneAndUpdate(
 			{ userId: subscription.usage.userId },
 			{
 				value: usageValue,
 				trialAccount: false,
-				renewDate: new Date(next_bill_date),
+				renewDate,
 				limitReached,
 				updatedAt: Date.now(),
 			}

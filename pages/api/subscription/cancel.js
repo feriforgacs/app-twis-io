@@ -51,6 +51,7 @@ export default async function CancelSubscriptionHandler(req, res) {
 							vendor_auth_code: process.env.PADDLE_AUTH_CODE,
 							amount: overagesCost,
 							charge_name: `twis.io - ${subscription.plan} plan monthly overages`,
+							passthrough: "overagescharge",
 						},
 						{
 							headers: {

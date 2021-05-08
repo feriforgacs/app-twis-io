@@ -45,12 +45,15 @@ export default async function DeleteRequestHandler(req, res) {
 
 	// get user's subscription
 	try {
-		const subscriptionPromise = Subscription.findOne({ userId: session.user.id, status: "active" });
+		const subscriptionPromise = Subscription.findOne({ userId: session.user.id });
 		const usagePromise = Usage.findOne({ userId: session.user.id });
 
 		const [subscription, usage] = await Promise.all([subscriptionPromise, usagePromise]);
 
-		if (subscription) {
+		/**
+		 * Check if overages exists for current account and charge overages costs
+		 */
+		if (subscription && subscription.status === "active") {
 			// check usage overages
 			if (usage && usage.value > usage.limit) {
 				// overages apply
@@ -66,6 +69,7 @@ export default async function DeleteRequestHandler(req, res) {
 							vendor_auth_code: process.env.PADDLE_AUTH_CODE,
 							amount: overagesCost,
 							charge_name: `twis.io - ${subscription.plan} plan monthly overages`,
+							passthrough: "overagescharge",
 						},
 						{
 							headers: {
@@ -99,7 +103,12 @@ export default async function DeleteRequestHandler(req, res) {
 			if (!cancelRequest.data.success) {
 				return res.status(400).json({ success: false });
 			}
+		}
 
+		/**
+		 * Delete subscription if exists
+		 */
+		if (subscription) {
 			// delete subscription document from the db
 			await Subscription.findOneAndDelete({ userId: session.user.id });
 
