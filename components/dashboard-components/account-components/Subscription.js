@@ -161,8 +161,11 @@ export default function Subscription() {
 					return;
 				}
 
-				// set subscription data in state
-				setActiveSubscription(result.data.subscription);
+				/**
+				 * @todo this is not working properly as the webhook fires a few seconds later so the usage data won't be accurate right after the checkout completed
+				 * set subscription data in state
+				 * setActiveSubscription(result.data.subscription);
+				 */
 			} catch (error) {
 				if (axios.isCancel(error)) {
 					return;
