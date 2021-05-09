@@ -1,6 +1,7 @@
 import Cors from "cors";
 import axios from "axios";
 import { addMonths } from "date-fns";
+import SendAdminNotification from "../../../lib/AdminNotification";
 import initMiddleware from "../../../lib/InitMiddleware";
 import DatabaseConnect from "../../../lib/DatabaseConnect";
 import Usage from "../../../models/Usage";
@@ -64,8 +65,10 @@ export default async function ChargeOveragesHandler(req, res) {
 				);
 
 				if (!overagesChargeResult.data.success) {
+					// send notification about overages charge error to admin
+					SendAdminNotification(`⚠️ Unable to charge overages`, `User ID: ${subscription.userId} Subscription ID: ${subscription.subscriptionId}`);
 					/**
-					 * @todo send error msg to admin and user
+					 * @todo send notification to user
 					 */
 				} else {
 					// reset usage
