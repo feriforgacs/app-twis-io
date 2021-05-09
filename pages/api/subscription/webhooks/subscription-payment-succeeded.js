@@ -33,7 +33,7 @@ export default async function SubscriptionPaymentSucceeded(req, res) {
 		return res.status(403).json({ success: false, error: "alert name missing or invalid" });
 	}
 
-	// overages charge, don't process it
+	// overages charge, nothing to do here
 	if (passthrough === "overagescharge") {
 		return res.status(200).json({ success: true });
 	}

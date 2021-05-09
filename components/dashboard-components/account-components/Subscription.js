@@ -116,6 +116,16 @@ export default function Subscription() {
 
 		const { plan, planTerm } = JSON.parse(data.checkout.passthrough);
 
+		const currentPlanTemp = currentPlan;
+		const currentPlanTermTemp = currentPlanTerm;
+		const activeSubscriptionTemp = activeSubscription;
+
+		/**
+		 * Optimistically, set plan, planterm and subscription data
+		 */
+		setCurrentPlan(plan);
+		setCurrentPlanTerm(planTerm);
+
 		Paddle.Order.details(data.checkout.id, async (orderDetails) => {
 			try {
 				const result = await axios.post(
@@ -138,12 +148,21 @@ export default function Subscription() {
 				);
 
 				if (result.data.success !== true) {
-					alert("An error occured, please refresh the page and try again");
-				} else {
-					setCurrentPlan(plan);
-					setCurrentPlanTerm(planTerm);
-					setActiveSubscription(result.data.subscription);
+					// return to previous state
+					setCurrentPlan(currentPlanTemp);
+					setCurrentPlanTerm(currentPlanTermTemp);
+					setActiveSubscription(activeSubscriptionTemp);
+
+					// display error toast
+					setToastMessage("An error occured, please refresh the page and try again");
+					setToastType("error");
+					setToastDuration(9000);
+					setToastVisible(true);
+					return;
 				}
+
+				// set subscription data in state
+				setActiveSubscription(result.data.subscription);
 			} catch (error) {
 				if (axios.isCancel(error)) {
 					return;
