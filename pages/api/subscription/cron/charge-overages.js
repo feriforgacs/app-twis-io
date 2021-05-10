@@ -21,8 +21,9 @@ export default async function ChargeOveragesHandler(req, res) {
 	 * Get usage where overages exists
 	 */
 	try {
+		const endOfToday = new Date(Date.now()).setHours(23, 59, 59, 59);
 		let overages = await Usage.find({ $expr: { $gt: ["value", "limit"] } })
-			.and({ renewDate: { $lte: new Date(Date.now()) } })
+			.and({ renewDate: { $lte: endOfToday } })
 			.and({ trialAccount: false })
 			.distinct("userId");
 
