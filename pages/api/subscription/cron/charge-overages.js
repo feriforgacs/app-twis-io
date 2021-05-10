@@ -72,11 +72,11 @@ export default async function ChargeOveragesHandler(req, res) {
 					 */
 				} else {
 					// reset usage
-					await Usage.findOneAndUpdate({ _id: subscription.usage._id }, { value: 0, renewDate, updatedAt: Date.now() });
+					await Usage.findOneAndUpdate({ _id: subscription.usage._id }, { value: 0, renewDate, limitReached: null, updatedAt: Date.now() });
 				}
 			} else {
 				// fair usage - if the overages wasn't that high, we just reset the usage to zero
-				await Usage.findOneAndUpdate({ _id: subscription.usage._id }, { value: 0, renewDate, updatedAt: Date.now() });
+				await Usage.findOneAndUpdate({ _id: subscription.usage._id }, { value: 0, renewDate, limitReached: null, updatedAt: Date.now() });
 			}
 		}
 
