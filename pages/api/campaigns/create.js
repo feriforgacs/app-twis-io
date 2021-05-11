@@ -1,6 +1,7 @@
 import Cors from "cors";
 import { v4 as uuidv4 } from "uuid";
 import slug from "slug";
+import { addMonths } from "date-fns";
 import { getSession } from "next-auth/client";
 import initMiddleware from "../../../lib/InitMiddleware";
 import AuthCheck from "../../../lib/AuthCheck";
@@ -40,7 +41,8 @@ export default async function CampaignCreateHandler(req, res) {
 	 * Save campaign data to the database
 	 */
 	try {
-		const campaign = await Campaign.create({ name, url, type, createdBy: session.user.id });
+		const visibleTo = addMonths(new Date(Date.now()), 1);
+		const campaign = await Campaign.create({ name, url, type, createdBy: session.user.id, visibleTo });
 		if (!campaign._id) {
 			return res.status(400).json({ success: false });
 		}
