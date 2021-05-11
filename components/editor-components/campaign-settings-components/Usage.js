@@ -93,7 +93,7 @@ export default function Usage() {
 								</>
 							)}
 							<br />
-							<a href="/account" target="_blank" rel="noopener noreferrer">
+							<a href="/account/subscription" target="_blank" rel="noopener noreferrer">
 								View detailed usage information.
 							</a>
 						</span>
