@@ -42,6 +42,9 @@ export default async function ChargeOveragesHandler(req, res) {
 		}
 
 		// calculate overages costs and initiate extra charge
+		/**
+		 * @todo refactor to foreach if possible, why didn't I use that before???
+		 */
 		for (const subscription of subscriptions) {
 			const overagesAmount = subscription.usage.value - subscription.usage.limit;
 			const overagesCost = subscription.overagesPrice * overagesAmount;
