@@ -50,8 +50,25 @@ export default async function ParticipantDeleteHandler(req, res) {
 
 	// delete participant from the database
 	try {
-		await Participant.findOneAndDelete({ _id: participantId, campaignId });
+		const participant = await Participant.findOneAndDelete({ _id: participantId, campaignId });
+
+		if (!participant) {
+			return res.status(400).json({ success: false, error: "can't remove participant from the db" });
+		}
+
+		// log event
 		await EventLog(`participant delete - participant id: ${participantId} - campaign id: ${campaignId}`, session.user.id, session.user.email);
+
+		// update campaign participant count
+		await Campaign.findOneAndUpdate(
+			{ _id: campaignId },
+			{
+				$inc: {
+					participantCount: -1,
+				},
+			}
+		);
+
 		return res.status(200).json({ success: true });
 	} catch (error) {
 		return res.status(400).json({ success: false, error: error });
