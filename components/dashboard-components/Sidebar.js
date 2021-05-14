@@ -22,11 +22,11 @@ Router.onRouteChangeError = () => {
 export default function Sidebar() {
 	const [session] = useSession();
 	const router = useRouter();
-	const [activeNavItem, setActiveNavItem] = useState();
+	const [currentPath, setCurrentPath] = useState();
 
 	useEffect(() => {
 		if (router.pathname) {
-			setActiveNavItem(router.pathname.replace("/", ""));
+			setCurrentPath(router.pathname.replace("/", ""));
 		}
 	}, [router.pathname]);
 
@@ -48,9 +48,9 @@ export default function Sidebar() {
 						</a>
 					</Link>
 				</div>
-				<SidebarNavItem activeNavItem={activeNavItem} setActiveNavItem={setActiveNavItem} navItemHref="dashboard" navItemIcon="dashboard" navItemLabel="Dashboard" />
-				<SidebarNavItem activeNavItem={activeNavItem} setActiveNavItem={setActiveNavItem} navItemHref="campaigns" navItemIcon="campaigns" navItemLabel="Campaigns" />
-				<SidebarNavItem activeNavItem={activeNavItem} setActiveNavItem={setActiveNavItem} navItemHref="participants" navItemIcon="participants" navItemLabel="Participants" />
+				<SidebarNavItem currentPath={currentPath} navItemHref="dashboard" navItemIcon="dashboard" navItemLabel="Dashboard" />
+				<SidebarNavItem currentPath={currentPath} navItemHref="campaigns" navItemIcon="campaigns" navItemLabel="Campaigns" />
+				<SidebarNavItem currentPath={currentPath} navItemHref="participants" navItemIcon="participants" navItemLabel="Participants" />
 			</nav>
 
 			<nav className="page__sidebar--bottom">
@@ -68,8 +68,8 @@ export default function Sidebar() {
 
 				<Usage />
 
-				<SidebarNavItem activeNavItem={activeNavItem} setActiveNavItem={setActiveNavItem} navItemHref="account" navItemIcon="account" navItemLabel="Account" />
-				<SidebarNavItem activeNavItem={activeNavItem} setActiveNavItem={setActiveNavItem} navItemHref="help" navItemIcon="help" navItemLabel="Help" />
+				<SidebarNavItem currentPath={currentPath} navItemHref="account" navItemIcon="account" navItemLabel="Account" />
+				<SidebarNavItem currentPath={currentPath} navItemHref="help" navItemIcon="help" navItemLabel="Help" />
 				<div className="nav-item nav-item--sign-out">
 					<a href="#" onClick={(e) => doSignOut(e)}>
 						<span className="nav-item__icon">
