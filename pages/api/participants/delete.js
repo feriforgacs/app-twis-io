@@ -7,6 +7,7 @@ import DatabaseConnect from "../../../lib/DatabaseConnect";
 import EventLog from "../../../lib/EventLog";
 import Campaign from "../../../models/Campaign";
 import Participant from "../../../models/Participant";
+import Answer from "../../../models/Answer";
 
 const cors = initMiddleware(
 	Cors({
@@ -57,17 +58,23 @@ export default async function ParticipantDeleteHandler(req, res) {
 		}
 
 		// log event
-		await EventLog(`participant delete - participant id: ${participantId} - campaign id: ${campaignId}`, session.user.id, session.user.email);
+		const eventLogPromise = EventLog(`participant delete - participant id: ${participantId} - campaign id: ${campaignId}`, session.user.id, session.user.email);
+
+		// delete participant answers
+		const answersDeletePromise = Answer.deleteMany({ participantId: participantId });
 
 		// update campaign participant count
-		await Campaign.findOneAndUpdate(
+		const campaignUpdatePromise = Campaign.findOneAndUpdate(
 			{ _id: campaignId },
 			{
 				$inc: {
 					participantCount: -1,
+					answerCount: -1,
 				},
 			}
 		);
+
+		await Promise.all([eventLogPromise, answersDeletePromise, campaignUpdatePromise]);
 
 		return res.status(200).json({ success: true });
 	} catch (error) {
