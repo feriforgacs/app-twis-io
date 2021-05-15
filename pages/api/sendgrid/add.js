@@ -8,7 +8,7 @@ const cors = initMiddleware(
 	})
 );
 
-export default async function (req, res) {
+export default async function AddToListRequest(req, res) {
 	await cors(req, res);
 
 	const client = new Client();
