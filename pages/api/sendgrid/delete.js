@@ -1,6 +1,7 @@
 import Cors from "cors";
 import { Client } from "@sendgrid/client";
 import initMiddleware from "../../../lib/InitMiddleware";
+import AuthCheck from "../../../lib/AuthCheck";
 
 const cors = initMiddleware(
 	Cors({
@@ -10,6 +11,11 @@ const cors = initMiddleware(
 
 export default async function RemoveFromListRequest(req, res) {
 	await cors(req, res);
+
+	/* const authStatus = await AuthCheck(req, res);
+	if (!authStatus) {
+		return res.status(401).end();
+	} */
 
 	const client = new Client();
 	client.setApiKey(process.env.SENDGRID_KEY);
@@ -29,8 +35,10 @@ export default async function RemoveFromListRequest(req, res) {
 	let contactId;
 	try {
 		const contact = await client.request(contactGetRequest);
-		if (contact.result.email.id && contact.result.email.list_ids.includes(process.env.SENDGRID_LIST_ID)) {
-			contactId = contact.result.email.id;
+		const [, body] = contact;
+
+		if (body.result[email].contact.id && body.result[email].contact.list_ids.includes(process.env.SENDGRID_LIST_ID)) {
+			contactId = body.result[email].contact.id;
 		} else {
 			return res.status(200).json({ success: true });
 		}
@@ -47,7 +55,7 @@ export default async function RemoveFromListRequest(req, res) {
 	}
 
 	/**
-	 * @todo Delete contact
+	 * Delete contact
 	 */
 	const contactDeleteRequest = {
 		body: {
@@ -57,7 +65,8 @@ export default async function RemoveFromListRequest(req, res) {
 		url: "https://api.sendgrid.com/v3/marketing/contacts",
 	};
 	try {
-		await client.request(contactDeleteRequest);
+		const deleteResult = await client.request(contactDeleteRequest);
+		console.log(deleteResult);
 		return res.status(200).json({ success: true });
 	} catch (error) {
 		console.log("can't remove contact from sendgrid", error);
