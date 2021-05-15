@@ -15,7 +15,7 @@ export default async function AddToListRequest(req, res) {
 	client.setApiKey(process.env.SENDGRID_KEY);
 	const { email, internalSecret } = req.body;
 
-	if (internalSecret !== process.env.INTERNALSECRET) {
+	if (!internalSecret || internalSecret !== process.env.INTERNALSECRET) {
 		return res.status(401).json({ success: false, error: "not authorized" });
 	}
 

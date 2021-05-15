@@ -121,9 +121,28 @@ export default async function DeleteRequestHandler(req, res) {
 	}
 
 	/**
-	 * @todo remove user from sendgrid
-	 * /api/sendgrid/delete
+	 * Remove user from sendgrid
 	 */
+	try {
+		const sendgridDeleteRequest = await fetch(`${process.env.APP_URL}/api/sendgrid/delete`, {
+			method: "delete",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				email: session.user.email,
+				internalSecret: process.env.INTERNALSECRET,
+			}),
+		});
+
+		if (sendgridDeleteRequest.status !== 200) {
+			console.log(sendgridDeleteRequest);
+			return res.status(400).json({ success: false, error: "can't remove user from sendgrid" });
+		}
+	} catch (error) {
+		console.log(error);
+		return res.status(400).json({ success: false, error });
+	}
 
 	// get user's campaigns
 	let campaigns = [];
