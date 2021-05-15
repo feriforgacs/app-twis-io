@@ -1,7 +1,6 @@
 import Cors from "cors";
 import { Client } from "@sendgrid/client";
 import initMiddleware from "../../../lib/InitMiddleware";
-import AuthCheck from "../../../lib/AuthCheck";
 
 const cors = initMiddleware(
 	Cors({
@@ -12,14 +11,13 @@ const cors = initMiddleware(
 export default async function AddToListRequest(req, res) {
 	await cors(req, res);
 
-	const authStatus = await AuthCheck(req, res);
-	if (!authStatus) {
-		return res.status(401).end();
-	}
-
 	const client = new Client();
 	client.setApiKey(process.env.SENDGRID_KEY);
-	const { email } = req.body;
+	const { email, internalSecret } = req.body;
+
+	if (internalSecret !== process.env.INTERNALSECRET) {
+		return res.status(401).json({ success: false, error: "not authorized" });
+	}
 
 	const requestBody = {
 		list_ids: [process.env.SENDGRID_LIST_ID],

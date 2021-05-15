@@ -72,6 +72,7 @@ const options = {
 			/**
 			 * Add user to sendgrid contacts list to start welcome automation
 			 */
+			message.internalSecret = process.env.INTERNALSECRET;
 			const res = await fetch(`${process.env.APP_URL}/api/sendgrid/add`, {
 				method: "PUT",
 				headers: {

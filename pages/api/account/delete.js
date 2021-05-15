@@ -120,6 +120,11 @@ export default async function DeleteRequestHandler(req, res) {
 		return res.status(400).json({ success: false, error });
 	}
 
+	/**
+	 * @todo remove user from sendgrid
+	 * /api/sendgrid/delete
+	 */
+
 	// get user's campaigns
 	let campaigns = [];
 	try {

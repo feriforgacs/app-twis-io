@@ -62,8 +62,7 @@ export default async function RemoveFromListRequest(req, res) {
 		url: `https://api.sendgrid.com/v3/marketing/contacts?ids=${contactId}`,
 	};
 	try {
-		const deleteResult = await client.request(contactDeleteRequest);
-		console.log(deleteResult);
+		await client.request(contactDeleteRequest);
 		return res.status(200).json({ success: true });
 	} catch (error) {
 		console.log("can't remove contact from sendgrid", error);
