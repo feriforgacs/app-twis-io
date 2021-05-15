@@ -12,10 +12,10 @@ const cors = initMiddleware(
 export default async function RemoveFromListRequest(req, res) {
 	await cors(req, res);
 
-	/* const authStatus = await AuthCheck(req, res);
+	const authStatus = await AuthCheck(req, res);
 	if (!authStatus) {
 		return res.status(401).end();
-	} */
+	}
 
 	const client = new Client();
 	client.setApiKey(process.env.SENDGRID_KEY);
@@ -58,11 +58,8 @@ export default async function RemoveFromListRequest(req, res) {
 	 * Delete contact
 	 */
 	const contactDeleteRequest = {
-		body: {
-			ids: [contactId],
-		},
 		method: "DELETE",
-		url: "https://api.sendgrid.com/v3/marketing/contacts",
+		url: `https://api.sendgrid.com/v3/marketing/contacts?ids=${contactId}`,
 	};
 	try {
 		const deleteResult = await client.request(contactDeleteRequest);
