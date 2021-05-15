@@ -18,7 +18,7 @@ export default async function RemoveFromListRequest(req, res) {
 	/**
 	 * Get contact id from sendgrid
 	 */
-	const getContactRequest = {
+	const contactGetRequest = {
 		body: {
 			emails: [email],
 		},
@@ -28,7 +28,7 @@ export default async function RemoveFromListRequest(req, res) {
 
 	let contactId;
 	try {
-		const contact = await client.request(getContactRequest);
+		const contact = await client.request(contactGetRequest);
 		if (contact.result.email.id && contact.result.email.list_ids.includes(process.env.SENDGRID_LIST_ID)) {
 			contactId = contact.result.email.id;
 		} else {
@@ -36,7 +36,7 @@ export default async function RemoveFromListRequest(req, res) {
 		}
 	} catch (error) {
 		console.log("can't get contact information from sendgrid", error);
-		res.status(error.code).send(error.message);
+		return res.status(error.code).send(error.message);
 	}
 
 	/**
@@ -49,4 +49,18 @@ export default async function RemoveFromListRequest(req, res) {
 	/**
 	 * @todo Delete contact
 	 */
+	const contactDeleteRequest = {
+		body: {
+			ids: [contactId],
+		},
+		method: "DELETE",
+		url: "https://api.sendgrid.com/v3/marketing/contacts",
+	};
+	try {
+		await client.request(contactDeleteRequest);
+		return res.status(200).json({ success: true });
+	} catch (error) {
+		console.log("can't remove contact from sendgrid", error);
+		return res.status(error.code).send(error.message);
+	}
 }
