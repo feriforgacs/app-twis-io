@@ -112,8 +112,8 @@ const verificationEmailHTML = ({ url, email }) => {
 	const backgroundColor = "#ffffff";
 	const textColor = "#1d1d1d";
 	const mainBackgroundColor = "#ffffff";
-	const buttonBackgroundColor = "#a30fbb";
-	const buttonBorderColor = "#a30fbb";
+	const buttonBackgroundColor = "#5a38fd";
+	const buttonBorderColor = "#5a38fd";
 	const buttonTextColor = "#ffffff";
 
 	return `
