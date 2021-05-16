@@ -11,7 +11,7 @@ export default function CampaignsPage() {
 	if (typeof window !== "undefined" && loading) return null;
 
 	if (!session) {
-		return <LoginForm signInPage={true} accessDenied={true} />;
+		return <LoginForm logInPage={true} accessDenied={true} />;
 	}
 
 	return (
