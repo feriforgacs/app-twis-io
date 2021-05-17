@@ -52,6 +52,7 @@ export default function FontSize() {
 					className={`item-settings ${styles.fontSizeInput}`}
 					value={fontSize}
 					debounceTimeout="300"
+					onWheel={(e) => e.target.blur()}
 					onChange={(e) => {
 						const fontSize = parseInt(e.target.value);
 						updateScreenItem(activeScreen.screenId, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, fontSize: fontSize } });
