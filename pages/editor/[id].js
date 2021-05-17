@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { useSession, getSession } from "next-auth/client";
+import Layout from "../../components/Layout";
 import { GlobalProvider } from "../../context/GlobalState";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -17,11 +18,13 @@ export default function EditorPage() {
 	}
 
 	return (
-		<DndProvider backend={HTML5Backend}>
-			<GlobalProvider>
-				<Editor campaignId={router.query.id} />
-			</GlobalProvider>
-		</DndProvider>
+		<Layout>
+			<DndProvider backend={HTML5Backend}>
+				<GlobalProvider>
+					<Editor campaignId={router.query.id} />
+				</GlobalProvider>
+			</DndProvider>
+		</Layout>
 	);
 }
 

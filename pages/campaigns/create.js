@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { useSession, getSession } from "next-auth/client";
+import Layout from "../../components/Layout";
 import LoginForm from "../../components/LoginForm";
 import Sidebar from "../../components/dashboard-components/Sidebar";
 import CampaignCreate from "../../components/dashboard-components/campaign-components/CampaignCreate";
@@ -15,16 +16,18 @@ export default function CampaignCreatePage() {
 	}
 
 	return (
-		<div id="campaigns" className="page">
-			<Head>
-				<title>Create New Campaign - {process.env.APP_NAME}</title>
-			</Head>
-			<Sidebar />
-			<div id="page__content">
-				<PageHeader title="Create New Campaign" />
-				<CampaignCreate />
+		<Layout>
+			<div id="campaigns" className="page">
+				<Head>
+					<title>Create New Campaign - {process.env.APP_NAME}</title>
+				</Head>
+				<Sidebar />
+				<div id="page__content">
+					<PageHeader title="Create New Campaign" />
+					<CampaignCreate />
+				</div>
 			</div>
-		</div>
+		</Layout>
 	);
 }
 

@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { useSession, getSession } from "next-auth/client";
+import Layout from "../../components/Layout";
 import LoginForm from "../../components/LoginForm";
 import Sidebar from "../../components/dashboard-components/Sidebar";
 import ParticipantList from "../../components/dashboard-components/participant-components/ParticipantList";
@@ -15,16 +16,18 @@ export default function Participants() {
 	}
 
 	return (
-		<div id="participants" className="page">
-			<Head>
-				<title>Participants - {process.env.APP_NAME}</title>
-			</Head>
-			<Sidebar />
-			<div id="page__content">
-				<PageHeader title="Participants" />
-				<ParticipantList />
+		<Layout>
+			<div id="participants" className="page">
+				<Head>
+					<title>Participants - {process.env.APP_NAME}</title>
+				</Head>
+				<Sidebar />
+				<div id="page__content">
+					<PageHeader title="Participants" />
+					<ParticipantList />
+				</div>
 			</div>
-		</div>
+		</Layout>
 	);
 }
 

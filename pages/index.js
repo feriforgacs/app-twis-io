@@ -1,6 +1,7 @@
 import { useSession } from "next-auth/client";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import Layout from "../components/Layout";
 import LoginForm from "../components/LoginForm";
 
 export default function Home() {
@@ -29,5 +30,9 @@ export default function Home() {
 	/**
 	 * Display login form to users
 	 */
-	return <LoginForm loginError={loginError} loggedOut={loggedOut} />;
+	return (
+		<Layout>
+			<LoginForm loginError={loginError} loggedOut={loggedOut} />
+		</Layout>
+	);
 }

@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { useSession, getSession } from "next-auth/client";
+import Layout from "../../components/Layout";
 import LoginForm from "../../components/LoginForm";
 import Sidebar from "../../components/dashboard-components/Sidebar";
 import PageTabNavigation from "../../components/dashboard-components/PageTabNavigation";
@@ -16,16 +17,18 @@ export default function SubscriptionPage() {
 	}
 
 	return (
-		<div id="account" className="page">
-			<Head>
-				<title>Subscription - Account - {process.env.APP_NAME}</title>
-			</Head>
-			<Sidebar />
-			<div id="page__content">
-				<PageTabNavigation tabs={accountPageTabs} activeTabSlug="/account/subscription" />
-				<Subscription />
+		<Layout>
+			<div id="account" className="page">
+				<Head>
+					<title>Subscription - Account - {process.env.APP_NAME}</title>
+				</Head>
+				<Sidebar />
+				<div id="page__content">
+					<PageTabNavigation tabs={accountPageTabs} activeTabSlug="/account/subscription" />
+					<Subscription />
+				</div>
 			</div>
-		</div>
+		</Layout>
 	);
 }
 

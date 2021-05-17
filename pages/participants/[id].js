@@ -3,6 +3,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useSession, getSession } from "next-auth/client";
 import NProgress from "nprogress";
+import Layout from "../../components/Layout";
 import LoginForm from "../../components/LoginForm";
 import Sidebar from "../../components/dashboard-components/Sidebar";
 import PageHeader from "../../components/dashboard-components/PageHeader";
@@ -79,19 +80,21 @@ export default function ParticipantPage() {
 	}
 
 	return (
-		<div id="participant" className="page">
-			<Head>
-				<title>Participant - {process.env.APP_NAME}</title>
-			</Head>
-			<Sidebar />
-			<div id="page__content">
-				<PageHeader title="Participant" secondaryActionLabel="Back to all participants" secondaryActionURL="/participants" />
-				{dataLoading && <SkeletonParticipantDetails />}
-				{participantData && <ParticipantDetails participantData={participantData} participantAnswers={participantAnswers} setToastMessage={setToastMessage} setToastType={setToastType} setToastDuration={setToastDuration} setToastVisible={setToastVisible} />}
-			</div>
+		<Layout>
+			<div id="participant" className="page">
+				<Head>
+					<title>Participant - {process.env.APP_NAME}</title>
+				</Head>
+				<Sidebar />
+				<div id="page__content">
+					<PageHeader title="Participant" secondaryActionLabel="Back to all participants" secondaryActionURL="/participants" />
+					{dataLoading && <SkeletonParticipantDetails />}
+					{participantData && <ParticipantDetails participantData={participantData} participantAnswers={participantAnswers} setToastMessage={setToastMessage} setToastType={setToastType} setToastDuration={setToastDuration} setToastVisible={setToastVisible} />}
+				</div>
 
-			{toastVisible && <Toast onClose={() => setToastVisible(false)} duration={toastDuration} type={toastType} content={toastMessage} />}
-		</div>
+				{toastVisible && <Toast onClose={() => setToastVisible(false)} duration={toastDuration} type={toastType} content={toastMessage} />}
+			</div>
+		</Layout>
 	);
 }
 

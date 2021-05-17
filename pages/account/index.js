@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { useSession, getSession } from "next-auth/client";
+import Layout from "../../components/Layout";
 import LoginForm from "../../components/LoginForm";
 import Sidebar from "../../components/dashboard-components/Sidebar";
 import PersonalSettings from "../../components/dashboard-components/account-components/PersonalSettings";
@@ -21,17 +22,19 @@ export default function AccountPage() {
 	}
 
 	return (
-		<div id="account" className="page">
-			<Head>
-				<title>Personal settings - Account - {process.env.APP_NAME}</title>
-			</Head>
-			<Sidebar />
-			<div id="page__content">
-				<PageTabNavigation tabs={accountPageTabs} activeTabSlug="/account" />
-				<PersonalSettings />
-				<AccountDelete />
+		<Layout>
+			<div id="account" className="page">
+				<Head>
+					<title>Personal settings - Account - {process.env.APP_NAME}</title>
+				</Head>
+				<Sidebar />
+				<div id="page__content">
+					<PageTabNavigation tabs={accountPageTabs} activeTabSlug="/account" />
+					<PersonalSettings />
+					<AccountDelete />
+				</div>
 			</div>
-		</div>
+		</Layout>
 	);
 }
 

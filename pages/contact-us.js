@@ -1,7 +1,8 @@
+import Layout from "../components/Layout";
 export default function ContactUs() {
 	return (
-		<div>
+		<Layout>
 			<h1>Contact Us</h1>
-		</div>
+		</Layout>
 	);
 }
