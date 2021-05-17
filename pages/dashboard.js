@@ -1,5 +1,6 @@
 import { useSession, getSession } from "next-auth/client";
 import Head from "next/head";
+import Layout from "../components/Layout";
 import LoginForm from "../components/LoginForm";
 import Sidebar from "../components/dashboard-components/Sidebar";
 import CampaignList from "../components/dashboard-components/campaign-components/CampaignList";
@@ -16,17 +17,19 @@ export default function Dashboard() {
 	}
 
 	return (
-		<div id="dashboard" className="page">
-			<Head>
-				<title>Dashboard - {process.env.APP_NAME}</title>
-			</Head>
-			<Sidebar />
-			<div id="page__content">
-				<PageHeader title="Dashboard" primaryActionURL="/campaigns/create" primaryActionLabel="Create New Campaign" />
-				<CampaignList dashboard={true} />
-				<ParticipantList dashboard={true} limit={50} />
+		<Layout>
+			<div id="dashboard" className="page">
+				<Head>
+					<title>Dashboard - {process.env.APP_NAME}</title>
+				</Head>
+				<Sidebar />
+				<div id="page__content">
+					<PageHeader title="Dashboard" primaryActionURL="/campaigns/create" primaryActionLabel="Create New Campaign" />
+					<CampaignList dashboard={true} />
+					<ParticipantList dashboard={true} limit={50} />
+				</div>
 			</div>
-		</div>
+		</Layout>
 	);
 }
 
