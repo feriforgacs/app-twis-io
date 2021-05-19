@@ -13,14 +13,14 @@ export default function Delete() {
 	 */
 	const handleKeyDown = useCallback(
 		(event) => {
-			const keyCode = event.keyCode || event.which;
-
 			// dont delete item if delete event happened in text input
 			if (event.target && event.target.type && (event.target.type === "text" || event.target.type === "textarea" || event.target.type === "url" || event.target.type === "email" || event.target.type === "number")) {
 				return;
 			}
 
-			if (keyCode === 8 || keyCode === 46) {
+			const keyCode = event.code;
+
+			if (keyCode === "Delete" || keyCode === "Backspace") {
 				if (event.target.isContentEditable) {
 					return;
 				}

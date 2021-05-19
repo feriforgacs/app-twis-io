@@ -59,9 +59,9 @@ export default function Button({ data }) {
 	 * @param {object} event Keypress event object
 	 */
 	const disableNewlines = (event) => {
-		const keyCode = event.keyCode || event.which;
+		const keyCode = event.code;
 
-		if (keyCode === 13) {
+		if (keyCode === "Enter") {
 			event.returnValue = false;
 			if (event.preventDefault) {
 				event.preventDefault();
