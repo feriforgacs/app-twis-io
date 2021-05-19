@@ -18,7 +18,7 @@ export default function Sidebar() {
 				<Element icon="sticker" label="Sticker" active={activeElement === "sticker"} onClick={() => setActiveElement("sticker")} />
 			</div>
 			<div id="sidebar__element-options" className={styles.sidebarElementOptions}>
-				<p>Drag and drop items to the screens</p>
+				<p>💡 Drag and drop items to the screens</p>
 				<TextList active={activeElement === "text"} />
 				<ButtonList active={activeElement === "button"} />
 				<ImageList active={activeElement === "image"} />
