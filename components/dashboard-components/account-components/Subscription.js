@@ -1,6 +1,3 @@
-/**
- * @todo display loading state
- */
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/client";
 import Refund from "./Refund";
