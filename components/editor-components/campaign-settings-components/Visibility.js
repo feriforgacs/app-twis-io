@@ -31,6 +31,16 @@ export default function Visibility() {
 		return dateFnsFormat(date, format, { locale });
 	};
 
+	let balloons = [];
+	for (let i = 0; i < 10; i++) {
+		let balloon = (
+			<span key={i}>
+				<strong>🎈</strong>
+			</span>
+		);
+		balloons.push(balloon);
+	}
+
 	return (
 		<>
 			{/* Campaign Status */}
@@ -64,6 +74,8 @@ export default function Visibility() {
 						</>
 					)}
 				</p>
+
+				<div className={`${styles.balloons} ${styles.animate}`}>{balloons}</div>
 			</div>
 
 			{/* Campaign Visiblity Dates */}

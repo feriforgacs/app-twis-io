@@ -254,3 +254,53 @@
 		margin-left: 5px;
 	}
 }
+
+.balloons {
+	position: relative;
+	width: 100%;
+
+	span {
+		left: 0;
+		opacity: 0;
+		position: absolute;
+		top: 0;
+
+		strong {
+			display: inline-block;
+		}
+
+		@for $i from 0 through 9 {
+			$randomPosition: random();
+			&:nth-child(#{$i}) {
+				left: percentage($randomPosition);
+				animation-delay: random(500) + ms;
+				animation-duration: random(1000) + 500 + ms;
+
+				strong {
+					transform: scale(random(3));
+				}
+			}
+		}
+	}
+}
+
+.animate {
+	animation-name: balloonFloat;
+	animation-fill-mode: forwards;
+	animation-timing-function: linear;
+}
+
+@keyframes balloonFloat {
+	0% {
+		opacity: 0;
+		transform: translateY(0px) translateX(0);
+	}
+	50% {
+		opacity: 1;
+		transform: translateY(-20px) translateX(-5px);
+	}
+	100% {
+		opacity: 0;
+		transform: translateY(-40px) translateX(5px);
+	}
+}
