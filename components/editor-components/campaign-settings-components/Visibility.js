@@ -34,7 +34,7 @@ export default function Visibility() {
 	let balloons = [];
 	for (let i = 0; i < 10; i++) {
 		let balloon = (
-			<span key={i}>
+			<span key={i} className={styles.animate}>
 				<strong>🎈</strong>
 			</span>
 		);
@@ -75,7 +75,7 @@ export default function Visibility() {
 					)}
 				</p>
 
-				<div className={`${styles.balloons} ${styles.animate}`}>{balloons}</div>
+				<div className={styles.balloons}>{balloons}</div>
 			</div>
 
 			{/* Campaign Visiblity Dates */}
