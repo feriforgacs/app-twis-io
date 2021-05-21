@@ -16,6 +16,7 @@ export default function Visibility() {
 	const [active, setActive] = useState(campaign.status === "active" || false);
 	const [visibleFrom, setVisibleFrom] = useState(new Date(campaign.visibleFrom) || new Date());
 	const [visibleTo, setVisibleTo] = useState(new Date(campaign.visibleTo) || new Date());
+	const [animateBalloons, setAnimateBalloons] = useState(false);
 
 	const dateFormat = "do MMM yyyy";
 
@@ -34,7 +35,7 @@ export default function Visibility() {
 	let balloons = [];
 	for (let i = 0; i < 10; i++) {
 		let balloon = (
-			<span key={i} className={styles.animate}>
+			<span key={i} className={animateBalloons ? styles.animate : ""}>
 				<strong>🎈</strong>
 			</span>
 		);
@@ -50,6 +51,7 @@ export default function Visibility() {
 						onChange={() => {
 							setActive(!active);
 							updateCampaignData("status", campaign.status === "active" ? "draft" : "active");
+							setAnimateBalloons(!active);
 						}}
 						checked={active}
 						onColor="#159c5b"
