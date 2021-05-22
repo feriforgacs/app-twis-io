@@ -273,7 +273,7 @@
 			$randomPosition: random();
 			&:nth-child(#{$i}) {
 				left: percentage($randomPosition);
-				animation-delay: random(500) + ms;
+				animation-delay: random(500) + 500 + ms;
 				animation-duration: random(1000) + 500 + ms;
 
 				strong {
