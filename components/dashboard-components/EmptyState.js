@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function EmptyStateCampaigns({ title = "Please, provide a title", description = "Please, provide a description", actionLink = "", actionLabel = "", helpURL = "", helpLabel = "Learn more", illustration = "" }) {
 	return (
@@ -22,7 +23,7 @@ export default function EmptyStateCampaigns({ title = "Please, provide a title",
 			</div>
 			{illustration && (
 				<div className="empty-state__illustration">
-					<img src={`/images/empty-states/${illustration}.png`} />
+					<Image src={`/images/empty-states/${illustration}.png`} width={450} height={450} />
 				</div>
 			)}
 		</div>
