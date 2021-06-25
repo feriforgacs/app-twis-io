@@ -73,7 +73,7 @@ export default async function SubscriptionPaymentSucceeded(req, res) {
 		}
 
 		/**
-		 * If usage value is already higher than usage limit, set limit reached date to current date
+		 * If usage value is already higher than usage limit, set limitReached date to current date
 		 */
 		const limitReached = usageValue > subscription.usage.limit ? Date.now() : null;
 
