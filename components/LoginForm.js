@@ -2,7 +2,6 @@ import { signIn, useSession } from "next-auth/client";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import Head from "next/head";
 import LoginError from "./LoginError";
 
@@ -112,11 +111,11 @@ export default function LoginForm({ loginError = false, loggedOut = false, logIn
 
 					<div id="login-form__legal">
 						By continuing with Google, Facebook, or email, you agree to our{" "}
-						<a href="/terms-of-service" target="_blank" rel="noopener noreferrer">
-							Terms of Service
+						<a href="https://twis.io/terms-and-conditions" target="_blank" rel="noopener noreferrer">
+							Terms and Conditions
 						</a>{" "}
 						and{" "}
-						<a href="/privacy-policy" target="_blank" rel="noopener noreferrer">
+						<a href="https://twis.io/privacy-policy" target="_blank" rel="noopener noreferrer">
 							Privacy Policy
 						</a>
 						.
@@ -125,9 +124,9 @@ export default function LoginForm({ loginError = false, loggedOut = false, logIn
 					<div id="login-form__help">
 						<p>
 							Having trouble signing in?{" "}
-							<Link href="/contact-us">
-								<a>Let us help!</a>
-							</Link>
+							<a href="https://twis.io/contact-us" target="_blank" rel="noopener noreferrer">
+								Let us help!
+							</a>
 						</p>
 					</div>
 				</section>

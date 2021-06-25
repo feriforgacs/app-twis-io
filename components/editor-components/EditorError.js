@@ -8,7 +8,7 @@ export default function EditorError({ errorMessage = "😢 An error occured. Ple
 			<Image src="/images/editor/illustrations/illustration-error.png" width={400} height={266} />
 			<p className={styles.editorErrorInfo}>
 				If you keep seeing this error,{" "}
-				<a href="/contact" target="_blank" rel="noreferrer">
+				<a href="https://twis.io/contact-us" target="_blank" rel="noopener noreferrer">
 					please get in touch
 				</a>
 				.

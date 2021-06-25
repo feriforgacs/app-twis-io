@@ -1,6 +1,5 @@
 import { useSession } from "next-auth/client";
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import Layout from "../components/Layout";
@@ -60,9 +59,9 @@ export default function CheckYourInbox() {
 						<p>Can’t find the email? Make sure you check your spam folder!</p>
 						<p>
 							Having trouble signing in?{" "}
-							<Link href="/contact-us">
-								<a>Let us help!</a>
-							</Link>
+							<a href="https://twis.io/contact-us" target="_blank" rel="noopener noreferrer">
+								Let us help!
+							</a>
 						</p>
 					</div>
 				</section>

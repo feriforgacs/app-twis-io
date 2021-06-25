@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 export default function LoginError({ error }) {
 	console.log(error);
 
@@ -13,9 +11,9 @@ export default function LoginError({ error }) {
 			) : (
 				<>
 					Something didn&apos;t work properly. Please, try again in a few minutes or use a different login option. If you keep seeing this message, please,
-					<Link href="/contact-us">
-						<a>contact us</a>
-					</Link>
+					<a href="https://twis.io/contact-us" target="_blank" rel="noopener noreferrer">
+						contact us
+					</a>
 					.
 				</>
 			)}
