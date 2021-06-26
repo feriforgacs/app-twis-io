@@ -174,12 +174,10 @@ export default function StickerList({ active = false }) {
 		<div className={`${!active ? "hidden" : ""}`}>
 			<div className={`${styles.searchInputContainer} ${loading ? styles.searchInputContainerLoading : ""} mt-20`}>
 				<DebounceInput className={`${loading ? styles.searchInputLoading : ""}`} placeholder="Search for stickers on GIPHY" minLength="3" debounceTimeout="300" onChange={(e) => searchImages(e.target.value)} />
-				<p className="align--center">
-					Powered by{" "}
-					<a href="https://giphy.com/?utm_source=twis&utm_medium=referral" target="_blank" rel="noreferrer">
-						<img src="/images/editor/logo-giphy.svg" alt="GIPHY logo" />
-					</a>
-				</p>
+
+				<a href="https://giphy.com/?utm_source=twis&utm_medium=referral" target="_blank" rel="noreferrer">
+					<img src="/images/editor/logo-giphy.png" alt="GIPHY logo" className={styles.giphyLogo} />
+				</a>
 			</div>
 
 			<div className={styles.imageList}>
