@@ -3,6 +3,7 @@ import { getSession } from "next-auth/client";
 import { v2 as cloudinary } from "cloudinary";
 import initMiddleware from "../../../../lib/InitMiddleware";
 import AuthCheck from "../../../../lib/AuthCheck";
+import MediaItem from "../../../../models/editor/MediaItem";
 
 const cors = initMiddleware(
 	Cors({
@@ -49,6 +50,20 @@ export default async function MediaUploadHandler(req, res) {
 			height: image.height,
 		};
 
+		/**
+		 * Save media item data to the db
+		 */
+		await MediaItem.create({
+			assetId: image.asset_id,
+			publicId: image.public_id,
+			url: image.url,
+			secureUrl: image.secure_url,
+			uploadedBy: session.user.id,
+		});
+
+		/**
+		 * Send back uploaded image data to the frontend
+		 */
 		return res.status(200).json({ success: true, image: uploadedImage });
 	} catch (error) {
 		return res.status(400).json({ success: false, error });
