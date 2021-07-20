@@ -8,8 +8,6 @@ import SkeletonParticipantList from "../skeletons/SkeletonParticipantList";
 import SkeletonSearchForm from "../skeletons/SkeletonSearchForm";
 import Toast from "../Toast";
 import ParticipantSearch from "./ParticipantSearch";
-import FooterHelp from "../FooterHelp";
-import LinkComponent from "../LinkComponent";
 import Pagination from "../Pagination";
 import PageActionsHeader from "../PageActionsHeader";
 
@@ -231,14 +229,8 @@ export default function ParticipantList({ limit = 200, dashboard = false, campai
 				{filtered && !participants.length && !searching ? <EmptyStateSearch title="No result" description="We couldn't find any items that fit your criteria. Please, try a different keyword" illustration="participants" /> : ""}
 
 				{/* Empty state when there are no participants, not search result and not loading */}
-				{!participants.length && !loading && !filtered ? <EmptyState title="No participants" description="You haven't acquired any participants yet." helpLabel="###TODO Learn how to acquire participants" helpURL="https://" illustration="participants" /> : ""}
+				{!participants.length && !loading && !filtered ? <EmptyState title="No participants" description="You haven't acquired any participants yet." illustration="participants" /> : ""}
 			</div>
-
-			{!dashboard && (
-				<FooterHelp>
-					###TODO Learn more about <LinkComponent url="http://twis.io">getting participants</LinkComponent>
-				</FooterHelp>
-			)}
 
 			{toastVisible && <Toast onClose={() => setToastVisible(false)} duration={toastDuration} type={toastType} content={toastMessage} />}
 		</>
