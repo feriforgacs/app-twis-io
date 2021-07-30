@@ -14,6 +14,11 @@ export default function AnswersSettings() {
 		setConfettiPreviewActive(confettiPreview);
 	}, [confettiPreview]);
 
+	useEffect(() => {
+		setSuccessEmoji(activeScreenItem.settings.successEmoji || "🎉");
+		setAnswersRandomOrder(activeScreenItem.settings.answersRandomOrder || false);
+	}, [activeScreenItem]);
+
 	return (
 		<>
 			<div className={`${styles.settingsSection} screen-settings`}>
@@ -24,7 +29,7 @@ export default function AnswersSettings() {
 					<label className={answersRandomOrder ? styles.optionSelected : ""}>
 						<input
 							type="checkbox"
-							defaultChecked={answersRandomOrder}
+							checked={answersRandomOrder}
 							onChange={() => {
 								setAnswersRandomOrder(!answersRandomOrder);
 								updateScreenItem(activeScreen.screenId, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, answersRandomOrder: !answersRandomOrder } });
