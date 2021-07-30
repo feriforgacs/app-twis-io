@@ -18,7 +18,7 @@ export default function FormFieldsSettings() {
 					<label className={`${collectName ? styles.optionSelected : ""}`}>
 						<input
 							type="checkbox"
-							defaultChecked={collectName}
+							checked={collectName}
 							onChange={() => {
 								setCollectName(!collectName);
 								updateScreenItem(activeScreen.screenId, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, collectName: !collectName } });
@@ -31,7 +31,7 @@ export default function FormFieldsSettings() {
 					<label className={`${collectEmail ? styles.optionSelected : ""}`}>
 						<input
 							type="checkbox"
-							defaultChecked={collectEmail}
+							checked={collectEmail}
 							onChange={() => {
 								setCollectEmail(!collectEmail);
 								updateScreenItem(activeScreen.screenId, activeScreenItem.itemId, { settings: { ...activeScreenItem.settings, collectEmail: !collectEmail } });

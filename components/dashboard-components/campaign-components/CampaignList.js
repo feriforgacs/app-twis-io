@@ -8,8 +8,6 @@ import EmptyState from "../EmptyState";
 import EmptyStateSearch from "../EmptyStateSearch";
 import Toast from "../Toast";
 import CampaignSearch from "./CampaignSearch";
-import FooterHelp from "../FooterHelp";
-import LinkComponent from "../LinkComponent";
 import PageActionsHeader from "../PageActionsHeader";
 
 export default function CampaignList({ limit = 50, dashboard = false }) {
@@ -131,14 +129,8 @@ export default function CampaignList({ limit = 50, dashboard = false }) {
 				{filtered && !campaigns.length && !searching ? <EmptyStateSearch title="No result" description="We couldn't find any items that fit your criteria. Please, try a different keyword" illustration="participants" /> : ""}
 
 				{/* Empty state when there are no campaigns, not search result and not loading */}
-				{!campaigns.length && !loading && !filtered ? <EmptyState title="Create your first campaign" description="You haven't created any campaigns yet. Click the button below to get started." actionLink="/campaigns/create" actionLabel="Create New Campaign" helpLabel="###TODO Learn more" helpURL="https://" illustration="campaigns" /> : ""}
+				{!campaigns.length && !loading && !filtered ? <EmptyState title="Create your first campaign" description="You haven't created any campaigns yet. Click the button below to get started." actionLink="/campaigns/create" actionLabel="Create New Campaign" illustration="campaigns" /> : ""}
 			</div>
-
-			{!dashboard && (
-				<FooterHelp>
-					###TODO Lrean more about <LinkComponent url="http://twis.io">campaign best practices</LinkComponent>
-				</FooterHelp>
-			)}
 
 			{toastVisible && <Toast onClose={() => setToastVisible(false)} duration={toastDuration} type={toastType} content={toastMessage} />}
 		</>
