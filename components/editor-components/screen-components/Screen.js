@@ -29,6 +29,13 @@ export default function Screen({ screen }) {
 			isOver: !!monitor.isOver(),
 		}),
 		drop: (item, monitor) => {
+			/**
+			 * Don't allow drop if there is no screen id
+			 */
+			if (!screen._id) {
+				return;
+			}
+
 			const itemType = monitor.getItemType();
 			const offset = monitor.getSourceClientOffset();
 			const dropTargetXy = screenRef.current.getBoundingClientRect();
