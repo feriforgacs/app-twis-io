@@ -69,7 +69,7 @@ export default async function ScreenAddHandler(req, res) {
 			return res.status(400).json({ success: false });
 		}
 
-		// get screen items from the screen object, and remove it
+		// get screen items from the screen object, and remove them
 		const newScreenItems = [...newScreenData.screenItems];
 		delete newScreenData.screenItems;
 

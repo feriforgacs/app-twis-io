@@ -2,6 +2,13 @@ export default function RemoveScreenItem(state, action) {
 	let screens = [...state.screens];
 	// find screen index based on screen id
 	let screenIndex = screens.findIndex((obj) => obj.screenId === action.payload.screenId);
+
+	if (screenIndex === -1) {
+		return {
+			...state,
+		};
+	}
+
 	let itemIndex = screens[screenIndex].screenItems.findIndex((obj) => obj.itemId === action.payload.itemId);
 	let currentScreenItem = screens[screenIndex].screenItems[itemIndex];
 

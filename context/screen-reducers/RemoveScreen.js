@@ -4,7 +4,7 @@ export default function RemoveScreen(state, action) {
 	// find screen index in screens array by screenId
 	let index = screens.findIndex((obj) => obj.screenId === action.payload.screenId);
 
-	if (!index === -1) {
+	if (index === -1) {
 		return {
 			...state,
 		};
