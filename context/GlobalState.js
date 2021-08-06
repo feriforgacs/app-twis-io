@@ -258,13 +258,14 @@ export const GlobalProvider = ({ children }) => {
 	 * @param {string} screenType The type of the screen we'd like to add
 	 * @param {string} screenId New screen's uuid
 	 */
-	const addScreen = async (screenType, screenId) => {
+	const addScreen = async (screenType) => {
 		const newScreen = screenType === "question" ? QuestionScreenTemplate : InfoScreenTemplate;
+		const screenId = uuidv4();
 		newScreen.screenId = screenId;
 		newScreen.campaignId = state.campaign._id;
 		newScreen.orderIndex = state.screens.length - 2;
 
-		const newScreenItems = screenType === "question" ? QuestionScreenTemplateItems : InfoScreenTemplateItems;
+		const newScreenItems = screenType === "question" ? [...QuestionScreenTemplateItems] : [...InfoScreenTemplateItems];
 
 		newScreenItems.forEach((item, index) => {
 			newScreenItems[index].itemId = uuidv4();
@@ -277,9 +278,6 @@ export const GlobalProvider = ({ children }) => {
 			type: "ADD_SCREEN",
 			payload: { newScreen, saving: true },
 		});
-
-		setActiveScreen(newScreen);
-		unsetActiveScreenItem();
 
 		// save screen to the database
 		let source = axios.CancelToken.source();
@@ -323,6 +321,7 @@ export const GlobalProvider = ({ children }) => {
 				const addedScreen = document.getElementById(`screen-${screenType}-${screenId}`);
 				if (addedScreen) {
 					addedScreen.scrollIntoView({ behavior: "smooth" });
+					unsetActiveScreenItem();
 					setActiveScreen({
 						...newScreen,
 						_id: result.data.screen._id,
